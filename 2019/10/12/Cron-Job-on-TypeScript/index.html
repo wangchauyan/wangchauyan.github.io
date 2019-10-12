@@ -55,32 +55,35 @@
   };
 </script>
 
-  <meta name="description" content="This is my peronsal dev blog.">
-<meta name="keywords" content="San Francisco, Android, iOS, TypeScript, Self-Driving">
-<meta property="og:type" content="website">
-<meta property="og:title" content="舊金山周記">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="What is Cron?Cron is a classic utility found on Linux and UNIX systems for running tasks at pre-determined times or intervals. These tasks are referred to as Cron tasks or Cron jobs. Use Cron to sche">
+<meta name="keywords" content="TypeScript, CronJob, Scheduler">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cron Job on TypeScript">
+<meta property="og:url" content="http://yoursite.com/2019/10/12/Cron-Job-on-TypeScript/index.html">
 <meta property="og:site_name" content="舊金山周記">
-<meta property="og:description" content="This is my peronsal dev blog.">
+<meta property="og:description" content="What is Cron?Cron is a classic utility found on Linux and UNIX systems for running tasks at pre-determined times or intervals. These tasks are referred to as Cron tasks or Cron jobs. Use Cron to sche">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="https://chauyanw.files.wordpress.com/2019/07/typescriptimage.jpeg?w=2924">
+<meta property="og:updated_time" content="2019-10-12T14:27:40.523Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="舊金山周記">
-<meta name="twitter:description" content="This is my peronsal dev blog.">
-  <link rel="canonical" href="http://yoursite.com/">
+<meta name="twitter:title" content="Cron Job on TypeScript">
+<meta name="twitter:description" content="What is Cron?Cron is a classic utility found on Linux and UNIX systems for running tasks at pre-determined times or intervals. These tasks are referred to as Cron tasks or Cron jobs. Use Cron to sche">
+<meta name="twitter:image" content="https://chauyanw.files.wordpress.com/2019/07/typescriptimage.jpeg?w=2924">
+  <link rel="canonical" href="http://yoursite.com/2019/10/12/Cron-Job-on-TypeScript/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: true,
-    isPost: false,
+    isHome: false,
+    isPost: true,
     isPage: false,
     isArchive: false
   };
 </script>
 
-  <title>舊金山周記</title>
+  <title>Cron Job on TypeScript | 舊金山周記</title>
   
 
 
@@ -195,10 +198,10 @@
             
 
   <div class="posts-expand">
-        
+      
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/12/Cron-Job-on-TypeScript/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -213,8 +216,9 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
+            Cron Job on TypeScript
             
-            <a href="/2019/10/12/Cron-Job-on-TypeScript/" class="post-title-link" itemprop="url">Cron Job on TypeScript</a>
+
           
         </h1>
 
@@ -248,125 +252,134 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><img src="https://chauyanw.files.wordpress.com/2019/07/typescriptimage.jpeg?w=2924" alt="typescriptimage.jpeg?w=2924"></p>
+        <p><img src="https://chauyanw.files.wordpress.com/2019/07/typescriptimage.jpeg?w=2924" alt="typescriptimage.jpeg?w=2924"></p>
 <h4 id="What-is-Cron"><a href="#What-is-Cron" class="headerlink" title="What is Cron?"></a>What is Cron?</h4><p>Cron is a classic utility found on Linux and UNIX systems for running tasks at pre-determined times or intervals. These tasks are referred to as <strong>Cron tasks</strong> or <strong>Cron jobs</strong>. Use Cron to schedule automated updates, report generation, or check for available disk space every day and send you an email if it falls below a certain amount.</p>
-          <!--noindex-->
+<a id="more"></a>
+
+<h4 id="Basic-formatting"><a href="#Basic-formatting" class="headerlink" title="Basic formatting"></a>Basic formatting</h4><p>The Cron time string is five values separated by spaces, based on the following information:</p>
+<table>
+<thead>
+<tr>
+<th>Character</th>
+<th>Descriptor</th>
+<th>Acceptable values</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Minute</td>
+<td>0 to 59, or * (no specific value)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Hour</td>
+<td>0 to 23, or * for any value. All times UTC.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Day of the month</td>
+<td>1 to 31, or * (no specific value)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Month</td>
+<td>1 to 12, or * (no specific value)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Day of the week</td>
+<td>0 to 7 (0 and 7 both represent Sunday), or * (no specific value)</td>
+</tr>
+</tbody></table>
+<p>The Cron time string must contain entries for each character attribute. If you want to set a value using only minutes, you must have asterisk characters for the other four attributes that you’re not configuring (hour, day of the month, month, and day of the week).</p>
+<p>Let’s see some basic example:</p>
+<table>
+<thead>
+<tr>
+<th>Cron time string</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>30 * * * *</code></td>
+<td>Execute a command at 30 minutes past the hour, every hour.</td>
+</tr>
+<tr>
+<td><code>*/5 * * * *</code></td>
+<td>Execute a command every five minutes.</td>
+</tr>
+<tr>
+<td><code>0 0 * * 1-5</code></td>
+<td>Execute a command on every day-of-week from Monday through Friday</td>
+</tr>
+<tr>
+<td><code>15 16 1 * *</code></td>
+<td>Execute a command at 16:15 on day-of-month 1:</td>
+</tr>
+<tr>
+<td><code>0 0 1 */6 *</code></td>
+<td>Execute a command every 6 months</td>
+</tr>
+<tr>
+<td><code>0 0 * * 0</code></td>
+<td>Execute a command every Sunday</td>
+</tr>
+</tbody></table>
+<p></p>
+
+<h4 id="NodeJS-cron-job"><a href="#NodeJS-cron-job" class="headerlink" title="NodeJS cron job"></a>NodeJS cron job</h4><p>We need to install <code>node-cron</code> package first.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install node-cron</span><br></pre></td></tr></table></figure>
+
+<p>After installation, let’s do setup: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import cron from &quot;node-cron&quot;;</span><br><span class="line"></span><br><span class="line">cron.schedule(&quot;* * * * *&quot;, () =&gt; &#123;</span><br><span class="line">	console.log(`this message logs every minute`);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>And now, you can start using cron-jobs in your project.<br>Happy coding, enjoy.</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
           
-            <div class="post-button">
-              <a class="btn" href="/2019/10/12/Cron-Job-on-TypeScript/#more" rel="contents">
-                Read more &raquo;
-              </a>
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/TypeScript-CronJob-Scheduler/" rel="tag"># TypeScript, CronJob, Scheduler</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2017/01/17/DP-Pixel-conversion-on-Android/" rel="next" title="DP-Pixel conversion on Android">
+                  <i class="fa fa-chevron-left"></i> DP-Pixel conversion on Android
+                </a>
+              
             </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
       </footer>
+    
   </article>
   
   
   
 
-    
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/17/DP-Pixel-conversion-on-Android/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Chauyan Wang">
-      <meta itemprop="description" content="This is my peronsal dev blog.">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="舊金山周記">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            
-            <a href="/2017/01/17/DP-Pixel-conversion-on-Android/" class="post-title-link" itemprop="url">DP-Pixel conversion on Android</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              
-                
-              
-
-              <time title="Created: 2017-01-17 21:32:00" itemprop="dateCreated datePublished" datetime="2017-01-17T21:32:00-08:00">2017-01-17</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-10-12 05:33:25" itemprop="dateModified" datetime="2019-10-12T05:33:25-07:00">2019-10-12</time>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="https://chauyanw.files.wordpress.com/2017/01/android_multi_screen.png?w=2924" alt="android_multi_screen.png?w=2924"></p>
-<h4 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h4><p>This is just a note for myself to remind me how to do dp-to-pixel translation and vice versa. Let’s see how to do it. </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public static float convertDpToPixel(float dp, Context context) &#123;	</span><br><span class="line">	float px = dp * getDensity(context);	</span><br><span class="line">	return px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static float convertPixelToDp(float px, Context context) &#123;	 </span><br><span class="line">	float dp = px / getDensity(context);</span><br><span class="line">	return dp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static float getDensity(Activity context) &#123;</span><br><span class="line">	DisplayMetrics metrics = new DisplayMetrics();</span><br><span class="line">	context.getWindowManager().getDefaultDisplay().getMetrics(metrics);		</span><br><span class="line">	return metrics.density;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>It’s pretty simple, enjoy.<br>Happy Coding.</p>
-<h4 id="Reference"><a href="#Reference" class="headerlink" title="[Reference]"></a>[Reference]</h4><ol>
-<li><a href="https://developer.android.com/reference/android/util/DisplayMetrics.html" target="_blank" rel="noopener">DisplayMetrics  |  Android Developers</a></li>
-<li><a href="https://developer.android.com/guide/practices/screens_support.html" target="_blank" rel="noopener">Screen compatibility overview  |  Android Developers</a></li>
-<li><a href="https://pixplicity.com/dp-px-converter/" target="_blank" rel="noopener">Pixplicity | DP/PX converter</a></li>
-</ol>
-
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-    
   </div>
-
-  
-
 
 
           </div>
@@ -383,6 +396,11 @@
 
   <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
@@ -395,6 +413,8 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#What-is-Cron"><span class="nav-number">1.</span> <span class="nav-text">What is Cron?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Basic-formatting"><span class="nav-number">2.</span> <span class="nav-text">Basic formatting</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NodeJS-cron-job"><span class="nav-number">3.</span> <span class="nav-text">NodeJS cron job</span></a></li></ol></div>
+        
       </div>
       <!--/noindex-->
 
