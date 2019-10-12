@@ -1,0 +1,29 @@
+[debug] [2019-10-12T22:25:49.685Z] ----------------------------------------------------------------------
+[debug] [2019-10-12T22:25:49.688Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2019-10-12T22:25:49.688Z] CLI Version:   7.5.0
+[debug] [2019-10-12T22:25:49.688Z] Platform:      darwin
+[debug] [2019-10-12T22:25:49.688Z] Node Version:  v8.9.1
+[debug] [2019-10-12T22:25:49.688Z] Time:          Sat Oct 12 2019 15:25:49 GMT-0700 (PDT)
+[debug] [2019-10-12T22:25:49.688Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-10-12T22:25:49.699Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-10-12T22:25:49.699Z] > authorizing via signed-in user
+[debug] [2019-10-12T22:25:49.699Z] [iam] checking project personaldevblog for permissions ["firebase.projects.get"]
+[debug] [2019-10-12T22:25:49.701Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-10-12T22:25:49.701Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-10-12T22:25:49.886Z] <<< HTTP RESPONSE 200
+[debug] [2019-10-12T22:25:49.902Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/personaldevblog:testIamPermissions  
+
+[debug] [2019-10-12T22:25:50.054Z] <<< HTTP RESPONSE 200
+[debug] [2019-10-12T22:25:50.056Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/personaldevblog  
+ 
+[debug] [2019-10-12T22:25:50.266Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/Chauyan/Documents/SideProjects/DevBlog/blog'...
+[info] 
+[debug] [2019-10-12T22:25:50.268Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/personaldevblog/webApps/-/config  
+ 
+[debug] [2019-10-12T22:25:50.666Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
