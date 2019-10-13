@@ -55,18 +55,20 @@
   };
 </script>
 
-  <meta name="description" content="What happened?Alright, I don’t know what happened when trying to login MySQL. And it shows that message: MySQL - Error 1045 (28000) using password: YES. I am pretty sure that user/pwd pair is correct.">
+  <meta name="description" content="What happened?Alright, I don’t know what happened when trying to log in to MySQL. And it shows that message: MySQL - Error 1045 (28000) using password: YES. I am pretty sure that user/pwd pair is cor">
 <meta name="keywords" content="Linux, MySQL, Error 1045 (28000)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL - Error 1045 (28000)">
 <meta property="og:url" content="http://yoursite.com/2017/01/20/MySQL-Error-1045-28000/index.html">
 <meta property="og:site_name" content="舊金山周記">
-<meta property="og:description" content="What happened?Alright, I don’t know what happened when trying to login MySQL. And it shows that message: MySQL - Error 1045 (28000) using password: YES. I am pretty sure that user/pwd pair is correct.">
+<meta property="og:description" content="What happened?Alright, I don’t know what happened when trying to log in to MySQL. And it shows that message: MySQL - Error 1045 (28000) using password: YES. I am pretty sure that user/pwd pair is cor">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-13T14:09:09.307Z">
+<meta property="og:image" content="https://chauyanw.files.wordpress.com/2017/01/mysql-logo.jpg?w=2924">
+<meta property="og:updated_time" content="2019-10-13T14:57:27.994Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL - Error 1045 (28000)">
-<meta name="twitter:description" content="What happened?Alright, I don’t know what happened when trying to login MySQL. And it shows that message: MySQL - Error 1045 (28000) using password: YES. I am pretty sure that user/pwd pair is correct.">
+<meta name="twitter:description" content="What happened?Alright, I don’t know what happened when trying to log in to MySQL. And it shows that message: MySQL - Error 1045 (28000) using password: YES. I am pretty sure that user/pwd pair is cor">
+<meta name="twitter:image" content="https://chauyanw.files.wordpress.com/2017/01/mysql-logo.jpg?w=2924">
   <link rel="canonical" href="http://yoursite.com/2017/01/20/MySQL-Error-1045-28000/">
 
 
@@ -242,7 +244,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-10-13 07:09:09" itemprop="dateModified" datetime="2019-10-13T07:09:09-07:00">2019-10-13</time>
+                <time title="Modified: 2019-10-13 07:57:27" itemprop="dateModified" datetime="2019-10-13T07:57:27-07:00">2019-10-13</time>
               </span>
             
           
@@ -258,22 +260,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h4 id="What-happened"><a href="#What-happened" class="headerlink" title="What happened?"></a>What happened?</h4><p>Alright, I don’t know what happened when trying to login MySQL. And it shows that message: MySQL - Error 1045 (28000) using password: YES. I am pretty sure that user/pwd pair is correct. After searching and studying some articles and forum discussions. I found it might cause by broken SQL or reinstall SQL. The interesting is I can’t remember I had done that before.</p>
+        <p><img src="https://chauyanw.files.wordpress.com/2017/01/mysql-logo.jpg?w=2924" alt="mysql-logo.jpg?w=2924"></p>
+<h4 id="What-happened"><a href="#What-happened" class="headerlink" title="What happened?"></a>What happened?</h4><p>Alright, I don’t know what happened when trying to log in to MySQL. And it shows that message: MySQL - Error 1045 (28000) using password: YES. I am pretty sure that user/pwd pair is correct. After searching and studying some articles and forum discussions. I found it might be caused by broken SQL or reinstall SQL. The interesting is I can’t remember I had done that before.</p>
 <a id="more"></a>
 
-<h4 id="How-to-solve"><a href="#How-to-solve" class="headerlink" title="How to solve?"></a>How to solve?</h4><p>Here some steps show how to restore your SQL.</p>
+<h4 id="How-to-solve-it"><a href="#How-to-solve-it" class="headerlink" title="How to solve it?"></a>How to solve it?</h4><p>So, here some steps show how to restore your SQL.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// first, stop your SQL daemon</span><br><span class="line">$sudo service mysql stop</span><br></pre></td></tr></table></figure>
 
 <p>After stopping your SQL daemon, then we need to start SQL without grant table.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sudo mysqld_safe --user=mysql --skip-grant-tables --skip-networking &amp;</span><br></pre></td></tr></table></figure>
 
-<p>After that, login your SQL as root.</p>
+<p>After that, log in your SQL as root.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sudo mysql -uroot mysql -p</span><br></pre></td></tr></table></figure>
 
 <p>We need to reset root pwd now.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$mysql&gt; UPDATE user SET Password=PASSWORD(&apos;new root pwd&apos;) where USER=&apos;root&apos;;</span><br></pre></td></tr></table></figure>
 
-<p>Let root regain the access right for your databases.</p>
+<p>Let root regain the access right for all of your databases.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$mysql&gt; GRANT all ON *.* TO root@&apos;localhost&apos; IDENTIFIED BY &apos;new root pwd&apos;;</span><br></pre></td></tr></table></figure>
 
 <p>Update the permission &amp; exit SQL</p>
@@ -282,10 +285,10 @@
 <p>Re-login to your SQL</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sudo mysql -uroot mysql -p</span><br></pre></td></tr></table></figure>
 
-<h4 id="Still-doesn’t-work"><a href="#Still-doesn’t-work" class="headerlink" title="Still doesn’t work!"></a>Still doesn’t work!</h4><p>I believe you can use your root pwd to login SQL now, but if you still can’t login, keep going through following steps. Sorry for your back luck. You need to check /etc/mysql/debian.cnf file in your system and find [client] section. Use this account to login.</p>
+<h4 id="If-it-still-doesn’t-work"><a href="#If-it-still-doesn’t-work" class="headerlink" title="If it still doesn’t work!"></a>If it still doesn’t work!</h4><p>I believe you can use your root PWD to log in to MySQL now, but if you still can’t login, keep going through the following steps. Sorry for your back luck. You need to check /etc/mysql/debian.cnf file in your system and find [client] section. Use this account to log in.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sudo mysql -udebian-sys-maint -p</span><br></pre></td></tr></table></figure>
 
-<p>Input debian-sys-maint pwd. and repeat these steps. We need to reset root pwd now.</p>
+<p>Input debian-sys-maint PWD. and repeat these steps. We need to reset root pwd now.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$mysql&gt; UPDATE user SET Password=PASSWORD(&apos;new root pwd&apos;) where USER=&apos;root&apos;;</span><br></pre></td></tr></table></figure>
 
 <p>Let root regain the access right for all of your databases.</p>
@@ -385,7 +388,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#What-happened"><span class="nav-number">1.</span> <span class="nav-text">What happened?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#How-to-solve"><span class="nav-number">2.</span> <span class="nav-text">How to solve?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Still-doesn’t-work"><span class="nav-number">3.</span> <span class="nav-text">Still doesn’t work!</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">[Reference]</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#What-happened"><span class="nav-number">1.</span> <span class="nav-text">What happened?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#How-to-solve-it"><span class="nav-number">2.</span> <span class="nav-text">How to solve it?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#If-it-still-doesn’t-work"><span class="nav-number">3.</span> <span class="nav-text">If it still doesn’t work!</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">[Reference]</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
