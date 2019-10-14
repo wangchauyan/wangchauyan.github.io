@@ -1,29 +1,35 @@
-[debug] [2019-10-13T23:39:06.811Z] ----------------------------------------------------------------------
-[debug] [2019-10-13T23:39:06.813Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
-[debug] [2019-10-13T23:39:06.813Z] CLI Version:   7.5.0
-[debug] [2019-10-13T23:39:06.813Z] Platform:      darwin
-[debug] [2019-10-13T23:39:06.813Z] Node Version:  v8.9.1
-[debug] [2019-10-13T23:39:06.813Z] Time:          Sun Oct 13 2019 16:39:06 GMT-0700 (PDT)
-[debug] [2019-10-13T23:39:06.813Z] ----------------------------------------------------------------------
+[debug] [2019-10-14T12:58:39.670Z] ----------------------------------------------------------------------
+[debug] [2019-10-14T12:58:39.673Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2019-10-14T12:58:39.673Z] CLI Version:   7.5.0
+[debug] [2019-10-14T12:58:39.673Z] Platform:      darwin
+[debug] [2019-10-14T12:58:39.673Z] Node Version:  v8.9.1
+[debug] [2019-10-14T12:58:39.674Z] Time:          Mon Oct 14 2019 05:58:39 GMT-0700 (PDT)
+[debug] [2019-10-14T12:58:39.674Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2019-10-13T23:39:06.822Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2019-10-13T23:39:06.822Z] > authorizing via signed-in user
-[debug] [2019-10-13T23:39:06.822Z] [iam] checking project personaldevblog for permissions ["firebase.projects.get"]
-[debug] [2019-10-13T23:39:06.823Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
-[debug] [2019-10-13T23:39:06.824Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+[debug] [2019-10-14T12:58:39.686Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-10-14T12:58:39.686Z] > authorizing via signed-in user
+[debug] [2019-10-14T12:58:39.686Z] [iam] checking project personaldevblog for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2019-10-14T12:58:39.688Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-10-14T12:58:39.688Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
  <request body omitted>
-[debug] [2019-10-13T23:39:06.968Z] <<< HTTP RESPONSE 200
-[debug] [2019-10-13T23:39:06.981Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/personaldevblog:testIamPermissions  
+[debug] [2019-10-14T12:58:39.854Z] <<< HTTP RESPONSE 200
+[debug] [2019-10-14T12:58:39.868Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/personaldevblog:testIamPermissions  
 
-[debug] [2019-10-13T23:39:07.101Z] <<< HTTP RESPONSE 200
-[debug] [2019-10-13T23:39:07.102Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/personaldevblog  
+[debug] [2019-10-14T12:58:39.997Z] <<< HTTP RESPONSE 200
+[debug] [2019-10-14T12:58:40.000Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/personaldevblog  
  
-[debug] [2019-10-13T23:39:07.365Z] <<< HTTP RESPONSE 200
+[debug] [2019-10-14T12:58:40.211Z] <<< HTTP RESPONSE 200
 [info] 
-[info] === Serving from '/Users/Chauyan/Documents/SideProjects/DevBlog/blog'...
+[info] === Deploying to 'personaldevblog'...
 [info] 
-[debug] [2019-10-13T23:39:07.367Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/personaldevblog/webApps/-/config  
- 
-[debug] [2019-10-13T23:39:07.820Z] <<< HTTP RESPONSE 200
-[info] i  hosting: Serving hosting files from: public
-[info] ✔  hosting: Local server: http://localhost:5000
+[info] i  deploying hosting
+[debug] [2019-10-14T12:58:40.215Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/personaldevblog/versions  
+
+[debug] [2019-10-14T12:58:41.081Z] <<< HTTP RESPONSE 200
+[info] i  hosting[personaldevblog]: beginning deploy...
+[info] i  hosting[personaldevblog]: found 64 files in public
+[debug] [2019-10-14T12:58:41.107Z] [hosting] hash cache [cHVibGlj] load error: lines is not defined
+[debug] [2019-10-14T12:58:41.147Z] [hosting] hash cache [cHVibGlj] stored for 64 files
+[debug] [2019-10-14T12:58:41.147Z] [hosting][hash queue][FINAL]
+[debug] [2019-10-14T12:58:41.147Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/personaldevblog/versions/348e0adad413e7b1:populateFiles  
+ <request body omitted>
