@@ -306,6 +306,157 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/10/Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chauyan Wang">
+      <meta itemprop="description" content="This is my peronsal dev blog.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="舊金山周記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2019/08/10/Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript/" class="post-title-link" itemprop="url">Use ESLint and Prettier to format your code in TypeScript</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2019-08-10 17:14:00" itemprop="dateCreated datePublished" datetime="2019-08-10T17:14:00-07:00">2019-08-10</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-10-17 07:13:43" itemprop="dateModified" datetime="2019-10-17T07:13:43-07:00">2019-10-17</time>
+              </span>
+            
+          
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2019/08/10/Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/08/10/Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="https://chauyanw.files.wordpress.com/2019/08/eslint_feature_image_chauyan.png?w=2924" alt="eslint_feature_image_chauyan.png?w=2924"></p>
+<p>I think <code>ESLint</code>[1] is a very important thing when you try to create a project using JavaScript/TypeScript. That would be a very good tool to parse the potential issues in your code. </p>
+<p>Let’s check the philosophy of ESLint:</p>
+<ul>
+<li>Everything is pluggable:<ul>
+<li>Rule API is used both by bundled and custom rules</li>
+<li>Formatter API is used both by bundled and custom formatters</li>
+<li>Additional rules and formatters can be specified at runtime</li>
+<li>Rules and formatters don’t have to be bundled to be used</li>
+</ul>
+</li>
+<li>Every rule:<ul>
+<li>Is standalone</li>
+<li>Can be turned off or on (nothing can be deemed “too important to turn off”)</li>
+<li>Can be set to a warning or error individually</li>
+</ul>
+</li>
+<li>Additionally:<ul>
+<li>Rules are “agenda-free” - ESLint does not promote any particular coding style</li>
+<li>Any bundled rules are generalizable</li>
+</ul>
+</li>
+<li>The project: <ul>
+<li>Values documentation and clear communication</li>
+<li>Is as transparent as possible</li>
+<li>Believes in the importance of testing</li>
+</ul>
+</li>
+</ul>
+<h4 id="Setup-ESLint"><a href="#Setup-ESLint" class="headerlink" title="Setup ESLint"></a>Setup ESLint</h4><p>First of all, let’s install the <code>ESLint</code> first. </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install eslint --save-dev</span><br><span class="line">npm install @typescript-eslint/parser --save-dev</span><br><span class="line">npm i @typescript-eslint/eslint-plugin --save-dev</span><br></pre></td></tr></table></figure>
+
+<p>The first one is the ESLint library for JavaScript and the rest of them are ESLint plugins for TypeScript. Next, you will need to create a <code>.eslintrc.yaml</code> configuration file to set up the rules and related parser for your TypeScript project.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">env:</span><br><span class="line">  jest: true</span><br><span class="line">  node: true</span><br><span class="line">parser: &apos;@typescript-eslint/parser&apos;</span><br><span class="line">parserOptions:</span><br><span class="line">  ecmaVersion: 9</span><br><span class="line">  project: ./tsconfig.json</span><br><span class="line">plugins:</span><br><span class="line">  - &apos;@typescript-eslint&apos;</span><br><span class="line">  - &apos;jest&apos;</span><br></pre></td></tr></table></figure>
+
+<p>Put this file in the project directory. Please notice that we don’t add any rules. You can read more about the <a href="https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin/docs/rules" target="_blank" rel="noopener">rules</a> here. A better way is to enable the recommended set of rules that the plugin provides. </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">env:</span><br><span class="line">  jest: true</span><br><span class="line">  node: true</span><br><span class="line">extends:</span><br><span class="line">  - plugin:@typescript-eslint/recommended</span><br><span class="line">parser: &apos;@typescript-eslint/parser&apos;</span><br><span class="line">parserOptions:</span><br><span class="line">  ecmaVersion: 9</span><br><span class="line">  project: ./tsconfig.json</span><br><span class="line">plugins:</span><br><span class="line">  - &apos;@typescript-eslint&apos;</span><br><span class="line">  - &apos;jest&apos;</span><br></pre></td></tr></table></figure>
+
+<p>It’s the basic setting of ESLint. If you wanna get more detail, I will recommend reading the ESLint GitHub. </p>
+<h4 id="Setup-Prettier"><a href="#Setup-Prettier" class="headerlink" title="Setup Prettier"></a>Setup Prettier</h4><p>Install Prettier </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install prettier --save-dev</span><br><span class="line">npm install eslint-config-prettier --save-dev</span><br><span class="line">npm install eslint-plugin-prettier --save-dev</span><br></pre></td></tr></table></figure>
+
+<p>Create a <code>.prettierrc.yaml</code> and put into your project directory </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">trailingComma: &quot;es5&quot;</span><br><span class="line">tabWidth: 2</span><br><span class="line">singleQuote: true</span><br></pre></td></tr></table></figure>
+
+<p>Integrate <code>Prettier</code> with <code>ESLint</code>, in the <code>.eslintrc.yaml</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">env:</span><br><span class="line">  jest: true</span><br><span class="line">  node: true</span><br><span class="line">extends:</span><br><span class="line">  - plugin:@typescript-eslint/recommended</span><br><span class="line">  - prettier/@typescript-eslint</span><br><span class="line">  - plugin:prettier/recommended</span><br><span class="line">parser: &apos;@typescript-eslint/parser&apos;</span><br><span class="line">parserOptions:</span><br><span class="line">  ecmaVersion: 9</span><br><span class="line">  project: ./tsconfig.json</span><br><span class="line">plugins:</span><br><span class="line">  - &apos;@typescript-eslint&apos;</span><br><span class="line">  - &apos;jest&apos;</span><br></pre></td></tr></table></figure>
+
+<p>Then you’re all set. </p>
+<h4 id="Integrate-with-VS-Code"><a href="#Integrate-with-VS-Code" class="headerlink" title="Integrate with VS Code"></a>Integrate with VS Code</h4><p>So far, we just set up all rules and plugins for this TypeScript project. There’s one thing we can do in the IDE to make our life easier. Open VSCode settings, </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&quot;editor.formatOnSave&quot;: true,</span><br><span class="line">  &quot;[javascript]&quot;: &#123;</span><br><span class="line">    &quot;editor.formatOnSave&quot;: false</span><br><span class="line">  &#125;,</span><br><span class="line">&quot;prettier.disableLanguages&quot;: [&quot;js&quot;],</span><br><span class="line">&quot;eslint.autoFixOnSave&quot;: true,</span><br><span class="line">&quot;eslint.alwaysShowStatus&quot;: true,</span><br><span class="line">&quot;files.autoSave&quot;: &quot;onFocusChange&quot;,</span><br></pre></td></tr></table></figure>
+
+<p>This will automatically format your code when you save the changed in the file. That means we don’t wait for submitting the PR to Github and then get the error. </p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="[Reference]"></a>[Reference]</h4><ol>
+<li><a href="https://eslint.org" target="_blank" rel="noopener">ESLint - Pluggable JavaScript linter</a></li>
+<li><a href="https://prettier.io" target="_blank" rel="noopener">Prettier · Opinionated Code Formatter</a></li>
+</ol>
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/01/Android-StrictMode-for-Debugging/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -761,7 +912,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -770,7 +921,7 @@
       
       <div class="site-state-item site-state-tags">
         
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">tags</span>
         
       </div>

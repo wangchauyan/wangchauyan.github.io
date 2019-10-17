@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="I think ESLint[1] is a very important thing when you try to create a project using JavaScript/TypeScript. That would be a very good tool to parse the potential issues in your code.  Let’s check the p">
+<meta name="keywords" content="ESLint, Prettier, TypeScript, VSCode">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Use ESLint and Prettier to format your code in TypeScript">
+<meta property="og:url" content="http://yoursite.com/2019/08/10/Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript/index.html">
+<meta property="og:site_name" content="舊金山周記">
+<meta property="og:description" content="I think ESLint[1] is a very important thing when you try to create a project using JavaScript/TypeScript. That would be a very good tool to parse the potential issues in your code.  Let’s check the p">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://chauyanw.files.wordpress.com/2019/08/eslint_feature_image_chauyan.png?w=2924">
+<meta property="og:updated_time" content="2019-10-17T14:13:43.492Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Use ESLint and Prettier to format your code in TypeScript">
+<meta name="twitter:description" content="I think ESLint[1] is a very important thing when you try to create a project using JavaScript/TypeScript. That would be a very good tool to parse the potential issues in your code.  Let’s check the p">
+<meta name="twitter:image" content="https://chauyanw.files.wordpress.com/2019/08/eslint_feature_image_chauyan.png?w=2924">
+  <link rel="canonical" href="http://yoursite.com/2019/08/10/Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Use ESLint and Prettier to format your code in TypeScript | 舊金山周記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149656006-1"></script>
+    <script>
+      var host = window.location.hostname;
+      if (host !== "localhost" || !true) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-149656006-1');
+      }
+    </script>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">舊金山周記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">The Venture of San Francisco</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/10/Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chauyan Wang">
+      <meta itemprop="description" content="This is my peronsal dev blog.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="舊金山周記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            Use ESLint and Prettier to format your code in TypeScript
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2019-08-10 17:14:00" itemprop="dateCreated datePublished" datetime="2019-08-10T17:14:00-07:00">2019-08-10</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-10-17 07:13:43" itemprop="dateModified" datetime="2019-10-17T07:13:43-07:00">2019-10-17</time>
+              </span>
+            
+          
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2019/08/10/Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/08/10/Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://chauyanw.files.wordpress.com/2019/08/eslint_feature_image_chauyan.png?w=2924" alt="eslint_feature_image_chauyan.png?w=2924"></p>
+<p>I think <code>ESLint</code>[1] is a very important thing when you try to create a project using JavaScript/TypeScript. That would be a very good tool to parse the potential issues in your code. </p>
+<p>Let’s check the philosophy of ESLint:</p>
+<ul>
+<li>Everything is pluggable:<ul>
+<li>Rule API is used both by bundled and custom rules</li>
+<li>Formatter API is used both by bundled and custom formatters</li>
+<li>Additional rules and formatters can be specified at runtime</li>
+<li>Rules and formatters don’t have to be bundled to be used</li>
+</ul>
+</li>
+<li>Every rule:<ul>
+<li>Is standalone</li>
+<li>Can be turned off or on (nothing can be deemed “too important to turn off”)</li>
+<li>Can be set to a warning or error individually</li>
+</ul>
+</li>
+<li>Additionally:<ul>
+<li>Rules are “agenda-free” - ESLint does not promote any particular coding style</li>
+<li>Any bundled rules are generalizable</li>
+</ul>
+</li>
+<li>The project: <ul>
+<li>Values documentation and clear communication</li>
+<li>Is as transparent as possible</li>
+<li>Believes in the importance of testing</li>
+</ul>
+</li>
+</ul>
+<h4 id="Setup-ESLint"><a href="#Setup-ESLint" class="headerlink" title="Setup ESLint"></a>Setup ESLint</h4><p>First of all, let’s install the <code>ESLint</code> first. </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install eslint --save-dev</span><br><span class="line">npm install @typescript-eslint/parser --save-dev</span><br><span class="line">npm i @typescript-eslint/eslint-plugin --save-dev</span><br></pre></td></tr></table></figure>
+
+<p>The first one is the ESLint library for JavaScript and the rest of them are ESLint plugins for TypeScript. Next, you will need to create a <code>.eslintrc.yaml</code> configuration file to set up the rules and related parser for your TypeScript project.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">env:</span><br><span class="line">  jest: true</span><br><span class="line">  node: true</span><br><span class="line">parser: &apos;@typescript-eslint/parser&apos;</span><br><span class="line">parserOptions:</span><br><span class="line">  ecmaVersion: 9</span><br><span class="line">  project: ./tsconfig.json</span><br><span class="line">plugins:</span><br><span class="line">  - &apos;@typescript-eslint&apos;</span><br><span class="line">  - &apos;jest&apos;</span><br></pre></td></tr></table></figure>
+
+<p>Put this file in the project directory. Please notice that we don’t add any rules. You can read more about the <a href="https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin/docs/rules" target="_blank" rel="noopener">rules</a> here. A better way is to enable the recommended set of rules that the plugin provides. </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">env:</span><br><span class="line">  jest: true</span><br><span class="line">  node: true</span><br><span class="line">extends:</span><br><span class="line">  - plugin:@typescript-eslint/recommended</span><br><span class="line">parser: &apos;@typescript-eslint/parser&apos;</span><br><span class="line">parserOptions:</span><br><span class="line">  ecmaVersion: 9</span><br><span class="line">  project: ./tsconfig.json</span><br><span class="line">plugins:</span><br><span class="line">  - &apos;@typescript-eslint&apos;</span><br><span class="line">  - &apos;jest&apos;</span><br></pre></td></tr></table></figure>
+
+<p>It’s the basic setting of ESLint. If you wanna get more detail, I will recommend reading the ESLint GitHub. </p>
+<h4 id="Setup-Prettier"><a href="#Setup-Prettier" class="headerlink" title="Setup Prettier"></a>Setup Prettier</h4><p>Install Prettier </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install prettier --save-dev</span><br><span class="line">npm install eslint-config-prettier --save-dev</span><br><span class="line">npm install eslint-plugin-prettier --save-dev</span><br></pre></td></tr></table></figure>
+
+<p>Create a <code>.prettierrc.yaml</code> and put into your project directory </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">trailingComma: &quot;es5&quot;</span><br><span class="line">tabWidth: 2</span><br><span class="line">singleQuote: true</span><br></pre></td></tr></table></figure>
+
+<p>Integrate <code>Prettier</code> with <code>ESLint</code>, in the <code>.eslintrc.yaml</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">env:</span><br><span class="line">  jest: true</span><br><span class="line">  node: true</span><br><span class="line">extends:</span><br><span class="line">  - plugin:@typescript-eslint/recommended</span><br><span class="line">  - prettier/@typescript-eslint</span><br><span class="line">  - plugin:prettier/recommended</span><br><span class="line">parser: &apos;@typescript-eslint/parser&apos;</span><br><span class="line">parserOptions:</span><br><span class="line">  ecmaVersion: 9</span><br><span class="line">  project: ./tsconfig.json</span><br><span class="line">plugins:</span><br><span class="line">  - &apos;@typescript-eslint&apos;</span><br><span class="line">  - &apos;jest&apos;</span><br></pre></td></tr></table></figure>
+
+<p>Then you’re all set. </p>
+<h4 id="Integrate-with-VS-Code"><a href="#Integrate-with-VS-Code" class="headerlink" title="Integrate with VS Code"></a>Integrate with VS Code</h4><p>So far, we just set up all rules and plugins for this TypeScript project. There’s one thing we can do in the IDE to make our life easier. Open VSCode settings, </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&quot;editor.formatOnSave&quot;: true,</span><br><span class="line">  &quot;[javascript]&quot;: &#123;</span><br><span class="line">    &quot;editor.formatOnSave&quot;: false</span><br><span class="line">  &#125;,</span><br><span class="line">&quot;prettier.disableLanguages&quot;: [&quot;js&quot;],</span><br><span class="line">&quot;eslint.autoFixOnSave&quot;: true,</span><br><span class="line">&quot;eslint.alwaysShowStatus&quot;: true,</span><br><span class="line">&quot;files.autoSave&quot;: &quot;onFocusChange&quot;,</span><br></pre></td></tr></table></figure>
+
+<p>This will automatically format your code when you save the changed in the file. That means we don’t wait for submitting the PR to Github and then get the error. </p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="[Reference]"></a>[Reference]</h4><ol>
+<li><a href="https://eslint.org" target="_blank" rel="noopener">ESLint - Pluggable JavaScript linter</a></li>
+<li><a href="https://prettier.io" target="_blank" rel="noopener">Prettier · Opinionated Code Formatter</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/ESLint-Prettier-TypeScript-VSCode/" rel="tag"># ESLint, Prettier, TypeScript, VSCode</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2017/02/01/Android-StrictMode-for-Debugging/" rel="next" title="Android StrictMode for Debugging">
+                  <i class="fa fa-chevron-left"></i> Android StrictMode for Debugging
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/10/12/Cron-Job-on-TypeScript/" rel="prev" title="Cron Job on TypeScript">
+                  Cron Job on TypeScript <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+    
+  <div class="comments" id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Setup-ESLint"><span class="nav-number">1.</span> <span class="nav-text">Setup ESLint</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Setup-Prettier"><span class="nav-number">2.</span> <span class="nav-text">Setup Prettier</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Integrate-with-VS-Code"><span class="nav-number">3.</span> <span class="nav-text">Integrate with VS Code</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">[Reference]</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chauyan Wang</p>
+  <div class="site-description" itemprop="description">This is my peronsal dev blog.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">tags</span>
+        
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/wangchauyan" title="GitHub &rarr; https://github.com/wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail &rarr; mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://www.facebook.com/chauyanw/" title="FB Page &rarr; https://www.facebook.com/chauyanw/" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://twitter.com/deathrid" title="Twitter &rarr; https://twitter.com/deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chauyan Wang</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://chauyan.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  function disqus_config() {
+    this.page.url = "http://yoursite.com/2019/08/10/Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript/";
+    this.page.identifier = "2019/08/10/Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript/";
+    this.page.title = 'Use ESLint and Prettier to format your code in TypeScript';
+  }
+  function loadComments() {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://chauyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  }
+    window.addEventListener('load', loadComments, false);
+  
+</script>
+
+</body>
+</html>
