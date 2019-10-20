@@ -55,19 +55,19 @@
   };
 </script>
 
-  <meta name="description" content="Android StrictMode for debugging IntroductionAndroid provides a very useful tool for developers to see what happened to their Apps. Sometimes, you just forgot to keep heavy loading job off main UI thr">
+  <meta name="description" content="Android StrictMode for debugging IntroductionAndroid provides a handy tool for developers to see what happened to their Apps. Sometimes, you just forgot to keep massive loading job off the main UI thr">
 <meta name="keywords" content="Android, StrictMode, Debugging">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android StrictMode for Debugging">
 <meta property="og:url" content="http://yoursite.com/2017/02/01/Android-StrictMode-for-Debugging/index.html">
 <meta property="og:site_name" content="舊金山周記">
-<meta property="og:description" content="Android StrictMode for debugging IntroductionAndroid provides a very useful tool for developers to see what happened to their Apps. Sometimes, you just forgot to keep heavy loading job off main UI thr">
+<meta property="og:description" content="Android StrictMode for debugging IntroductionAndroid provides a handy tool for developers to see what happened to their Apps. Sometimes, you just forgot to keep massive loading job off the main UI thr">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://chauyanw.files.wordpress.com/2017/02/strictmode.png?w=2924">
-<meta property="og:updated_time" content="2019-10-14T13:50:03.333Z">
+<meta property="og:updated_time" content="2019-10-20T13:44:20.088Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android StrictMode for Debugging">
-<meta name="twitter:description" content="Android StrictMode for debugging IntroductionAndroid provides a very useful tool for developers to see what happened to their Apps. Sometimes, you just forgot to keep heavy loading job off main UI thr">
+<meta name="twitter:description" content="Android StrictMode for debugging IntroductionAndroid provides a handy tool for developers to see what happened to their Apps. Sometimes, you just forgot to keep massive loading job off the main UI thr">
 <meta name="twitter:image" content="https://chauyanw.files.wordpress.com/2017/02/strictmode.png?w=2924">
   <link rel="canonical" href="http://yoursite.com/2017/02/01/Android-StrictMode-for-Debugging/">
 
@@ -255,7 +255,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-10-14 06:50:03" itemprop="dateModified" datetime="2019-10-14T06:50:03-07:00">2019-10-14</time>
+                <time title="Modified: 2019-10-20 06:44:20" itemprop="dateModified" datetime="2019-10-20T06:44:20-07:00">2019-10-20</time>
               </span>
             
           
@@ -288,12 +288,11 @@
 
       
         <h2 id="Android-StrictMode-for-debugging"><a href="#Android-StrictMode-for-debugging" class="headerlink" title="Android StrictMode for debugging"></a>Android StrictMode for debugging</h2><p><img src="https://chauyanw.files.wordpress.com/2017/02/strictmode.png?w=2924" alt="strictmode.png?w=2924"></p>
-<h4 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h4><p>Android provides a very useful tool for developers to see what happened to their Apps. Sometimes, you just forgot to keep heavy loading job off main UI thread, e.g network access, database query, or something you need a lot of time to handle, in these cases, you usually got ANR dialogs to notify you: Your app is going to spend too much time on something in UI thread.</p>
+<h4 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h4><p>Android provides a handy tool for developers to see what happened to their Apps. Sometimes, you just forgot to keep massive loading job off the main UI thread, e.g., network access, database query, or something you need much time to handle, in these cases, you usually got ANR dialogs to notify you: Your App is going to spend too much time on something in UI thread.</p>
 <a id="more"></a>
 
-<p>But sometimes, we just ignore these signals and release our App, then you received a lot of complaints from customer emails, comments on Google Play, and weird crash from Crashlyitcs.</p>
-<p>So, how do we solve these problems? Any tools can help us to monitor these cases? Yes, we can use StrictMode to check current status in our Apps. StrictMode is a developer tool that detects things you might be doing by accident and brings them to your attention so you can fix them.</p>
-<p>StrictMode is most commonly used to catch accidental disk or network access on the application’s main thread, where UI operations are received and animations take place. Keeping disk and network operations off the main thread makes for much smoother, more responsive applications. By keeping your application’s main thread responsive, you also prevent ANR dialogs from being shown to users.</p>
+<p>But sometimes, we ignore these signals and release our App, and then you received many complaints from customer emails, comments on Google Play, and weird crash from Crashlyitcs.</p>
+<p>So, how do we solve these problems? Can any tools help us to monitor these cases? Yes, we can use StrictMode to check the current status in our project. The StrictMode would detect things that should not run in the main thread, for example, the network loading, massive disk accessing, and those actions make the UI not responsiveness to users. </p>
 <p>Here is the <a href="https://developer.android.com/reference/android/os/StrictMode.html" target="_blank">StrictMode Introduction.</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public void onCreate() &#123;</span><br><span class="line">   if (DEVELOPER_MODE) &#123;</span><br><span class="line">     StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()</span><br><span class="line">       .detectDiskReads()</span><br><span class="line">       .detectDiskWrites()</span><br><span class="line">       .detectNetwork()</span><br><span class="line">       .penaltyLog()</span><br><span class="line">       .build());</span><br><span class="line">     StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()</span><br><span class="line">       .detectLeakedSqlLiteObjects()</span><br><span class="line">       .detectLeakedClosableObjects()</span><br><span class="line">       .penaltyLog()</span><br><span class="line">       .penaltyDeath()</span><br><span class="line">       .build());</span><br><span class="line">   &#125;</span><br><span class="line">   super.onCreate();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -303,8 +302,8 @@
 <li>for threads</li>
 <li>for VMs. </li>
 </ol>
-<p>That means you can monitor some heavy loading jobs on UI thread, or check leaks on VMs. Both are really useful. I will suggest you should open two detection policies for both thread and VM. But I need to emphasize that StrictMode is not a security mechanism, it’s just a helper tool. So, I will recommend that you, developers, should combine other tools to check/analyze your Apps.</p>
-<p>There are a lot of policies you can use, please refer to <a href="https://developer.android.com/reference/android/os/StrictMode.ThreadPolicy.Builder.html" target="_blank" rel="noopener">descriptions</a> here. The most interesting thing is you can send penalty logs to your Dropbox account, so, all you need to do is connect to your dropbox account with your phone, and start testing.</p>
+<p>That means you can monitor some heavy loading jobs on UI thread, or check leaks on VMs. Both are useful. I would suggest you should open two detection policies for both thread and VM. But I need to emphasize that StrictMode is not a security mechanism, it’s just a helper tool. So, I suggest that you, developers, should combine other tools to check/analyze your Apps.</p>
+<p>There are a lot of policies you can use, please refer to <a href="https://developer.android.com/reference/android/os/StrictMode.ThreadPolicy.Builder.html" target="_blank" rel="noopener">descriptions</a> here. The most interesting thing is you can send penalty logs to your Dropbox account, so, all you need to do is connect to your Dropbox account with your phone, and start testing.</p>
 <p>Happy coding, enjoy.</p>
 <h4 id="Reference"><a href="#Reference" class="headerlink" title="[Reference]"></a>[Reference]</h4><ol>
 <li><a href="https://www.youtube.com/watch?v=BxTfwT7mkB4" target="_blank" rel="noopener">YouTube: Google Best Practices - StrictMode</a></li>
