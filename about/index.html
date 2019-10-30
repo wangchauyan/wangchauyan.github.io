@@ -58,15 +58,16 @@
   <meta name="description" content="This is my peronsal dev blog.">
 <meta name="keywords" content="San Francisco, Android, iOS, TypeScript, Self-Driving">
 <meta property="og:type" content="website">
-<meta property="og:title" content="舊金山周記">
-<meta property="og:url" content="http://yoursite.com/archives/2019/index.html">
+<meta property="og:title" content="about">
+<meta property="og:url" content="http://yoursite.com/about/index.html">
 <meta property="og:site_name" content="舊金山周記">
 <meta property="og:description" content="This is my peronsal dev blog.">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-30T12:02:02.904Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="舊金山周記">
+<meta name="twitter:title" content="about">
 <meta name="twitter:description" content="This is my peronsal dev blog.">
-  <link rel="canonical" href="http://yoursite.com/archives/2019/">
+  <link rel="canonical" href="http://yoursite.com/about/">
 
 
 <script id="page-configurations">
@@ -75,12 +76,15 @@
     sidebar: "",
     isHome: false,
     isPost: false,
-    isPage: false,
-    isArchive: true
+    isPage: true,
+    isArchive: false
   };
 </script>
 
-  <title>Archive | 舊金山周記</title>
+  <title>
+      about | 舊金山周記
+    
+  </title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149656006-1"></script>
     <script>
@@ -246,128 +250,55 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+    
+    
+    
+    <div class="post-block" lang="en">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">about
   
+
+</h1>
+
+<div class="post-meta">
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        
-        
-        
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
           
         
-        <span class="collection-header">Um..! 8 posts in total. Keep on posting.</span>
       </div>
       
-
       
-
-  
-  
-
-  
+      
+    </div>
     
-    <div class="collection-year">
-      <h1 class="collection-header">2019</h1>
-    </div>
-  
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-10-12T06:49:49-07:00"
-              content="2019-10-12">
-          10-12
-        </time>
-      </div>
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/10/12/Cron-Job-on-TypeScript/" itemprop="url">
-            <span itemprop="name">Cron Job on TypeScript</span>
-          </a>
-        
-      </h2>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-08-10T17:14:00-07:00"
-              content="2019-08-10">
-          08-10
-        </time>
-      </div>
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/08/10/Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript/" itemprop="url">
-            <span itemprop="name">Use ESLint and Prettier to format your code in TypeScript</span>
-          </a>
-        
-      </h2>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-04-18T16:22:00-07:00"
-              content="2019-04-18">
-          04-18
-        </time>
-      </div>
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/04/18/Android-Hopping-Animation/" itemprop="url">
-            <span itemprop="name">Android Hopping Animation</span>
-          </a>
-        
-      </h2>
-
-    </header>
-  </article>
-
-
-
-
-    </div>
+    
+    
+    
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
           
+    
+    
+  <div class="comments" id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+  
 
         </div>
           
@@ -380,6 +311,11 @@
 
   <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
@@ -559,6 +495,28 @@
   }
   // defer loading until the whole page loading is completed
   window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  function disqus_config() {
+    this.page.url = "http://yoursite.com/about/index.html";
+    this.page.identifier = "about/index.html";
+    this.page.title = 'about';
+  }
+  function loadComments() {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://chauyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  }
+    window.addEventListener('load', loadComments, false);
+  
 </script>
 
 </body>

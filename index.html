@@ -175,6 +175,32 @@
       
         
         
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
         <li class="menu-item menu-item-archives">
       
     
@@ -347,7 +373,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-10-20 06:10:46" itemprop="dateModified" datetime="2019-10-20T06:10:46-07:00">2019-10-20</time>
+                <time title="Modified: 2019-10-30 05:01:49" itemprop="dateModified" datetime="2019-10-30T05:01:49-07:00">2019-10-30</time>
               </span>
             
           
@@ -408,35 +434,15 @@
 </ul>
 </li>
 </ul>
-<h4 id="Setup-ESLint"><a href="#Setup-ESLint" class="headerlink" title="Setup ESLint"></a>Setup ESLint</h4><p>First of all, let’s install the <code>ESLint</code> first. </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install eslint --save-dev</span><br><span class="line">npm install @typescript-eslint/parser --save-dev</span><br><span class="line">npm i @typescript-eslint/eslint-plugin --save-dev</span><br></pre></td></tr></table></figure>
-
-<p>The first one is the ESLint library for JavaScript, and the rest of them are ESLint plugins for TypeScript. Next, you will need to create a <code>.eslintrc.yaml</code> configuration file to set up the rules and related parser for your TypeScript project.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">env:</span><br><span class="line">  jest: true</span><br><span class="line">  node: true</span><br><span class="line">parser: &apos;@typescript-eslint/parser&apos;</span><br><span class="line">parserOptions:</span><br><span class="line">  ecmaVersion: 9</span><br><span class="line">  project: ./tsconfig.json</span><br><span class="line">plugins:</span><br><span class="line">  - &apos;@typescript-eslint&apos;</span><br><span class="line">  - &apos;jest&apos;</span><br></pre></td></tr></table></figure>
-
-<p>Put this file in the project directory. Please note that we don’t add any rules. You can read more about the <a href="https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin/docs/rules" target="_blank" rel="noopener">rules</a> here. A better way is to enable the recommended set of rules that the plugin provides. </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">env:</span><br><span class="line">  jest: true</span><br><span class="line">  node: true</span><br><span class="line">extends:</span><br><span class="line">  - plugin:@typescript-eslint/recommended</span><br><span class="line">parser: &apos;@typescript-eslint/parser&apos;</span><br><span class="line">parserOptions:</span><br><span class="line">  ecmaVersion: 9</span><br><span class="line">  project: ./tsconfig.json</span><br><span class="line">plugins:</span><br><span class="line">  - &apos;@typescript-eslint&apos;</span><br><span class="line">  - &apos;jest&apos;</span><br></pre></td></tr></table></figure>
-
-<p>It’s the primary setting of ESLint. If you want to get more detail, I will recommend reading the ESLint GitHub. </p>
-<h4 id="Setup-Prettier"><a href="#Setup-Prettier" class="headerlink" title="Setup Prettier"></a>Setup Prettier</h4><p>Install Prettier </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install prettier --save-dev</span><br><span class="line">npm install eslint-config-prettier --save-dev</span><br><span class="line">npm install eslint-plugin-prettier --save-dev</span><br></pre></td></tr></table></figure>
-
-<p>Create a <code>.prettierrc.yaml</code> and put into your project directory </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">trailingComma: &quot;es5&quot;</span><br><span class="line">tabWidth: 2</span><br><span class="line">singleQuote: true</span><br></pre></td></tr></table></figure>
-
-<p>Integrate <code>Prettier</code> with <code>ESLint</code>, in the <code>.eslintrc.yaml</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">env:</span><br><span class="line">  jest: true</span><br><span class="line">  node: true</span><br><span class="line">extends:</span><br><span class="line">  - plugin:@typescript-eslint/recommended</span><br><span class="line">  - prettier/@typescript-eslint</span><br><span class="line">  - plugin:prettier/recommended</span><br><span class="line">parser: &apos;@typescript-eslint/parser&apos;</span><br><span class="line">parserOptions:</span><br><span class="line">  ecmaVersion: 9</span><br><span class="line">  project: ./tsconfig.json</span><br><span class="line">plugins:</span><br><span class="line">  - &apos;@typescript-eslint&apos;</span><br><span class="line">  - &apos;jest&apos;</span><br></pre></td></tr></table></figure>
-
-<p>Then you’re all set. </p>
-<h4 id="Integrate-with-VS-Code"><a href="#Integrate-with-VS-Code" class="headerlink" title="Integrate with VS Code"></a>Integrate with VS Code</h4><p>So far, we just set up all rules and plugins for this TypeScript project. There’s one thing we can do in the IDE to make our life easier. Open VSCode settings, </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&quot;editor.formatOnSave&quot;: true,</span><br><span class="line">  &quot;[javascript]&quot;: &#123;</span><br><span class="line">    &quot;editor.formatOnSave&quot;: false</span><br><span class="line">  &#125;,</span><br><span class="line">&quot;prettier.disableLanguages&quot;: [&quot;js&quot;],</span><br><span class="line">&quot;eslint.autoFixOnSave&quot;: true,</span><br><span class="line">&quot;eslint.alwaysShowStatus&quot;: true,</span><br><span class="line">&quot;files.autoSave&quot;: &quot;onFocusChange&quot;,</span><br></pre></td></tr></table></figure>
-
-<p>This setting will automatically format your code when you save the changed in the file. That means we don’t wait to submit the PR to Github and then get the error. </p>
-<h4 id="Reference"><a href="#Reference" class="headerlink" title="[Reference]"></a>[Reference]</h4><ol>
-<li><a href="https://eslint.org" target="_blank" rel="noopener">ESLint - Pluggable JavaScript linter</a></li>
-<li><a href="https://prettier.io" target="_blank" rel="noopener">Prettier · Opinionated Code Formatter</a></li>
-</ol>
-
+          <!--noindex-->
+          
+            <div class="post-button">
+              <a class="btn" href="/2019/08/10/Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
