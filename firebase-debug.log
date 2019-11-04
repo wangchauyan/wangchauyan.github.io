@@ -1,0 +1,33 @@
+[debug] [2019-11-04T14:26:49.416Z] ----------------------------------------------------------------------
+[debug] [2019-11-04T14:26:49.418Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy -m Add something about my mom
+[debug] [2019-11-04T14:26:49.418Z] CLI Version:   7.6.2
+[debug] [2019-11-04T14:26:49.418Z] Platform:      darwin
+[debug] [2019-11-04T14:26:49.418Z] Node Version:  v8.9.1
+[debug] [2019-11-04T14:26:49.419Z] Time:          Mon Nov 04 2019 06:26:49 GMT-0800 (PST)
+[debug] [2019-11-04T14:26:49.419Z] ----------------------------------------------------------------------
+[debug] [2019-11-04T14:26:49.419Z] 
+[debug] [2019-11-04T14:26:49.425Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-11-04T14:26:49.425Z] > authorizing via signed-in user
+[debug] [2019-11-04T14:26:49.426Z] [iam] checking project personaldevblog for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2019-11-04T14:26:49.427Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/personaldevblog:testIamPermissions  
+
+[debug] [2019-11-04T14:26:49.557Z] <<< HTTP RESPONSE 200
+[debug] [2019-11-04T14:26:49.559Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/personaldevblog  
+ 
+[debug] [2019-11-04T14:26:49.744Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'personaldevblog'...
+[info] 
+[info] i  deploying hosting
+[debug] [2019-11-04T14:26:49.748Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/personaldevblog/versions  
+
+[debug] [2019-11-04T14:26:50.556Z] <<< HTTP RESPONSE 200
+[info] i  hosting[personaldevblog]: beginning deploy...
+[info] i  hosting[personaldevblog]: found 82 files in public
+[debug] [2019-11-04T14:26:50.668Z] [hosting] hash cache [cHVibGlj] stored for 82 files
+[debug] [2019-11-04T14:26:50.668Z] [hosting][hash queue][FINAL]
+[debug] [2019-11-04T14:26:50.669Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/personaldevblog/versions/0fcda90126fe0401:populateFiles  
+ <request body omitted>
+[debug] [2019-11-04T14:26:52.809Z] <<< HTTP RESPONSE 200
+[debug] [2019-11-04T14:26:52.819Z] [hosting][populate queue][FINAL]
+[debug] [2019-11-04T14:26:52.819Z] [hosting] uploads queued: 33
