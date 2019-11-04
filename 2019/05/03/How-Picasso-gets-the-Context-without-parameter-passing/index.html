@@ -64,7 +64,7 @@
 <meta property="og:description" content="How Picasso gets the Context without parameter passing What’s new?I’ve updated the Picasso library recently and mainly see if anything new and surprising. The second goal was to see if the latest vers">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://chauyanw.files.wordpress.com/2019/05/sample.png?w=2924">
-<meta property="og:updated_time" content="2019-11-04T00:05:51.706Z">
+<meta property="og:updated_time" content="2019-11-04T14:36:04.317Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="How Picasso gets the Context without parameter passing">
 <meta name="twitter:description" content="How Picasso gets the Context without parameter passing What’s new?I’ve updated the Picasso library recently and mainly see if anything new and surprising. The second goal was to see if the latest vers">
@@ -282,7 +282,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-11-03 16:05:51" itemprop="dateModified" datetime="2019-11-03T16:05:51-08:00">2019-11-03</time>
+                <time title="Modified: 2019-11-04 06:36:04" itemprop="dateModified" datetime="2019-11-04T06:36:04-08:00">2019-11-04</time>
               </span>
             
           
@@ -334,7 +334,7 @@
 
 <p>It’s there but doesn’t use any keyword like <code>export</code> to outside users.</p>
 <h4 id="The-tricky-part"><a href="#The-tricky-part" class="headerlink" title="The tricky part."></a>The tricky part.</h4><p>There’s a tricky part here. If you notice the authorities’ declaration of the content provider, you can see that it uses the <code>${applicationId}</code> this way to set up a sole authority for different Apps. That’s because if you set up a unique authority, then that’s only one application running on the device can use this library at the same time. So, by using this way, you can create a general 3rd library for different Apps. You should also remember to remove the <code>ApplicationId</code> setting in the library module, or the Gradle will automatically use this <code>ApplicationId</code> from build.gradle file. </p>
-<p>Another question is: how can we make sure the content provider would be the first component to intialize? That’s because when an Android application has launched, there is a well-defined order of initializing components: </p>
+<p>Another question is: how can we make sure the content provider would be the first component to initialize? That’s because when an Android application has launched, there is a well-defined order of initializing components: </p>
 <ul>
 <li><p>Each content provider declared in the manifest would be initialized first in this <a href="https://developer.android.com/guide/topics/manifest/provider-element.html#init" target="_blank" rel="noopener">order</a></p>
 </li>
