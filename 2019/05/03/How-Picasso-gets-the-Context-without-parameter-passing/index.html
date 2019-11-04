@@ -55,18 +55,20 @@
   };
 </script>
 
-  <meta name="description" content="What’s new?I’ve updated the Picasso library recently and mainly see if anything new and surprising. The second goal was to see if the latest version has some bug fixes. I didn’t realize that, on the l">
+  <meta name="description" content="How Picasso gets the Context without parameter passing What’s new?I’ve updated the Picasso library recently and mainly see if anything new and surprising. The second goal was to see if the latest vers">
 <meta name="keywords" content="Android, Picasso, ContentProvider, Lifecycle">
 <meta property="og:type" content="article">
 <meta property="og:title" content="How Picasso gets the Context without parameter passing">
 <meta property="og:url" content="http://yoursite.com/2019/05/03/How-Picasso-gets-the-Context-without-parameter-passing/index.html">
 <meta property="og:site_name" content="舊金山周記">
-<meta property="og:description" content="What’s new?I’ve updated the Picasso library recently and mainly see if anything new and surprising. The second goal was to see if the latest version has some bug fixes. I didn’t realize that, on the l">
+<meta property="og:description" content="How Picasso gets the Context without parameter passing What’s new?I’ve updated the Picasso library recently and mainly see if anything new and surprising. The second goal was to see if the latest vers">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-11-04T00:05:04.950Z">
+<meta property="og:image" content="https://chauyanw.files.wordpress.com/2019/05/sample.png?w=2924">
+<meta property="og:updated_time" content="2019-11-04T00:05:51.706Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="How Picasso gets the Context without parameter passing">
-<meta name="twitter:description" content="What’s new?I’ve updated the Picasso library recently and mainly see if anything new and surprising. The second goal was to see if the latest version has some bug fixes. I didn’t realize that, on the l">
+<meta name="twitter:description" content="How Picasso gets the Context without parameter passing What’s new?I’ve updated the Picasso library recently and mainly see if anything new and surprising. The second goal was to see if the latest vers">
+<meta name="twitter:image" content="https://chauyanw.files.wordpress.com/2019/05/sample.png?w=2924">
   <link rel="canonical" href="http://yoursite.com/2019/05/03/How-Picasso-gets-the-Context-without-parameter-passing/">
 
 
@@ -280,7 +282,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-11-03 16:05:04" itemprop="dateModified" datetime="2019-11-03T16:05:04-08:00">2019-11-03</time>
+                <time title="Modified: 2019-11-03 16:05:51" itemprop="dateModified" datetime="2019-11-03T16:05:51-08:00">2019-11-03</time>
               </span>
             
           
@@ -312,7 +314,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h4 id="What’s-new"><a href="#What’s-new" class="headerlink" title="What’s new?"></a>What’s new?</h4><p>I’ve updated the Picasso library recently and mainly see if anything new and surprising. The second goal was to see if the latest version has some bug fixes. I didn’t realize that, on the latest version <code>2.7828</code>, it changes the way to instantiate the Picasso instance by using the <code>With(Context context).</code> Instead, it uses a <code>Get()</code> function to get the instance: </p>
+        <h2 id="How-Picasso-gets-the-Context-without-parameter-passing"><a href="#How-Picasso-gets-the-Context-without-parameter-passing" class="headerlink" title="How Picasso gets the Context without parameter passing"></a>How Picasso gets the Context without parameter passing</h2><p><img src="https://chauyanw.files.wordpress.com/2019/05/sample.png?w=2924" alt="sample.png?w=2924"></p>
+<h4 id="What’s-new"><a href="#What’s-new" class="headerlink" title="What’s new?"></a>What’s new?</h4><p>I’ve updated the Picasso library recently and mainly see if anything new and surprising. The second goal was to see if the latest version has some bug fixes. I didn’t realize that, on the latest version <code>2.7828</code>, it changes the way to instantiate the Picasso instance by using the <code>With(Context context).</code> Instead, it uses a <code>Get()</code> function to get the instance: </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Picasso.get()</span><br><span class="line">  .load(url)</span><br><span class="line">  .resize(50, 50)</span><br><span class="line">  .centerCrop()</span><br><span class="line">  .into(imageView)</span><br></pre></td></tr></table></figure>
 
 <a id="more"></a>
@@ -446,7 +449,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#What’s-new"><span class="nav-number">1.</span> <span class="nav-text">What’s new?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#How-does-it-do"><span class="nav-number">2.</span> <span class="nav-text">How does it do?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#The-tricky-part"><span class="nav-number">3.</span> <span class="nav-text">The tricky part.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#The-future"><span class="nav-number">4.</span> <span class="nav-text">The future</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">[Reference]</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#How-Picasso-gets-the-Context-without-parameter-passing"><span class="nav-number">1.</span> <span class="nav-text">How Picasso gets the Context without parameter passing</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#What’s-new"><span class="nav-number">1.0.1.</span> <span class="nav-text">What’s new?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#How-does-it-do"><span class="nav-number">1.0.2.</span> <span class="nav-text">How does it do?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#The-tricky-part"><span class="nav-number">1.0.3.</span> <span class="nav-text">The tricky part.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#The-future"><span class="nav-number">1.0.4.</span> <span class="nav-text">The future</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Reference"><span class="nav-number">1.0.5.</span> <span class="nav-text">[Reference]</span></a></li></ol></li></ol></li></ol></div>
         
       </div>
       <!--/noindex-->

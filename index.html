@@ -505,7 +505,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-11-03 16:05:04" itemprop="dateModified" datetime="2019-11-03T16:05:04-08:00">2019-11-03</time>
+                <time title="Modified: 2019-11-03 16:05:51" itemprop="dateModified" datetime="2019-11-03T16:05:51-08:00">2019-11-03</time>
               </span>
             
           
@@ -537,7 +537,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4 id="What’s-new"><a href="#What’s-new" class="headerlink" title="What’s new?"></a>What’s new?</h4><p>I’ve updated the Picasso library recently and mainly see if anything new and surprising. The second goal was to see if the latest version has some bug fixes. I didn’t realize that, on the latest version <code>2.7828</code>, it changes the way to instantiate the Picasso instance by using the <code>With(Context context).</code> Instead, it uses a <code>Get()</code> function to get the instance: </p>
+          <h2 id="How-Picasso-gets-the-Context-without-parameter-passing"><a href="#How-Picasso-gets-the-Context-without-parameter-passing" class="headerlink" title="How Picasso gets the Context without parameter passing"></a>How Picasso gets the Context without parameter passing</h2><p><img src="https://chauyanw.files.wordpress.com/2019/05/sample.png?w=2924" alt="sample.png?w=2924"></p>
+<h4 id="What’s-new"><a href="#What’s-new" class="headerlink" title="What’s new?"></a>What’s new?</h4><p>I’ve updated the Picasso library recently and mainly see if anything new and surprising. The second goal was to see if the latest version has some bug fixes. I didn’t realize that, on the latest version <code>2.7828</code>, it changes the way to instantiate the Picasso instance by using the <code>With(Context context).</code> Instead, it uses a <code>Get()</code> function to get the instance: </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Picasso.get()</span><br><span class="line">  .load(url)</span><br><span class="line">  .resize(50, 50)</span><br><span class="line">  .centerCrop()</span><br><span class="line">  .into(imageView)</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           
