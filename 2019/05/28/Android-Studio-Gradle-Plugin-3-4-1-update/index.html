@@ -55,18 +55,22 @@
   };
 </script>
 
-  <meta name="description" content="This is my peronsal dev blog.">
-<meta name="keywords" content="San Francisco, Android, iOS, TypeScript, Self-Driving">
-<meta property="og:type" content="website">
-<meta property="og:title" content="舊金山周記">
-<meta property="og:url" content="http://yoursite.com/archives/2019/04/index.html">
+  <meta name="description" content="The new Android Gradle plugin comes to a minor change and some updates for the version code to 3.4.1. Here are some behavior changes you should know.">
+<meta name="keywords" content="Android, Gradle Plugin, R8, CMake">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Studio Gradle Plugin 3.4.1 update">
+<meta property="og:url" content="http://yoursite.com/2019/05/28/Android-Studio-Gradle-Plugin-3-4-1-update/index.html">
 <meta property="og:site_name" content="舊金山周記">
-<meta property="og:description" content="This is my peronsal dev blog.">
+<meta property="og:description" content="The new Android Gradle plugin comes to a minor change and some updates for the version code to 3.4.1. Here are some behavior changes you should know.">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="https://chauyanw.files.wordpress.com/2019/05/old_compile_flow.png">
+<meta property="og:image" content="https://chauyanw.files.wordpress.com/2019/05/new_compile_flow.png">
+<meta property="og:updated_time" content="2019-11-08T14:59:05.033Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="舊金山周記">
-<meta name="twitter:description" content="This is my peronsal dev blog.">
-  <link rel="canonical" href="http://yoursite.com/archives/2019/04/">
+<meta name="twitter:title" content="Android Studio Gradle Plugin 3.4.1 update">
+<meta name="twitter:description" content="The new Android Gradle plugin comes to a minor change and some updates for the version code to 3.4.1. Here are some behavior changes you should know.">
+<meta name="twitter:image" content="https://chauyanw.files.wordpress.com/2019/05/old_compile_flow.png">
+  <link rel="canonical" href="http://yoursite.com/2019/05/28/Android-Studio-Gradle-Plugin-3-4-1-update/">
 
 
 <script id="page-configurations">
@@ -74,13 +78,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
+    isPost: true,
     isPage: false,
-    isArchive: true
+    isArchive: false
   };
 </script>
 
-  <title>Archive | 舊金山周記</title>
+  <title>Android Studio Gradle Plugin 3.4.1 update | 舊金山周記</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149656006-1"></script>
     <script>
@@ -215,21 +219,6 @@
 
     
 
-  
-    
-    
-  
-    
-    
-  
-    
-    
-  
-    
-    
-  
-  
-
 </nav>
 </div>
     </header>
@@ -247,99 +236,161 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        
-        
-        
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/28/Android-Studio-Gradle-Plugin-3-4-1-update/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chauyan Wang">
+      <meta itemprop="description" content="This is my peronsal dev blog.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="舊金山周記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
           
-        
-        <span class="collection-header">Um..! 13 posts in total. Keep on posting.</span>
-      </div>
-      
+            Android Studio Gradle Plugin 3.4.1 update
+            
 
-      
+          
+        </h1>
 
-  
-  
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
 
+              
+                
+              
+
+              <time title="Created: 2019-05-28 05:03:00" itemprop="dateCreated datePublished" datetime="2019-05-28T05:03:00-07:00">2019-05-28</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-11-08 06:59:05" itemprop="dateModified" datetime="2019-11-08T06:59:05-08:00">2019-11-08</time>
+              </span>
+            
+          
+
+          
   
+  <span class="post-meta-item">
     
-    <div class="collection-year">
-      <h1 class="collection-header">2019</h1>
-    </div>
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-04-19T16:23:00-07:00"
-              content="2019-04-19">
-          04-19
-        </time>
-      </div>
-
-      <h2 class="post-title">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
         
-          <a class="post-title-link" href="/2019/04/19/Car-Insurance-in-US/" itemprop="url">
-            <span itemprop="name">美國汽車保險</span>
-          </a>
-        
-      </h2>
-
-    </header>
-  </article>
-
-
-
+      
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2019/05/28/Android-Studio-Gradle-Plugin-3-4-1-update/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/05/28/Android-Studio-Gradle-Plugin-3-4-1-update/" itemprop="commentCount"></span>
+    </a>
+  </span>
   
   
 
-  
+        </div>
+      </header>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-04-18T16:22:00-07:00"
-              content="2019-04-18">
-          04-18
-        </time>
-      </div>
+      
+        <p>The new Android Gradle plugin comes to a minor change and some updates for the version code to 3.4.1. Here are some behavior changes you should know.</p>
+<a id="more"></a>
 
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/04/18/Android-Hopping-Animation/" itemprop="url">
-            <span itemprop="name">Android Hopping Animation</span>
-          </a>
-        
-      </h2>
+<h5 id="R8-enabled-by-default-You-can-see-the-old-way-we-use-before-as-followed"><a href="#R8-enabled-by-default-You-can-see-the-old-way-we-use-before-as-followed" class="headerlink" title="R8 enabled by default. You can see the old way we use before as followed:"></a>R8 enabled by default. You can see the old way we use before as followed:</h5><p><img src="https://chauyanw.files.wordpress.com/2019/05/old_compile_flow.png" alt="old_compile_flow.png"><br><em>Old compile flow</em></p>
+<p>As you can see, a java file would be compiled into <code>.class</code> file and be applied the ProGuard rules to confuse the code. After that, Gradle would use the D8 and desugaring the <code>.class</code> file to <code>.dex</code> file.</p>
+<p>Here is the new flow:</p>
+<p><img src="https://chauyanw.files.wordpress.com/2019/05/new_compile_flow.png" alt="new_compile_flow.png"><br><em>New compile flow</em></p>
+<p>New Gradle plugin merges two steps (ProGuard and D8/Desugar) into one step - R8. That means you would spend less time compiling the project.</p>
+<p>R8 is designed to work with the exiting ProGuard rules. So, you don’t have to take any further actions to benefit from R8. But if you experience any issues by using R8, you can disable it.</p>
+<p>In <code>gradle.properties</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Disables R8 for Android Library modules only.</span><br><span class="line">android.enableR8.libraries = false</span><br><span class="line"># Disables R8 for all modules.</span><br><span class="line">android.enableR8 = false</span><br></pre></td></tr></table></figure>
 
-    </header>
-  </article>
-
-
-
+<h5 id="ndkCompile-is-deprecated"><a href="#ndkCompile-is-deprecated" class="headerlink" title="ndkCompile is deprecated."></a>ndkCompile is deprecated.</h5><p>It seems that Google wants you to use CMake to compile the NDK files. You can’t use <code>ndkBuild</code> - the compile your native libraries. I used to use that so many places in old projects. Now I need to use CMake instead.</p>
 
     </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/Android-Gradle-Plugin-R8-CMake/" rel="tag"># Android, Gradle Plugin, R8, CMake</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/05/05/Still-miss-you/" rel="next" title="說好不再流淚">
+                  <i class="fa fa-chevron-left"></i> 說好不再流淚
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/08/10/Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript/" rel="prev" title="Use ESLint and Prettier to format your code in TypeScript">
+                  Use ESLint and Prettier to format your code in TypeScript <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
           
+    
+    
+  <div class="comments" id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+  
 
         </div>
           
@@ -352,6 +403,11 @@
 
   <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
@@ -364,6 +420,8 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#R8-enabled-by-default-You-can-see-the-old-way-we-use-before-as-followed"><span class="nav-number">1.</span> <span class="nav-text">R8 enabled by default. You can see the old way we use before as followed:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ndkCompile-is-deprecated"><span class="nav-number">2.</span> <span class="nav-text">ndkCompile is deprecated.</span></a></li></ol></div>
+        
       </div>
       <!--/noindex-->
 
@@ -531,6 +589,28 @@
   }
   // defer loading until the whole page loading is completed
   window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  function disqus_config() {
+    this.page.url = "http://yoursite.com/2019/05/28/Android-Studio-Gradle-Plugin-3-4-1-update/";
+    this.page.identifier = "2019/05/28/Android-Studio-Gradle-Plugin-3-4-1-update/";
+    this.page.title = 'Android Studio Gradle Plugin 3.4.1 update';
+  }
+  function loadComments() {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://chauyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  }
+    window.addEventListener('load', loadComments, false);
+  
 </script>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->
