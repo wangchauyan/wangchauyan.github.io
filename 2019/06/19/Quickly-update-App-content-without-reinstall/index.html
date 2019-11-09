@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="How does it work?Have you ever wondered what the quickest and easiest way to apply a change in your App immediately is? Many people have the first thought on their mind is to use the instant run inst">
+<meta name="keywords" content="Android, Reciever, Instant Run, Reload">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Quickly update App content without reinstall">
+<meta property="og:url" content="http://yoursite.com/2019/06/19/Quickly-update-App-content-without-reinstall/index.html">
+<meta property="og:site_name" content="舊金山周記">
+<meta property="og:description" content="How does it work?Have you ever wondered what the quickest and easiest way to apply a change in your App immediately is? Many people have the first thought on their mind is to use the instant run inst">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://chauyanw.files.wordpress.com/2019/06/adbandroid.png?w=2924">
+<meta property="og:image" content="https://chauyanw.files.wordpress.com/2019/06/out.gif">
+<meta property="og:image" content="https://chauyanw.files.wordpress.com/2019/06/mvi.png">
+<meta property="og:updated_time" content="2019-11-09T14:29:04.622Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Quickly update App content without reinstall">
+<meta name="twitter:description" content="How does it work?Have you ever wondered what the quickest and easiest way to apply a change in your App immediately is? Many people have the first thought on their mind is to use the instant run inst">
+<meta name="twitter:image" content="https://chauyanw.files.wordpress.com/2019/06/adbandroid.png?w=2924">
+  <link rel="canonical" href="http://yoursite.com/2019/06/19/Quickly-update-App-content-without-reinstall/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Quickly update App content without reinstall | 舊金山周記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149656006-1"></script>
+    <script>
+      var host = window.location.hostname;
+      if (host !== "localhost" || !true) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-149656006-1');
+      }
+    </script>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <script data-ad-client="ca-pub-2964291656930077" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">舊金山周記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">The Venture of San Francisco</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/19/Quickly-update-App-content-without-reinstall/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chauyan Wang">
+      <meta itemprop="description" content="This is my peronsal dev blog.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="舊金山周記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            Quickly update App content without reinstall
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2019-06-19 07:24:00" itemprop="dateCreated datePublished" datetime="2019-06-19T07:24:00-07:00">2019-06-19</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-11-09 06:29:04" itemprop="dateModified" datetime="2019-11-09T06:29:04-08:00">2019-11-09</time>
+              </span>
+            
+          
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2019/06/19/Quickly-update-App-content-without-reinstall/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/06/19/Quickly-update-App-content-without-reinstall/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://chauyanw.files.wordpress.com/2019/06/adbandroid.png?w=2924" alt="adbandroid.png?w=2924"></p>
+<h4 id="How-does-it-work"><a href="#How-does-it-work" class="headerlink" title="How does it work?"></a>How does it work?</h4><p>Have you ever wondered what the quickest and easiest way to apply a change in your App immediately is? Many people have the first thought on their mind is to use the <code>instant run</code> installation from Android studio. That would be one possible solution.</p>
+<p>But what if I ask you, can you do that without any installation and directly apply a new change to your project? You may say, how could that be possible? Yes, it’s possible to adopt changes without any installation. How to do? Let me show you. You can see the demo video below. I use the command-line tool to update the content of a TextView in the App quickly.</p>
+<a id="more"></a>
+
+<p><img class=" size-full wp-image-654 aligncenter" src="https://chauyanw.files.wordpress.com/2019/06/out.gif" alt="out" width="640" height="360"> <em>Command line demo</em></p>
+<p>Let’s see how to do it. First of all, create a <strong>debugger broadcast receiver</strong> - </p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Debugger</span></span>(</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">val</span> context: Context,</span><br><span class="line">  intentAction: String = <span class="string">"fastReload"</span>,</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">val</span> actionHandler: (Intent?) -&gt; <span class="built_in">Unit</span></span><br><span class="line">): BroadcastReceiver() &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">init</span> &#123;</span><br><span class="line">    context.registerReceiver(<span class="keyword">this</span>, IntentFilter(intentAction))</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onReceive</span><span class="params">(context: <span class="type">Context</span>?, intent: <span class="type">Intent</span>?)</span></span> &#123;</span><br><span class="line">    actionHandler(intent)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">fun</span> <span class="title">unRegisterSelf</span><span class="params">()</span></span> &#123;</span><br><span class="line">    context.unregisterReceiver(<span class="keyword">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>You can see, the default intent action is <code>fastReload,</code> you can set whatever action string you want. I provide the registration and un-registration functions in this receiver. </p>
+<p>Let’s instantiate the receiver in your <code>MainActivity</code> (actually, you can set up in whatever activity you want) first. </p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> : <span class="type">AppCompatActivity</span></span>() &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">var</span> receiver: Debugger? = <span class="literal">null</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">var</span> debugTextView: TextView? = <span class="literal">null</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">    setContentView(R.layout.activity_main)</span><br><span class="line"></span><br><span class="line">    debugTextView = debuggerMessage</span><br><span class="line"></span><br><span class="line">    receiver = Debugger(<span class="keyword">this</span>) &#123; intent -&gt;</span><br><span class="line">      intent?.let &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// update text size</span></span><br><span class="line">        it.getStringExtra(<span class="string">"textSize"</span>)?.let &#123; size -&gt;</span><br><span class="line">          debugTextView?.textSize = size.toFloat()</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// update text color</span></span><br><span class="line">        it.getStringExtra(<span class="string">"textColor"</span>)?.let &#123; color -&gt;</span><br><span class="line">          <span class="keyword">val</span> (r, g, b) = color.split(<span class="string">","</span>).map(String::toInt)</span><br><span class="line">          <span class="keyword">val</span> realColor = Color.argb(<span class="number">255</span>, r, g, b)</span><br><span class="line">          debugTextView?.setTextColor(realColor)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// update message</span></span><br><span class="line">        it.getStringExtra(<span class="string">"testMsg"</span>)?.let &#123; message -&gt;</span><br><span class="line">          debugTextView?.text = message</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// update rotation</span></span><br><span class="line">        it.getStringExtra(<span class="string">"rotation"</span>)?.let &#123; rotation -&gt;</span><br><span class="line">          debugTextView?.rotation = rotation.toFloat()</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onDestroy</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onDestroy()</span><br><span class="line">    receiver?.unRegisterSelf()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Do receiver registration in the <code>onCreate</code> function, don’t forget to unregister in the <code>onDestroy</code> function. Then it’s done. It’s pretty easy.</p>
+<p>I think this way draws another path to test our App. What are the benefits we can have in this method? </p>
+<ol>
+<li><p>Easily test different logic in the same screen without re-installation. </p>
+</li>
+<li><p>Easily test intentions if we try to use MVI to construct our project. As you know, the intention is a considerably important concept in the MVI model. Using different intentions to trigger different UI actions. Here is the concept of MVI from Google sample:<img src="https://chauyanw.files.wordpress.com/2019/06/mvi.png" alt="mvi"></p>
+</li>
+<li><p>You can create a script to debug and to speed up the test process. </p>
+</li>
+<li><p>Quickly see the result.</p>
+</li>
+</ol>
+<p>Let’s talk about what are the drawbacks of using this way.</p>
+<ol>
+<li>Your code logic can not be able to update if you found there’s a bug in your function.</li>
+<li>You need to isolate the broadcast receiver with Gradle build flags, cause we don’t want to leak this communication channel when we publish the App. So, you need to use feature modules or build config to separate this from the original <code>App</code> module. That makes your App safer.</li>
+</ol>
+<p>From this method, it shows another doable solution for us to test our Apps. Still, we need to see what we can do by using it. </p>
+<p>Happy coding. </p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="[Reference]"></a>[Reference]</h4><ol>
+<li><a href="https://developer.android.com/studio/command-line/adb#IntentSpec" target="_blank" rel="noopener">Android Debug Bridge (adb)  |  Android Developers</a></li>
+<li><a href="https://pspdfkit.com/blog/2019/android-debug-bridge-tips-and-tricks" target="_blank" rel="noopener">Android Debug Bridge Tricks and Tips | Inside PSPDFKit</a></li>
+<li><a href="https://github.com/wangchauyan/adb_debugger" target="_blank" rel="noopener">GitHub - wangchauyan/adb_debugger: Using ADB command line to fast apply value change in your project</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/Android-Reciever-Instant-Run-Reload/" rel="tag"># Android, Reciever, Instant Run, Reload</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/05/28/Android-Studio-Gradle-Plugin-3-4-1-update/" rel="next" title="Android Studio Gradle Plugin 3.4.1 update">
+                  <i class="fa fa-chevron-left"></i> Android Studio Gradle Plugin 3.4.1 update
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/08/10/Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript/" rel="prev" title="Use ESLint and Prettier to format your code in TypeScript">
+                  Use ESLint and Prettier to format your code in TypeScript <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+    
+  <div class="comments" id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#How-does-it-work"><span class="nav-number">1.</span> <span class="nav-text">How does it work?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Reference"><span class="nav-number">2.</span> <span class="nav-text">[Reference]</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chauyan Wang</p>
+  <div class="site-description" itemprop="description">This is my peronsal dev blog.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span>
+        
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/wangchauyan" title="GitHub &rarr; https://github.com/wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail &rarr; mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://www.facebook.com/chauyanw/" title="FB Page &rarr; https://www.facebook.com/chauyanw/" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://twitter.com/deathrid" title="Twitter &rarr; https://twitter.com/deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chauyan Wang</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://chauyan.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  function disqus_config() {
+    this.page.url = "http://yoursite.com/2019/06/19/Quickly-update-App-content-without-reinstall/";
+    this.page.identifier = "2019/06/19/Quickly-update-App-content-without-reinstall/";
+    this.page.title = 'Quickly update App content without reinstall';
+  }
+  function loadComments() {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://chauyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  }
+    window.addEventListener('load', loadComments, false);
+  
+</script>
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCqTNIS0PZUFVzFmQOCcFEheWocG9daymY",
+    authDomain: "personaldevblog.firebaseapp.com",
+    databaseURL: "https://personaldevblog.firebaseio.com",
+    projectId: "personaldevblog",
+    storageBucket: "personaldevblog.appspot.com",
+    messagingSenderId: "785621246959",
+    appId: "1:785621246959:web:87cab80109fd2701f44c1a",
+    measurementId: "G-4KWYT0P8Z8"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+</body>
+</html>
