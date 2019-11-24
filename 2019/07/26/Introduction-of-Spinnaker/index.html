@@ -55,26 +55,26 @@
   };
 </script>
 
-  <meta name="description" content="日本城櫻花節 (Japan Town - The Northern California Cherry Blossom Festival) 每年四月第三個週末很熱鬧, 正好是美國的復活節 Easter週末, 在這周前的一兩週各地的活動很多, 我們也趁熱鬧跑去 Golden Gate Park 參加了撿彩蛋的活動, 不過兒子不太買單, 覺得撿彩蛋頗無聊, 倒是我撿到快累死了.">
-<meta name="keywords" content="SF Japan Town, The Northern California Cherry Blossom Festival">
+  <meta name="description" content="Why Spinnaker?在開始使用 Spinnaker 之前, 先來了解一下它是什麼東西, 為什麼要使用它, 以及它能為我們整合開發上帶來什麼好處. Netflix 推出這個開源的 project 用來做為 Continuous Integration (CI) 之後的發佈動作 (Continuous Delivery, CD) 最後一哩路. 而 Spinnaker 在 Github 上面對">
+<meta name="keywords" content="CI, CD, Spinnaker, Delivery Platform">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Japan Town - The Northern California Cherry Blossom Festival">
-<meta property="og:url" content="http://yoursite.com/2019/04/22/Japan-Town-The-Northern-California-Cherry-Blossom-Festival/index.html">
+<meta property="og:title" content="Introduction of Spinnaker">
+<meta property="og:url" content="http://yoursite.com/2019/07/26/Introduction-of-Spinnaker/index.html">
 <meta property="og:site_name" content="舊金山周記">
-<meta property="og:description" content="日本城櫻花節 (Japan Town - The Northern California Cherry Blossom Festival) 每年四月第三個週末很熱鬧, 正好是美國的復活節 Easter週末, 在這周前的一兩週各地的活動很多, 我們也趁熱鬧跑去 Golden Gate Park 參加了撿彩蛋的活動, 不過兒子不太買單, 覺得撿彩蛋頗無聊, 倒是我撿到快累死了.">
+<meta property="og:description" content="Why Spinnaker?在開始使用 Spinnaker 之前, 先來了解一下它是什麼東西, 為什麼要使用它, 以及它能為我們整合開發上帶來什麼好處. Netflix 推出這個開源的 project 用來做為 Continuous Integration (CI) 之後的發佈動作 (Continuous Delivery, CD) 最後一哩路. 而 Spinnaker 在 Github 上面對">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://chauyanw.files.wordpress.com/2019/04/nccbf_banner.png?w=2924">
-<meta property="og:image" content="https://chauyanw.files.wordpress.com/2019/04/nor-cal-cherry-blossom-festival-maps.png">
-<meta property="og:image" content="https://chauyanw.files.wordpress.com/2019/04/nor-cal-cherry-blossom-festival-matcha-cafe-maiko.png">
-<meta property="og:image" content="https://chauyanw.files.wordpress.com/2019/04/img_5941.jpeg">
-<meta property="og:image" content="https://chauyanw.files.wordpress.com/2019/04/img_5938.jpeg">
-<meta property="og:image" content="https://chauyanw.files.wordpress.com/2019/04/img_5925.jpeg">
-<meta property="og:updated_time" content="2019-11-13T14:01:36.324Z">
+<meta property="og:image" content="https://chauyanw.files.wordpress.com/2019/07/spin-logo-800x400.jpg?w=2924">
+<meta property="og:image" content="https://chauyanw.files.wordpress.com/2019/07/spinnaker.png">
+<meta property="og:image" content="https://www.spinnaker.io/concepts/clusters.png">
+<meta property="og:image" content="https://www.spinnaker.io/concepts/pipelines.png">
+<meta property="og:image" content="https://programmaticponderings.files.wordpress.com/2018/05/spin46.png">
+<meta property="og:image" content="https://www.spinnaker.io/concepts/deployment-strategies.png">
+<meta property="og:updated_time" content="2019-11-24T06:29:37.586Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Japan Town - The Northern California Cherry Blossom Festival">
-<meta name="twitter:description" content="日本城櫻花節 (Japan Town - The Northern California Cherry Blossom Festival) 每年四月第三個週末很熱鬧, 正好是美國的復活節 Easter週末, 在這周前的一兩週各地的活動很多, 我們也趁熱鬧跑去 Golden Gate Park 參加了撿彩蛋的活動, 不過兒子不太買單, 覺得撿彩蛋頗無聊, 倒是我撿到快累死了.">
-<meta name="twitter:image" content="https://chauyanw.files.wordpress.com/2019/04/nccbf_banner.png?w=2924">
-  <link rel="canonical" href="http://yoursite.com/2019/04/22/Japan-Town-The-Northern-California-Cherry-Blossom-Festival/">
+<meta name="twitter:title" content="Introduction of Spinnaker">
+<meta name="twitter:description" content="Why Spinnaker?在開始使用 Spinnaker 之前, 先來了解一下它是什麼東西, 為什麼要使用它, 以及它能為我們整合開發上帶來什麼好處. Netflix 推出這個開源的 project 用來做為 Continuous Integration (CI) 之後的發佈動作 (Continuous Delivery, CD) 最後一哩路. 而 Spinnaker 在 Github 上面對">
+<meta name="twitter:image" content="https://chauyanw.files.wordpress.com/2019/07/spin-logo-800x400.jpg?w=2924">
+  <link rel="canonical" href="http://yoursite.com/2019/07/26/Introduction-of-Spinnaker/">
 
 
 <script id="page-configurations">
@@ -88,7 +88,7 @@
   };
 </script>
 
-  <title>Japan Town - The Northern California Cherry Blossom Festival | 舊金山周記</title>
+  <title>Introduction of Spinnaker | 舊金山周記</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149656006-1"></script>
     <script>
@@ -245,7 +245,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/Japan-Town-The-Northern-California-Cherry-Blossom-Festival/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/26/Introduction-of-Spinnaker/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Chauyan Wang">
@@ -259,7 +259,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            Japan Town - The Northern California Cherry Blossom Festival
+            Introduction of Spinnaker
             
 
           
@@ -276,7 +276,7 @@
                 
               
 
-              <time title="Created: 2019-04-22 06:43:00" itemprop="dateCreated datePublished" datetime="2019-04-22T06:43:00-07:00">2019-04-22</time>
+              <time title="Created: 2019-07-26 16:57:00" itemprop="dateCreated datePublished" datetime="2019-07-26T16:57:00-07:00">2019-07-26</time>
             </span>
           
             
@@ -287,7 +287,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-11-13 06:01:36" itemprop="dateModified" datetime="2019-11-13T06:01:36-08:00">2019-11-13</time>
+                <time title="Modified: 2019-11-23 22:29:37" itemprop="dateModified" datetime="2019-11-23T22:29:37-08:00">2019-11-23</time>
               </span>
             
           
@@ -303,8 +303,8 @@
       
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2019/04/22/Japan-Town-The-Northern-California-Cherry-Blossom-Festival/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/04/22/Japan-Town-The-Northern-California-Cherry-Blossom-Festival/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2019/07/26/Introduction-of-Spinnaker/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/07/26/Introduction-of-Spinnaker/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -319,23 +319,64 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="日本城櫻花節-Japan-Town-The-Northern-California-Cherry-Blossom-Festival"><a href="#日本城櫻花節-Japan-Town-The-Northern-California-Cherry-Blossom-Festival" class="headerlink" title="日本城櫻花節 (Japan Town - The Northern California Cherry Blossom Festival)"></a>日本城櫻花節 (Japan Town - The Northern California Cherry Blossom Festival)</h2><p><img src="https://chauyanw.files.wordpress.com/2019/04/nccbf_banner.png?w=2924" alt="nccbf_banner.png?w=2924"></p>
-<p>每年四月第三個週末很熱鬧, 正好是美國的<a href="https://en.wikipedia.org/wiki/Easter" target="_blank" rel="noopener">復活節 Easter</a>週末, 在這周前的一兩週各地的活動很多, 我們也趁熱鬧跑去 Golden Gate Park 參加了撿彩蛋的活動, 不過兒子不太買單, 覺得撿彩蛋頗無聊, 倒是我撿到快累死了.</p>
+        <p><img src="https://chauyanw.files.wordpress.com/2019/07/spin-logo-800x400.jpg?w=2924" alt="spin-logo-800x400.jpg?w=2924"></p>
+<h4 id="Why-Spinnaker"><a href="#Why-Spinnaker" class="headerlink" title="Why Spinnaker?"></a>Why Spinnaker?</h4><p>在開始使用 Spinnaker 之前, 先來了解一下它是什麼東西, 為什麼要使用它, 以及它能為我們整合開發上帶來什麼好處.</p>
+<p>Netflix 推出這個開源的 project 用來做為 Continuous Integration (CI) 之後的發佈動作 (Continuous Delivery, CD) 最後一哩路. 而 Spinnaker 在 Github 上面對自己的定位: </p>
+<blockquote>
+<p>Spinnaker is an open source, multi-cloud continuous delivery platform for releasing software changes with high velocity and confidence.</p>
+</blockquote>
 <a id="more"></a>
 
-<p>所以星期六 (4/20) 想說不然來去日本城, 那邊聽說有櫻花節活動. 一到現場一看不得了啊,完全是人山人海, 整個道路都封街了:</p>
-<p><img src="https://chauyanw.files.wordpress.com/2019/04/nor-cal-cherry-blossom-festival-maps.png" alt="nor-cal-cherry-blossom-festival-maps.png"><br><em>Nor Cal Cherry Blossom Festival</em></p>
-<p>這封街的範圍有點大. 當時我開車走 Geary Blvd 完全找不到停車位. 後來還是停到 日本城裡面的停車場, 畢竟車子停外面風險太大, 真心傷不起. 只好花點小錢看能不能好好保護一下, 殊不知我想得太天真: 不管到哪裡風險都存在, 問題在於你運氣夠不夠好.</p>
-<p>後來上網一查才知道, 原來日本城的櫻花節算是歷史悠久, 從1968年就開始了. 算是北加州日裔族群大的歡慶活動, 可以參考: <a href="https://sfcherryblossom.org/history/" target="_blank" rel="noopener">History – Northern California Cherry Blossom Festival</a>. 這個歡樂節慶其實有一整週的時間, 不過我們好趕上週末人最多的時候, 當天擺攤的攤位每攤基本上都要排隊, 對於排隊沒有任何興趣的我, 最後還是排了日本城裡面最富盛名的 <a href="http://www.matchacafe-maiko.com/eng/" target="_blank" rel="noopener">Matcha Cafe Maiko</a>, 這家實在太有名了. 基本上我十分推薦他們家的 Matcha Ice Cream. 抹茶味非常濃厚, 但<strong>不會讓你覺得很膩, 又不死甜, 吃了基本上就是會升天那種</strong> (可惜食尚玩家不玩了, 不然我也去應徵外景主持人). 另外, 他們有金箔口味的將軍, 先來看一下圖:</p>
-<p><img src="https://chauyanw.files.wordpress.com/2019/04/nor-cal-cherry-blossom-festival-matcha-cafe-maiko.png" alt="nor-cal-cherry-blossom-festival-matcha-cafe-maiko.png"></p>
-<p>一大片金箔, 是不是很威猛, 可惜我是從來沒點過, 但聽吃過的朋友都讚不絕口, 以後有機會過來的吃吃的話, 請大家一定不能錯過.</p>
-<p>吃完冰淇淋之後我其實一直在想要不要衝二樓的拉麵, 這家真心不騙非常好吃, Yelp 高達 <a href="https://www.yelp.com/biz/marufuku-ramen-sf-san-francisco?osq=Ramen+Japan+Town" target="_blank" rel="noopener">4.7顆星評價</a>, 只是真的人永遠這麼多, 完全排不到, 後來想想還是放棄, 去廣場看一下活動好了.</p>
-<p><img src="https://chauyanw.files.wordpress.com/2019/04/img_5941.jpeg" alt="img_5941.jpeg"></p>
-<p><img src="https://chauyanw.files.wordpress.com/2019/04/img_5938.jpeg" alt="img_5938.jpeg"></p>
-<p>我兒子受到台上的感召也是在旁邊又唱要跳的, 看來一代舞王的養成要準備開始了. KrKr.</p>
-<p><img src="https://chauyanw.files.wordpress.com/2019/04/img_5925.jpeg" alt="img_5925.jpeg"></p>
-<p>後續:</p>
-<p>原本想說停到室內停車場比較有保障, 結果到繳費機就看到兩位老先先老太太在他們新車車頭那邊不知道在討論什麼. 一看不得了, Lexus IS 300 全新車, 車頭被刮了!!!!! 立馬手刀回自己的車子查看. 還好還好, 我停得夠角落, 夠低調, 沒什麼人注意到, 只能幫他們 QQ了. 舊金山最近 Window Break-in 越來越多, 還有人會故意去刮新車, 看來得想個辦法了, 囧.</p>
+<p>其中最關鍵一句話: <strong>可以快速部署到多種不同雲的部署平台</strong>. 可以從下圖看到 Spinnaker 概括的開發週期.</p>
+<p><img src="https://chauyanw.files.wordpress.com/2019/07/spinnaker.png" alt="spinnaker.png"><br><em>Spinnaker Adapted Development Cycle</em></p>
+<p>Spinnaker 真正最大的用武之地正在 Github 的 CI (像是 Jenkins, etc.) 結束後的快速部署. </p>
+<h4 id="Core-Feature-Sets"><a href="#Core-Feature-Sets" class="headerlink" title="Core Feature Sets"></a>Core Feature Sets</h4><p>目前 Spinnaker 主要提供 2 種不同的 core feature sets.</p>
+<ul>
+<li>Application Management (應用管理)</li>
+<li>Application Deployment (應用部署)</li>
+</ul>
+<p>以下則針對這兩個不同的特色來稍微介紹一下.</p>
+<p><strong>Application Management (應用管理)</strong></p>
+<p>在 Spinnaker 的服務中有三個主要的角色:</p>
+<ul>
+<li><p>Application (應用)</p>
+<ul>
+<li>簡單來說, 你發佈在 server 上的 - 不管是 Application type, e.g. 某個線上應用, 或者是微服務群 (MicroServices), 都可以對應到 Spinnaker 的 Application 這個概念上. 一個 Application 會包含多個 Cluster (群組). 通常 Application 上面會包含防火牆或者負載平衡. 基本上就是你所發佈 Service 的運行環境集合. </li>
+</ul>
+</li>
+<li><p>Cluster (群組)</p>
+<ul>
+<li>這邊的 Cluster 是指一群 Server Group 的集合, 跟 K8s 上面的所指的 Cluster 不同.</li>
+</ul>
+</li>
+<li><p>Server Group</p>
+<ul>
+<li>這邊的 Server Group 指的是由 VM image, Docker image, 或者 pod 等 source location 所產生的 instance 群組, 包含相關的設定檔案.</li>
+</ul>
+</li>
+</ul>
+<p>可以從底下相關的 diagram 更清楚地暸解全貌:<br><img src="https://www.spinnaker.io/concepts/clusters.png" alt="clusters.png"><br><em>Application, Cluster, and Server Group</em></p>
+<p>其中流量透過負載平衡器經過防火牆進入各種不同 Server Group.</p>
+<p><strong>Application Deployment (應用部署)</strong></p>
+<p>當我們使用 Spinnaker 進行應用部署的時候, 每個階段(stage)可以有各種不同的操作, 可以看一下底下的 Pipeline:</p>
+<p><img src="https://www.spinnaker.io/concepts/pipelines.png" alt="pipelines.png"><br><em>Spinnaker Pipeline</em></p>
+<p>使用 pipeline 的時機點可以非常彈性, 可透過手動啟用 pipeline 或者 透過自動化設定 Event 的方式來啟動一個 pipeline, 像是你 CI server (Jenkins) 完成工作的時候, 送一個 event 到 Spinnaker 來啟動 Auto-deploy. 而 Pipeline 也可以跟常用的 Slack 整合, 你會看到以下的畫面:</p>
+<p><img src="https://programmaticponderings.files.wordpress.com/2018/05/spin46.png" alt="spin46.png"><br><em>Slack Integration</em></p>
+<p>當然整合 Email/SMS 是最基本的功能, 詳細可以看看 Spinnaker 相關的設定. 這邊需要提一下 Stage:</p>
+<blockquote>
+<p>A Stage in Spinnaker is an atomic building block for a pipeline, describing an action that the pipeline will perform. You can sequence stages in a Pipeline in any order, though some stage sequences may be more common than others. Spinnaker provides a number of stages such as Deploy, Resize, Disable, Manual Judgment, and many more. You can see the full list of stages and read about implementation details for each provider in the Reference section.</p>
+</blockquote>
+<p>Stage 在 Pipeline 有著非常重要的地位, 基本上在整個 pipeline 過程中可以給予 Stage 不同的參數來做不同事情, 也可以任意改變 Stage 在 Pipeline 裡面的順序, 彈性相當大. 最後來看看佈署策略, 其實 Spinnaker 提供的部屬策略主要有這幾種:</p>
+<h4 id="Deployment-Strategy"><a href="#Deployment-Strategy" class="headerlink" title="Deployment Strategy"></a>Deployment Strategy</h4><ul>
+<li>Highlander</li>
+<li>Red/Black (紅黑策略, 又稱為藍綠策略)</li>
+<li>Rolling Red/Black</li>
+<li>Canary</li>
+</ul>
+<p>看一下圖例可以更好地瞭解:</p>
+<p><img src="https://www.spinnaker.io/concepts/deployment-strategies.png" alt="deployment-strategies.png"><br><em>Deployment Strategy</em></p>
+<p>詳細的部署策略可以看 [4], 更深入的介紹就留待下一篇了!</p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p>[1] <a href="https://medium.com/netflix-techblog/global-continuous-delivery-with-spinnaker-2a6896c23ba7" target="_blank" rel="noopener">https://medium.com/netflix-techblog/global-continuous-delivery-with-spinnaker-2a6896c23ba7</a><br>[2] <a href="https://programmaticponderings.com/tag/spinnaker/" target="_blank" rel="noopener">https://programmaticponderings.com/tag/spinnaker/</a><br>[3] <a href="https://www.spinnaker.io/concepts/" target="_blank" rel="noopener">https://www.spinnaker.io/concepts/</a><br>[4] <a href="https://blog.armory.io/tag/spinnaker-training-series/" target="_blank" rel="noopener">https://blog.armory.io/tag/spinnaker-training-series/</a></p>
 
     </div>
 
@@ -351,7 +392,7 @@
           
           <div class="post-tags">
             
-              <a href="/tags/SF-Japan-Town-The-Northern-California-Cherry-Blossom-Festival/" rel="tag"># SF Japan Town, The Northern California Cherry Blossom Festival</a>
+              <a href="/tags/CI-CD-Spinnaker-Delivery-Platform/" rel="tag"># CI, CD, Spinnaker, Delivery Platform</a>
             
           </div>
         
@@ -361,8 +402,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2019/04/19/Car-Insurance-in-US/" rel="next" title="美國汽車保險">
-                  <i class="fa fa-chevron-left"></i> 美國汽車保險
+                <a href="/2019/06/28/Android-Dynamic-Feature-Module-DFM/" rel="next" title="Android Dynamic Feature Module (DFM)">
+                  <i class="fa fa-chevron-left"></i> Android Dynamic Feature Module (DFM)
                 </a>
               
             </div>
@@ -371,8 +412,8 @@
 
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/2019/05/02/San-Mateo-DMV-Road-Test-路考/" rel="prev" title="San Mateo DMV Road Test (路考)">
-                  San Mateo DMV Road Test (路考) <i class="fa fa-chevron-right"></i>
+                <a href="/2019/08/10/Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript/" rel="prev" title="Use ESLint and Prettier to format your code in TypeScript">
+                  Use ESLint and Prettier to format your code in TypeScript <i class="fa fa-chevron-right"></i>
                 </a>
               
             </div>
@@ -428,7 +469,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#日本城櫻花節-Japan-Town-The-Northern-California-Cherry-Blossom-Festival"><span class="nav-number">1.</span> <span class="nav-text">日本城櫻花節 (Japan Town - The Northern California Cherry Blossom Festival)</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Why-Spinnaker"><span class="nav-number">1.</span> <span class="nav-text">Why Spinnaker?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Core-Feature-Sets"><span class="nav-number">2.</span> <span class="nav-text">Core Feature Sets</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Deployment-Strategy"><span class="nav-number">3.</span> <span class="nav-text">Deployment Strategy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -600,9 +641,9 @@
 </script>
 <script>
   function disqus_config() {
-    this.page.url = "http://yoursite.com/2019/04/22/Japan-Town-The-Northern-California-Cherry-Blossom-Festival/";
-    this.page.identifier = "2019/04/22/Japan-Town-The-Northern-California-Cherry-Blossom-Festival/";
-    this.page.title = 'Japan Town - The Northern California Cherry Blossom Festival';
+    this.page.url = "http://yoursite.com/2019/07/26/Introduction-of-Spinnaker/";
+    this.page.identifier = "2019/07/26/Introduction-of-Spinnaker/";
+    this.page.title = 'Introduction of Spinnaker';
   }
   function loadComments() {
     if (window.DISQUS) {
