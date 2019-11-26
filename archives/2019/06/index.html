@@ -1,36 +1,33 @@
 <!DOCTYPE html>
-
-
-
-
-
 <html lang="en">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 3.9.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
-  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="舊金山周記" type="application/atom+xml">
 
-<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+<link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
 
 
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
     root: '/',
-    scheme: 'Muse',
-    version: '7.4.1',
+    scheme: 'Pisces',
+    version: '7.5.0',
     exturl: false,
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
@@ -46,11 +43,6 @@
     localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
     path: '',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    },
     sidebarPadding: 40
   };
 </script>
@@ -66,7 +58,8 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="舊金山周記">
 <meta name="twitter:description" content="This is my peronsal dev blog.">
-  <link rel="canonical" href="http://yoursite.com/archives/2019/06/">
+
+<link rel="canonical" href="http://yoursite.com/archives/2019/06/">
 
 
 <script id="page-configurations">
@@ -84,17 +77,13 @@
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149656006-1"></script>
     <script>
-      var host = window.location.hostname;
-      if (host !== "localhost" || !true) {
+      if (CONFIG.hostname === location.hostname) {
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'UA-149656006-1');
       }
     </script>
-  
-
-
 
 
 
@@ -143,7 +132,6 @@
       </a>
     </div>
         <p class="site-subtitle">The Venture of San Francisco</p>
-      
   </div>
 
   <div class="site-nav-toggle">
@@ -159,91 +147,41 @@
 <nav class="site-nav">
   
   <ul id="menu" class="menu">
-      
-      
-        
-        
         <li class="menu-item menu-item-home">
-      
-    
 
     <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
 
   </li>
-      
-    
-      
-      
-        
-        
         <li class="menu-item menu-item-about">
-      
-    
 
     <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
 
   </li>
-      
-    
-      
-      
-        
-        
         <li class="menu-item menu-item-tags">
-      
-    
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">24</span></a>
 
   </li>
-      
-    
-      
-      
-        
-        
         <li class="menu-item menu-item-archives">
-      
-    
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">24</span></a>
 
   </li>
-      
-    
   </ul>
-
-    
-
-  
-    
-    
-  
-    
-    
-  
-    
-    
-  
-    
-    
-  
-  
 
 </nav>
 </div>
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
+          
+
           <div class="content">
             
 
@@ -253,26 +191,13 @@
   <div class="post-block">
     <div class="posts-collapse">
       <div class="collection-title">
-        
-        
-        
-          
-        
         <span class="collection-header">Um..! 24 posts in total. Keep on posting.</span>
       </div>
-      
 
       
-
-  
-  
-
-  
-    
     <div class="collection-year">
       <h1 class="collection-header">2019</h1>
     </div>
-  
 
   <article itemscope itemtype="http://schema.org/Article">
     <header class="post-header">
@@ -286,22 +211,13 @@
       </div>
 
       <h2 class="post-title">
-        
           <a class="post-title-link" href="/2019/06/28/Android-Dynamic-Feature-Module-DFM/" itemprop="url">
             <span itemprop="name">Android Dynamic Feature Module (DFM)</span>
           </a>
-        
       </h2>
 
     </header>
   </article>
-
-
-
-  
-  
-
-  
 
   <article itemscope itemtype="http://schema.org/Article">
     <header class="post-header">
@@ -315,22 +231,13 @@
       </div>
 
       <h2 class="post-title">
-        
           <a class="post-title-link" href="/2019/06/19/Quickly-update-App-content-without-reinstall/" itemprop="url">
             <span itemprop="name">Quickly update App content without reinstall</span>
           </a>
-        
       </h2>
 
     </header>
   </article>
-
-
-
-  
-  
-
-  
 
   <article itemscope itemtype="http://schema.org/Article">
     <header class="post-header">
@@ -344,17 +251,13 @@
       </div>
 
       <h2 class="post-title">
-        
           <a class="post-title-link" href="/2019/06/18/Convert-a-video-clip-to-a-Gif-file/" itemprop="url">
             <span itemprop="name">Convert a video clip to a Gif file</span>
           </a>
-        
       </h2>
 
     </header>
   </article>
-
-
 
 
     </div>
@@ -404,75 +307,45 @@
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        
           <a href="/archives/">
         
           <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-tags">
-        
         <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">tags</span>
-        
       </div>
-    
   </nav>
 </div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://github.com/wangchauyan" title="GitHub &rarr; https://github.com/wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/wangchauyan" title="GitHub → https://github.com/wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail &rarr; mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://www.facebook.com/chauyanw/" title="FB Page &rarr; https://www.facebook.com/chauyanw/" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https://www.facebook.com/chauyanw/" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://twitter.com/deathrid" title="Twitter &rarr; https://twitter.com/deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+        <a href="https://twitter.com/deathrid" title="Twitter → https://twitter.com/deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
       </span>
-    
   </div>
 
 
 
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
 
     </div>
   </aside>
@@ -487,6 +360,7 @@
         
 
 <div class="copyright">
+  
   &copy; 
   <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
@@ -504,22 +378,18 @@
 
 
 
-
-
-
-
         
       </div>
     </footer>
   </div>
 
   
-  <script src="/lib/anime.min.js?v=3.1.0"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
-<script src="/js/schemes/muse.js?v=7.4.1"></script>
-<script src="/js/next-boot.js?v=7.4.1"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
 
 
 
@@ -539,13 +409,6 @@
 
 
 
-
-
-
-
-
-
-  
 
   
 

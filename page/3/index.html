@@ -1,36 +1,33 @@
 <!DOCTYPE html>
-
-
-
-
-
 <html lang="en">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 3.9.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
-  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="舊金山周記" type="application/atom+xml">
 
-<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+<link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
 
 
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
     root: '/',
-    scheme: 'Muse',
-    version: '7.4.1',
+    scheme: 'Pisces',
+    version: '7.5.0',
     exturl: false,
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
@@ -46,11 +43,6 @@
     localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
     path: '',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    },
     sidebarPadding: 40
   };
 </script>
@@ -66,7 +58,8 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="舊金山周記">
 <meta name="twitter:description" content="This is my peronsal dev blog.">
-  <link rel="canonical" href="http://yoursite.com/page/3/">
+
+<link rel="canonical" href="http://yoursite.com/page/3/">
 
 
 <script id="page-configurations">
@@ -84,17 +77,13 @@
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149656006-1"></script>
     <script>
-      var host = window.location.hostname;
-      if (host !== "localhost" || !true) {
+      if (CONFIG.hostname === location.hostname) {
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'UA-149656006-1');
       }
     </script>
-  
-
-
 
 
 
@@ -143,7 +132,6 @@
       </a>
     </div>
         <p class="site-subtitle">The Venture of San Francisco</p>
-      
   </div>
 
   <div class="site-nav-toggle">
@@ -159,76 +147,41 @@
 <nav class="site-nav">
   
   <ul id="menu" class="menu">
-      
-      
-        
-        
         <li class="menu-item menu-item-home">
-      
-    
 
     <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
 
   </li>
-      
-    
-      
-      
-        
-        
         <li class="menu-item menu-item-about">
-      
-    
 
     <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
 
   </li>
-      
-    
-      
-      
-        
-        
         <li class="menu-item menu-item-tags">
-      
-    
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">24</span></a>
 
   </li>
-      
-    
-      
-      
-        
-        
         <li class="menu-item menu-item-archives">
-      
-    
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">24</span></a>
 
   </li>
-      
-    
   </ul>
-
-    
 
 </nav>
 </div>
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
+          
+
           <div class="content">
             
 
@@ -240,9 +193,9 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/01/Android-StrictMode-for-Debugging/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Chauyan Wang">
       <meta itemprop="description" content="This is my peronsal dev blog.">
-      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -251,9 +204,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            
             <a href="/2017/02/01/Android-StrictMode-for-Debugging/" class="post-title-link" itemprop="url">Android StrictMode for Debugging</a>
-          
         </h1>
 
         <div class="post-meta">
@@ -263,16 +214,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2017-02-01 04:37:00" itemprop="dateCreated datePublished" datetime="2017-02-01T04:37:00-08:00">2017-02-01</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -280,8 +223,6 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-10-20 06:44:20" itemprop="dateModified" datetime="2019-10-20T06:44:20-07:00">2019-10-20</time>
               </span>
-            
-          
 
           
   
@@ -290,8 +231,6 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
     <a title="disqus" href="/2017/02/01/Android-StrictMode-for-Debugging/#comments" itemprop="discussionUrl">
@@ -313,13 +252,11 @@
           <h2 id="Android-StrictMode-for-debugging"><a href="#Android-StrictMode-for-debugging" class="headerlink" title="Android StrictMode for debugging"></a>Android StrictMode for debugging</h2><p><img src="https://chauyanw.files.wordpress.com/2017/02/strictmode.png?w=2924" alt="strictmode.png?w=2924"></p>
 <h4 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h4><p>Android provides a handy tool for developers to see what happened to their Apps. Sometimes, you just forgot to keep massive loading job off the main UI thread, e.g., network access, database query, or something you need much time to handle, in these cases, you usually got ANR dialogs to notify you: Your App is going to spend too much time on something in UI thread.</p>
           <!--noindex-->
-          
             <div class="post-button">
               <a class="btn" href="/2017/02/01/Android-StrictMode-for-Debugging/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
@@ -336,7 +273,6 @@
   
   
 
-    
         
   
   
@@ -344,9 +280,9 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/29/UIAlertController-Text-Alignment/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Chauyan Wang">
       <meta itemprop="description" content="This is my peronsal dev blog.">
-      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -355,9 +291,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            
             <a href="/2017/01/29/UIAlertController-Text-Alignment/" class="post-title-link" itemprop="url">UIAlertViewController Text Alignment</a>
-          
         </h1>
 
         <div class="post-meta">
@@ -367,16 +301,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2017-01-29 04:27:00" itemprop="dateCreated datePublished" datetime="2017-01-29T04:27:00-08:00">2017-01-29</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -384,8 +310,6 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-10-14 05:57:50" itemprop="dateModified" datetime="2019-10-14T05:57:50-07:00">2019-10-14</time>
               </span>
-            
-          
 
           
   
@@ -394,8 +318,6 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
     <a title="disqus" href="/2017/01/29/UIAlertController-Text-Alignment/#comments" itemprop="discussionUrl">
@@ -422,7 +344,6 @@
 <p>The most important thing is the key <code>attributedMessage</code>. An alert controller can change its text alignment value by using this key.</p>
 <h4 id="References"><a href="#References" class="headerlink" title="[References]"></a>[References]</h4><p><a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html" target="_blank" rel="noopener">Introduction to Key-Value Observing Programming Guide</a></p>
 
-        
       
     </div>
 
@@ -437,7 +358,6 @@
   
   
 
-    
         
   
   
@@ -445,9 +365,9 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/20/MySQL-Error-1045-28000/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Chauyan Wang">
       <meta itemprop="description" content="This is my peronsal dev blog.">
-      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -456,9 +376,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            
             <a href="/2017/01/20/MySQL-Error-1045-28000/" class="post-title-link" itemprop="url">MySQL - Error 1045 (28000)</a>
-          
         </h1>
 
         <div class="post-meta">
@@ -468,16 +386,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2017-01-20 07:34:00" itemprop="dateCreated datePublished" datetime="2017-01-20T07:34:00-08:00">2017-01-20</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -485,8 +395,6 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-10-13 07:57:27" itemprop="dateModified" datetime="2019-10-13T07:57:27-07:00">2019-10-13</time>
               </span>
-            
-          
 
           
   
@@ -495,8 +403,6 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
     <a title="disqus" href="/2017/01/20/MySQL-Error-1045-28000/#comments" itemprop="discussionUrl">
@@ -518,13 +424,11 @@
           <p><img src="https://chauyanw.files.wordpress.com/2017/01/mysql-logo.jpg?w=2924" alt="mysql-logo.jpg?w=2924"></p>
 <h4 id="What-happened"><a href="#What-happened" class="headerlink" title="What happened?"></a>What happened?</h4><p>Alright, I don’t know what happened when trying to log in to MySQL. And it shows that message: MySQL - Error 1045 (28000) using password: YES. I am pretty sure that user/pwd pair is correct. After searching and studying some articles and forum discussions. I found it might be caused by broken SQL or reinstall SQL. The interesting is I can’t remember I had done that before.</p>
           <!--noindex-->
-          
             <div class="post-button">
               <a class="btn" href="/2017/01/20/MySQL-Error-1045-28000/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
@@ -541,7 +445,6 @@
   
   
 
-    
         
   
   
@@ -549,9 +452,9 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/17/DP-Pixel-conversion-on-Android/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Chauyan Wang">
       <meta itemprop="description" content="This is my peronsal dev blog.">
-      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -560,9 +463,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            
             <a href="/2017/01/17/DP-Pixel-conversion-on-Android/" class="post-title-link" itemprop="url">DP-Pixel conversion on Android</a>
-          
         </h1>
 
         <div class="post-meta">
@@ -572,16 +473,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2017-01-17 21:32:00" itemprop="dateCreated datePublished" datetime="2017-01-17T21:32:00-08:00">2017-01-17</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -589,8 +482,6 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-10-12 05:33:25" itemprop="dateModified" datetime="2019-10-12T05:33:25-07:00">2019-10-12</time>
               </span>
-            
-          
 
           
   
@@ -599,8 +490,6 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
     <a title="disqus" href="/2017/01/17/DP-Pixel-conversion-on-Android/#comments" itemprop="discussionUrl">
@@ -630,7 +519,6 @@
 <li><a href="https://pixplicity.com/dp-px-converter/" target="_blank" rel="noopener">Pixplicity | DP/PX converter</a></li>
 </ol>
 
-        
       
     </div>
 
@@ -645,7 +533,6 @@
   
   
 
-    
   </div>
 
   
@@ -692,75 +579,45 @@
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        
           <a href="/archives/">
         
           <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-tags">
-        
         <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">tags</span>
-        
       </div>
-    
   </nav>
 </div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://github.com/wangchauyan" title="GitHub &rarr; https://github.com/wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/wangchauyan" title="GitHub → https://github.com/wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail &rarr; mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://www.facebook.com/chauyanw/" title="FB Page &rarr; https://www.facebook.com/chauyanw/" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https://www.facebook.com/chauyanw/" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://twitter.com/deathrid" title="Twitter &rarr; https://twitter.com/deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+        <a href="https://twitter.com/deathrid" title="Twitter → https://twitter.com/deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
       </span>
-    
   </div>
 
 
 
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
 
     </div>
   </aside>
@@ -775,6 +632,7 @@
         
 
 <div class="copyright">
+  
   &copy; 
   <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
@@ -792,22 +650,18 @@
 
 
 
-
-
-
-
         
       </div>
     </footer>
   </div>
 
   
-  <script src="/lib/anime.min.js?v=3.1.0"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
-<script src="/js/schemes/muse.js?v=7.4.1"></script>
-<script src="/js/next-boot.js?v=7.4.1"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
 
 
 
@@ -827,13 +681,6 @@
 
 
 
-
-
-
-
-
-
-  
 
   
 

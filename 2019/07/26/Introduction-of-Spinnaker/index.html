@@ -1,36 +1,33 @@
 <!DOCTYPE html>
-
-
-
-
-
 <html lang="en">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 3.9.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
-  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="舊金山周記" type="application/atom+xml">
 
-<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+<link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
 
 
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
     root: '/',
-    scheme: 'Muse',
-    version: '7.4.1',
+    scheme: 'Pisces',
+    version: '7.5.0',
     exturl: false,
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
@@ -46,11 +43,6 @@
     localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
     path: '',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    },
     sidebarPadding: 40
   };
 </script>
@@ -74,7 +66,8 @@
 <meta name="twitter:title" content="Introduction of Spinnaker">
 <meta name="twitter:description" content="Why Spinnaker?在開始使用 Spinnaker 之前, 先來了解一下它是什麼東西, 為什麼要使用它, 以及它能為我們整合開發上帶來什麼好處. Netflix 推出這個開源的 project 用來做為 Continuous Integration (CI) 之後的發佈動作 (Continuous Delivery, CD) 最後一哩路. 而 Spinnaker 在 Github 上面對">
 <meta name="twitter:image" content="https://chauyanw.files.wordpress.com/2019/07/spin-logo-800x400.jpg?w=2924">
-  <link rel="canonical" href="http://yoursite.com/2019/07/26/Introduction-of-Spinnaker/">
+
+<link rel="canonical" href="http://yoursite.com/2019/07/26/Introduction-of-Spinnaker/">
 
 
 <script id="page-configurations">
@@ -92,17 +85,13 @@
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149656006-1"></script>
     <script>
-      var host = window.location.hostname;
-      if (host !== "localhost" || !true) {
+      if (CONFIG.hostname === location.hostname) {
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'UA-149656006-1');
       }
     </script>
-  
-
-
 
 
 
@@ -151,7 +140,6 @@
       </a>
     </div>
         <p class="site-subtitle">The Venture of San Francisco</p>
-      
   </div>
 
   <div class="site-nav-toggle">
@@ -167,76 +155,41 @@
 <nav class="site-nav">
   
   <ul id="menu" class="menu">
-      
-      
-        
-        
         <li class="menu-item menu-item-home">
-      
-    
 
     <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
 
   </li>
-      
-    
-      
-      
-        
-        
         <li class="menu-item menu-item-about">
-      
-    
 
     <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
 
   </li>
-      
-    
-      
-      
-        
-        
         <li class="menu-item menu-item-tags">
-      
-    
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">24</span></a>
 
   </li>
-      
-    
-      
-      
-        
-        
         <li class="menu-item menu-item-archives">
-      
-    
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">24</span></a>
 
   </li>
-      
-    
   </ul>
-
-    
 
 </nav>
 </div>
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
+          
+
           <div class="content">
             
 
@@ -248,9 +201,9 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/26/Introduction-of-Spinnaker/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Chauyan Wang">
       <meta itemprop="description" content="This is my peronsal dev blog.">
-      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -258,11 +211,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
-            Introduction of Spinnaker
-            
-
-          
+          Introduction of Spinnaker
         </h1>
 
         <div class="post-meta">
@@ -272,16 +221,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2019-07-26 16:57:00" itemprop="dateCreated datePublished" datetime="2019-07-26T16:57:00-07:00">2019-07-26</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -289,8 +230,6 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-11-23 22:29:37" itemprop="dateModified" datetime="2019-11-23T22:29:37-08:00">2019-11-23</time>
               </span>
-            
-          
 
           
   
@@ -299,8 +238,6 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
     <a title="disqus" href="/2019/07/26/Introduction-of-Spinnaker/#comments" itemprop="discussionUrl">
@@ -383,42 +320,26 @@
     
     
     
-        
-      
 
       <footer class="post-footer">
-          
-            
-          
           <div class="post-tags">
-            
               <a href="/tags/CI-CD-Spinnaker-Delivery-Platform/" rel="tag"># CI, CD, Spinnaker, Delivery Platform</a>
-            
           </div>
-        
 
         
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-              
-                <a href="/2019/06/28/Android-Dynamic-Feature-Module-DFM/" rel="next" title="Android Dynamic Feature Module (DFM)">
-                  <i class="fa fa-chevron-left"></i> Android Dynamic Feature Module (DFM)
-                </a>
-              
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2019/08/10/Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript/" rel="prev" title="Use ESLint and Prettier to format your code in TypeScript">
-                  Use ESLint and Prettier to format your code in TypeScript <i class="fa fa-chevron-right"></i>
-                </a>
-              
-            </div>
-          </div>
         
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/06/28/Android-Dynamic-Feature-Module-DFM/" rel="prev" title="Android Dynamic Feature Module (DFM)">
+      <i class="fa fa-chevron-left"></i> Android Dynamic Feature Module (DFM)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/08/10/Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript/" rel="next" title="Use ESLint and Prettier to format your code in TypeScript">
+      Use ESLint and Prettier to format your code in TypeScript <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -432,13 +353,11 @@
           </div>
           
     
-    
   <div class="comments" id="comments">
     <div id="disqus_thread">
       <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
   </div>
-  
   
 
         </div>
@@ -452,11 +371,6 @@
 
   <aside class="sidebar">
     <div class="sidebar-inner">
-        
-        
-        
-        
-      
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
@@ -470,7 +384,6 @@
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
           <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Why-Spinnaker"><span class="nav-number">1.</span> <span class="nav-text">Why Spinnaker?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Core-Feature-Sets"><span class="nav-number">2.</span> <span class="nav-text">Core Feature Sets</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Deployment-Strategy"><span class="nav-number">3.</span> <span class="nav-text">Deployment Strategy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
-        
       </div>
       <!--/noindex-->
 
@@ -482,75 +395,45 @@
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        
           <a href="/archives/">
         
           <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-tags">
-        
         <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">tags</span>
-        
       </div>
-    
   </nav>
 </div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://github.com/wangchauyan" title="GitHub &rarr; https://github.com/wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/wangchauyan" title="GitHub → https://github.com/wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail &rarr; mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://www.facebook.com/chauyanw/" title="FB Page &rarr; https://www.facebook.com/chauyanw/" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https://www.facebook.com/chauyanw/" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://twitter.com/deathrid" title="Twitter &rarr; https://twitter.com/deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+        <a href="https://twitter.com/deathrid" title="Twitter → https://twitter.com/deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
       </span>
-    
   </div>
 
 
 
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
 
     </div>
   </aside>
@@ -565,6 +448,7 @@
         
 
 <div class="copyright">
+  
   &copy; 
   <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
@@ -582,22 +466,18 @@
 
 
 
-
-
-
-
         
       </div>
     </footer>
   </div>
 
   
-  <script src="/lib/anime.min.js?v=3.1.0"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
-<script src="/js/schemes/muse.js?v=7.4.1"></script>
-<script src="/js/next-boot.js?v=7.4.1"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
 
 
 
@@ -617,13 +497,6 @@
 
 
 
-
-
-
-
-
-
-  
 
   
 
@@ -640,16 +513,16 @@
   window.addEventListener('load', loadCount, false);
 </script>
 <script>
-  function disqus_config() {
-    this.page.url = "http://yoursite.com/2019/07/26/Introduction-of-Spinnaker/";
-    this.page.identifier = "2019/07/26/Introduction-of-Spinnaker/";
-    this.page.title = 'Introduction of Spinnaker';
-  }
   function loadComments() {
     if (window.DISQUS) {
       DISQUS.reset({
         reload: true,
-        config: disqus_config
+        config: {page: {
+            url: "http://yoursite.com/2019/07/26/Introduction-of-Spinnaker/",
+            identifier: "2019/07/26/Introduction-of-Spinnaker/",
+            title: "Introduction of Spinnaker"
+          }
+        }
       });
     } else {
       var d = document, s = d.createElement('script');
@@ -659,7 +532,6 @@
     }
   }
     window.addEventListener('load', loadComments, false);
-  
 </script>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->

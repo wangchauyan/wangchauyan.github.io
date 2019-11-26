@@ -1,36 +1,33 @@
 <!DOCTYPE html>
-
-
-
-
-
 <html lang="en">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 3.9.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
-  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="舊金山周記" type="application/atom+xml">
 
-<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+<link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
 
 
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
     root: '/',
-    scheme: 'Muse',
-    version: '7.4.1',
+    scheme: 'Pisces',
+    version: '7.5.0',
     exturl: false,
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
@@ -46,11 +43,6 @@
     localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
     path: '',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    },
     sidebarPadding: 40
   };
 </script>
@@ -66,7 +58,8 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="舊金山周記">
 <meta name="twitter:description" content="This is my peronsal dev blog.">
-  <link rel="canonical" href="http://yoursite.com/page/2/">
+
+<link rel="canonical" href="http://yoursite.com/page/2/">
 
 
 <script id="page-configurations">
@@ -84,17 +77,13 @@
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149656006-1"></script>
     <script>
-      var host = window.location.hostname;
-      if (host !== "localhost" || !true) {
+      if (CONFIG.hostname === location.hostname) {
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'UA-149656006-1');
       }
     </script>
-  
-
-
 
 
 
@@ -143,7 +132,6 @@
       </a>
     </div>
         <p class="site-subtitle">The Venture of San Francisco</p>
-      
   </div>
 
   <div class="site-nav-toggle">
@@ -159,76 +147,41 @@
 <nav class="site-nav">
   
   <ul id="menu" class="menu">
-      
-      
-        
-        
         <li class="menu-item menu-item-home">
-      
-    
 
     <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
 
   </li>
-      
-    
-      
-      
-        
-        
         <li class="menu-item menu-item-about">
-      
-    
 
     <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
 
   </li>
-      
-    
-      
-      
-        
-        
         <li class="menu-item menu-item-tags">
-      
-    
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">24</span></a>
 
   </li>
-      
-    
-      
-      
-        
-        
         <li class="menu-item menu-item-archives">
-      
-    
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">24</span></a>
 
   </li>
-      
-    
   </ul>
-
-    
 
 </nav>
 </div>
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
+          
+
           <div class="content">
             
 
@@ -240,9 +193,9 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/29/Pokemon-Go-Example-by-using-Google-Maps/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Chauyan Wang">
       <meta itemprop="description" content="This is my peronsal dev blog.">
-      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -251,9 +204,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            
             <a href="/2019/05/29/Pokemon-Go-Example-by-using-Google-Maps/" class="post-title-link" itemprop="url">Pokemon Go Example by using Google Maps</a>
-          
         </h1>
 
         <div class="post-meta">
@@ -263,16 +214,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2019-05-29 08:04:00" itemprop="dateCreated datePublished" datetime="2019-05-29T08:04:00-07:00">2019-05-29</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -280,8 +223,6 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-11-24 22:11:26" itemprop="dateModified" datetime="2019-11-24T22:11:26-08:00">2019-11-24</time>
               </span>
-            
-          
 
           
   
@@ -290,8 +231,6 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
     <a title="disqus" href="/2019/05/29/Pokemon-Go-Example-by-using-Google-Maps/#comments" itemprop="discussionUrl">
@@ -313,13 +252,11 @@
           <p><img src="https://chauyanw.files.wordpress.com/2019/05/pokemon_go.jpg?w=2924" alt="pokemon_go.jpg?w=2924"></p>
 <p>I was wondering how to do the map display just like Pokemon Go! Game does. Let’s check how it looks from the below screenshot.</p>
           <!--noindex-->
-          
             <div class="post-button">
               <a class="btn" href="/2019/05/29/Pokemon-Go-Example-by-using-Google-Maps/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
@@ -336,7 +273,6 @@
   
   
 
-    
         
   
   
@@ -344,9 +280,9 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/28/Android-Studio-Gradle-Plugin-3-4-1-update/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Chauyan Wang">
       <meta itemprop="description" content="This is my peronsal dev blog.">
-      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -355,9 +291,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            
             <a href="/2019/05/28/Android-Studio-Gradle-Plugin-3-4-1-update/" class="post-title-link" itemprop="url">Android Studio Gradle Plugin 3.4.1 update</a>
-          
         </h1>
 
         <div class="post-meta">
@@ -367,16 +301,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2019-05-28 05:03:00" itemprop="dateCreated datePublished" datetime="2019-05-28T05:03:00-07:00">2019-05-28</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -384,8 +310,6 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-11-08 06:59:05" itemprop="dateModified" datetime="2019-11-08T06:59:05-08:00">2019-11-08</time>
               </span>
-            
-          
 
           
   
@@ -394,8 +318,6 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
     <a title="disqus" href="/2019/05/28/Android-Studio-Gradle-Plugin-3-4-1-update/#comments" itemprop="discussionUrl">
@@ -416,13 +338,11 @@
       
           <p>The new Android Gradle plugin comes to a minor change and some updates for the version code to 3.4.1. Here are some behavior changes you should know.</p>
           <!--noindex-->
-          
             <div class="post-button">
               <a class="btn" href="/2019/05/28/Android-Studio-Gradle-Plugin-3-4-1-update/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
@@ -439,7 +359,6 @@
   
   
 
-    
         
   
   
@@ -447,9 +366,9 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/05/Still-miss-you/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Chauyan Wang">
       <meta itemprop="description" content="This is my peronsal dev blog.">
-      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -458,9 +377,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            
             <a href="/2019/05/05/Still-miss-you/" class="post-title-link" itemprop="url">說好不再流淚</a>
-          
         </h1>
 
         <div class="post-meta">
@@ -470,16 +387,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2019-05-05 05:51:00" itemprop="dateCreated datePublished" datetime="2019-05-05T05:51:00-07:00">2019-05-05</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -487,8 +396,6 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-11-08 06:45:37" itemprop="dateModified" datetime="2019-11-08T06:45:37-08:00">2019-11-08</time>
               </span>
-            
-          
 
           
   
@@ -497,8 +404,6 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
     <a title="disqus" href="/2019/05/05/Still-miss-you/#comments" itemprop="discussionUrl">
@@ -520,13 +425,11 @@
           <h2 id="說好不再流淚"><a href="#說好不再流淚" class="headerlink" title="說好不再流淚"></a>說好不再流淚</h2><p>清醒的時間大概都是處在悲傷的情緒之中哭泣，或者麻木做的無意義的事。</p>
 <p>每天的清晨 5:00 跟 下午 5:00 都習慣性地看向手機，因為我知道我媽會跟我 update 她目前用藥的狀況，以及叫我不要擔心。總是說她在醫院很好，讓我在這邊好好工作照顧好一家人。不過從今天開始當我看向手機的時候，沒有任何新進來的訊息，我明白老媽再也不會給我消息了。我剩下的就是跟她的回憶，也沒辦法再抱抱她，說她好矮！</p>
           <!--noindex-->
-          
             <div class="post-button">
               <a class="btn" href="/2019/05/05/Still-miss-you/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
@@ -543,7 +446,6 @@
   
   
 
-    
         
   
   
@@ -551,9 +453,9 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/04/Dear-Mom/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Chauyan Wang">
       <meta itemprop="description" content="This is my peronsal dev blog.">
-      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -562,9 +464,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            
             <a href="/2019/05/04/Dear-Mom/" class="post-title-link" itemprop="url">Dear Mom ...</a>
-          
         </h1>
 
         <div class="post-meta">
@@ -574,16 +474,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2019-05-04 06:23:38" itemprop="dateCreated datePublished" datetime="2019-05-04T06:23:38-07:00">2019-05-04</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -591,8 +483,6 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-11-08 06:47:04" itemprop="dateModified" datetime="2019-11-08T06:47:04-08:00">2019-11-08</time>
               </span>
-            
-          
 
           
   
@@ -601,8 +491,6 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
     <a title="disqus" href="/2019/05/04/Dear-Mom/#comments" itemprop="discussionUrl">
@@ -626,13 +514,11 @@
 </blockquote>
 <p>我的母親在今天去世了，而我卻無法在她身邊見她最後一面。根據我父親轉述，我母親在沒有任何痛苦的情況下離開人世。透過與我妹妹的視訊，看到了母親最後的容貌，一如以往的沈睡模樣。直到這個時候還是無法想像，她已經永遠的離我們而去了。</p>
           <!--noindex-->
-          
             <div class="post-button">
               <a class="btn" href="/2019/05/04/Dear-Mom/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
@@ -649,7 +535,6 @@
   
   
 
-    
         
   
   
@@ -657,9 +542,9 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/03/How-Picasso-gets-the-Context-without-parameter-passing/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Chauyan Wang">
       <meta itemprop="description" content="This is my peronsal dev blog.">
-      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -668,9 +553,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            
             <a href="/2019/05/03/How-Picasso-gets-the-Context-without-parameter-passing/" class="post-title-link" itemprop="url">How Picasso gets the Context without parameter passing</a>
-          
         </h1>
 
         <div class="post-meta">
@@ -680,16 +563,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2019-05-03 06:35:00" itemprop="dateCreated datePublished" datetime="2019-05-03T06:35:00-07:00">2019-05-03</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -697,8 +572,6 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-11-04 06:36:04" itemprop="dateModified" datetime="2019-11-04T06:36:04-08:00">2019-11-04</time>
               </span>
-            
-          
 
           
   
@@ -707,8 +580,6 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
     <a title="disqus" href="/2019/05/03/How-Picasso-gets-the-Context-without-parameter-passing/#comments" itemprop="discussionUrl">
@@ -731,13 +602,11 @@
 <h4 id="What’s-new"><a href="#What’s-new" class="headerlink" title="What’s new?"></a>What’s new?</h4><p>I’ve updated the Picasso library recently and mainly see if anything new and surprising. The second goal was to see if the latest version has some bug fixes. I didn’t realize that, on the latest version <code>2.7828</code>, it changes the way to instantiate the Picasso instance by using the <code>With(Context context).</code> Instead, it uses a <code>Get()</code> function to get the instance: </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Picasso.get()</span><br><span class="line">  .load(url)</span><br><span class="line">  .resize(50, 50)</span><br><span class="line">  .centerCrop()</span><br><span class="line">  .into(imageView)</span><br></pre></td></tr></table></figure>
           <!--noindex-->
-          
             <div class="post-button">
               <a class="btn" href="/2019/05/03/How-Picasso-gets-the-Context-without-parameter-passing/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
@@ -754,7 +623,6 @@
   
   
 
-    
         
   
   
@@ -762,9 +630,9 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/02/San-Mateo-DMV-Road-Test-路考/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Chauyan Wang">
       <meta itemprop="description" content="This is my peronsal dev blog.">
-      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -773,9 +641,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            
             <a href="/2019/05/02/San-Mateo-DMV-Road-Test-路考/" class="post-title-link" itemprop="url">San Mateo DMV Road Test (路考)</a>
-          
         </h1>
 
         <div class="post-meta">
@@ -785,16 +651,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2019-05-02 06:58:00" itemprop="dateCreated datePublished" datetime="2019-05-02T06:58:00-07:00">2019-05-02</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -802,8 +660,6 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-11-23 22:04:27" itemprop="dateModified" datetime="2019-11-23T22:04:27-08:00">2019-11-23</time>
               </span>
-            
-          
 
           
   
@@ -812,8 +668,6 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
     <a title="disqus" href="/2019/05/02/San-Mateo-DMV-Road-Test-路考/#comments" itemprop="discussionUrl">
@@ -833,7 +687,6 @@
 
       
           
-        
       
     </div>
 
@@ -848,7 +701,6 @@
   
   
 
-    
         
   
   
@@ -856,9 +708,9 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/Japan-Town-The-Northern-California-Cherry-Blossom-Festival/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Chauyan Wang">
       <meta itemprop="description" content="This is my peronsal dev blog.">
-      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -867,9 +719,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            
             <a href="/2019/04/22/Japan-Town-The-Northern-California-Cherry-Blossom-Festival/" class="post-title-link" itemprop="url">Japan Town - The Northern California Cherry Blossom Festival</a>
-          
         </h1>
 
         <div class="post-meta">
@@ -879,16 +729,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2019-04-22 06:43:00" itemprop="dateCreated datePublished" datetime="2019-04-22T06:43:00-07:00">2019-04-22</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -896,8 +738,6 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-11-13 06:01:36" itemprop="dateModified" datetime="2019-11-13T06:01:36-08:00">2019-11-13</time>
               </span>
-            
-          
 
           
   
@@ -906,8 +746,6 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
     <a title="disqus" href="/2019/04/22/Japan-Town-The-Northern-California-Cherry-Blossom-Festival/#comments" itemprop="discussionUrl">
@@ -929,13 +767,11 @@
           <h2 id="日本城櫻花節-Japan-Town-The-Northern-California-Cherry-Blossom-Festival"><a href="#日本城櫻花節-Japan-Town-The-Northern-California-Cherry-Blossom-Festival" class="headerlink" title="日本城櫻花節 (Japan Town - The Northern California Cherry Blossom Festival)"></a>日本城櫻花節 (Japan Town - The Northern California Cherry Blossom Festival)</h2><p><img src="https://chauyanw.files.wordpress.com/2019/04/nccbf_banner.png?w=2924" alt="nccbf_banner.png?w=2924"></p>
 <p>每年四月第三個週末很熱鬧, 正好是美國的<a href="https://en.wikipedia.org/wiki/Easter" target="_blank" rel="noopener">復活節 Easter</a>週末, 在這周前的一兩週各地的活動很多, 我們也趁熱鬧跑去 Golden Gate Park 參加了撿彩蛋的活動, 不過兒子不太買單, 覺得撿彩蛋頗無聊, 倒是我撿到快累死了.</p>
           <!--noindex-->
-          
             <div class="post-button">
               <a class="btn" href="/2019/04/22/Japan-Town-The-Northern-California-Cherry-Blossom-Festival/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
@@ -952,7 +788,6 @@
   
   
 
-    
         
   
   
@@ -960,9 +795,9 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/19/Car-Insurance-in-US/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Chauyan Wang">
       <meta itemprop="description" content="This is my peronsal dev blog.">
-      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -971,9 +806,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            
             <a href="/2019/04/19/Car-Insurance-in-US/" class="post-title-link" itemprop="url">美國汽車保險</a>
-          
         </h1>
 
         <div class="post-meta">
@@ -983,16 +816,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2019-04-19 16:23:00" itemprop="dateCreated datePublished" datetime="2019-04-19T16:23:00-07:00">2019-04-19</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -1000,8 +825,6 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-11-08 06:41:49" itemprop="dateModified" datetime="2019-11-08T06:41:49-08:00">2019-11-08</time>
               </span>
-            
-          
 
           
   
@@ -1010,8 +833,6 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
     <a title="disqus" href="/2019/04/19/Car-Insurance-in-US/#comments" itemprop="discussionUrl">
@@ -1032,13 +853,11 @@
       
           <h4 id="Why-leasing-buying-a-car"><a href="#Why-leasing-buying-a-car" class="headerlink" title="Why leasing/buying a car?"></a>Why leasing/buying a car?</h4><p>剛來美國沒多久, 就一直被提醒要趕快去考駕照, 畢竟在一個車輪上的國家, 沒車就跟沒腳一樣哪兒都去不了. 而我所在的北加州(San Francisco) 的大眾交通工具有幾個選擇: </p>
           <!--noindex-->
-          
             <div class="post-button">
               <a class="btn" href="/2019/04/19/Car-Insurance-in-US/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
@@ -1055,7 +874,6 @@
   
   
 
-    
         
   
   
@@ -1063,9 +881,9 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/18/Android-Hopping-Animation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Chauyan Wang">
       <meta itemprop="description" content="This is my peronsal dev blog.">
-      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1074,9 +892,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            
             <a href="/2019/04/18/Android-Hopping-Animation/" class="post-title-link" itemprop="url">Android Hopping Animation</a>
-          
         </h1>
 
         <div class="post-meta">
@@ -1086,16 +902,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2019-04-18 16:22:00" itemprop="dateCreated datePublished" datetime="2019-04-18T16:22:00-07:00">2019-04-18</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -1103,8 +911,6 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-10-30 04:47:45" itemprop="dateModified" datetime="2019-10-30T04:47:45-07:00">2019-10-30</time>
               </span>
-            
-          
 
           
   
@@ -1113,8 +919,6 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
     <a title="disqus" href="/2019/04/18/Android-Hopping-Animation/#comments" itemprop="discussionUrl">
@@ -1137,13 +941,11 @@
 <p><img src="https://chauyanw.files.wordpress.com/2019/04/ezgif.com-crop.gif" alt="ezgif.com-crop.gif"><br><em>Animation example</em></p>
 <hr>
           <!--noindex-->
-          
             <div class="post-button">
               <a class="btn" href="/2019/04/18/Android-Hopping-Animation/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
@@ -1160,7 +962,6 @@
   
   
 
-    
         
   
   
@@ -1168,9 +969,9 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/17/How-to-precisely-jump-to-a-specific-time-in-AVPlayer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Chauyan Wang">
       <meta itemprop="description" content="This is my peronsal dev blog.">
-      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1179,9 +980,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            
             <a href="/2017/02/17/How-to-precisely-jump-to-a-specific-time-in-AVPlayer/" class="post-title-link" itemprop="url">How to precisely jump to a specific time in AVPlayer</a>
-          
         </h1>
 
         <div class="post-meta">
@@ -1191,16 +990,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2017-02-17 06:34:00" itemprop="dateCreated datePublished" datetime="2017-02-17T06:34:00-08:00">2017-02-17</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -1208,8 +999,6 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-10-26 16:37:02" itemprop="dateModified" datetime="2019-10-26T16:37:02-07:00">2019-10-26</time>
               </span>
-            
-          
 
           
   
@@ -1218,8 +1007,6 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
     <a title="disqus" href="/2017/02/17/How-to-precisely-jump-to-a-specific-time-in-AVPlayer/#comments" itemprop="discussionUrl">
@@ -1241,13 +1028,11 @@
           <p><img src="https://images.pexels.com/photos/9352/glass-time-watch-business.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="glass-time-watch-business.jpg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=750&amp;w=1260"></p>
 <h4 id="What’s-the-issue"><a href="#What’s-the-issue" class="headerlink" title="What’s the issue?"></a>What’s the issue?</h4><p>When using <a href="https://developer.apple.com/reference/avfoundation/avplayer?language=objc" target="_blank" rel="noopener">AVPlayer</a> method - SeekToTime, I found there’s an issue that I don’t understand: the position of pointed time is not correct. In other word, the return time slot is not exactly what you want.</p>
           <!--noindex-->
-          
             <div class="post-button">
               <a class="btn" href="/2017/02/17/How-to-precisely-jump-to-a-specific-time-in-AVPlayer/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
@@ -1264,7 +1049,6 @@
   
   
 
-    
   </div>
 
   
@@ -1311,75 +1095,45 @@
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        
           <a href="/archives/">
         
           <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-tags">
-        
         <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">tags</span>
-        
       </div>
-    
   </nav>
 </div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://github.com/wangchauyan" title="GitHub &rarr; https://github.com/wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/wangchauyan" title="GitHub → https://github.com/wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail &rarr; mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://www.facebook.com/chauyanw/" title="FB Page &rarr; https://www.facebook.com/chauyanw/" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https://www.facebook.com/chauyanw/" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://twitter.com/deathrid" title="Twitter &rarr; https://twitter.com/deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+        <a href="https://twitter.com/deathrid" title="Twitter → https://twitter.com/deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
       </span>
-    
   </div>
 
 
 
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
 
     </div>
   </aside>
@@ -1394,6 +1148,7 @@
         
 
 <div class="copyright">
+  
   &copy; 
   <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
@@ -1411,22 +1166,18 @@
 
 
 
-
-
-
-
         
       </div>
     </footer>
   </div>
 
   
-  <script src="/lib/anime.min.js?v=3.1.0"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
-<script src="/js/schemes/muse.js?v=7.4.1"></script>
-<script src="/js/next-boot.js?v=7.4.1"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
 
 
 
@@ -1446,13 +1197,6 @@
 
 
 
-
-
-
-
-
-
-  
 
   
 

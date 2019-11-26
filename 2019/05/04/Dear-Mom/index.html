@@ -1,36 +1,33 @@
 <!DOCTYPE html>
-
-
-
-
-
 <html lang="en">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 3.9.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
-  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="舊金山周記" type="application/atom+xml">
 
-<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+<link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
 
 
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
     root: '/',
-    scheme: 'Muse',
-    version: '7.4.1',
+    scheme: 'Pisces',
+    version: '7.5.0',
     exturl: false,
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
@@ -46,11 +43,6 @@
     localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
     path: '',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    },
     sidebarPadding: 40
   };
 </script>
@@ -71,7 +63,8 @@
 <meta name="twitter:title" content="Dear Mom ...">
 <meta name="twitter:description" content="自由自在的飛翔吧 … 今天是我這輩子最悲傷的一天，沒有之一！再也不能孝順您了！  我的母親在今天去世了，而我卻無法在她身邊見她最後一面。根據我父親轉述，我母親在沒有任何痛苦的情況下離開人世。透過與我妹妹的視訊，看到了母親最後的容貌，一如以往的沈睡模樣。直到這個時候還是無法想像，她已經永遠的離我們而去了。">
 <meta name="twitter:image" content="https://chauyanw.files.wordpress.com/2019/05/img_01f16ab0f338-1.jpeg">
-  <link rel="canonical" href="http://yoursite.com/2019/05/04/Dear-Mom/">
+
+<link rel="canonical" href="http://yoursite.com/2019/05/04/Dear-Mom/">
 
 
 <script id="page-configurations">
@@ -89,17 +82,13 @@
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149656006-1"></script>
     <script>
-      var host = window.location.hostname;
-      if (host !== "localhost" || !true) {
+      if (CONFIG.hostname === location.hostname) {
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'UA-149656006-1');
       }
     </script>
-  
-
-
 
 
 
@@ -148,7 +137,6 @@
       </a>
     </div>
         <p class="site-subtitle">The Venture of San Francisco</p>
-      
   </div>
 
   <div class="site-nav-toggle">
@@ -164,76 +152,41 @@
 <nav class="site-nav">
   
   <ul id="menu" class="menu">
-      
-      
-        
-        
         <li class="menu-item menu-item-home">
-      
-    
 
     <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
 
   </li>
-      
-    
-      
-      
-        
-        
         <li class="menu-item menu-item-about">
-      
-    
 
     <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
 
   </li>
-      
-    
-      
-      
-        
-        
         <li class="menu-item menu-item-tags">
-      
-    
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">24</span></a>
 
   </li>
-      
-    
-      
-      
-        
-        
         <li class="menu-item menu-item-archives">
-      
-    
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">24</span></a>
 
   </li>
-      
-    
   </ul>
-
-    
 
 </nav>
 </div>
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
+          
+
           <div class="content">
             
 
@@ -245,9 +198,9 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/04/Dear-Mom/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Chauyan Wang">
       <meta itemprop="description" content="This is my peronsal dev blog.">
-      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -255,11 +208,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
-            Dear Mom ...
-            
-
-          
+          Dear Mom ...
         </h1>
 
         <div class="post-meta">
@@ -269,16 +218,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2019-05-04 06:23:38" itemprop="dateCreated datePublished" datetime="2019-05-04T06:23:38-07:00">2019-05-04</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -286,8 +227,6 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-11-08 06:47:04" itemprop="dateModified" datetime="2019-11-08T06:47:04-08:00">2019-11-08</time>
               </span>
-            
-          
 
           
   
@@ -296,8 +235,6 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
     <a title="disqus" href="/2019/05/04/Dear-Mom/#comments" itemprop="discussionUrl">
@@ -355,42 +292,26 @@
     
     
     
-        
-      
 
       <footer class="post-footer">
-          
-            
-          
           <div class="post-tags">
-            
               <a href="/tags/淑月-老媽-我愛您-AML-Acute-Myeloid-Leukemia/" rel="tag"># 淑月, 老媽, 我愛您, AML, Acute Myeloid Leukemia</a>
-            
           </div>
-        
 
         
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-              
-                <a href="/2019/05/03/How-Picasso-gets-the-Context-without-parameter-passing/" rel="next" title="How Picasso gets the Context without parameter passing">
-                  <i class="fa fa-chevron-left"></i> How Picasso gets the Context without parameter passing
-                </a>
-              
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2019/05/05/Still-miss-you/" rel="prev" title="說好不再流淚">
-                  說好不再流淚 <i class="fa fa-chevron-right"></i>
-                </a>
-              
-            </div>
-          </div>
         
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/05/03/How-Picasso-gets-the-Context-without-parameter-passing/" rel="prev" title="How Picasso gets the Context without parameter passing">
+      <i class="fa fa-chevron-left"></i> How Picasso gets the Context without parameter passing
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/05/05/Still-miss-you/" rel="next" title="說好不再流淚">
+      說好不再流淚 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -404,13 +325,11 @@
           </div>
           
     
-    
   <div class="comments" id="comments">
     <div id="disqus_thread">
       <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
   </div>
-  
   
 
         </div>
@@ -424,11 +343,6 @@
 
   <aside class="sidebar">
     <div class="sidebar-inner">
-        
-        
-        
-        
-      
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
@@ -442,7 +356,6 @@
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
           <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#自由自在的飛翔吧-…"><span class="nav-number">1.</span> <span class="nav-text">自由自在的飛翔吧 …</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#白血病的確診"><span class="nav-number">1.0.1.</span> <span class="nav-text">白血病的確診</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#進行治療"><span class="nav-number">1.0.2.</span> <span class="nav-text">進行治療</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#化療結束"><span class="nav-number">1.0.3.</span> <span class="nav-text">化療結束</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#復發"><span class="nav-number">1.0.4.</span> <span class="nav-text">復發</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#永別"><span class="nav-number">1.0.5.</span> <span class="nav-text">永別</span></a></li></ol></li></ol></li></ol></div>
-        
       </div>
       <!--/noindex-->
 
@@ -454,75 +367,45 @@
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        
           <a href="/archives/">
         
           <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-tags">
-        
         <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">tags</span>
-        
       </div>
-    
   </nav>
 </div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://github.com/wangchauyan" title="GitHub &rarr; https://github.com/wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/wangchauyan" title="GitHub → https://github.com/wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail &rarr; mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://www.facebook.com/chauyanw/" title="FB Page &rarr; https://www.facebook.com/chauyanw/" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https://www.facebook.com/chauyanw/" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://twitter.com/deathrid" title="Twitter &rarr; https://twitter.com/deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+        <a href="https://twitter.com/deathrid" title="Twitter → https://twitter.com/deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
       </span>
-    
   </div>
 
 
 
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
 
     </div>
   </aside>
@@ -537,6 +420,7 @@
         
 
 <div class="copyright">
+  
   &copy; 
   <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
@@ -554,22 +438,18 @@
 
 
 
-
-
-
-
         
       </div>
     </footer>
   </div>
 
   
-  <script src="/lib/anime.min.js?v=3.1.0"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
-<script src="/js/schemes/muse.js?v=7.4.1"></script>
-<script src="/js/next-boot.js?v=7.4.1"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
 
 
 
@@ -589,13 +469,6 @@
 
 
 
-
-
-
-
-
-
-  
 
   
 
@@ -612,16 +485,16 @@
   window.addEventListener('load', loadCount, false);
 </script>
 <script>
-  function disqus_config() {
-    this.page.url = "http://yoursite.com/2019/05/04/Dear-Mom/";
-    this.page.identifier = "2019/05/04/Dear-Mom/";
-    this.page.title = 'Dear Mom ...';
-  }
   function loadComments() {
     if (window.DISQUS) {
       DISQUS.reset({
         reload: true,
-        config: disqus_config
+        config: {page: {
+            url: "http://yoursite.com/2019/05/04/Dear-Mom/",
+            identifier: "2019/05/04/Dear-Mom/",
+            title: "Dear Mom ..."
+          }
+        }
       });
     } else {
       var d = document, s = d.createElement('script');
@@ -631,7 +504,6 @@
     }
   }
     window.addEventListener('load', loadComments, false);
-  
 </script>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->
