@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="The storyI recently see many people have trouble with Google Dagger 2 library. To be honest, I think those Googlers should be carefully considering there are so many newbies like me can’t understand">
+<meta name="keywords" content="Android, Dagger2, Native Components, AndroidInjector">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dagger Series: elegantly handle your Activities and Fragments by AndroidInjector">
+<meta property="og:url" content="http://yoursite.com/2019/12/11/Dagger-Series-elegantly-handle-your-Activities-and-Fragments-by-AndroidInjector/index.html">
+<meta property="og:site_name" content="舊金山周記">
+<meta property="og:description" content="The storyI recently see many people have trouble with Google Dagger 2 library. To be honest, I think those Googlers should be carefully considering there are so many newbies like me can’t understand">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://chauyanw.files.wordpress.com/2019/08/dagger-in-android.png?w=2924">
+<meta property="og:image" content="https://media.giphy.com/media/11ahZZugJHrdLO/giphy.gif">
+<meta property="og:image" content="https://media.giphy.com/media/1fmBvkvmgm86Hw4WhK/giphy.gif">
+<meta property="og:image" content="https://docs.google.com/drawings/d/e/2PACX-1vRTIVWk2JFmE7WvPrVmjtHGzFyFfIUnCiSBEShK-S6vrLKZAJv6xwz7q296AtIteLKyf808sXCiWa-6/pub?w=960&h=720">
+<meta property="og:image" content="https://media.giphy.com/media/l0G170TiMx2d58RnG/giphy.gif">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*dGWDFmW4OW84J5QDqQiXpQ.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*OnHyI7wh_K6CDB06i9YFzg.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*j1tUI7WOKTtwupNh7X6_Og.png">
+<meta property="og:image" content="https://media.giphy.com/media/2tKDw0Ch4aclQseWGu/giphy.gif">
+<meta property="og:image" content="https://media.giphy.com/media/xT5LMTU1x0E2ZKCFEs/giphy.gif">
+<meta property="og:updated_time" content="2019-12-25T06:05:40.708Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dagger Series: elegantly handle your Activities and Fragments by AndroidInjector">
+<meta name="twitter:description" content="The storyI recently see many people have trouble with Google Dagger 2 library. To be honest, I think those Googlers should be carefully considering there are so many newbies like me can’t understand">
+<meta name="twitter:image" content="https://chauyanw.files.wordpress.com/2019/08/dagger-in-android.png?w=2924">
+
+<link rel="canonical" href="http://yoursite.com/2019/12/11/Dagger-Series-elegantly-handle-your-Activities-and-Fragments-by-AndroidInjector/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Dagger Series: elegantly handle your Activities and Fragments by AndroidInjector | 舊金山周記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149656006-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-149656006-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <script data-ad-client="ca-pub-2964291656930077" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">舊金山周記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">The Venture of San Francisco</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">34</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">34</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/11/Dagger-Series-elegantly-handle-your-Activities-and-Fragments-by-AndroidInjector/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chauyan">
+      <meta itemprop="description" content="Personal dev blog for sharing what I've learned.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="舊金山周記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Dagger Series: elegantly handle your Activities and Fragments by AndroidInjector
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-11 06:00:04" itemprop="dateCreated datePublished" datetime="2019-12-11T06:00:04-08:00">2019-12-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-12-24 22:05:40" itemprop="dateModified" datetime="2019-12-24T22:05:40-08:00">2019-12-24</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2019/12/11/Dagger-Series-elegantly-handle-your-Activities-and-Fragments-by-AndroidInjector/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/12/11/Dagger-Series-elegantly-handle-your-Activities-and-Fragments-by-AndroidInjector/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://chauyanw.files.wordpress.com/2019/08/dagger-in-android.png?w=2924" alt="dagger-in-android.png?w=2924"></p>
+<h4 id="The-story"><a href="#The-story" class="headerlink" title="The story"></a>The story</h4><p>I recently see many people have trouble with <a href="https://dagger.dev/" target="_blank" rel="noopener">Google Dagger 2</a> library. To be honest, I think those Googlers should be carefully considering there are so many newbies like me can’t understand what their document exactly wants to explain.</p>
+<p><img src="https://media.giphy.com/media/11ahZZugJHrdLO/giphy.gif" alt="giphy.gif"></p>
+<ul>
+<li>Every time, when I try to read the documents.*</li>
+</ul>
+<a id="more"></a>
+
+
+<p>That’s the reason that I decided to write a sample by using Dagger2, which we can reuse it in the future as a boilerplate without rewriting too many codes for it. Let’s start creating an Android application sample.</p>
+<h4 id="Create-a-new-project"><a href="#Create-a-new-project" class="headerlink" title="Create a new project"></a>Create a new project</h4><p>It’s pure and straightforward. Open the <code>Android Studio</code> IDE and create a <code>Kotlin</code> project.<br><img src="https://media.giphy.com/media/1fmBvkvmgm86Hw4WhK/giphy.gif" alt="giphy.gif"></p>
+<h4 id="Modify-build-gradle-file-of-the-App-module"><a href="#Modify-build-gradle-file-of-the-App-module" class="headerlink" title="Modify build.gradle file of the App module"></a>Modify <code>build.gradle</code> file of the App module</h4><ol>
+<li>add <code>kapt</code> plugin</li>
+<li>add dagger gradle implementations</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// dagger implementations</span><br><span class="line">kapt 'com.google.dagger:dagger-compiler:2.24'</span><br><span class="line">implementation 'com.google.dagger:dagger:2.24'</span><br><span class="line"></span><br><span class="line">// add dagger-support if you are using support library</span><br><span class="line">implementation 'com.google.dagger:dagger-android-support:2.24'</span><br></pre></td></tr></table></figure>
+
+<h4 id="Create-application-level-DI-graph"><a href="#Create-application-level-DI-graph" class="headerlink" title="Create application-level DI graph"></a>Create application-level DI graph</h4><p>Let’s create an <code>ApplicationComponent</code> and an application-level injector to help create the entire application DI graph first. Keep this <a href="https://docs.google.com/drawings/d/e/2PACX-1vRTIVWk2JFmE7WvPrVmjtHGzFyFfIUnCiSBEShK-S6vrLKZAJv6xwz7q296AtIteLKyf808sXCiWa-6/pub?w=960&h=720" target="_blank" rel="noopener">diagram</a> in mind. We need to think of the scope of our injection graph carefully.</p>
+<p><img src="https://docs.google.com/drawings/d/e/2PACX-1vRTIVWk2JFmE7WvPrVmjtHGzFyFfIUnCiSBEShK-S6vrLKZAJv6xwz7q296AtIteLKyf808sXCiWa-6/pub?w=960&h=720" alt="pub?w=960&amp;h=720"></p>
+<p>I also create an <code>Injectable</code> interface to describe a particular fragment that could be injected by <code>AndroidInjector</code> from Dagger. We can see the detail later.</p>
+<h4 id="Implement-HasAndroidInjector"><a href="#Implement-HasAndroidInjector" class="headerlink" title="Implement HasAndroidInjector"></a>Implement <code>HasAndroidInjector</code></h4><p>You need to implement the <code>HasAndroidInject</code> interface to let Dagger know how to correctly inject your android components included <code>Activity,</code> <code>Fragment,</code> and <code>Service</code> these native components. We already create an application-level component in the previous section. It would make sense to implement <code>HasAndroidInjector</code> in your Application:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SampleApplication</span>: <span class="type">Application</span></span>(), HasAndroidInjector &#123;</span><br><span class="line">  <span class="meta">@Inject</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> activityInjector: </span><br><span class="line">                          DispatchingAndroidInjector&lt;Any&gt;</span><br><span class="line">                          </span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">androidInjector</span><span class="params">()</span></span> = activityInjector</span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// init application component.</span></span><br><span class="line">    AppInjector.inject(<span class="keyword">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>In this way, we can get rid of writing injections in every activity or fragment. You might notice why we use <code>Any</code> type instead of using the <code>Activity</code> type. That’s because Dagger changes the way to inject android components - <a href="https://github.com/google/dagger/commit/9bdbb54a07958ad92ab21c69c630cd4783956b16#diff-2a00c299a435e0379f31c188c920c32a" target="_blank" rel="noopener">check this out</a><br>. The reason to use <code>Any</code> type is to make it more generic.</p>
+<p>Are you still with me now? Ok, it seems we have everything we need at this moment. Let’s run this sample application and see what would happen. Okay, it crashed.</p>
+<p><img src="https://media.giphy.com/media/l0G170TiMx2d58RnG/giphy.gif" alt="giphy.gif"><br><em>It doesn’t work !!</em></p>
+<p><strong>Crash logs:</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Caused by: java.lang.IllegalArgumentException: No injector factory bound for Class at dagger.android.DispatchingAndroidInjector.inject(DispatchingAndroidInjector.java:136)</span><br><span class="line">at dagger.android.AndroidInjection.inject(AndroidInjection.java:181)</span><br><span class="line">at dagger.android.AndroidInjection.inject(AndroidInjection.java:55)</span><br><span class="line">at idv.chauyan.androiddaggersample.di.AppInjector.handleActivity(AppInjector.kt:47)</span><br><span class="line">at idv.chauyan.androiddaggersample.di.AppInjector.access$handleActivity(AppInjector.kt:13)</span><br><span class="line">at idv.chauyan.androiddaggersample.di.AppInjector$inject$1.onActivityCreated(AppInjector.kt:27)</span><br></pre></td></tr></table></figure>
+
+<p>The log said <code>Dagger</code> can’t do injection without an <code>injector factory.</code> Then, what’s the <code>injector factory</code>? Well, you would need to create <code>AndroidInjector. Factory</code> for each Activity to let Dagger know how to create the Activity instance. To create an <code>injector factory,</code> you would need to create <code>Subcomponent</code> for each <code>Activity,</code> check my post about <code>Subcomponent</code> - <a href="https://personaldevblog.firebaseapp.com/2019/12/07/Dagger-Series-How-do-you-use-it-in-your-Modularization#more" target="_blank" rel="noopener">here</a></p>
+<h4 id="Subcomponent-for-each-Activity"><a href="#Subcomponent-for-each-Activity" class="headerlink" title="Subcomponent for each Activity"></a>Subcomponent for each <code>Activity</code></h4><p>All activities would need to create their own <code>Subcomponents</code> and <code>Modules.</code> Subcomponents are the factories that create <code>AndroidInjectors</code> for a concrete subtype of a core Android type such as <code>Activity</code>/<code>Fragment.</code> Modules are the resources that a specific <code>Activity.class</code> needs. A Module can descript how to create the entry of <code>Activity.class</code> and <code>Subcomponent. Factory</code> to the map of injector factories used by <code>DispachAndroidInjector.</code> Dagger-Android uses this entry to build an Activity <code>Subcomponent</code> and perform injections for <code>Activity.class.</code></p>
+<p><strong>MainActivityComponent.kt</strong></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Subcomponent</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">MainActivityComponent</span>: <span class="type">AndroidInjector</span>&lt;<span class="type">MainActivity</span>&gt; </span>&#123;      </span><br><span class="line">  <span class="meta">@Subcomponent</span>.Factory    </span><br><span class="line">  <span class="class"><span class="keyword">interface</span> <span class="title">Factory</span> : <span class="type">AndroidInjector.Factory</span>&lt;<span class="type">MainActivity</span>&gt;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>MainActivityModule.kt</strong></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Module</span> (</span><br><span class="line">  subcomponents = [   </span><br><span class="line">    <span class="comment">// If you need to export the resources in </span></span><br><span class="line">    <span class="comment">// a module to a subcomponent, use this way.</span></span><br><span class="line">    MainActivityComponent::<span class="class"><span class="keyword">class</span></span></span><br><span class="line">  ]</span><br><span class="line">)</span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivityModule</span> </span>&#123;    </span><br><span class="line">  <span class="meta">@Binds</span>    </span><br><span class="line">  <span class="meta">@IntoMap</span>    </span><br><span class="line">  <span class="meta">@ClassKey(MainActivity::class)</span>    </span><br><span class="line">  <span class="keyword">internal</span> <span class="keyword">abstract</span> <span class="function"><span class="keyword">fun</span> <span class="title">bindMainActivityFactory</span><span class="params">(factory:   </span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="type">MainActivityComponent</span>.<span class="type">Factory</span>)</span></span>: AndroidInjector.Factory&lt;*&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>A tip to the subcomponents and modules</strong> if you don’t have any other resources needed to inject into your activities. You can just create a simple module with <code>@ContributesAndroidInjector</code> annotation. Here’s an example.</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Module</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AltMainActivityModule</span> </span>&#123;</span><br><span class="line">  <span class="meta">@ContributesAndroidInjector</span> (</span><br><span class="line">    <span class="comment">/* modules to install into the subcomponent */</span></span><br><span class="line">    modules = []</span><br><span class="line">  )</span><br><span class="line">  <span class="keyword">internal</span> <span class="keyword">abstract</span> <span class="function"><span class="keyword">fun</span> <span class="title">contributeYourAndroidInjector</span><span class="params">()</span></span>: MainActivity</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Dagger compiler would compile it into this way:</p>
+<p><strong>Generated code of AltMainActivityModule.kt by Dagger:</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Module</span>(</span><br><span class="line">  subcomponents =</span><br><span class="line">      AltMainActivityModule_ContributeYourAndroidInjector$app_debug.MainActivitySubcomponent.class</span><br><span class="line">)</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AltMainActivityModule_ContributeYourAndroidInjector</span>$<span class="title">app_debug</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> AltMainActivityModule_ContributeYourAndroidInjector$app_debug() &#123;&#125;</span><br><span class="line">  <span class="meta">@Binds</span></span><br><span class="line">  <span class="meta">@IntoMap</span></span><br><span class="line">  <span class="meta">@ClassKey</span>(MainActivity.class)</span><br><span class="line">  <span class="keyword">abstract</span> AndroidInjector.Factory&lt;?&gt; bindAndroidInjectorFactory(</span><br><span class="line">      MainActivitySubcomponent.Factory builder);</span><br><span class="line">  <span class="meta">@Subcomponent</span></span><br><span class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MainActivitySubcomponent</span> <span class="keyword">extends</span> </span></span><br><span class="line"><span class="class">                                         <span class="title">AndroidInjector</span>&lt;<span class="title">MainActivity</span>&gt; </span>&#123;</span><br><span class="line">    <span class="meta">@Subcomponent</span>.Factory</span><br><span class="line">    <span class="class"><span class="keyword">interface</span> <span class="title">Factory</span> <span class="keyword">extends</span> <span class="title">AndroidInjector</span>.<span class="title">Factory</span>&lt;<span class="title">MainActivity</span>&gt; </span>&#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>You can see if we use the annotation <code>@ContributeAndroidInjector</code> for our module, Dagger almost does the same thing for us. After having these two foundational parts for our <code>MainActivity,</code> now we put our <code>MainActivityModule</code> into <code>ApplicationComponent.</code> After doing this, everything should be ok. You can see the App runs well:</p>
+<p><img src="https://miro.medium.com/max/1400/1*dGWDFmW4OW84J5QDqQiXpQ.png" alt="1*dGWDFmW4OW84J5QDqQiXpQ.png"><br><em>Activities with Dagger support</em></p>
+<p>Ok, it’s time to verify if we are still on the correct road. Let’s create a <code>Car</code> model as a data model and try to inject it into <code>MainActivity</code> to see if it works as what we expect. I create a <code>Model</code> package and put this <code>Car</code> data class inside. It primarily provides a vehicle model name. You can put any vehicle model name here for testing injection. For convenience, I create a <code>ResourceModule</code> to provide the <code>Car</code> resource to <code>ApplicationComponent.</code> Here is the source code –</p>
+<p><strong>Car.kt</strong></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line"><span class="comment">// Let's pretend we have a nice car.</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">var</span> carModel: String = “mercedes-benz GLC <span class="number">300</span>” </span><br><span class="line">  <span class="function"><span class="keyword">fun</span> <span class="title">getModelName</span><span class="params">()</span></span>: String = carModel</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>ResourceModule.kt</strong></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Module</span> (</span><br><span class="line">  subcomponents = [</span><br><span class="line">    MainActivityComponent::<span class="class"><span class="keyword">class</span></span></span><br><span class="line">  ]</span><br><span class="line">)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ResourceModule</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Provides</span></span><br><span class="line">  <span class="function"><span class="keyword">fun</span> <span class="title">provideCar</span><span class="params">()</span></span>: Car = Car()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>We inject the <code>Car</code> into the <code>MainActivity.</code></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> : <span class="type">AppCompatActivity</span></span>() &#123;</span><br><span class="line">  <span class="comment">// Inject car here, try to print the car model name out.</span></span><br><span class="line">  <span class="meta">@Inject</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> car: Car</span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">    setContentView(R.layout.activity_main)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// See if we can successfully show the car model name on the screen.</span></span><br><span class="line">    CarModule.text = car.getModelName()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://miro.medium.com/max/1400/1*OnHyI7wh_K6CDB06i9YFzg.png" alt="Successfully show the car model name"><br><em>Successfully show the car model name</em></p>
+<p>Everything is so far so good, isn’t it? The next question would be: how to handle <code>Fragments</code> in the project? Let’s do it. To make it simple, I am not going to use the <a href="https://developer.android.com/guide/navigation" target="_blank" rel="noopener">NavigationController</a> by Google support library. Instead, I just create a simple <code>Fragment</code> and put it in another <code>Activity.</code> Our current sample App looks like this:</p>
+<p><img src="https://miro.medium.com/max/1400/1*j1tUI7WOKTtwupNh7X6_Og.png" alt="1*j1tUI7WOKTtwupNh7X6_Og.png"><br><em>New Fragment introduced in the project</em></p>
+<p>Let’s do the same thing we did on <code>MainActivity</code> for <code>DetailActivity</code> beforehand. Then, here comes a question you might be curious:</p>
+<blockquote>
+<p>Question: Which scope does your fragment want to bind?</p>
+</blockquote>
+<p><img src="https://media.giphy.com/media/2tKDw0Ch4aclQseWGu/giphy.gif" alt="giphy.gif"><br><em>Question about Fragment scope</em></p>
+<p>It’s not just to define modules for our activities, and you have to decide where to install modules for your Fragments. You can make your <code>Fragment component</code> as a subcomponent of a <code>Fragment component,</code> an <code>Activity component,</code> or the <code>Application component</code> -  it depends on what bindings your Fragment requires. For example, your fragments might need resources from an Activity, and then this fragment’s life cycle may come with the Activity. It would make sense to bind with your <code>ActivityComponent.</code> You should think about what your fragment wants to do first. In this sample, it’s more convenient that we just bind a fragment with <code>ActivityComponent.</code> You might notice I create an interface called <code>Injectable</code> which is an easier way for us to annotate which fragment should be injected by Dagger:</p>
+<p>In <code>AppInjectr.kt</code> We have this:</p>
+<p><strong>handleActivity function</strong></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">handleActivity</span><span class="params">(activity: <span class="type">Activity</span>)</span></span> &#123;</span><br><span class="line">  <span class="comment">// inject activity itself</span></span><br><span class="line">  AndroidInjection.inject(activity)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (activity <span class="keyword">is</span> FragmentActivity) &#123;</span><br><span class="line">    activity.supportFragmentManager.registerFragmentLifecycleCallbacks(</span><br><span class="line">        <span class="keyword">object</span> : FragmentManager.FragmentLifecycleCallbacks() &#123;</span><br><span class="line">          <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onFragmentCreated</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">            fm: <span class="type">FragmentManager</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">            f: <span class="type">Fragment</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">            savedInstanceState: <span class="type">Bundle</span>?</span></span></span><br><span class="line"><span class="function"><span class="params">          )</span></span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (f <span class="keyword">is</span> Injectable) &#123;</span><br><span class="line">              AndroidSupportInjection.inject(f)</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;, <span class="literal">true</span></span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>We check if the fragment is an <code>Injectable</code> object. If this Fragment implements <code>Injectable</code>, we can use <code>AndroidSupportInjection</code> to handle the Fragment. In this way, we don’t have to write code in a Fragment’s <code>onAttach</code> function like this for each Fragment:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FragmentSample</span>: <span class="type">Fragment</span></span>() &#123;</span><br><span class="line">  <span class="meta">@Inject</span> SomeDependency someDep;</span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onAttach</span><span class="params">(context: <span class="type">Context</span>?)</span></span> &#123;</span><br><span class="line">    AndroidSupportInjection.inject(<span class="keyword">this</span>)</span><br><span class="line">    <span class="keyword">super</span>.onAttach(context)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>How does <code>AndroidSupportInjection.inject()</code> work? Check the source code comments in <code>AndroidSupportInjection.java</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Injects &#123;<span class="meta">@code</span> fragment&#125; <span class="keyword">if</span> an associated &#123;<span class="meta">@link</span> AndroidInjector&#125; implementation can be found, otherwise <span class="keyword">throws</span> an &#123;<span class="meta">@link</span> IllegalArgumentException&#125;. Uses the following algorithm to find the appropriate &#123;<span class="meta">@code</span> AndroidInjector&#125; to</span><br><span class="line">use to inject &#123;<span class="meta">@code</span> fragment&#125;:</span><br><span class="line"></span><br><span class="line"><span class="number">1</span>. Walks the parent-fragment hierarchy to find the fragment that implements &#123;<span class="meta">@link</span> HasAndroidInjector&#125;, and <span class="keyword">if</span> none <span class="keyword">do</span></span><br><span class="line"></span><br><span class="line">2. Uses the &#123;@code fragment&#125;’s &#123;@link Fragment#getActivity() activity&#125; if it implements &#123;@link HasAndroidInjector&#125;, and if not</span><br><span class="line"></span><br><span class="line"><span class="number">3</span>. Uses the &#123;<span class="meta">@link</span> android.app.Application&#125; <span class="keyword">if</span> it implements &#123;<span class="meta">@link</span> HasAndroidInjector&#125;.</span><br><span class="line"></span><br><span class="line">If none of them implement &#123;<span class="meta">@link</span> HasAndroidInjector&#125;, a &#123;<span class="meta">@link</span> IllegalArgumentException&#125; is thrown. <span class="meta">@throw</span> IllegalArgumentException <span class="keyword">if</span> no parent fragment, activity, or application implements &#123;<span class="meta">@link</span> HasAndroidInjector&#125;.</span><br></pre></td></tr></table></figure>
+
+<p>In our case, we’ve implemented the <code>HasAndroidInjector</code> at the Application level. According to the comment, it seems that we don’t need to implement the <code>HasAndroidInjector</code> in <code>DetailActivity</code> because this fragment eventually finds the <code>Application</code> has implemented the <code>HasAndroidInjector.</code> It sounds pretty reasonable. Doesn’t it? Ok, except this, what a <code>Fragment</code> needs just like what an <code>Activity</code> needs, it would needs Subcomponent and module for creating its own DI graph.</p>
+<p><strong>DetailFragmentComponent.kt</strong></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Subcomponent</span></span><br><span class="line"><span class="keyword">internal</span> <span class="class"><span class="keyword">interface</span> <span class="title">DetailFragmentComponent</span> : <span class="type">AndroidInjector</span>&lt;<span class="type">DetailFragment</span>&gt; </span>&#123;</span><br><span class="line">  <span class="meta">@Subcomponent</span>.Factory</span><br><span class="line">  <span class="class"><span class="keyword">interface</span> <span class="title">Factory</span> : <span class="type">AndroidInjector.Factory</span>&lt;<span class="type">DetailFragment</span>&gt;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>DetailFragmentModule.kt</strong></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Module(subcomponents = [</span></span><br><span class="line"><span class="meta">    DetailFragmentComponent::class</span></span><br><span class="line"><span class="meta">  ]</span></span><br><span class="line"><span class="meta">)</span></span><br><span class="line"><span class="keyword">internal</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">DetailFragmentModule</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Binds</span></span><br><span class="line">  <span class="meta">@IntoMap</span></span><br><span class="line">  <span class="meta">@ClassKey(DetailFragment::class)</span></span><br><span class="line">  <span class="keyword">internal</span> <span class="keyword">abstract</span> <span class="function"><span class="keyword">fun</span> <span class="title">bindDetailFragmentInjectorFactory</span><span class="params">(factory: <span class="type">DetailFragmentComponent</span>.<span class="type">Factory</span>)</span></span>: AndroidInjector.Factory&lt;*&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>We want to bind this fragment within <code>DetailActivity,</code> so we also need to update <code>DetailActivityComponent</code> itself.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Subcomponent (</span><br><span class="line">    modules = [</span><br><span class="line">      // here we bind with DetailActivity&apos;s DI graph</span><br><span class="line">      DetailFragmentModule::class</span><br><span class="line">    ]</span><br><span class="line">)</span><br><span class="line">interface DetailActivityComponent: AndroidInjector&lt;DetailActivity&gt; &#123;</span><br><span class="line">  @Subcomponent.Factory</span><br><span class="line">  interface Factory : AndroidInjector.Factory&lt;DetailActivity&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>It looks very similar to Activity’s part. It’s time to verify if we correctly handle the Fragment Injection now. But, it shows errors.</p>
+<p>We see this error:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Caused by: java.lang.IllegalArgumentException: No injector factory bound for Class&lt;idv.chauyan.dagger_boilerplate.ui.detail.ui.detail.DetailFragment</span><br></pre></td></tr></table></figure>
+
+<p>It’s bizarre. How come we already implement the <code>HasAndroidInjector</code> and two essentials for this <code>DetailFragment,</code> but it still shows this error? If you use the breakpoint, you can see Dagger does find the <code>SampleApplication,</code> which implemented the <code>HasAndroidInjector,</code> but it obviously can’t find the injector factory from the map of <code>SampleApplication.class</code> &amp; <code>ApplicationComponent.</code> In the <code>DispatchAndroidInjector.java</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public boolean maybeInject(T instance) &#123;</span><br><span class="line">  Provider&lt;AndroidInjector.Factory&lt;?&gt;&gt; factoryProvider =  </span><br><span class="line">            injectorFactories.get(instance.getClass().getName());</span><br><span class="line">  if (factoryProvider == null) &#123;</span><br><span class="line">    return false;</span><br><span class="line">  &#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Although we have <code>HasAndroidInjector</code> in Application-level, we still need to implement that in Activity-level. In our case, we put the <code>FragmentModule</code> in <code>ActivityComponent,</code> which means Activity should take care of Fragment Injection stuff.</p>
+<p><strong>DetailActivity.kt</strong></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DetailActivity</span> : <span class="type">AppCompatActivity</span></span>(), HasAndroidInjector &#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Inject</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> fragmentInjector: </span><br><span class="line">                            DispatchingAndroidInjector&lt;Any&gt;</span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">androidInjector</span><span class="params">()</span></span>: AndroidInjector&lt;Any&gt; = </span><br><span class="line">                            fragmentInjector</span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Ok, we still need to test it a little bit to avoid any beautiful fantasy. Let’s update the <code>Car</code> model and provide a car model detail string to show:</p>
+<p><strong>Car.kt</strong></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">val</span> carModel: String = <span class="string">"mercedes-benz GLC 300"</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">val</span> carModelDetail: String = <span class="string">"here is the car model detail information"</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">fun</span> <span class="title">getModelName</span><span class="params">()</span></span>: String = carModel</span><br><span class="line">  <span class="function"><span class="keyword">fun</span> <span class="title">getModelDetail</span><span class="params">()</span></span>: String = carModelDetail</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Inject it into <code>DetailFragment</code>:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DetailFragment</span> : <span class="type">Fragment</span></span>(), Injectable &#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Inject</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> car: Car</span><br><span class="line"></span><br><span class="line">  <span class="keyword">companion</span> <span class="keyword">object</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">newInstance</span><span class="params">()</span></span> = DetailFragment()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreateView</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    inflater: <span class="type">LayoutInflater</span>, container: <span class="type">ViewGroup</span>?,</span></span></span><br><span class="line"><span class="function"><span class="params">    savedInstanceState: <span class="type">Bundle</span>?</span></span></span><br><span class="line"><span class="function"><span class="params">  )</span></span>: View &#123;</span><br><span class="line">    <span class="keyword">return</span> inflater.inflate(R.layout.detail_fragment, container, <span class="literal">false</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onResume</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onResume()</span><br><span class="line"></span><br><span class="line">    message.text = car.getModelDetail()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://media.giphy.com/media/xT5LMTU1x0E2ZKCFEs/giphy.gif" alt><br><em>New Fragment introduced in the project</em></p>
+<p>It works very well. Ok, you can find the whole project at <a href="https://github.com/wangchauyan/Dagger-Boilerplate" target="_blank" rel="noopener"><strong>HERE!</strong></a>. I am going to dive a little bit deeper into <code>Dynamic-Feature-Module</code> in the next post. </p>
+<p>Happy coding. Enjoy.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android-Dagger2-Native-Components-AndroidInjector/" rel="tag"># Android, Dagger2, Native Components, AndroidInjector</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/07/Dagger-Series-How-do-you-use-it-in-your-Modularization/" rel="prev" title="Dagger Series: How do you use it in your Modularization?">
+      <i class="fa fa-chevron-left"></i> Dagger Series: How do you use it in your Modularization?
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments" id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#The-story"><span class="nav-number">1.</span> <span class="nav-text">The story</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Create-a-new-project"><span class="nav-number">2.</span> <span class="nav-text">Create a new project</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Modify-build-gradle-file-of-the-App-module"><span class="nav-number">3.</span> <span class="nav-text">Modify build.gradle file of the App module</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Create-application-level-DI-graph"><span class="nav-number">4.</span> <span class="nav-text">Create application-level DI graph</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Implement-HasAndroidInjector"><span class="nav-number">5.</span> <span class="nav-text">Implement HasAndroidInjector</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Subcomponent-for-each-Activity"><span class="nav-number">6.</span> <span class="nav-text">Subcomponent for each Activity</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chauyan</p>
+  <div class="site-description" itemprop="description">Personal dev blog for sharing what I've learned.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wangchauyan" title="GitHub → https://github.com/wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/deathrid" title="Twitter → https://twitter.com/deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https://www.facebook.com/chauyanw/" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chauyan</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://chauyan.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  function loadComments() {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: {page: {
+            url: "http://yoursite.com/2019/12/11/Dagger-Series-elegantly-handle-your-Activities-and-Fragments-by-AndroidInjector/",
+            identifier: "2019/12/11/Dagger-Series-elegantly-handle-your-Activities-and-Fragments-by-AndroidInjector/",
+            title: "Dagger Series: elegantly handle your Activities and Fragments by AndroidInjector"
+          }
+        }
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://chauyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  }
+    window.addEventListener('load', loadComments, false);
+</script>
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCqTNIS0PZUFVzFmQOCcFEheWocG9daymY",
+    authDomain: "personaldevblog.firebaseapp.com",
+    databaseURL: "https://personaldevblog.firebaseio.com",
+    projectId: "personaldevblog",
+    storageBucket: "personaldevblog.appspot.com",
+    messagingSenderId: "785621246959",
+    appId: "1:785621246959:web:87cab80109fd2701f44c1a",
+    measurementId: "G-4KWYT0P8Z8"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+</body>
+</html>
