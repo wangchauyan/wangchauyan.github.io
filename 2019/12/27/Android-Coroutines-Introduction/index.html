@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="I recently read the source code of Coroutines. It’s pretty fun, and I’ve learned a lot from the source code. I am going to share some I learned here. I would break the learning into several parts. I">
+<meta name="keywords" content="Android, Coroutines">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Coroutines - Introduction">
+<meta property="og:url" content="http://yoursite.com/2019/12/27/Android-Coroutines-Introduction/index.html">
+<meta property="og:site_name" content="舊金山周記">
+<meta property="og:description" content="I recently read the source code of Coroutines. It’s pretty fun, and I’ve learned a lot from the source code. I am going to share some I learned here. I would break the learning into several parts. I">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://chauyanw.files.wordpress.com/2019/08/kotlin-coroutines-1.png?w=2924">
+<meta property="og:updated_time" content="2020-01-01T07:11:33.600Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android Coroutines - Introduction">
+<meta name="twitter:description" content="I recently read the source code of Coroutines. It’s pretty fun, and I’ve learned a lot from the source code. I am going to share some I learned here. I would break the learning into several parts. I">
+<meta name="twitter:image" content="https://chauyanw.files.wordpress.com/2019/08/kotlin-coroutines-1.png?w=2924">
+
+<link rel="canonical" href="http://yoursite.com/2019/12/27/Android-Coroutines-Introduction/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Android Coroutines - Introduction | 舊金山周記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149656006-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-149656006-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <script data-ad-client="ca-pub-2964291656930077" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">舊金山周記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">The Venture of San Francisco</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">35</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">36</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/27/Android-Coroutines-Introduction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chauyan">
+      <meta itemprop="description" content="Personal dev blog for sharing what I've learned.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="舊金山周記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android Coroutines - Introduction
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-27 17:51:42" itemprop="dateCreated datePublished" datetime="2019-12-27T17:51:42-08:00">2019-12-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-12-31 23:11:33" itemprop="dateModified" datetime="2019-12-31T23:11:33-08:00">2019-12-31</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2019/12/27/Android-Coroutines-Introduction/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/12/27/Android-Coroutines-Introduction/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://chauyanw.files.wordpress.com/2019/08/kotlin-coroutines-1.png?w=2924" alt="kotlin-coroutines-1.png?w=2924"></p>
+<p>I recently read the source code of <code>Coroutines.</code> It’s pretty fun, and I’ve learned a lot from the source code. I am going to share some I learned here. I would break the learning into several parts. I hope everyone can find something useful for your projects.</p>
+<p>I download the latest master branch code at <a href="https://github.com/Kotlin/kotlinx.coroutines" target="_blank" rel="noopener"><strong>HERE</strong></a>, and if you are interested, you can just download the official release version to try. So, it’s up to you to choose either the official release version or the latest master branch. And the Kotlin version is <code>1.3.61</code> check <a href="https://github.com/Kotlin/kotlinx.coroutines/blob/master/README.md" target="_blank" rel="noopener">README</a> here.</p>
+<h4 id="Part1-Introduction"><a href="#Part1-Introduction" class="headerlink" title="Part1 - Introduction"></a>Part1 - Introduction</h4><p>Before starting the introduction, let’s think of a question: how do you handle the CPU-consuming tasks or networking accessing works? We can’t do these tasks in the main thread (in Android, which is UIThread). Then we need to think about using the multiple threading techniques to solve our questions. In Java, you can use <code>Thread</code> to do this.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Runnable task = () -&gt; &#123;</span><br><span class="line">  String threadName = Thread.currentThread().getName();</span><br><span class="line">  System.out.println(<span class="string">"Hello "</span> + threadName);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Thread thread = <span class="keyword">new</span> Thread(task);</span><br><span class="line">thread.start();</span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">"Done!"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>You can see the result:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Hello Thread-0</span><br><span class="line">Done!</span><br></pre></td></tr></table></figure>
+
+<p>or</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Done!</span><br><span class="line">Hello Thread-0</span><br></pre></td></tr></table></figure>
+
+<p>But creating threads frequently is a resource-consuming behavior, you would want to create a <code>ThreadPool</code> to reduce the cost.</p>
+<p>In Android, we have several options for concurrency tasks. For example, you can use the <code>AsyncTask,</code> <code>Background Service,</code> and <code>Handler</code> in the Android projects.</p>
+<p>The second question is: how do you communicate between two different threads? In Java, you need to manipulate the <code>Thread</code> interaction by using <code>IPC</code> mechanism, for example, shared memory, Pipe, named Pipe, mapped memory, semaphore, socket, message, and signals. There are many techniques we can use. What about concurrency in Kotlin’s world? Do we have any weapons for arming? Fortunately, we can still use the same techniques from the Java world. But Kotlin gives us a more powerful weapon, Coroutines, to use.</p>
+<p>Let’s see an example first. We have three functions which need the results from the previous one finished the job.</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">requestToken</span><span class="params">()</span></span>: Token &#123; ... &#125;</span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">createPost</span><span class="params">(token: <span class="type">Token</span>, item: <span class="type">Item</span>)</span></span>: Post &#123; ... &#125;</span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">processPost</span><span class="params">(post: <span class="type">Post</span>)</span></span> &#123; ... &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// post a specific item</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">postItem</span><span class="params">(item: <span class="type">Item</span>)</span></span> &#123;</span><br><span class="line">  <span class="keyword">val</span> token = requestToken()</span><br><span class="line">  <span class="keyword">val</span> post = createPost(token, item)</span><br><span class="line">  processPost(post)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>These three functions are probably time-consuming tasks. Hence, it’s not able to put them in the UI thread in the Android project. What can we do now?</p>
+<h5 id="By-using-a-Thread"><a href="#By-using-a-Thread" class="headerlink" title="By using a Thread"></a>By using a Thread</h5><p>As I mentioned before, create a thread to run it.</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Thread(&#123;</span><br><span class="line">  postItem(item)</span><br><span class="line">&#125;).start()</span><br></pre></td></tr></table></figure>
+
+<p>Keeping this in mind: thread is not cheap. You would need to do context-switch, which is costly.</p>
+<h5 id="By-using-a-Callback"><a href="#By-using-a-Callback" class="headerlink" title="By using a Callback"></a>By using a Callback</h5><p>We can also use a callback function plus threading to catch the result from each function.</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">postItem</span><span class="params">(item: <span class="type">Item</span>)</span></span> &#123;</span><br><span class="line">  preparePostAsync &#123; token -&gt;</span><br><span class="line">    submitPostAsync(token, item) &#123; post -&gt;</span><br><span class="line">      processPost(post)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">preparePostAsync</span><span class="params">(callback: (<span class="type">Token</span>) -&gt; <span class="type">Unit</span>)</span></span> &#123;</span><br><span class="line">  <span class="comment">// make request and return immediately</span></span><br><span class="line">  <span class="comment">// arrange callback to be invoked later</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>What’s the drawback of using callback? The most known pitfall is the <code>callback hell.</code> That makes you hardly debug and read the source code.</p>
+<h5 id="By-using-Java-Future"><a href="#By-using-Java-Future" class="headerlink" title="By using Java Future"></a>By using Java <code>Future</code></h5><p>In Java 8, it introduces the <code>CompletableFuture.</code> This feature lets you connect several tasks.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">fun <span class="title">requestToken</span><span class="params">()</span>: CompletableFuture </span>&#123; ... &#125;</span><br><span class="line"><span class="function">fun <span class="title">createPost</span><span class="params">(token: Token, item: Item)</span>: CompletableFuture </span>&#123; ... &#125;</span><br><span class="line"><span class="function">fun <span class="title">processPost</span><span class="params">(post: Post)</span> </span>&#123; ... &#125;</span><br><span class="line"></span><br><span class="line"><span class="function">fun <span class="title">postItem</span><span class="params">(item: Item)</span> </span>&#123;</span><br><span class="line">  requestToken()</span><br><span class="line">    .thenCompose &#123; token -&gt; createPost(token, item) &#125;</span><br><span class="line">    .thenAccept &#123; post -&gt; processPost(post) &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="Rx-Extension"><a href="#Rx-Extension" class="headerlink" title="Rx Extension"></a>Rx Extension</h5><p>I believe there must be many developers who use this library.</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Single.fromCallable &#123; requestToken() &#125;</span><br><span class="line">  .map &#123; token -&gt; createPost(token, item) &#125;</span><br><span class="line">  .subscribe(</span><br><span class="line">    &#123; post -&gt; processPost(post) &#125;,</span><br><span class="line">    &#123; e -&gt; e.printStackTrace() &#125;</span><br><span class="line">  )</span><br></pre></td></tr></table></figure>
+
+<p>I think the biggest problem for me when using Rx is that the exception log is pretty hard to read. And it also creates too many instances that Rx needs and consumes too much memory.</p>
+<p>Here’s why Coroutines show and want to give developers another solution.</p>
+<h5 id="Coroutines"><a href="#Coroutines" class="headerlink" title="Coroutines"></a>Coroutines</h5><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">requestToken</span><span class="params">()</span></span>: Token &#123; ... &#125;</span><br><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">createPost</span><span class="params">(token: <span class="type">Token</span>, item: <span class="type">Item</span>)</span></span>: Post &#123; ... &#125;</span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">processPost</span><span class="params">(post: <span class="type">Post</span>)</span></span> &#123; ... &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">postItem</span><span class="params">(item: <span class="type">Item</span>)</span></span> &#123;</span><br><span class="line">  GlobalScope.launch &#123;</span><br><span class="line">    <span class="keyword">val</span> token = requestToken()</span><br><span class="line">    <span class="keyword">val</span> post = createPost(token, item)</span><br><span class="line">    processPost(post)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>It looks just like the previous code snap, doesn’t it? If we want to add a <code>try-catch</code> block inside the <code>postItem</code> function. Just add it. We don’t need any extra effort to handle it.</p>
+<p>First of all, let’s check how a coroutine works. A <code>Coroutine</code> is like a <code>Thread</code> in concept. But it’s much more lightweight than a real <code>Thread.</code> Several different coroutines can run on a <code>Thread,</code> and the Coroutine runtime manages them. You might remember the thread itself is not that cheap as you think because the system controls the threads, and it needs to do context-switch for you. </p>
+<p>Another reason that a thread is costly is because it would spend more resource on the creation and termination. So the good practice is to use a thread pool (to create some threads inside first) in advance. Let’s back to <code>Coroutines.</code> The <code>Coroutines</code> don’t have the same problem. It’s very lightweight, which means you can create a Coroutine anytime, anywhere. It’s controlled by Kotlin runtime, not by system.</p>
+<p>What’s the <code>Suspend</code> keyword? You would call suspending functions in the coroutines, just like regular functions. To call a suspending function, you need to declare the caller function as a suspending function as well. A suspending function can only be used in a coroutine or another suspending function.</p>
+<p>When you try to launch a coroutine, it would be like this:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GlobalScope.launch &#123;</span><br><span class="line">  processPost(post)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Check the launch function itself:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> CoroutineScope.<span class="title">launch</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  context: <span class="type">CoroutineContext</span> = EmptyCoroutineContext,</span></span></span><br><span class="line"><span class="function"><span class="params">  start: <span class="type">CoroutineStart</span> = CoroutineStart.DEFAULT,</span></span></span><br><span class="line"><span class="function"><span class="params">  block: <span class="type">suspend</span> <span class="type">CoroutineScope</span>.() -&gt; <span class="type">Unit</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>: Job</span><br></pre></td></tr></table></figure>
+
+<p>It launches a new coroutine without blocking the current thread and returns a reference to the coroutine as a <code>Job.</code> You can use this <code>Job</code> object to cancel the coroutine execution by calling <code>Job.cancel().</code> A CoroutineScope defines a scope for new coroutines. It contains a <code>CoroutineContext</code> variable, which describes what factors would be involved in the CoroutineScope by setting up the <code>Element.</code></p>
+<p>Which thread would host a specific coroutine? In launch function, if you don’t assign a dispatcher, it would use <code>Dispatchers. Default</code>.</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> CoroutineScope.<span class="title">launch</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  context: <span class="type">CoroutineContext</span> = EmptyCoroutineContext,</span></span></span><br><span class="line"><span class="function"><span class="params">  start: <span class="type">CoroutineStart</span> = CoroutineStart.DEFAULT,</span></span></span><br><span class="line"><span class="function"><span class="params">  block: <span class="type">suspend</span> <span class="type">CoroutineScope</span>.() -&gt; <span class="type">Unit</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>: Job &#123;</span><br><span class="line">  <span class="keyword">val</span> newContext = newCoroutineContext(context)</span><br><span class="line">  <span class="keyword">val</span> coroutine = <span class="keyword">if</span> (start.isLazy)</span><br><span class="line">  LazyStandaloneCoroutine(newContext, block) <span class="keyword">else</span></span><br><span class="line">  StandaloneCoroutine(newContext, active = <span class="literal">true</span>)</span><br><span class="line">  coroutine.start(start, coroutine, block)</span><br><span class="line">  <span class="keyword">return</span> coroutine</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>in <code>newCoroutineContext</code>, it will use <code>Dispatchers.Default</code> to find a thread to host a coroutine. There are several Dispatchers types:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">actual</span> <span class="keyword">val</span> Default: CoroutineDispatcher</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">actual</span> <span class="keyword">val</span> Main: MainCoroutineDispatcher</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">actual</span> <span class="keyword">val</span> Unconfined: CoroutineDispatcher</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">val</span> IO: CoroutineDispatcher</span><br></pre></td></tr></table></figure>
+
+<p>In the launch function, if the context does not have any dispatcher nor any other <code>ContinuationInterceptor,</code> then <code>Dispatchers. Default</code> would be used. The <code>Default</code> is a <code>CoroutineDispatcher,</code> which has a shared thread pool to use.</p>
+<p>What’s a <code>Job</code>? The most basic instances of <code>Job</code> are created with <code>launch</code> function of coroutine builder or with a <code>Job()</code> factory function. By default, a failure of any of the job’s children leads to an immediate failure of its parent and cancellation of the rest of its children. This behavior can be customized using <code>SupervisorJob</code>. Job has a simple life-cycle:</p>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>isActive</th>
+<th>isCompleted</th>
+<th>isCancelled</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><em>New</em> (optional initial state)</td>
+<td><code>false</code></td>
+<td><code>false</code></td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><em>Active</em> (default initial state)</td>
+<td><code>true</code></td>
+<td><code>false</code></td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><em>Completing</em> (transient state)</td>
+<td><code>true</code></td>
+<td><code>false</code></td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><em>Cancelling</em> (transient state)</td>
+<td><code>false</code></td>
+<td><code>false</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><em>Cancelled</em> (final state)</td>
+<td><code>false</code></td>
+<td><code>true</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><em>Completed</em> (final state)</td>
+<td><code>false</code></td>
+<td><code>true</code></td>
+<td><code>false</code></td>
+</tr>
+</tbody></table>
+<p>It has three different states: <code>isActive,</code> <code>isCompleted,</code> and <code>isCancelled.</code> Conceptually, execution of the job does not produce a result value. Jobs are launched solely for their side-effects. If you try to get a result from a <code>Job,</code> check the <code>Deferred.</code></p>
+<p>Here I introduce the basic concepts of Coroutines, which is very powerful and helps to reduce the complexity of multi-task in Kotlin world.</p>
+<p>Happy coding, enjoy.</p>
+<h4 id="Part2-Suspend-Resume-and-Dispatch"><a href="#Part2-Suspend-Resume-and-Dispatch" class="headerlink" title="Part2 - Suspend, Resume and Dispatch"></a>Part2 - Suspend, Resume and Dispatch</h4><h4 id="Part3-Callback-Interaction-and-Cancellation"><a href="#Part3-Callback-Interaction-and-Cancellation" class="headerlink" title="Part3 - Callback, Interaction and Cancellation"></a>Part3 - Callback, Interaction and Cancellation</h4><h4 id="Part4-Exception"><a href="#Part4-Exception" class="headerlink" title="Part4 - Exception"></a>Part4 - Exception</h4><h4 id="Part5-Concurrency"><a href="#Part5-Concurrency" class="headerlink" title="Part5 - Concurrency"></a>Part5 - Concurrency</h4><h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><ol>
+<li>KotlinConf 2017 - Introduction to Coroutines by Roman Elizarov</li>
+<li>Asynchronous Programming Techniques</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android-Coroutines/" rel="tag"># Android, Coroutines</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/27/Android-Thread-Model/" rel="prev" title="Android Thread Model">
+      <i class="fa fa-chevron-left"></i> Android Thread Model
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments" id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Part1-Introduction"><span class="nav-number">1.</span> <span class="nav-text">Part1 - Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#By-using-a-Thread"><span class="nav-number">1.1.</span> <span class="nav-text">By using a Thread</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#By-using-a-Callback"><span class="nav-number">1.2.</span> <span class="nav-text">By using a Callback</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#By-using-Java-Future"><span class="nav-number">1.3.</span> <span class="nav-text">By using Java Future</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Rx-Extension"><span class="nav-number">1.4.</span> <span class="nav-text">Rx Extension</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Coroutines"><span class="nav-number">1.5.</span> <span class="nav-text">Coroutines</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Part2-Suspend-Resume-and-Dispatch"><span class="nav-number">2.</span> <span class="nav-text">Part2 - Suspend, Resume and Dispatch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Part3-Callback-Interaction-and-Cancellation"><span class="nav-number">3.</span> <span class="nav-text">Part3 - Callback, Interaction and Cancellation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Part4-Exception"><span class="nav-number">4.</span> <span class="nav-text">Part4 - Exception</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Part5-Concurrency"><span class="nav-number">5.</span> <span class="nav-text">Part5 - Concurrency</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Reference"><span class="nav-number">6.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chauyan</p>
+  <div class="site-description" itemprop="description">Personal dev blog for sharing what I've learned.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wangchauyan" title="GitHub → https://github.com/wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/deathrid" title="Twitter → https://twitter.com/deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https://www.facebook.com/chauyanw/" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chauyan</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://chauyan.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  function loadComments() {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: {page: {
+            url: "http://yoursite.com/2019/12/27/Android-Coroutines-Introduction/",
+            identifier: "2019/12/27/Android-Coroutines-Introduction/",
+            title: "Android Coroutines - Introduction"
+          }
+        }
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://chauyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  }
+    window.addEventListener('load', loadComments, false);
+</script>
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCqTNIS0PZUFVzFmQOCcFEheWocG9daymY",
+    authDomain: "personaldevblog.firebaseapp.com",
+    databaseURL: "https://personaldevblog.firebaseio.com",
+    projectId: "personaldevblog",
+    storageBucket: "personaldevblog.appspot.com",
+    messagingSenderId: "785621246959",
+    appId: "1:785621246959:web:87cab80109fd2701f44c1a",
+    measurementId: "G-4KWYT0P8Z8"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+</body>
+</html>
