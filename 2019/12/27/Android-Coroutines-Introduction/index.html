@@ -55,7 +55,7 @@
 <meta property="og:description" content="I recently read the source code of Coroutines. It’s pretty fun, and I’ve learned a lot from the source code. I am going to share some I learned here. I would break the learning into several parts. I">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://chauyanw.files.wordpress.com/2019/08/kotlin-coroutines-1.png?w=2924">
-<meta property="og:updated_time" content="2020-01-01T07:11:33.600Z">
+<meta property="og:updated_time" content="2020-01-01T07:18:06.767Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Coroutines - Introduction">
 <meta name="twitter:description" content="I recently read the source code of Coroutines. It’s pretty fun, and I’ve learned a lot from the source code. I am going to share some I learned here. I would break the learning into several parts. I">
@@ -222,7 +222,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-12-31 23:11:33" itemprop="dateModified" datetime="2019-12-31T23:11:33-08:00">2019-12-31</time>
+                <time title="Modified: 2019-12-31 23:18:06" itemprop="dateModified" datetime="2019-12-31T23:18:06-08:00">2019-12-31</time>
               </span>
 
           
@@ -252,6 +252,8 @@
       
         <p><img src="https://chauyanw.files.wordpress.com/2019/08/kotlin-coroutines-1.png?w=2924" alt="kotlin-coroutines-1.png?w=2924"></p>
 <p>I recently read the source code of <code>Coroutines.</code> It’s pretty fun, and I’ve learned a lot from the source code. I am going to share some I learned here. I would break the learning into several parts. I hope everyone can find something useful for your projects.</p>
+<a id="more"></a>
+
 <p>I download the latest master branch code at <a href="https://github.com/Kotlin/kotlinx.coroutines" target="_blank" rel="noopener"><strong>HERE</strong></a>, and if you are interested, you can just download the official release version to try. So, it’s up to you to choose either the official release version or the latest master branch. And the Kotlin version is <code>1.3.61</code> check <a href="https://github.com/Kotlin/kotlinx.coroutines/blob/master/README.md" target="_blank" rel="noopener">README</a> here.</p>
 <h4 id="Part1-Introduction"><a href="#Part1-Introduction" class="headerlink" title="Part1 - Introduction"></a>Part1 - Introduction</h4><p>Before starting the introduction, let’s think of a question: how do you handle the CPU-consuming tasks or networking accessing works? We can’t do these tasks in the main thread (in Android, which is UIThread). Then we need to think about using the multiple threading techniques to solve our questions. In Java, you can use <code>Thread</code> to do this.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Runnable task = () -&gt; &#123;</span><br><span class="line">  String threadName = Thread.currentThread().getName();</span><br><span class="line">  System.out.println(<span class="string">"Hello "</span> + threadName);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Thread thread = <span class="keyword">new</span> Thread(task);</span><br><span class="line">thread.start();</span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">"Done!"</span>);</span><br></pre></td></tr></table></figure>
