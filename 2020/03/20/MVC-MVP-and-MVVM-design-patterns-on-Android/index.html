@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="MVC design patternIn the MVC design pattern, it divides the components into three different categories, Model, View, and Controller. You might see the user interaction would be directly on the Control">
+<meta name="keywords" content="Android, Design Pattern, MVC, MVP, MVVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MVC, MVP, and MVVM design patterns on Android">
+<meta property="og:url" content="http://yoursite.com/2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/index.html">
+<meta property="og:site_name" content="舊金山周記">
+<meta property="og:description" content="MVC design patternIn the MVC design pattern, it divides the components into three different categories, Model, View, and Controller. You might see the user interaction would be directly on the Control">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/MVC_Model.svg">
+<meta property="og:image" content="http://yoursite.com/2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/MVP_Model.svg">
+<meta property="og:image" content="http://yoursite.com/2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/MVVM_Model.svg">
+<meta property="og:updated_time" content="2020-03-22T22:54:57.562Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MVC, MVP, and MVVM design patterns on Android">
+<meta name="twitter:description" content="MVC design patternIn the MVC design pattern, it divides the components into three different categories, Model, View, and Controller. You might see the user interaction would be directly on the Control">
+<meta name="twitter:image" content="http://yoursite.com/2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/MVC_Model.svg">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>MVC, MVP, and MVVM design patterns on Android | 舊金山周記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149656006-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-149656006-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">舊金山周記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">The Venture of San Francisco</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">39</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">40</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chauyan">
+      <meta itemprop="description" content="Personal dev blog for sharing what I've learned.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="舊金山周記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MVC, MVP, and MVVM design patterns on Android
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-20 23:25:16" itemprop="dateCreated datePublished" datetime="2020-03-20T23:25:16-07:00">2020-03-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-03-22 15:54:57" itemprop="dateModified" datetime="2020-03-22T15:54:57-07:00">2020-03-22</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="MVC-design-pattern"><a href="#MVC-design-pattern" class="headerlink" title="MVC design pattern"></a>MVC design pattern</h4><p>In the MVC design pattern, it divides the components into three different categories, <strong>Model</strong>, <strong>View</strong>, and <strong>Controller</strong>. You might see the user interaction would be directly on the <code>Controller.</code> </p>
+<p><img src="2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/MVC_Model.svg" alt="MVC Model.svg"></p>
+<a id="more"></a>
+
+<h5 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h5><p>The <code>Model</code> would be the data model to store related data to display. It represents a collection of classes that results either from business logic or data received from outside. In this collection of data classes, they describe the business rules and show how to manipulate and change.</p>
+<h5 id="View"><a href="#View" class="headerlink" title="View"></a>View</h5><p>The <code>View</code> represents the UIs, which shows on the screen. It usually comes from XML or native Android views. In the MVC pattern, <code>View</code> usually monitors the changes of the data model and reflects these changes, for example, change the display content, change the boundary of view components based on different situations. </p>
+<h5 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h5><p>The <code>Controller</code> is in charge of processing user interactions. It usually passes the user requests to <code>View</code> to generate correct results and save to <code>Model.</code> In the meantime, it triggers the data update from the <code>Model</code> to <code>View.</code>  </p>
+<p>In Android, the MVC design pattern is prevalent and would be this first recommendation for the beginner. The pro would be that you can write the business logic into <code>Controllers</code> along with related <code>Data Model</code> to control the specific <code>View</code> components directly. It would be very convenient to see everything in the same place, but the drawback would be the <code>Controllers</code> become too large to maintain. </p>
+<h4 id="MVP-design-pattern"><a href="#MVP-design-pattern" class="headerlink" title="MVP design pattern"></a>MVP design pattern</h4><p>To solve some drawbacks in the MVC pattern, for example, hard to write the test cases, the super large controller code, the MVP comes up, and try to bring a new relationship between <code>Model,</code> <code>View,</code> and <code>Controller.</code> It derives from the MVC design pattern, where it replaces the <code>Controller</code> by the <code>Presenter.</code> This pattern divides the whole application into three major parts. </p>
+<p><img src="2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/MVP_Model.svg" alt="MVP Model.svg"></p>
+<h5 id="Model-1"><a href="#Model-1" class="headerlink" title="Model"></a>Model</h5><p>The <code>Model</code> is almost the same as the <code>Model</code> in the MVC design pattern. It represents a set of data classes where you can save and manipulate the results from user interactions. In the meantime, you can also define the business rules or the related actions in the <code>Model.</code></p>
+<h5 id="View-1"><a href="#View-1" class="headerlink" title="View"></a>View</h5><p>The <code>View</code> components come from XML or native Android UI components, for example, Activities, Fragments, and Views. In the <code>View</code> component, it doesn’t contain any operation logic. It’s only responsible for showing the data from the <code>Model.</code></p>
+<h5 id="Presenter"><a href="#Presenter" class="headerlink" title="Presenter"></a>Presenter</h5><p>The <code>Presenter</code> would be the bridge between the <code>View</code> and the <code>Model.</code> When a <code>View</code> receives the user interactions, it passes the request to the <code>Presenter</code> via a pre-defined interface in the <code>Contract.</code> After receiving the request from the <code>View,</code> the <code>Presenter</code> would process the request and save the final result into the <code>Model.</code> In the meantime, once a <code>Model</code> changes, it would notice the <code>Presenter.</code> Then the <code>Presenter</code> would also pass the changes to the <code>View</code> for rendering. The pro part of <code>MVP</code> design pattern is pretty obvious. Because of isolation between <code>View</code> and the <code>Model</code> by the <code>Presenter,</code> you can easily create a mock instance for the <code>View</code> and the <code>Model.</code> You can also easily create unit tests for these components. Due to the interface definitions, you can easily replace the different implementation of these three components. The biggest drawback is that a <code>Presenter</code> would become too complicated because of the increase in business logic. That would be a cost to maintain a complicated <code>Presenter.</code> </p>
+<h4 id="MVVM-design-pattern"><a href="#MVVM-design-pattern" class="headerlink" title="MVVM design pattern"></a>MVVM design pattern</h4><p>What problem does the MVVM design pattern try to solve, which we encounter in the MVP design pattern? The answer would be the tight coupling. You might see the relationship diagram above, which shows that every activity/fragment would have its presenter. When the complexity of a <code>View</code> rises, then the <code>Presenter</code> would become more complicated and harder handling. </p>
+<p>Back to the <code>MVVM,</code> Google has officially listed this as a recommendation architecture for the developers. Check the model diagram below. </p>
+<p><img src="2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/MVVM_Model.svg" alt="MVVM Model.svg"></p>
+<h5 id="Model-2"><a href="#Model-2" class="headerlink" title="Model"></a>Model</h5><p>The <code>Model</code> concept here is the same as in <code>MVC</code> and <code>MVP</code> models. </p>
+<h5 id="View-2"><a href="#View-2" class="headerlink" title="View"></a>View</h5><p>The <code>View</code> concept here is the same as in <code>MVC</code> and <code>MVP</code> models. </p>
+<h5 id="View-Model"><a href="#View-Model" class="headerlink" title="View Model"></a>View Model</h5><p>What does a <code>View Model</code> do? It maintains the state for Views, which needs to change the content display based on the state change. There is a <code>multiple to one</code> relationship between <code>View</code> and <code>ViewModel.</code> It doesn’t like the <code>MVP</code> model. In the <code>MVP</code> model, every view (activity/fragment/view) should have its presenter. This hard binding relationship would cause a little bit harder for writing the unit tests. But in the <code>MVVM,</code> that’s no longer an issue because you can use subscription to get data from the <code>View Model.</code> So, the <code>MVVM</code> provides an optimized observer pattern for the developers. </p>
+<p>That’s the very high-level overview of these three patterns. Happy coding, enjoy!</p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p>[1]<a href="https://developer.android.com/topic/libraries/architecture/viewmodel" target="_blank" rel="noopener">ViewModel Overview  |  Android Developers</a><br>[2]<a href="https://android.jlelse.eu/why-to-choose-mvvm-over-mvp-android-architecture-33c0f2de5516" target="_blank" rel="noopener">Why to choose MVVM over MVP — Android Architecture - AndroidPub</a><br>[3]<a href="https://medium.com/@ankit.sinhal/mvc-mvp-and-mvvm-design-pattern-6e169567bbad" target="_blank" rel="noopener">MVC, MVP and MVVM Design Pattern - Ankit Sinhal - Medium</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android-Design-Pattern-MVC-MVP-MVVM/" rel="tag"># Android, Design Pattern, MVC, MVP, MVVM</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/16/Shelter-in-place-for-COVID-19-in-San-Francisco/" rel="prev" title="Shelter in place for COVID-19 in San Francisco">
+      <i class="fa fa-chevron-left"></i> Shelter in place for COVID-19 in San Francisco
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+  <div>
+  <script type="text/javascript">
+	atOptions = {
+		'key' : '335b6d5fd0ce419dba15708955862700',
+		'format' : 'iframe',
+		'height' : 60,
+		'width' : 468,
+		'params' : {}
+	};
+	document.write('<scr' + 'ipt type="text/javascript" src="http' + (location.protocol === 'https:' ? 's' : '') + '://www.madcpms.com/335b6d5fd0ce419dba15708955862700/invoke.js"></scr' + 'ipt>');
+</script>
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments" id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#MVC-design-pattern"><span class="nav-number">1.</span> <span class="nav-text">MVC design pattern</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Model"><span class="nav-number">1.1.</span> <span class="nav-text">Model</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#View"><span class="nav-number">1.2.</span> <span class="nav-text">View</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Controller"><span class="nav-number">1.3.</span> <span class="nav-text">Controller</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MVP-design-pattern"><span class="nav-number">2.</span> <span class="nav-text">MVP design pattern</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Model-1"><span class="nav-number">2.1.</span> <span class="nav-text">Model</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#View-1"><span class="nav-number">2.2.</span> <span class="nav-text">View</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Presenter"><span class="nav-number">2.3.</span> <span class="nav-text">Presenter</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MVVM-design-pattern"><span class="nav-number">3.</span> <span class="nav-text">MVVM design pattern</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Model-2"><span class="nav-number">3.1.</span> <span class="nav-text">Model</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#View-2"><span class="nav-number">3.2.</span> <span class="nav-text">View</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#View-Model"><span class="nav-number">3.3.</span> <span class="nav-text">View Model</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chauyan</p>
+  <div class="site-description" itemprop="description">Personal dev blog for sharing what I've learned.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wangchauyan" title="GitHub → https://github.com/wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/deathrid" title="Twitter → https://twitter.com/deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https://www.facebook.com/chauyanw/" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chauyan</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://chauyan.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  function loadComments() {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: {page: {
+            url: "http://yoursite.com/2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/",
+            identifier: "2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/",
+            title: "MVC, MVP, and MVVM design patterns on Android"
+          }
+        }
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://chauyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  }
+    window.addEventListener('load', loadComments, false);
+</script>
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCqTNIS0PZUFVzFmQOCcFEheWocG9daymY",
+    authDomain: "personaldevblog.firebaseapp.com",
+    databaseURL: "https://personaldevblog.firebaseio.com",
+    projectId: "personaldevblog",
+    storageBucket: "personaldevblog.appspot.com",
+    messagingSenderId: "785621246959",
+    appId: "1:785621246959:web:87cab80109fd2701f44c1a",
+    measurementId: "G-4KWYT0P8Z8"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+</body>
+</html>
