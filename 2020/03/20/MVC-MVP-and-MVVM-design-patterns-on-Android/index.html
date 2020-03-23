@@ -54,14 +54,14 @@
 <meta property="og:site_name" content="舊金山周記">
 <meta property="og:description" content="MVC design patternIn the MVC design pattern, it divides the components into three different categories, Model, View, and Controller. You might see the user interaction would be directly on the Control">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/MVC-MVP-and-MVVM-design-patterns-on-Android/MVC_Model.svg">
+<meta property="og:image" content="https://personaldevblog.firebaseapp.com/2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/MVC_Model.svg">
 <meta property="og:image" content="https://personaldevblog.firebaseapp.com/2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/MVP_Model.svg">
 <meta property="og:image" content="https://personaldevblog.firebaseapp.com/2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/MVVM_Model.svg">
-<meta property="og:updated_time" content="2020-03-23T01:33:58.087Z">
+<meta property="og:updated_time" content="2020-03-23T01:40:52.367Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MVC, MVP, and MVVM design patterns on Android">
 <meta name="twitter:description" content="MVC design patternIn the MVC design pattern, it divides the components into three different categories, Model, View, and Controller. You might see the user interaction would be directly on the Control">
-<meta name="twitter:image" content="http://yoursite.com/2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/MVC-MVP-and-MVVM-design-patterns-on-Android/MVC_Model.svg">
+<meta name="twitter:image" content="https://personaldevblog.firebaseapp.com/2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/MVC_Model.svg">
 
 <link rel="canonical" href="http://yoursite.com/2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/">
 
@@ -224,7 +224,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-22 18:33:58" itemprop="dateModified" datetime="2020-03-22T18:33:58-07:00">2020-03-22</time>
+                <time title="Modified: 2020-03-22 18:40:52" itemprop="dateModified" datetime="2020-03-22T18:40:52-07:00">2020-03-22</time>
               </span>
 
           
@@ -253,7 +253,7 @@
 
       
         <h4 id="MVC-design-pattern"><a href="#MVC-design-pattern" class="headerlink" title="MVC design pattern"></a>MVC design pattern</h4><p>In the MVC design pattern, it divides the components into three different categories, <strong>Model</strong>, <strong>View</strong>, and <strong>Controller</strong>. You might see the user interaction would be directly on the <code>Controller.</code> </p>
-<p><img src="MVC-MVP-and-MVVM-design-patterns-on-Android/MVC_Model.svg" alt="MVP_Model.svg"></p>
+<p><img src="https://personaldevblog.firebaseapp.com/2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/MVC_Model.svg" height="50%">.</p>
 <a id="more"></a>
 
 <h5 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h5><p>The <code>Model</code> would be the data model to store related data to display. It represents a collection of classes that results either from business logic or data received from outside. In this collection of data classes, they describe the business rules and show how to manipulate and change.</p>
@@ -267,7 +267,7 @@
 <h5 id="Presenter"><a href="#Presenter" class="headerlink" title="Presenter"></a>Presenter</h5><p>The <code>Presenter</code> would be the bridge between the <code>View</code> and the <code>Model.</code> When a <code>View</code> receives the user interactions, it passes the request to the <code>Presenter</code> via a pre-defined interface in the <code>Contract.</code> After receiving the request from the <code>View,</code> the <code>Presenter</code> would process the request and save the final result into the <code>Model.</code> In the meantime, once a <code>Model</code> changes, it would notice the <code>Presenter.</code> Then the <code>Presenter</code> would also pass the changes to the <code>View</code> for rendering. The pro part of <code>MVP</code> design pattern is pretty obvious. Because of isolation between <code>View</code> and the <code>Model</code> by the <code>Presenter,</code> you can easily create a mock instance for the <code>View</code> and the <code>Model.</code> You can also easily create unit tests for these components. Due to the interface definitions, you can easily replace the different implementation of these three components. The biggest drawback is that a <code>Presenter</code> would become too complicated because of the increase in business logic. That would be a cost to maintain a complicated <code>Presenter.</code> </p>
 <h4 id="MVVM-design-pattern"><a href="#MVVM-design-pattern" class="headerlink" title="MVVM design pattern"></a>MVVM design pattern</h4><p>What problem does the MVVM design pattern try to solve, which we encounter in the MVP design pattern? The answer would be the tight coupling. You might see the relationship diagram above, which shows that every activity/fragment would have its presenter. When the complexity of a <code>View</code> rises, then the <code>Presenter</code> would become more complicated and harder handling. </p>
 <p>Back to the <code>MVVM,</code> Google has officially listed this as a recommendation architecture for the developers. Check the model diagram below. </p>
-<p><img src="https://personaldevblog.firebaseapp.com/2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/MVVM_Model.svg" alt="MVP_Model.svg"></p>
+<p><img src="https://personaldevblog.firebaseapp.com/2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/MVVM_Model.svg" alt="MVVM_Model.svg"></p>
 <h5 id="Model-2"><a href="#Model-2" class="headerlink" title="Model"></a>Model</h5><p>The <code>Model</code> concept here is the same as in <code>MVC</code> and <code>MVP</code> models. </p>
 <h5 id="View-2"><a href="#View-2" class="headerlink" title="View"></a>View</h5><p>The <code>View</code> concept here is the same as in <code>MVC</code> and <code>MVP</code> models. </p>
 <h5 id="View-Model"><a href="#View-Model" class="headerlink" title="View Model"></a>View Model</h5><p>What does a <code>View Model</code> do? It maintains the state for Views, which needs to change the content display based on the state change. There is a <code>multiple to one</code> relationship between <code>View</code> and <code>ViewModel.</code> It doesn’t like the <code>MVP</code> model. In the <code>MVP</code> model, every view (activity/fragment/view) should have its presenter. This hard binding relationship would cause a little bit harder for writing the unit tests. But in the <code>MVVM,</code> that’s no longer an issue because you can use subscription to get data from the <code>View Model.</code> So, the <code>MVVM</code> provides an optimized observer pattern for the developers. </p>
