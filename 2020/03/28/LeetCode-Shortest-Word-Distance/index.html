@@ -46,19 +46,20 @@
   };
 </script>
 
-  <meta name="description" content="Personal dev blog for sharing what I&apos;ve learned.">
-<meta name="keywords" content="San Francisco, Android, iOS, TypeScript, Self-Driving">
-<meta property="og:type" content="website">
-<meta property="og:title" content="舊金山周記">
-<meta property="og:url" content="http://yoursite.com/archives/2019/09/index.html">
+  <meta name="description" content="Shortest Word Distance (Easy)  Question:Given a list of words and two words word1 and word2, return the shortest distance between these two words in the list.">
+<meta name="keywords" content="LeetCode, LinkedIn, Microsoft, Paypal, Oracle, Array">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[LeetCode] Shortest Word Distance">
+<meta property="og:url" content="http://yoursite.com/2020/03/28/LeetCode-Shortest-Word-Distance/index.html">
 <meta property="og:site_name" content="舊金山周記">
-<meta property="og:description" content="Personal dev blog for sharing what I&apos;ve learned.">
+<meta property="og:description" content="Shortest Word Distance (Easy)  Question:Given a list of words and two words word1 and word2, return the shortest distance between these two words in the list.">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-03-29T05:49:23.119Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="舊金山周記">
-<meta name="twitter:description" content="Personal dev blog for sharing what I&apos;ve learned.">
+<meta name="twitter:title" content="[LeetCode] Shortest Word Distance">
+<meta name="twitter:description" content="Shortest Word Distance (Easy)  Question:Given a list of words and two words word1 and word2, return the shortest distance between these two words in the list.">
 
-<link rel="canonical" href="http://yoursite.com/archives/2019/09/">
+<link rel="canonical" href="http://yoursite.com/2020/03/28/LeetCode-Shortest-Word-Distance/">
 
 
 <script id="page-configurations">
@@ -66,13 +67,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
+    isPost: true,
     isPage: false,
-    isArchive: true
+    isArchive: false
   };
 </script>
 
-  <title>Archive | 舊金山周記</title>
+  <title>[LeetCode] Shortest Word Distance | 舊金山周記</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149656006-1"></script>
     <script>
@@ -184,74 +185,133 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/28/LeetCode-Shortest-Word-Distance/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chauyan">
+      <meta itemprop="description" content="Personal dev blog for sharing what I've learned.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="舊金山周記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [LeetCode] Shortest Word Distance
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-03-28 16:13:29 / Modified: 22:49:23" itemprop="dateCreated datePublished" datetime="2020-03-28T16:13:29-07:00">2020-03-28</time>
+            </span>
+
+          
   
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        
-        <span class="collection-header">OK! 41 posts in total. Keep on posting.</span>
-      </div>
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2020/03/28/LeetCode-Shortest-Word-Distance/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/03/28/LeetCode-Shortest-Word-Distance/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h1 class="collection-header">2019</h1>
-    </div>
+        <ol start="243">
+<li>Shortest Word Distance (Easy)</li>
+</ol>
+<p><strong>Question:</strong><br>Given a list of words and two words word1 and word2, return the shortest distance between these two words in the list.</p>
+<a id="more"></a>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+<p>Example:<br>Assume that words = <code>[&quot;practice&quot;, &quot;makes&quot;, &quot;perfect&quot;, &quot;coding&quot;, &quot;makes&quot;]</code>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: word1 = “coding”, word2 = “practice”</span><br><span class="line">Output: 3</span><br></pre></td></tr></table></figure>
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-09-20T06:39:00-07:00"
-              content="2019-09-20">
-          09-20
-        </time>
-      </div>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: word1 = &quot;makes&quot;, word2 = &quot;coding&quot;</span><br><span class="line">Output: 1</span><br></pre></td></tr></table></figure>
 
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/09/20/Composition-over-the-inheritance/" itemprop="url">
-            <span itemprop="name">Composition over the inheritance</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-09-11T17:10:00-07:00"
-              content="2019-09-11">
-          09-11
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/09/11/System-loading-test-by-using-Artillery/" itemprop="url">
-            <span itemprop="name">System loading test by using Artillery</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
+<p><strong>Note:</strong><br>You may assume that <em>word1</em> <strong>does not equal</strong> to <em>word2</em>, and word1 and word2 are both in the list.</p>
+<p><strong>Analysis:</strong></p>
+<p>This one is pretty straightforward. You can use two different word indices to represent <em>word1</em> and <em>word2</em> by given a single for-loop to find out these two different indices. The difference between these two indices would be the distance between <em>word1</em> and <em>word2</em>. You need to compare different distances to get the shortest one. That one would be our answer. So, the runtime complexity would be <code>O(n)</code> because you need to run through all elements in this word dictionary. And, the space complexity would be <code>O(1)</code> because we only need three variables to memorize the word indices and the result. </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">  public int shortestDistance(String[] words, String word1, String word2) &#123;</span><br><span class="line">    int wordIndex1 = -1, wordIndex2 = -1; </span><br><span class="line">    int minDistance = Integer.MAX_VALUE; </span><br><span class="line">    </span><br><span class="line">    for (int i = 0; i &lt; words.length; i++) &#123;</span><br><span class="line">      if (words[i].equals(word1)) wordIndex1 = i; </span><br><span class="line">      if (words[i].equals(word2)) wordIndex2 = i; </span><br><span class="line">      </span><br><span class="line">      if (wordIndex1 != -1 &amp;&amp; wordIndex2 != -1) &#123;</span><br><span class="line">        if (minDistance &gt; Math.abs(wordIndex1 - wordIndex2)) &#123;</span><br><span class="line">          minDistance = Math.abs(wordIndex1 - wordIndex2);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return minDistance;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
     </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/LeetCode-LinkedIn-Microsoft-Paypal-Oracle-Array/" rel="tag"># LeetCode, LinkedIn, Microsoft, Paypal, Oracle, Array</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/20/MVC-MVP-and-MVVM-design-patterns-on-Android/" rel="prev" title="MVC, MVP, and MVVM design patterns on Android">
+      <i class="fa fa-chevron-left"></i> MVC, MVP, and MVVM design patterns on Android
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
   </div>
-  
-  
-  
-
-  
-
+  <div>
+  <script type="text/javascript">
+	atOptions = {
+		'key' : '335b6d5fd0ce419dba15708955862700',
+		'format' : 'iframe',
+		'height' : 60,
+		'width' : 468,
+		'params' : {}
+	};
+	document.write('<scr' + 'ipt type="text/javascript" src="http' + (location.protocol === 'https:' ? 's' : '') + '://www.madcpms.com/335b6d5fd0ce419dba15708955862700/invoke.js"></scr' + 'ipt>');
+</script>
+  </div>
 
 
           </div>
           
+    
+  <div class="comments" id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
 
         </div>
           
@@ -398,6 +458,27 @@
   }
   // defer loading until the whole page loading is completed
   window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  function loadComments() {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: {page: {
+            url: "http://yoursite.com/2020/03/28/LeetCode-Shortest-Word-Distance/",
+            identifier: "2020/03/28/LeetCode-Shortest-Word-Distance/",
+            title: "[LeetCode] Shortest Word Distance"
+          }
+        }
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://chauyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  }
+    window.addEventListener('load', loadComments, false);
 </script>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->

@@ -50,7 +50,7 @@
 <meta name="keywords" content="San Francisco, Android, iOS, TypeScript, Self-Driving">
 <meta property="og:type" content="website">
 <meta property="og:title" content="舊金山周記">
-<meta property="og:url" content="http://yoursite.com/archives/2019/09/index.html">
+<meta property="og:url" content="http://yoursite.com/page/5/index.html">
 <meta property="og:site_name" content="舊金山周記">
 <meta property="og:description" content="Personal dev blog for sharing what I&apos;ve learned.">
 <meta property="og:locale" content="en">
@@ -58,21 +58,21 @@
 <meta name="twitter:title" content="舊金山周記">
 <meta name="twitter:description" content="Personal dev blog for sharing what I&apos;ve learned.">
 
-<link rel="canonical" href="http://yoursite.com/archives/2019/09/">
+<link rel="canonical" href="http://yoursite.com/page/5/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
+    isHome: true,
     isPost: false,
     isPage: false,
-    isArchive: true
+    isArchive: false
   };
 </script>
 
-  <title>Archive | 舊金山周記</title>
+  <title>舊金山周記</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149656006-1"></script>
     <script>
@@ -184,69 +184,101 @@
           <div class="content">
             
 
-  
-  
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
+  <div class="posts-expand">
         
-        <span class="collection-header">OK! 41 posts in total. Keep on posting.</span>
-      </div>
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/17/DP-Pixel-conversion-on-Android/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chauyan">
+      <meta itemprop="description" content="Personal dev blog for sharing what I've learned.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="舊金山周記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/01/17/DP-Pixel-conversion-on-Android/" class="post-title-link" itemprop="url">DP-Pixel conversion on Android</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-01-17 21:32:00" itemprop="dateCreated datePublished" datetime="2017-01-17T21:32:00-08:00">2017-01-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-10-12 05:33:25" itemprop="dateModified" datetime="2019-10-12T05:33:25-07:00">2019-10-12</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2017/01/17/DP-Pixel-conversion-on-Android/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/01/17/DP-Pixel-conversion-on-Android/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h1 class="collection-header">2019</h1>
+          <p><img src="https://chauyanw.files.wordpress.com/2017/01/android_multi_screen.png?w=2924" alt="android_multi_screen.png?w=2924"></p>
+<h4 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h4><p>This is just a note for myself to remind me how to do dp-to-pixel translation and vice versa. Let’s see how to do it. </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public static float convertDpToPixel(float dp, Context context) &#123;	</span><br><span class="line">	float px = dp * getDensity(context);	</span><br><span class="line">	return px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static float convertPixelToDp(float px, Context context) &#123;	 </span><br><span class="line">	float dp = px / getDensity(context);</span><br><span class="line">	return dp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static float getDensity(Activity context) &#123;</span><br><span class="line">	DisplayMetrics metrics = new DisplayMetrics();</span><br><span class="line">	context.getWindowManager().getDefaultDisplay().getMetrics(metrics);		</span><br><span class="line">	return metrics.density;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>It’s pretty simple, enjoy.<br>Happy Coding.</p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="[Reference]"></a>[Reference]</h4><ol>
+<li><a href="https://developer.android.com/reference/android/util/DisplayMetrics.html" target="_blank" rel="noopener">DisplayMetrics  |  Android Developers</a></li>
+<li><a href="https://developer.android.com/guide/practices/screens_support.html" target="_blank" rel="noopener">Screen compatibility overview  |  Android Developers</a></li>
+<li><a href="https://pixplicity.com/dp-px-converter/" target="_blank" rel="noopener">Pixplicity | DP/PX converter</a></li>
+</ol>
+
+      
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-09-20T06:39:00-07:00"
-              content="2019-09-20">
-          09-20
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/09/20/Composition-over-the-inheritance/" itemprop="url">
-            <span itemprop="name">Composition over the inheritance</span>
-          </a>
-      </h2>
-
-    </header>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
   </article>
+  
+  
+  
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-09-11T17:10:00-07:00"
-              content="2019-09-11">
-          09-11
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/09/11/System-loading-test-by-using-Artillery/" itemprop="url">
-            <span itemprop="name">System loading test by using Artillery</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-
-    </div>
   </div>
-  
-  
-  
 
   
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+  </nav>
 
 
 
