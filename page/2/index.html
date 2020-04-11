@@ -158,12 +158,12 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">42</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">44</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">43</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">45</span></a>
 
   </li>
   </ul>
@@ -185,6 +185,206 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/27/Android-Thread-Model/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chauyan">
+      <meta itemprop="description" content="Personal dev blog for sharing what I've learned.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="舊金山周記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/27/Android-Thread-Model/" class="post-title-link" itemprop="url">Android Thread Model</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-27 17:51:01" itemprop="dateCreated datePublished" datetime="2019-12-27T17:51:01-08:00">2019-12-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-11 00:38:55" itemprop="dateModified" datetime="2020-04-11T00:38:55-07:00">2020-04-11</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2019/12/27/Android-Thread-Model/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/12/27/Android-Thread-Model/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="Process-v-s-Thread"><a href="#Process-v-s-Thread" class="headerlink" title="Process v.s Thread"></a>Process v.s Thread</h4><p>Android OS is a kind of Linus system. Every time you launch an application on your device, it invokes a process to host this application and provides the necessary resources for the application. By default, all components that come from the same application would run in the same process and thread (called main thread or UI thread). By default, you would run all components, <code>Activity,</code> <code>Service,</code> <code>Receiver,</code> <code>Provider,</code> on the same process. But there’s a way for a specific need for developers who want to run these components on different processes. You can add <code>android: process</code> in the <code>AndroidManifest.xml</code> file in each component declaration. For example, </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span> </span></span><br><span class="line"><span class="tag">  <span class="attr">android:launchMode</span>=<span class="string">"singleTop"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">android:process</span>=<span class="string">"process_name"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">...</span></span></span><br><span class="line"><span class="tag">/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>You might be interested in how the Android system manages the processes, for example, what if we run out of the system resources, let’s say the memory, which process is going to be closed? Here is how system weight each process: </p>
+<ol>
+<li><p><strong>Foreground process</strong><br>There are three different scenarios for a foreground process. </p>
+<ul>
+<li>It’s running an <code>Activity</code> which you are interacting with. </li>
+<li>It’s running this method <code>BroadcastReceiver.onReceive()</code> in a broadcast receiver.</li>
+<li>It’s running these methods, <code>Service.onCreate()</code>, <code>Service.onStart()</code>, <code>Service.onDestroy()</code> in a <code>Service</code>. </li>
+</ul>
+</li>
+<li><p><strong>Visible process</strong><br>How to define if this process is a visible process? Here are some criterias: </p>
+<ul>
+<li>An <code>Activity</code> has been called <code>onPause()</code>. </li>
+<li>A <code>Service</code> has been launched by calling <code>Service.startForeground()</code>. </li>
+</ul>
+</li>
+<li><p><strong>Service process</strong><br>A service process is a process that holds a service launched by <code>startService().</code> </p>
+</li>
+<li><p><strong>Cached process</strong><br>A process has been clarified as a cached process means this process is no longer interacting with the users. For example, an <code>Activity</code> has been called <code>onStop()</code> function. Android system would have a list for these processes and would delete them when the system resource is not enough. </p>
+</li>
+</ol>
+<p>You can check the AOSP source code in the <code>ActivityManagerService.java</code> to get more information about this. <a href="https://android.googlesource.com/platform/frameworks/base/+/4f868ed/services/core/java/com/android/server/am/ActivityManagerService.java#2677" target="_blank" rel="noopener">(services/core/java/com/android/server/am/ActivityManagerService.java - platform/frameworks/base)</a></p>
+<p>We already have a picture of what the process is and how the Android system measures a process. Now, we need to dive into the process to see what a thread is and what main/UI thread means. When you launch an application, the Android system creates a thread of execution for this application called <code>main.</code> The main thread is responsible for dispatching events (included drawing events) to user interface widgets. Due to this reason, the main thread is sometimes called <code>UIThread.</code> The main thread is not always the UI thread. If you check the <a href="https://developer.android.com/studio/write/annotations#thread-annotations" target="_blank" rel="noopener">annotations</a>, you can find two annotations called <code>@MainThread</code> and <code>@UiThread.</code> They are usually the same, but you can assign different threads as the UI thread too. If you check <a href="https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/app/Activity.java#7746" target="_blank" rel="noopener"><code>Activity.java</code></a> in the AOSP project, you can see there are two variables that one is <code>mUiThread</code> and another one is <code>mMainThread.</code> </p>
+<p>The Android system doesn’t create a specific thread to run different components that means, by default, all components run on <code>MainThread.</code> You are not allowed to do heavy work loading, such as network loading on the main thread. It would cause <code>ANR</code> - <a href="https://developer.android.com/training/articles/perf-anr#anr" target="_blank" rel="noopener">application not responding</a> error. You would need to create another thread to handle these heavy-loading jobs. That comes to another problem. The Android UI toolkits are not thread-safe, so you can’t operate UIs in another thread, not in the main thread. You can send <code>events</code> back to the main thread to control the UI. For instance, you want to display a picture that comes from the internet, </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Thread(Runnable &#123;</span><br><span class="line">  // a potentially time consuming task</span><br><span class="line">  val bitmap = processBitMap(&quot;image.png&quot;)</span><br><span class="line">  imageView.post &#123;</span><br><span class="line">      imageView.setImageBitmap(bitmap)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;).start()</span><br></pre></td></tr></table></figure>
+
+<p>You should post this update event to the main thread and update the image view. </p>
+<p>Here is come high-level overview of the thread model in the Android system. I hope you find something useful in this article. Enjoy!</p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="[Reference]"></a>[Reference]</h4><p>[1] <a href="https://medium.com/androiddevelopers/who-lives-and-who-dies-process-priorities-on-android-cb151f39044f" target="_blank" rel="noopener">Who lives and who dies? Process priorities on Android</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/11/Dagger-Series-elegantly-handle-your-Activities-and-Fragments-by-AndroidInjector/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chauyan">
+      <meta itemprop="description" content="Personal dev blog for sharing what I've learned.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="舊金山周記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/11/Dagger-Series-elegantly-handle-your-Activities-and-Fragments-by-AndroidInjector/" class="post-title-link" itemprop="url">Dagger Series: Elegantly handle your Activities and Fragments by AndroidInjector</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-11 06:00:04" itemprop="dateCreated datePublished" datetime="2019-12-11T06:00:04-08:00">2019-12-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-01-01 13:42:42" itemprop="dateModified" datetime="2020-01-01T13:42:42-08:00">2020-01-01</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2019/12/11/Dagger-Series-elegantly-handle-your-Activities-and-Fragments-by-AndroidInjector/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/12/11/Dagger-Series-elegantly-handle-your-Activities-and-Fragments-by-AndroidInjector/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="https://chauyanw.files.wordpress.com/2019/08/dagger-in-android.png?w=2924" alt="dagger-in-android.png?w=2924"></p>
+<h4 id="The-story"><a href="#The-story" class="headerlink" title="The story"></a>The story</h4><p>I recently see many people have trouble with <a href="https://dagger.dev/" target="_blank" rel="noopener">Google Dagger 2</a> library. To be honest, I think those Googlers should be carefully considering there are so many newbies like me can’t understand what their document exactly wants to explain.</p>
+<p><img src="https://media.giphy.com/media/11ahZZugJHrdLO/giphy.gif" alt="giphy.gif"></p>
+<ul>
+<li>Every time, when I try to read the documents.*</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/12/11/Dagger-Series-elegantly-handle-your-Activities-and-Fragments-by-AndroidInjector/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -881,189 +1081,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/28/The-difference-between-import-from-and-import-require-in-TypeScript/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chauyan">
-      <meta itemprop="description" content="Personal dev blog for sharing what I've learned.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="舊金山周記">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/08/28/The-difference-between-import-from-and-import-require-in-TypeScript/" class="post-title-link" itemprop="url">The difference between import from and import require in TypeScript</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-08-28 21:45:00" itemprop="dateCreated datePublished" datetime="2019-08-28T21:45:00-07:00">2019-08-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-12-03 05:47:06" itemprop="dateModified" datetime="2019-12-03T05:47:06-08:00">2019-12-03</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2019/08/28/The-difference-between-import-from-and-import-require-in-TypeScript/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/08/28/The-difference-between-import-from-and-import-require-in-TypeScript/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="https://chauyanw.files.wordpress.com/2019/07/typescriptimage.jpeg?w=2924" alt="typescriptimage.jpeg?w=2924"></p>
-<p>You might sometimes see <code>import * from library</code> in the third-party library or some project, and in the meantime, you can also see this code <code>import something = require(&#39;library&#39;).</code> Would you wonder what the difference between these two sentences is? Here is the explanation about what difference between <code>import from</code> and <code>import require</code> is. </p>
-<p>Let’s see an example first, and you can find these two usages: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import uuid = require(&apos;uuid&apos;);</span><br></pre></td></tr></table></figure>
-
-<p>And, another way like this: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import uuid from &apos;uuid&apos;;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/08/28/The-difference-between-import-from-and-import-require-in-TypeScript/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/22/Import-path-in-TypeScript/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chauyan">
-      <meta itemprop="description" content="Personal dev blog for sharing what I've learned.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="舊金山周記">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/08/22/Import-path-in-TypeScript/" class="post-title-link" itemprop="url">Import path in TypeScript</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-08-22 10:42:00" itemprop="dateCreated datePublished" datetime="2019-08-22T10:42:00-07:00">2019-08-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-11-13 06:01:49" itemprop="dateModified" datetime="2019-11-13T06:01:49-08:00">2019-11-13</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2019/08/22/Import-path-in-TypeScript/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/08/22/Import-path-in-TypeScript/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="https://chauyanw.files.wordpress.com/2019/07/typescriptimage.jpeg?w=2924" alt="typescriptimage.jpeg?w=2924"></p>
-<h4 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h4><p>In the recent project, we’ve mentioned about one question:</p>
-<blockquote>
-<p>why do we do our imports as relative paths rather than absolute paths? It’s not easy to figure out what’s the correct path. </p>
-</blockquote>
-<p>We then start discussing what the pros and cons are for using an absolute path or relative path. To my best knowledge, I always voted for the relative path, cause that won’t cause a problem when we try to deploy the service into different file paths. But the con is that we need first to figure out what’s the correct import path. But using an absolute import path is the contrary.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/08/22/Import-path-in-TypeScript/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1112,12 +1129,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
