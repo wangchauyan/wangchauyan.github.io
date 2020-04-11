@@ -54,7 +54,7 @@
 <meta property="og:site_name" content="舊金山周記">
 <meta property="og:description" content="Process v.s ThreadAndroid OS is a kind of Linus system. Every time you launch an application on your device, it invokes a process to host this application and provides the necessary resources for the">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-04-11T07:38:55.099Z">
+<meta property="og:updated_time" content="2020-04-11T07:40:41.757Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Thread Model">
 <meta name="twitter:description" content="Process v.s ThreadAndroid OS is a kind of Linus system. Every time you launch an application on your device, it invokes a process to host this application and provides the necessary resources for the">
@@ -220,7 +220,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-11 00:38:55" itemprop="dateModified" datetime="2020-04-11T00:38:55-07:00">2020-04-11</time>
+                <time title="Modified: 2020-04-11 00:40:41" itemprop="dateModified" datetime="2020-04-11T00:40:41-07:00">2020-04-11</time>
               </span>
 
           
@@ -249,6 +249,8 @@
 
       
         <h4 id="Process-v-s-Thread"><a href="#Process-v-s-Thread" class="headerlink" title="Process v.s Thread"></a>Process v.s Thread</h4><p>Android OS is a kind of Linus system. Every time you launch an application on your device, it invokes a process to host this application and provides the necessary resources for the application. By default, all components that come from the same application would run in the same process and thread (called main thread or UI thread). By default, you would run all components, <code>Activity,</code> <code>Service,</code> <code>Receiver,</code> <code>Provider,</code> on the same process. But there’s a way for a specific need for developers who want to run these components on different processes. You can add <code>android: process</code> in the <code>AndroidManifest.xml</code> file in each component declaration. For example, </p>
+<a id="more"></a>
+
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span> </span></span><br><span class="line"><span class="tag">  <span class="attr">android:launchMode</span>=<span class="string">"singleTop"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">android:process</span>=<span class="string">"process_name"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">...</span></span></span><br><span class="line"><span class="tag">/&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>You might be interested in how the Android system manages the processes, for example, what if we run out of the system resources, let’s say the memory, which process is going to be closed? Here is how system weight each process: </p>
