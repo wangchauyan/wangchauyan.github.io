@@ -226,7 +226,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-19 22:42:09" itemprop="dateModified" datetime="2020-07-19T22:42:09-07:00">2020-07-19</time>
+                <time title="Modified: 2020-07-19 22:44:02" itemprop="dateModified" datetime="2020-07-19T22:44:02-07:00">2020-07-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -266,40 +266,14 @@
 
       
           <h2 id="Introduction-of-the-Chrome-Custom-Tabs"><a href="#Introduction-of-the-Chrome-Custom-Tabs" class="headerlink" title="Introduction of the Chrome Custom Tabs"></a>Introduction of the Chrome Custom Tabs</h2><h4 id="Why-Chrome-Custom-Tabs"><a href="#Why-Chrome-Custom-Tabs" class="headerlink" title="Why Chrome Custom Tabs?"></a>Why Chrome Custom Tabs?</h4><p>Android developers might encounter a situation: the user needs to open a web link in the App, for example, the terms of service page. We might either open a browser using an intention with a view action or using the WebView to display. </p>
-<p>These two options present challenges. Switching to the browser is a massive content switch behavior. Using the WebView is hard to share the status with the browser and hard for the maintenance, it will need to handle different scenarios; for instance, add different headers based on different URL requests. </p>
-<p>Do we have any better solution for this? Yes, Google provides another choice for the developers - Chrome Custom Tabs. It can switch the webpage from the App smoothly and set up multiple extra settings into CCT. Let us see the performance comparison: </p>
-<p><img src="https://developer.chrome.com/multidevice/images/customtab/performance.gif" alt="performance.gif"><br><em>Performance Comparison</em></p>
-<p>There are three different cases here: </p>
-<ol>
-<li>Launch the Chrome browser to handle the web link. </li>
-<li>Use the Chrome Custom Tabs to handle the web link. </li>
-<li>Use the WebView to handle the web link. </li>
-</ol>
-<p>Using chrome custom tabs gets the fastest rendering time. That is impressive. What can the CCT do? It provides: </p>
-<ol>
-<li>The ability to customize the tab look and feel in an Activity in Chrome included: <ul>
-<li>Toolbar color </li>
-<li>Action buttons to the toolbar</li>
-<li>Custom menu items </li>
-</ul>
-</li>
-<li>The ability to customize the exit/enter animation for the activity. </li>
-</ol>
-<p>Besides, it can use a pre-warming technique in the background, which would let the users feel the web page loading is fast without delay. It shares the cookie jar and permission with the browser in the user’s mobile phone, which means the CCT provides the unified experience. Users can seamlessly use the browser to visit the sites they have visited before. The most important thing is browser prevents the application from being evicted by the system while on top of it by raising its importance to the “foreground” level. </p>
-<h4 id="How-to-develope"><a href="#How-to-develope" class="headerlink" title="How to develope"></a>How to develope</h4><p>Add this dependency to your project: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    implementation &quot;androidx.browser:browser:1.2.0&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Using the example code from Google Developer site: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String url = ¨https://paul.kinlan.me/¨;</span><br><span class="line">CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();</span><br><span class="line">CustomTabsIntent customTabsIntent = builder.build();</span><br><span class="line">customTabsIntent.launchUrl(this, Uri.parse(url));</span><br></pre></td></tr></table></figure>
-
-<p>The developer can use <code>CustomTabIntent.Builder</code> to build up the data and pass to the chrome browser. Get more information at reference [1]. </p>
-<h4 id="How-to-know-if-the-Chrome-browser-supports-CCT"><a href="#How-to-know-if-the-Chrome-browser-supports-CCT" class="headerlink" title="How to know if the Chrome browser supports CCT?"></a>How to know if the Chrome browser supports CCT?</h4><p>All supported versions of the Chrome browser would expose the custom tabs’ service to the developers. Developers can try to connect to this service if the App successfully connects to the service and use the CCT. Please check <a href="https://developer.android.com/reference/android/support/customtabs/CustomTabsClient.html#bindcustomtabsservice" target="_blank" rel="noopener">bindCustomTabsService</a>.</p>
-<p>Enjoy the article, happy coding.</p>
-<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><ol>
-<li><a href="https://developer.chrome.com/multidevice/android/customtabs" target="_blank" rel="noopener">Chrome Custom Tabs - Google Chrome</a></li>
-<li><a href="https://github.com/GoogleChrome/android-browser-helper" target="_blank" rel="noopener">Github - GoogleChrome/android-browser-helper</a></li>
-</ol>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/13/Introduction-of-the-Chrome-Custom-Tabs/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
