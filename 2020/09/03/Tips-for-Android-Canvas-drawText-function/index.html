@@ -56,7 +56,8 @@
 <meta property="og:description" content="Why?If you start doing the Android platform’s customized view components, you may need to draw something special in your Canvas object. It’s very straightforward to draw a circle, a rectangle, an arc,">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://personaldevblog.firebaseapp.com/2020/09/03/Tips-for-Android-Canvas-drawText-function/DrawText_Exmaple.png">
-<meta property="og:updated_time" content="2020-09-20T07:20:18.037Z">
+<meta property="og:image" content="https://miro.medium.com/max/2000/1*v1FDlH-vFEnhXDFDxp6OXg.png">
+<meta property="og:updated_time" content="2020-09-20T07:23:00.068Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tips for Android Canvas.drawText Function">
 <meta name="twitter:description" content="Why?If you start doing the Android platform’s customized view components, you may need to draw something special in your Canvas object. It’s very straightforward to draw a circle, a rectangle, an arc,">
@@ -228,7 +229,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-09-20 00:20:18" itemprop="dateModified" datetime="2020-09-20T00:20:18-07:00">2020-09-20</time>
+                <time title="Modified: 2020-09-20 00:23:00" itemprop="dateModified" datetime="2020-09-20T00:23:00-07:00">2020-09-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -272,6 +273,9 @@
 <p>What about drawing a string on your canvas? </p>
 </blockquote>
 <p>Well, that’s a good question. Let’s see how to draw a string fundamentally. </p>
+<a id="more"></a>
+
+
 <h4 id="Basic-way-to-draw-a-string"><a href="#Basic-way-to-draw-a-string" class="headerlink" title="Basic way to draw a string"></a>Basic way to draw a string</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class CustomizeView(context: Context) : View(context) &#123;</span><br><span class="line"></span><br><span class="line">  private val textPaint = Paint()</span><br><span class="line">  private val renderText = &quot;Random String&quot;</span><br><span class="line">  private val startX = 20f</span><br><span class="line">  private val startY = 60f</span><br><span class="line"></span><br><span class="line">  init &#123;</span><br><span class="line">    textPaint.apply &#123;</span><br><span class="line">      color = Color.BLACK</span><br><span class="line">      style = Paint.Style.STROKE</span><br><span class="line">      strokeCap = Paint.Cap.ROUND</span><br><span class="line">      textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 30f, resources.displayMetrics)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  override fun onDraw(canvas: Canvas?) &#123;</span><br><span class="line">    super.onDraw(canvas)</span><br><span class="line"></span><br><span class="line">    canvas?.drawText(renderText, startX, startY, textPaint)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>I create a customized view that displays a <code>Random String</code> on the screen. As you can see, the most important thing for a personalized view you need to take care of is its <code>onDraw</code> function. In this function, you can draw whatever you want as long as you know how to draw objects. </p>
@@ -279,9 +283,9 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">override fun onDraw(canvas: Canvas?) &#123;</span><br><span class="line">  super.onDraw(canvas)</span><br><span class="line"></span><br><span class="line">  canvas?.apply &#123;</span><br><span class="line"></span><br><span class="line">    val textBound = Rect()</span><br><span class="line">    textPaint.getTextBounds(renderText, 0, renderText.length, textBound)</span><br><span class="line"></span><br><span class="line">    drawText(renderText,</span><br><span class="line">      circleCenterX - textBound.width() / 2,</span><br><span class="line">      circleCenterY - textBound.height() / 2,</span><br><span class="line">      textPaint)</span><br><span class="line">    drawCircle(circleCenterX, circleCenterY, circleRadius, circlePaint)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>The first thought that comes to my mind is that I want to get the text bound for this specific text and then let both the text’s width/height bound divide by 2. This coordinate would be the start point to draw. Let’s see what the result is. </p>
-<p><strong>⚠ You have pasted a link referring an attachment that could not be found in the storage location of this note. Pasting links referring attachments is only supported if the source and destination location is the same storage. Please Drag&amp;Drop the attachment instead! ⚠</strong><br><em>Drawing the string at the center point of the circle</em></p>
+<p><img src="https://personaldevblog.firebaseapp.com/2020/09/03/Tips-for-Android-Canvas-drawText-function/DrawText_Exmaple.png" alt="DrawText_Exmaple.png"><br><em>Drawing the string at the center point of the circle</em></p>
 <h4 id="The-basic-introduction-of-the-font-metrics"><a href="#The-basic-introduction-of-the-font-metrics" class="headerlink" title="The basic introduction of the font metrics"></a>The basic introduction of the font metrics</h4><p>It doesn’t look at what we want to show on the screen. Let’s get into the font metrics on the Android platform. Here is a picture from reference [1].</p>
-<p><img src="https://personaldevblog.firebaseapp.com/2020/09/03/Tips-for-Android-Canvas-drawText-function/DrawText_Exmaple.png" alt="DrawText_Exmaple.png"></p>
+<p><img src="https://miro.medium.com/max/2000/1*v1FDlH-vFEnhXDFDxp6OXg.png" alt="1*v1FDlH-vFEnhXDFDxp6OXg.png"></p>
 <p>Here are some brief descriptions for different positions: </p>
 <p><strong>Top</strong>: the maximum distance above the baseline for the tallest glyph in a string at given text size. </p>
 <p><strong>Ascent</strong>: the recommended distance above the baseline for the singled spaced text. </p>
