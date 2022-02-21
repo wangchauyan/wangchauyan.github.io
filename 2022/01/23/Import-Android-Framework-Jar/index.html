@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
+<meta name="generator" content="Hexo 6.0.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
@@ -48,17 +48,17 @@
 </script>
 
   <meta name="description" content="Import AOSP framework jar fileWhy do we import the AOSP framework jar file to the Android Studio? It’s usually unnecessary to import this jar file to develop a standard application for your project. B">
-<meta name="keywords" content="Gradle Dependency">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Import Android Framework Jar">
 <meta property="og:url" content="http://yoursite.com/2022/01/23/Import-Android-Framework-Jar/index.html">
 <meta property="og:site_name" content="舊金山周記">
 <meta property="og:description" content="Import AOSP framework jar fileWhy do we import the AOSP framework jar file to the Android Studio? It’s usually unnecessary to import this jar file to develop a standard application for your project. B">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-02-21T16:12:49.634Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-01-24T06:01:51.000Z">
+<meta property="article:modified_time" content="2022-02-21T16:22:28.844Z">
+<meta property="article:author" content="Chauyan">
+<meta property="article:tag" content="Gradle Dependency">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Import Android Framework Jar">
-<meta name="twitter:description" content="Import AOSP framework jar fileWhy do we import the AOSP framework jar file to the Android Studio? It’s usually unnecessary to import this jar file to develop a standard application for your project. B">
 
 <link rel="canonical" href="http://yoursite.com/2022/01/23/Import-Android-Framework-Jar/">
 
@@ -226,7 +226,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-02-21 08:12:49" itemprop="dateModified" datetime="2022-02-21T08:12:49-08:00">2022-02-21</time>
+                <time title="Modified: 2022-02-21 08:22:28" itemprop="dateModified" datetime="2022-02-21T08:22:28-08:00">2022-02-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -267,10 +267,10 @@
       
         <h4 id="Import-AOSP-framework-jar-file"><a href="#Import-AOSP-framework-jar-file" class="headerlink" title="Import AOSP framework jar file"></a>Import AOSP framework jar file</h4><p>Why do we import the AOSP framework jar file to the Android Studio? It’s usually unnecessary to import this jar file to develop a standard application for your project. But when you need to build an application that will need to interact with your framework code or do system integration with your hardware, those are two good use-cases to put the framework jar into the Android Studio. </p>
 <p>Here we will show you how to import this framework jar file and use it in your project. </p>
-<a id="more"></a>
+<span id="more"></span>
 
 <h4 id="Build-out-the-framework-jar"><a href="#Build-out-the-framework-jar" class="headerlink" title="Build out the framework jar."></a>Build out the framework jar.</h4><p>When you run the following commands, </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">source ./build/envsetup.sh </span><br><span class="line">lunch aosp_arm64-eng</span><br><span class="line">make -j24</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">source ./build/envsetup.sh </span><br><span class="line">lunch aosp_arm64-eng</span><br><span class="line">make -j24</span><br></pre></td></tr></table></figure>
 
 <p>you can build the AOSP images out and get the class_header.jar file from this path: </p>
 <p><code>path/to/your/AOSP/out/target/common/obj/JAVA_LIBRARIES/framework_intermediates</code></p>
@@ -279,14 +279,14 @@
 <h5 id="Create-a-SDK-folder"><a href="#Create-a-SDK-folder" class="headerlink" title="Create a SDK folder"></a>Create a SDK folder</h5><p>You can create an SDK folder in your application root path and put your framework.jar file in this SDK folder. </p>
 <h5 id="Update-project-build-gradle"><a href="#Update-project-build-gradle" class="headerlink" title="Update project build.gradle."></a>Update project build.gradle.</h5><p>We need to update the project level Gradle file and add the following code, </p>
 <p><strong>before Android 4.2</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gradle.projectsEvaluated &#123;</span><br><span class="line">	tasks.withType(JavaCompile) &#123;</span><br><span class="line">		options.compilerArgs.add(&apos;-Xbootclasspath/p:app/sdk/framework.jar&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gradle.projectsEvaluated &#123;</span><br><span class="line">	tasks.withType(JavaCompile) &#123;</span><br><span class="line">		options.compilerArgs.add(&#x27;-Xbootclasspath/p:app/sdk/framework.jar&#x27;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>after Android 4.2</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">gradle.projectsEvaluated &#123;  </span><br><span class="line">    tasks.withType(JavaCompile) &#123;  </span><br><span class="line">        Set&lt;File&gt; fileSet = options.bootstrapClasspath.getFiles()  </span><br><span class="line">        List&lt;File&gt; newFileList = new ArrayList&lt;&gt;();  </span><br><span class="line">        newFileList.add(new File(&quot;./app/sdk/framework.jar&quot;))  </span><br><span class="line">        newFileList.addAll(fileSet)  </span><br><span class="line">        options.bootstrapClasspath = files(newFileList.toArray())  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">gradle.projectsEvaluated &#123;  </span><br><span class="line">    tasks.withType(JavaCompile) &#123;  </span><br><span class="line">        Set&lt;File&gt; fileSet = options.bootstrapClasspath.getFiles()  </span><br><span class="line">        List&lt;File&gt; newFileList = new ArrayList&lt;&gt;();  </span><br><span class="line">        newFileList.add(new File(&quot;./app/sdk/framework.jar&quot;))  </span><br><span class="line">        newFileList.addAll(fileSet)  </span><br><span class="line">        options.bootstrapClasspath = files(newFileList.toArray())  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>The concept here is to put the framework.jar to the classpath where the bootstrap class loader can load and find the class. Android Studio will know it needs to put this framework.jar into the classpath to avoid the import error with this setting. After setting up the project build.gradle, you will need to change your application-level build.gradle. </p>
 <h5 id="And-the-framework-jar-to-the-Application-module"><a href="#And-the-framework-jar-to-the-Application-module" class="headerlink" title="And the framework.jar to the Application module"></a>And the framework.jar to the Application module</h5><p>After the changes described above, you will need to add this jar file to the Application module. </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compileOnly files(&apos;skd/framework.jar&apos;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compileOnly files(&#x27;sdk/framework.jar&#x27;)</span><br></pre></td></tr></table></figure>
 
 <p>We use <code>compileOnly</code> because the standard Android SDK contains the corresponding APIs, but we can’t access them due to the <code>@SystemApi</code>  annotation. So letting the compiler know this framework jar and leveraging the APIs during the compiling process can bypass the <code>@SystemApi</code> access problem. </p>
 <p>After doing those changes, you should access the framework API in your Android Studio projects. Enjoy, happy coding. </p>
@@ -402,16 +402,16 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/wangchauyan" title="GitHub → https://github.com/wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
         <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://twitter.com/deathrid" title="Twitter → https://twitter.com/deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https://www.facebook.com/chauyanw/" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
       </span>
   </div>
 
@@ -463,9 +463,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 
