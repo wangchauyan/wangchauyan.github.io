@@ -158,7 +158,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">99</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">100</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -168,7 +168,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">62</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">63</span></a>
 
   </li>
   </ul>
@@ -190,6 +190,131 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/10/Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chauyan">
+      <meta itemprop="description" content="Personal dev blog for sharing what I've learned.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="舊金山周記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/10/Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript/" class="post-title-link" itemprop="url">Use ESLint and Prettier to format your code in TypeScript</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-10 17:14:00" itemprop="dateCreated datePublished" datetime="2019-08-10T17:14:00-07:00">2019-08-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-12 00:54:04" itemprop="dateModified" datetime="2020-04-12T00:54:04-07:00">2020-04-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/TypeScript/" itemprop="url" rel="index">
+                    <span itemprop="name">TypeScript</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2019/08/10/Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/08/10/Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript"><a href="#Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript" class="headerlink" title="Use ESLint and Prettier to format your code in TypeScript"></a>Use ESLint and Prettier to format your code in TypeScript</h2><p><img src="https://chauyanw.files.wordpress.com/2019/08/eslint_feature_image_chauyan.png?w=2924" alt="eslint_feature_image_chauyan.png?w=2924"></p>
+<p>I think <code>ESLint</code>[1] is an essential thing when you try to create a project using JavaScript/TypeScript. That would be an excellent tool to parse the potential issues in your code. </p>
+<p>Let’s check the philosophy of ESLint:</p>
+<ul>
+<li>Everything is pluggable:<ul>
+<li>Rule API is used both by bundled and custom rules</li>
+<li>Formatter API is used both by bundled and custom formatters</li>
+<li>Additional rules and formatters can apply at runtime</li>
+<li>Rules and formatters don’t have to be bundled to combine</li>
+</ul>
+</li>
+<li>Every rule:<ul>
+<li>Is standalone</li>
+<li>Can be turned off or on (nothing can be deemed “too important to turn off”)</li>
+<li>Can be set to a warning or error individually</li>
+</ul>
+</li>
+<li>Additionally:<ul>
+<li>Rules are “agenda-free” - ESLint does not promote any particular coding style</li>
+<li>Any bundled rules are generalizable</li>
+</ul>
+</li>
+<li>The project: <ul>
+<li>Values documentation and clear communication</li>
+<li>Is as transparent as possible</li>
+<li>Believes in the importance of testing</li>
+</ul>
+</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/08/10/Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -1092,103 +1217,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/28/Android-Studio-Gradle-Plugin-3-4-1-update/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chauyan">
-      <meta itemprop="description" content="Personal dev blog for sharing what I've learned.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="舊金山周記">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/05/28/Android-Studio-Gradle-Plugin-3-4-1-update/" class="post-title-link" itemprop="url">Android Studio Gradle Plugin 3.4.1 update</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-05-28 05:03:00" itemprop="dateCreated datePublished" datetime="2019-05-28T05:03:00-07:00">2019-05-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-12 01:02:43" itemprop="dateModified" datetime="2020-04-12T01:02:43-07:00">2020-04-12</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android-Dev/" itemprop="url" rel="index">
-                    <span itemprop="name">Android Dev</span>
-                  </a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2019/05/28/Android-Studio-Gradle-Plugin-3-4-1-update/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/05/28/Android-Studio-Gradle-Plugin-3-4-1-update/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>The new Android Gradle plugin comes to a minor change and some updates for the version code to 3.4.1. Here are some behavior changes you should know.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/05/28/Android-Studio-Gradle-Plugin-3-4-1-update/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1237,7 +1265,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-count">63</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1250,7 +1278,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">99</span>
+        <span class="site-state-item-count">100</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="msapplication-config" content="/images/site.webmanifest">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Something related to the System ApplicationYou might wonder how to deploy your App as a system application. There are two cases we can talk about. First one, on a rooted device, you can simply put you">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Something related to the System App">
+<meta property="og:url" content="http://yoursite.com/2022/03/05/Something-related-to-the-System-App/index.html">
+<meta property="og:site_name" content="舊金山周記">
+<meta property="og:description" content="Something related to the System ApplicationYou might wonder how to deploy your App as a system application. There are two cases we can talk about. First one, on a rooted device, you can simply put you">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-03-06T06:58:44.000Z">
+<meta property="article:modified_time" content="2022-03-06T07:00:09.339Z">
+<meta property="article:author" content="Chauyan">
+<meta property="article:tag" content="System App">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2022/03/05/Something-related-to-the-System-App/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Something related to the System App | 舊金山周記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149656006-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-149656006-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">舊金山周記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">The Venture of San Francisco</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">100</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">11</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">63</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/05/Something-related-to-the-System-App/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chauyan">
+      <meta itemprop="description" content="Personal dev blog for sharing what I've learned.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="舊金山周記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Something related to the System App
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-03-05 22:58:44 / Modified: 23:00:09" itemprop="dateCreated datePublished" datetime="2022-03-05T22:58:44-08:00">2022-03-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android-Dev/" itemprop="url" rel="index">
+                    <span itemprop="name">Android Dev</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2022/03/05/Something-related-to-the-System-App/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/03/05/Something-related-to-the-System-App/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="Something-related-to-the-System-Application"><a href="#Something-related-to-the-System-Application" class="headerlink" title="Something related to the System Application"></a>Something related to the System Application</h4><p>You might wonder how to deploy your App as a system application. There are two cases we can talk about. First one, on a rooted device, you can simply put your App into either &#x2F;system&#x2F;app or &#x2F;system&#x2F;priv-app by using this way: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$adb root </span><br><span class="line">$adb remount</span><br><span class="line">$adb push your_app.apk /sdcard/ </span><br><span class="line"></span><br><span class="line">$adb shell </span><br><span class="line">$su </span><br><span class="line">$cd /sdcard/ &amp; mv your_app.apk /system/priv-app</span><br></pre></td></tr></table></figure>
+
+<p>This is an easier way to make your application access @systemApi without pain. What about the second case? We can download the AOSP source code, put our application into the build process, and make the App a system application when building the AOSP source. </p>
+<h5 id="Where-to-put-your-App"><a href="#Where-to-put-your-App" class="headerlink" title="Where to put your App"></a>Where to put your App</h5><p>You can put your App in these two folders: </p>
+<ul>
+<li>your_aosp_project_folder&#x2F;packages&#x2F;apps&#x2F;your_app_folder</li>
+<li>your_aosp_project_folder&#x2F;vendor&#x2F;your_project&#x2F;packages&#x2F;apps&#x2F;your_app_folder</li>
+</ul>
+<p>For the last folder, you have to create that yourself by using:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p vendor/your_project/packages/apps/your_app_folder. </span><br></pre></td></tr></table></figure>
+
+<p>You can simply put a prebuilt Apk or the entire project source code into the AOSP build. I will simply go over the prebuilt Apk way, but the concepts are the same. Here is the example of preparing the Android.mk or Android.bp for the AOSP build. </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">LOCAL_PATH := $(call my-dir)</span><br><span class="line">include $(CLEAR_VARS)</span><br><span class="line"></span><br><span class="line">LOCAL_MODULE_TAGS := optional</span><br><span class="line"></span><br><span class="line">LOCAL_UNINSTALLABLE_MODULE := true</span><br><span class="line">LOCAL_MODULE_PATH := $(TARGET_OUT_APPS)</span><br><span class="line"></span><br><span class="line">LOCAL_MODULE := your_app_folder_name</span><br><span class="line">LOCAL_SRC_FILES := $(LOCAL_MODULE).apk </span><br><span class="line"></span><br><span class="line">LOCAL_MODULE_CLASS := APPS </span><br><span class="line"></span><br><span class="line">LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX) </span><br><span class="line"></span><br><span class="line"># If you simply wanted to include your App into the AOSP, use PRESIGNED.</span><br><span class="line"># If you wanted to make your App as a system App (Android.uid.system), use platform</span><br><span class="line">LOCAL_CERTIFICATE := PRESIGNED</span><br><span class="line"></span><br><span class="line">include $(BUILD_PREBUILT)</span><br></pre></td></tr></table></figure>
+
+<h5 id="The-key-and-Keystore"><a href="#The-key-and-Keystore" class="headerlink" title="The key and Keystore"></a>The key and Keystore</h5><p>Please note that if you want to make your application a system App, you will need to add <code>android.uid.system</code>  to your AndroidManifest.xml. This setting will make your application share the same system uid with other system applications. And by using this way, you will need to provide the platform key to sign your application: </p>
+<p><strong>Manually sign</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -Djava.library.path=out/host/linux-x86/lib64 -jar out/host/linux-x86/framework/signapk.jar build/target/product/security/platform.x509.pem build/target/product/security/platform.pk8 your_debug_app.apk your_debug_app_signed.apk</span><br></pre></td></tr></table></figure>
+
+
+<p><strong>Sign your app by using Android Studio</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keytool-importkeypair -k ~/.android/platform.keystore -p android -pk8 platform.pk8 -cert platform.x509.pem -alias platform</span><br></pre></td></tr></table></figure>
+
+<p>After creating the Keystore file, you can use this Keystore file in your Android Studio and set up the SignConfig to sign your application. </p>
+<pre><code>signingConfigs &#123;   
+    release &#123;   
+        storeFile file(&quot;your.keystore&quot;)   
+        storePassword &#39;your_store_pwd&#39;  
+        keyAlias &#39;your_key_alias&#39;  
+        keyPassword &#39;your_key_pwd&#39;  
+    &#125;   
+&#125;
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/System-App/" rel="tag"># System App</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/23/Import-Android-Framework-Jar/" rel="prev" title="Import Android Framework Jar">
+      <i class="fa fa-chevron-left"></i> Import Android Framework Jar
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+  <div>
+  <script type="text/javascript">
+	atOptions = {
+		'key' : '335b6d5fd0ce419dba15708955862700',
+		'format' : 'iframe',
+		'height' : 60,
+		'width' : 468,
+		'params' : {}
+	};
+	document.write('<scr' + 'ipt type="text/javascript" src="http' + (location.protocol === 'https:' ? 's' : '') + '://www.madcpms.com/335b6d5fd0ce419dba15708955862700/invoke.js"></scr' + 'ipt>');
+</script>
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments" id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Something-related-to-the-System-Application"><span class="nav-number">1.</span> <span class="nav-text">Something related to the System Application</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Where-to-put-your-App"><span class="nav-number">1.1.</span> <span class="nav-text">Where to put your App</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#The-key-and-Keystore"><span class="nav-number">1.2.</span> <span class="nav-text">The key and Keystore</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chauyan</p>
+  <div class="site-description" itemprop="description">Personal dev blog for sharing what I've learned.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chauyan</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://chauyan.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  function loadComments() {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: {page: {
+            url: "http://yoursite.com/2022/03/05/Something-related-to-the-System-App/",
+            identifier: "2022/03/05/Something-related-to-the-System-App/",
+            title: "Something related to the System App"
+          }
+        }
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://chauyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  }
+    window.addEventListener('load', loadComments, false);
+</script>
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCqTNIS0PZUFVzFmQOCcFEheWocG9daymY",
+    authDomain: "personaldevblog.firebaseapp.com",
+    databaseURL: "https://personaldevblog.firebaseio.com",
+    projectId: "personaldevblog",
+    storageBucket: "personaldevblog.appspot.com",
+    messagingSenderId: "785621246959",
+    appId: "1:785621246959:web:87cab80109fd2701f44c1a",
+    measurementId: "G-4KWYT0P8Z8"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+</body>
+</html>
