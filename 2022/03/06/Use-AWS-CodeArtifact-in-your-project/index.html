@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.0.0">
+<meta name="generator" content="Hexo 7.3.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
@@ -162,7 +162,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">101</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">102</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -172,7 +172,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">64</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">67</span></a>
 
   </li>
   </ul>
@@ -265,8 +265,8 @@
 <h5 id="Why-CodeArtifact"><a href="#Why-CodeArtifact" class="headerlink" title="Why CodeArtifact"></a>Why CodeArtifact</h5><p>You should have the experience to create the in-house libraries and integrate them with other projects by either using the multi-module development or publishing them as the AAR files for usage. Here comes another great option from AWS, you can use the CodeArtifact to host your local Maven repositories.</p>
 <span id="more"></span>
 
-<h5 id="What’s-the-pain-point"><a href="#What’s-the-pain-point" class="headerlink" title="What’s the pain point"></a>What’s the pain point</h5><p>The pain point of using CodeArtifact is that the authentication token will be expired every <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/codeartifact/latest/ug/tokens-authentication.html">12 hours</a>. So, you would need to update the token every day for syncing the latest libraries from the CodeArtifact. I have to say this is quite annoying for the Devs. Is there any better way to solve this issue? Yes, thanks <a target="_blank" rel="noopener" href="https://plugins.gradle.org/plugin/ai.clarity.codeartifact">Clarity</a> for developing a Gradle plugin to solve this issue. Here are the steps for integrating this plugin with CodeArtifact. </p>
-<h5 id="Basic-setup-AWS-CLI-tool-installation"><a href="#Basic-setup-AWS-CLI-tool-installation" class="headerlink" title="Basic setup - AWS CLI tool installation"></a>Basic setup - AWS CLI tool installation</h5><p>You have to install the <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html">AWS CLI</a> tool and set up the access key id and secret key string. </p>
+<h5 id="What’s-the-pain-point"><a href="#What’s-the-pain-point" class="headerlink" title="What’s the pain point"></a>What’s the pain point</h5><p>The pain point of using CodeArtifact is that the authentication token will be expired every <a href="https://docs.aws.amazon.com/codeartifact/latest/ug/tokens-authentication.html">12 hours</a>. So, you would need to update the token every day for syncing the latest libraries from the CodeArtifact. I have to say this is quite annoying for the Devs. Is there any better way to solve this issue? Yes, thanks <a href="https://plugins.gradle.org/plugin/ai.clarity.codeartifact">Clarity</a> for developing a Gradle plugin to solve this issue. Here are the steps for integrating this plugin with CodeArtifact. </p>
+<h5 id="Basic-setup-AWS-CLI-tool-installation"><a href="#Basic-setup-AWS-CLI-tool-installation" class="headerlink" title="Basic setup - AWS CLI tool installation"></a>Basic setup - AWS CLI tool installation</h5><p>You have to install the <a href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html">AWS CLI</a> tool and set up the access key id and secret key string. </p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws configure</span><br></pre></td></tr></table></figure>
 
 <p>And then input your region, output format, and the access key config. After that, check if everything is good.</p>
@@ -327,7 +327,10 @@
     <a href="/2022/03/05/Something-related-to-the-System-App/" rel="prev" title="Something related to the System App">
       <i class="fa fa-chevron-left"></i> Something related to the System App
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/16/Start-your-Application-after-system-boots/" rel="next" title="Start your Application after system boots">
+      Start your Application after system boots <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -398,7 +401,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">64</span>
+          <span class="site-state-item-count">67</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -411,7 +414,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">101</span>
+        <span class="site-state-item-count">102</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -454,7 +457,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
