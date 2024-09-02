@@ -14,38 +14,12 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    hostname: new URL('http://yoursite.com').hostname,
-    root: '/',
-    scheme: 'Pisces',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}},
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}}};
+  </script>
 
   <meta name="description" content="Personal dev blog for sharing what I&#39;ve learned.">
 <meta property="og:type" content="website">
@@ -55,7 +29,7 @@
 <meta property="og:description" content="Personal dev blog for sharing what I&#39;ve learned.">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="Chauyan">
-<meta property="article:tag" content="San Francisco, Android, iOS, TypeScript, Self-Driving">
+<meta property="article:tag" content="San Francisco, Bay Area, Android, iOS, Server, AOSP, Jenkins, AWS, TypeScript, Self-Driving, Platform">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/">
@@ -65,10 +39,9 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: true,
-    isPost: false,
-    isPage: false,
-    isArchive: false
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
   };
 </script>
 
@@ -121,18 +94,6 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">舊金山周記</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">The Venture of San Francisco</p>
-  </div>
-
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar">
       <span class="toggle-line toggle-line-first"></span>
@@ -140,40 +101,59 @@
       <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">舊金山周記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">The Venture of San Francisco</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
 </div>
 
 
+
+
 <nav class="site-nav">
-  
-  <ul id="menu" class="menu">
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">11</span></a>
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories<span class="badge">11</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
 
   </li>
   </ul>
-
 </nav>
+
+
+
+
 </div>
     </header>
 
@@ -186,14 +166,12 @@
         <div class="content-wrap">
           
 
-          <div class="content">
+          <div class="content index posts-expand">
             
-
-  <div class="posts-expand">
-        
+      
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2024/08/18/How-to-install-multiple-APKs-on-Android/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -206,15 +184,15 @@
       <meta itemprop="name" content="舊金山周記">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           
             <a href="/2024/08/18/How-to-install-multiple-APKs-on-Android/" class="post-title-link" itemprop="url">How to install multiple APKs on Android</a>
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
               
@@ -223,13 +201,11 @@
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android-Dev/" itemprop="url" rel="index">
-                    <span itemprop="name">Android Dev</span>
-                  </a>
+                  <a href="/categories/Android-Dev/" itemprop="url" rel="index"><span itemprop="name">Android Dev</span></a>
                 </span>
             </span>
 
@@ -238,11 +214,11 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2024/08/18/How-to-install-multiple-APKs-on-Android/#comments" itemprop="discussionUrl">
+    <a title="disqus" href="/2024/08/18/How-to-install-multiple-APKs-on-Android/#disqus_thread" itemprop="discussionUrl">
       <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/08/18/How-to-install-multiple-APKs-on-Android/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -281,10 +257,10 @@
   
   
 
-        
+      
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/31/Android-Moshi-and-Polymorphism/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -297,15 +273,15 @@
       <meta itemprop="name" content="舊金山周記">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           
             <a href="/2022/03/31/Android-Moshi-and-Polymorphism/" class="post-title-link" itemprop="url">Android Moshi and Polymorphism</a>
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
@@ -317,11 +293,11 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2022/03/31/Android-Moshi-and-Polymorphism/#comments" itemprop="discussionUrl">
+    <a title="disqus" href="/2022/03/31/Android-Moshi-and-Polymorphism/#disqus_thread" itemprop="discussionUrl">
       <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/03/31/Android-Moshi-and-Polymorphism/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -352,10 +328,10 @@
   
   
 
-        
+      
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/16/Start-your-Application-after-system-boots/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -368,15 +344,15 @@
       <meta itemprop="name" content="舊金山周記">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           
             <a href="/2022/03/16/Start-your-Application-after-system-boots/" class="post-title-link" itemprop="url">Start your Application after system boots</a>
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
@@ -388,11 +364,11 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2022/03/16/Start-your-Application-after-system-boots/#comments" itemprop="discussionUrl">
+    <a title="disqus" href="/2022/03/16/Start-your-Application-after-system-boots/#disqus_thread" itemprop="discussionUrl">
       <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/03/16/Start-your-Application-after-system-boots/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -423,10 +399,10 @@
   
   
 
-        
+      
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/06/Use-AWS-CodeArtifact-in-your-project/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -439,15 +415,15 @@
       <meta itemprop="name" content="舊金山周記">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           
             <a href="/2022/03/06/Use-AWS-CodeArtifact-in-your-project/" class="post-title-link" itemprop="url">Use AWS CodeArtifact in your project</a>
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
               
@@ -456,13 +432,11 @@
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android-Dev/" itemprop="url" rel="index">
-                    <span itemprop="name">Android Dev</span>
-                  </a>
+                  <a href="/categories/Android-Dev/" itemprop="url" rel="index"><span itemprop="name">Android Dev</span></a>
                 </span>
             </span>
 
@@ -471,11 +445,11 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2022/03/06/Use-AWS-CodeArtifact-in-your-project/#comments" itemprop="discussionUrl">
+    <a title="disqus" href="/2022/03/06/Use-AWS-CodeArtifact-in-your-project/#disqus_thread" itemprop="discussionUrl">
       <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/03/06/Use-AWS-CodeArtifact-in-your-project/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -515,10 +489,10 @@
   
   
 
-        
+      
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/05/Something-related-to-the-System-App/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -531,15 +505,15 @@
       <meta itemprop="name" content="舊金山周記">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           
             <a href="/2022/03/05/Something-related-to-the-System-App/" class="post-title-link" itemprop="url">Something related to the System App</a>
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
               
@@ -548,13 +522,11 @@
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android-Dev/" itemprop="url" rel="index">
-                    <span itemprop="name">Android Dev</span>
-                  </a>
+                  <a href="/categories/Android-Dev/" itemprop="url" rel="index"><span itemprop="name">Android Dev</span></a>
                 </span>
             </span>
 
@@ -563,11 +535,11 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2022/03/05/Something-related-to-the-System-App/#comments" itemprop="discussionUrl">
+    <a title="disqus" href="/2022/03/05/Something-related-to-the-System-App/#disqus_thread" itemprop="discussionUrl">
       <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/03/05/Something-related-to-the-System-App/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -606,10 +578,10 @@
   
   
 
-        
+      
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/01/23/Import-Android-Framework-Jar/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -622,15 +594,15 @@
       <meta itemprop="name" content="舊金山周記">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           
             <a href="/2022/01/23/Import-Android-Framework-Jar/" class="post-title-link" itemprop="url">Import Android Framework Jar</a>
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
@@ -638,20 +610,18 @@
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
+                  <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2022-02-21 08:24:53" itemprop="dateModified" datetime="2022-02-21T08:24:53-08:00">2022-02-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android-Dev/" itemprop="url" rel="index">
-                    <span itemprop="name">Android Dev</span>
-                  </a>
+                  <a href="/categories/Android-Dev/" itemprop="url" rel="index"><span itemprop="name">Android Dev</span></a>
                 </span>
             </span>
 
@@ -660,11 +630,11 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2022/01/23/Import-Android-Framework-Jar/#comments" itemprop="discussionUrl">
+    <a title="disqus" href="/2022/01/23/Import-Android-Framework-Jar/#disqus_thread" itemprop="discussionUrl">
       <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/01/23/Import-Android-Framework-Jar/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -705,10 +675,10 @@
   
   
 
-        
+      
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/01/17/Gradle-dependency-management/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -721,15 +691,15 @@
       <meta itemprop="name" content="舊金山周記">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           
             <a href="/2022/01/17/Gradle-dependency-management/" class="post-title-link" itemprop="url">Gradle dependency management</a>
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
@@ -737,20 +707,18 @@
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
+                  <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2022-01-18 18:56:12" itemprop="dateModified" datetime="2022-01-18T18:56:12-08:00">2022-01-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android-Dev/" itemprop="url" rel="index">
-                    <span itemprop="name">Android Dev</span>
-                  </a>
+                  <a href="/categories/Android-Dev/" itemprop="url" rel="index"><span itemprop="name">Android Dev</span></a>
                 </span>
             </span>
 
@@ -759,11 +727,11 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2022/01/17/Gradle-dependency-management/#comments" itemprop="discussionUrl">
+    <a title="disqus" href="/2022/01/17/Gradle-dependency-management/#disqus_thread" itemprop="discussionUrl">
       <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/01/17/Gradle-dependency-management/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -803,10 +771,10 @@
   
   
 
-        
+      
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/01/13/Setup-Gerrit-Server-for-AOSP/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -819,15 +787,15 @@
       <meta itemprop="name" content="舊金山周記">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           
             <a href="/2022/01/13/Setup-Gerrit-Server-for-AOSP/" class="post-title-link" itemprop="url">Setup Gerrit Server for AOSP</a>
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
@@ -839,11 +807,11 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2022/01/13/Setup-Gerrit-Server-for-AOSP/#comments" itemprop="discussionUrl">
+    <a title="disqus" href="/2022/01/13/Setup-Gerrit-Server-for-AOSP/#disqus_thread" itemprop="discussionUrl">
       <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/01/13/Setup-Gerrit-Server-for-AOSP/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -874,10 +842,10 @@
   
   
 
-        
+      
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/01/07/Jetpack-Compose-Customize-your-layout/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -890,15 +858,15 @@
       <meta itemprop="name" content="舊金山周記">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           
             <a href="/2022/01/07/Jetpack-Compose-Customize-your-layout/" class="post-title-link" itemprop="url">Jetpack Compose - Customize your layout</a>
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
@@ -910,11 +878,11 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2022/01/07/Jetpack-Compose-Customize-your-layout/#comments" itemprop="discussionUrl">
+    <a title="disqus" href="/2022/01/07/Jetpack-Compose-Customize-your-layout/#disqus_thread" itemprop="discussionUrl">
       <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/01/07/Jetpack-Compose-Customize-your-layout/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -945,10 +913,10 @@
   
   
 
-        
+      
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/12/08/VOD-Introduction/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -961,15 +929,15 @@
       <meta itemprop="name" content="舊金山周記">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           
             <a href="/2021/12/08/VOD-Introduction/" class="post-title-link" itemprop="url">VOD Introduction</a>
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
@@ -977,7 +945,7 @@
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
+                  <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2022-01-19 21:59:21" itemprop="dateModified" datetime="2022-01-19T21:59:21-08:00">2022-01-19</time>
@@ -988,11 +956,11 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2021/12/08/VOD-Introduction/#comments" itemprop="discussionUrl">
+    <a title="disqus" href="/2021/12/08/VOD-Introduction/#disqus_thread" itemprop="discussionUrl">
       <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/12/08/VOD-Introduction/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -1024,7 +992,6 @@
   
   
 
-  </div>
 
   
   <nav class="pagination">
@@ -1035,6 +1002,28 @@
 
           </div>
           
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -1092,16 +1081,16 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="twitter fa-fw"></i>Twitter</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="facebook fa-fw"></i>FB Page</a>
       </span>
   </div>
 
@@ -1125,15 +1114,19 @@
       <div class="footer-inner">
         
 
+        
+
 <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Chauyan</span>
 </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
 
         
 
@@ -1144,7 +1137,6 @@
 
 
 
-        
       </div>
     </footer>
   </div>
@@ -1168,7 +1160,6 @@
 
 
   
-
 
 
 

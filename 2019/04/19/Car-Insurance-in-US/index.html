@@ -14,38 +14,12 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    hostname: new URL('http://yoursite.com').hostname,
-    root: '/',
-    scheme: 'Pisces',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}},
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}}};
+  </script>
 
   <meta name="description" content="Why leasing&#x2F;buying a car?剛來美國沒多久, 就一直被提醒要趕快去考駕照, 畢竟在一個車輪上的國家, 沒車就跟沒腳一樣哪兒都去不了. 而我所在的北加州(San Francisco) 的大眾交通工具有幾個選擇:">
 <meta property="og:type" content="article">
@@ -69,10 +43,9 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
   };
 </script>
 
@@ -125,18 +98,6 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">舊金山周記</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">The Venture of San Francisco</p>
-  </div>
-
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar">
       <span class="toggle-line toggle-line-first"></span>
@@ -144,40 +105,59 @@
       <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">舊金山周記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">The Venture of San Francisco</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
 </div>
 
 
+
+
 <nav class="site-nav">
-  
-  <ul id="menu" class="menu">
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">11</span></a>
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories<span class="badge">11</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
 
   </li>
   </ul>
-
 </nav>
+
+
+
+
 </div>
     </header>
 
@@ -190,14 +170,13 @@
         <div class="content-wrap">
           
 
-          <div class="content">
+          <div class="content post posts-expand">
             
 
-  <div class="posts-expand">
-      
+    
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/19/Car-Insurance-in-US/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -217,7 +196,7 @@
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
@@ -225,20 +204,18 @@
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
+                  <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2020-04-12 01:03:01" itemprop="dateModified" datetime="2020-04-12T01:03:01-07:00">2020-04-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Life/" itemprop="url" rel="index">
-                    <span itemprop="name">Life</span>
-                  </a>
+                  <a href="/categories/Life/" itemprop="url" rel="index"><span itemprop="name">Life</span></a>
                 </span>
             </span>
 
@@ -247,11 +224,166 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2019/04/19/Car-Insurance-in-US/#comments" itemprop="discussionUrl">
+    <a title="disqus" href="/2019/04/19/Car-Insurance-in-US/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/04/19/Car-Insurance-in-US/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="Why-leasing-buying-a-car"><a href="#Why-leasing-buying-a-car" class="headerlink" title="Why leasing/buying a car?"></a>Why leasing/buying a car?</h4><p>剛來美國沒多久, 就一直被提醒要趕快去考駕照, 畢竟在一個車輪上的國家, 沒車就跟沒腳一樣哪兒都去不了. 而我所在的北加州(San Francisco) 的大眾交通工具有幾個選擇: </p>
+<a id="more"></a>
+
+<ul>
+<li><p>RideShare services like Lyft, Uber, etc.<br>– 通常這些 rideshare service 都有很多新使用者優惠 (First time join bonus), 像是 $10 off 的優惠碼, 如果有需要可以使用我的優惠碼, 如果有不定期的優惠, 我也會分享在這邊: </p>
+<ul>
+<li><strong>CHAUYAN89441</strong> for Lyft </li>
+<li><strong>chauyanwue</strong> for Uber</li>
+</ul>
+</li>
+<li><p>Muni<br>– 這是舊金山區域的大眾運輸系統, 可以參考 <a href="https://www.sfmta.com/muni" target="_blank" rel="noopener">Muni | SFMTA</a>. 包含了Hybrid Bus, Metro, 以及有名的 <a href="https://www.sfmta.com/getting-around/muni/cable-cars" target="_blank" rel="noopener">Cable Cars</a> 也就是來 San Francisco 一定要坐的叮叮車. </p>
+</li>
+<li><p>BART - Bay Area Rapid Transit<br>– 其實 BART 有點像是地鐵, 算是整個 bay area 中遠距離的交通工具. 但因為經過的區域太多, 裡面有太多耐人尋”味”的東東, 一般來說如非必要我是很少搭乘, 印象中只有之前從 SFO 出來搭過一次到 Powell Street.</p>
+</li>
+<li><p><a href="http://www.caltrain.com/" target="_blank" rel="noopener">Caltrain</a><br>– 這算是加州的火車系統, 這邊的大眾交通工具其實跟台灣差很多, 很多都是區域鄉縣市鎮政府或者民間單位自己運行, 所以也不是每個地方都有, 不過想想也是合理, 因為美國實在太大了. 基本上買票的有幾種選擇: </p>
+<ul>
+<li><a href="https://www.clippercard.com/ClipperWeb/index.do" target="_blank" rel="noopener">Clipper card</a> - 可以到實體店面買卡也可以上網買卡寄送到家. </li>
+<li><a href="https://apps.apple.com/us/app/caltrain-mobile/id1341108133?ls=1" target="_blank" rel="noopener">Caltrain iOS App</a></li>
+<li><a href="https://play.google.com/store/apps/details?id=org.caltrain.riderapp" target="_blank" rel="noopener">Caltrain Android App</a></li>
+</ul>
+</li>
+</ul>
+<p>以上幾個服務我大多嘗試過, 雖然在舊金山搭乘 Uber 或者 Lyft 很方便, 但不會是帶著小孩的好選擇, 雖然 Uber/Lfyt 說可以請司機提供 car seat, 但我還真沒看過有哪個司機有提供的, 而且我用背巾背小孩搭車, 好一點的司機大概會提醒我注意安全, 一些司機會警告我說, 如果沒有合法的Car Seat, 被警察抓到我要自己搞定, 比較保守的司機, 一看到我們這些行頭 - 背巾 + 推車, 直接就 cancel request 拒載. 我們還遇到滿多次的, 常常傻眼在路邊重新叫車 (泣).</p>
+<h4 id="Solution"><a href="#Solution" class="headerlink" title="Solution?"></a>Solution?</h4><p>後來實在受不了了, 我開始認真思考買/租一台車的事, 不過買車之前有幾個問題需要解決, 比較重要的就是兩個: </p>
+<ul>
+<li>你的 Local driving license (U.S Driver License/DL). </li>
+<li>你的汽車保險 (Car Insurance).</li>
+</ul>
+<p>當地駕照的部分, 有些州可以直接台灣駕照直接換, 直接參考 <a href="https://www.mofa.gov.tw/Upload/WebArchive/1860/01link%E5%8C%97%E7%BE%8E%E5%9C%B0%E5%8D%80%E5%90%84%E5%9C%8B%E6%89%BF%E8%AA%8D%E6%88%91%E5%9C%8B%E9%A7%95%E7%85%A7%E5%85%8D%E8%A9%A6%E6%8F%9B%E7%85%A7%E4%B8%80%E8%A6%BD%E8%A1%A8_1080111.pdf" target="_blank" rel="noopener">中華民國外交部 - 全球資訊網</a>. 所以你如果發現可以直接換照的, 那就真的要說聲恭喜了, 你出運了. 不過像是加州就不承認其他國家/的駕照, 所以來這邊一定要重考筆試跟路考, 整個就是一個等待的折磨過程. 另外美國 DMV (車輛管理局) 真的不是像你想的那麼簡單, 這張圖很好的說明了一切:</p>
+<p><img src="https://chauyanw.files.wordpress.com/2019/04/sloth-dmv.jpg" alt="sloth-dmv.jpg"></p>
+<p>而另一個需要注意的重點: 車輛保險. 在美國沒有車輛保險能不能開車上路? 當然可以, 不過一旦出事那後續的事故處理就會很麻煩, 而如果有駕駛人沒有保險就上路, 當然自己的車險有包含這部分的話就比較安全. 另外沒保險上路的話, 被抓到你會很慘喔</p>
+<blockquote>
+<p><strong>Penalties for Driving Without Insurance</strong><br>Anytime a police officer pulls you over for traffic violations in California, he or she has the power to ask you to present three things: your driver’s license, CA vehicle registration, and evidence of auto insurance. Failure to present valid proof of insurance that meets the <a href="https://www.valuepenguin.com/auto-insurance/california/requirements" target="_blank" rel="noopener">state requirements</a> could result in a fine that could be anywhere between $360 and $720 or more (on top of the traffic violation ticket fine). Whether you are truely uninsured, or have forgotten to carry your insurance card, you will get a ticket. However, in case you are actually insured, you may be able to appeal for reduced fine in court.</p>
+</blockquote>
+<p>所以千萬不要拿自己跟別人的生命開玩笑, 當個好駕駛把該備齊的都準備好.那麼問題來了, 沒有 Local Driving License 用 IDP (International Driving Permits) 可以辦保險嗎? 目前就我嘗試過的結果是可以的, 不過台灣監理所發的 International Driving License 其實不算是真正的 IDP, 比較像是你原始駕照的翻譯本. 所以在外面開車時, 在還沒拿到當地駕照之前, 原始駕照跟翻譯本都要帶著.</p>
+<h4 id="How-to-select-the-proper-insurance"><a href="#How-to-select-the-proper-insurance" class="headerlink" title="How to select the proper insurance?"></a>How to select the proper insurance?</h4><p>但保險公司不好找, 一般來說只有少數幾家保險公司願意承認 IDP. 網路上有人討論 - <a href="https://www.thebalance.com/car-insurance-for-drivers-with-international-driving-permits-4584597" target="_blank" rel="noopener">Car Insurance for Drivers With International Driving Permits</a> 其中提到 Progressive, Farmers 有提供, 這兩家我倒是沒試過. 後來找了 AAA (American Automobile Association) 詢價並且購買了保險. 最主要有兩個原因 </p>
+<ol>
+<li>我在還沒買車之前, 就先加入了 AAA 的會員, 主要有些租車, 旅行, 處理事故的服務, 福利不錯, 建議可以加入 - <a href="https://calstate.aaa.com/membership/join-aaa" target="_blank" rel="noopener">AAA Membership</a></li>
+<li>第二個原因則是因為眾多網友對AAA一致認同好評, 我打去 customer service 的溝通經驗也是很好, 所以最後才決定使用 AAA. </li>
+</ol>
+<p>如果有 AAA 的會員, 還可以打折. 可以參考一下, 關於 AAA 這個神奇的組織這邊有專文<a href="https://www.guruin.com/articles/2470" target="_blank" rel="noopener">專文</a>介紹, 可以好好參考一下. 最後保險搞定了, 但是實在太貴了. 如果不是 Local Driving License, 你的保費大概會是一般人的2-3 倍貴. 所以還是盡快搞定當地駕照比較划算啊, 哭. 有相關需求的朋友有疑問也可以問我, 我可以提供一些經驗. 一般來說, 汽車保險大概都是 半年或者一年一保, AAA 提供 month pay, half-year pay, 或者 annual pay. 如果選擇 一次付清 [pay-in-full] 也會有一些優惠. 其他像是多台車輛保折扣, 新車保險折扣, 好學生/優良駕駛折扣 等等. 最後提供一些相關的 references.</p>
+<h4 id="2019-04-26-update"><a href="#2019-04-26-update" class="headerlink" title="[2019.04.26 update]"></a>[2019.04.26 update]</h4><p>更新一下, 前兩天收到 AAA 的通知說我policy 內容變更, 需要補繳 900多鎂, 當下立馬就炸了. 想說怎麼可能, 明明我就一次付清了.</p>
+<p>後來跟我的 Agent Johnnie 聯絡, 他說他也不清楚, 幫我查証一下, 沒查沒事, 一查不得了, 我的 Good driver discount 被取消了?!?!?! 令人震驚 (其實也沒這麼震驚)</p>
+<p>打電話跟 Agent 還有 underwriting department 溝通了一下, 原來他們沒把我的外國駕駛經驗算入, 一般來說都不會算外國駕駛經驗, 一定要以美國駕照 (至少三年以上) 為主. 這下糟糕了, 在本人非常不想支付這筆費用的狀況下, 我問 Johnnie 有沒有解, 不然我就要改投別家了. Johnnie 很義氣的幫忙內部溝通了一下, 幫我wavier這筆費用 ! 只好給 100 分 !</p>
+<p>下回有需要的朋友可以找這位 Agent - Johnnie Cole.</p>
+<p>P.S. 有人問最終保費是多少, 其實就是 2700USD/yr. 很貴, 所以趕快拿到 local driving license 才是上策. QQ</p>
+<h4 id="References"><a href="#References" class="headerlink" title="[References]"></a>[References]</h4><ol>
+<li><a href="https://www.thezebra.com/" target="_blank" rel="noopener">The Zebra: Instantly Compare Car Insurance Quotes</a></li>
+<li><a href="https://calstate.aaa.com/insurance/discounts" target="_blank" rel="noopener">AAA Insurance Discounts - Car Auto Home Discounts by State | AAA</a> </li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AAA/" rel="tag"># AAA</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/04/18/Android-Hopping-Animation/" rel="prev" title="Android Hopping Animation">
+      <i class="fa fa-chevron-left"></i> Android Hopping Animation
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/04/22/Japan-Town-The-Northern-California-Cherry-Blossom-Festival/" rel="next" title="Japan Town - The Northern California Cherry Blossom Festival">
+      Japan Town - The Northern California Cherry Blossom Festival <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/19/Car-Insurance-in-US/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chauyan">
+      <meta itemprop="description" content="Personal dev blog for sharing what I've learned.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="舊金山周記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          美國汽車保險
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-19 16:23:00" itemprop="dateCreated datePublished" datetime="2019-04-19T16:23:00-07:00">2019-04-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-12 01:03:01" itemprop="dateModified" datetime="2020-04-12T01:03:01-07:00">2020-04-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Life/" itemprop="url" rel="index"><span itemprop="name">Life</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2019/04/19/Car-Insurance-in-US/#disqus_thread" itemprop="discussionUrl">
       <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/04/19/Car-Insurance-in-US/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -368,12 +500,34 @@
           </div>
           
     
-  <div class="comments" id="comments">
+  <div class="comments">
     <div id="disqus_thread">
       <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
   </div>
   
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -432,16 +586,16 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="twitter fa-fw"></i>Twitter</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="facebook fa-fw"></i>FB Page</a>
       </span>
   </div>
 
@@ -465,15 +619,19 @@
       <div class="footer-inner">
         
 
+        
+
 <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Chauyan</span>
 </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
 
         
 
@@ -484,7 +642,6 @@
 
 
 
-        
       </div>
     </footer>
   </div>
@@ -523,7 +680,6 @@
 
 
 
-
   
 
   
@@ -539,16 +695,16 @@
   window.addEventListener('load', loadCount, false);
 </script>
 <script>
-  function loadComments() {
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/2019/04/19/Car-Insurance-in-US/";
+    this.page.identifier = "2019/04/19/Car-Insurance-in-US/";
+    this.page.title = "美國汽車保險";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
       DISQUS.reset({
         reload: true,
-        config: {page: {
-            url: "http://yoursite.com/2019/04/19/Car-Insurance-in-US/",
-            identifier: "2019/04/19/Car-Insurance-in-US/",
-            title: "美國汽車保險"
-          }
-        }
+        config: disqus_config
       });
     } else {
       var d = document, s = d.createElement('script');
@@ -556,8 +712,7 @@
       s.setAttribute('data-timestamp', '' + +new Date());
       (d.head || d.body).appendChild(s);
     }
-  }
-    window.addEventListener('load', loadComments, false);
+  });
 </script>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->

@@ -14,38 +14,12 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    hostname: new URL('http://yoursite.com').hostname,
-    root: '/',
-    scheme: 'Pisces',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}},
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}}};
+  </script>
 
   <meta name="description" content="Why Spinnaker?在開始使用 Spinnaker 之前, 先來了解一下它是什麼東西, 為什麼要使用它, 以及它能為我們整合開發上帶來什麼好處. Netflix 推出這個開源的 project 用來做為 Continuous Integration (CI) 之後的發佈動作 (Continuous Delivery, CD) 最後一哩路. 而 Spinnaker 在 Github 上面對">
 <meta property="og:type" content="article">
@@ -76,10 +50,9 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
   };
 </script>
 
@@ -132,18 +105,6 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">舊金山周記</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">The Venture of San Francisco</p>
-  </div>
-
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar">
       <span class="toggle-line toggle-line-first"></span>
@@ -151,40 +112,59 @@
       <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">舊金山周記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">The Venture of San Francisco</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
 </div>
 
 
+
+
 <nav class="site-nav">
-  
-  <ul id="menu" class="menu">
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">11</span></a>
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories<span class="badge">11</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
 
   </li>
   </ul>
-
 </nav>
+
+
+
+
 </div>
     </header>
 
@@ -197,14 +177,13 @@
         <div class="content-wrap">
           
 
-          <div class="content">
+          <div class="content post posts-expand">
             
 
-  <div class="posts-expand">
-      
+    
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/26/Introduction-of-Spinnaker/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -224,7 +203,7 @@
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
@@ -232,20 +211,18 @@
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
+                  <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2020-04-12 00:49:39" itemprop="dateModified" datetime="2020-04-12T00:49:39-07:00">2020-04-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/DevOps/" itemprop="url" rel="index">
-                    <span itemprop="name">DevOps</span>
-                  </a>
+                  <a href="/categories/DevOps/" itemprop="url" rel="index"><span itemprop="name">DevOps</span></a>
                 </span>
             </span>
 
@@ -254,11 +231,176 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2019/07/26/Introduction-of-Spinnaker/#comments" itemprop="discussionUrl">
+    <a title="disqus" href="/2019/07/26/Introduction-of-Spinnaker/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/07/26/Introduction-of-Spinnaker/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://chauyanw.files.wordpress.com/2019/07/spin-logo-800x400.jpg?w=2924" alt="spin-logo-800x400.jpg?w=2924"></p>
+<h4 id="Why-Spinnaker"><a href="#Why-Spinnaker" class="headerlink" title="Why Spinnaker?"></a>Why Spinnaker?</h4><p>在開始使用 Spinnaker 之前, 先來了解一下它是什麼東西, 為什麼要使用它, 以及它能為我們整合開發上帶來什麼好處.</p>
+<p>Netflix 推出這個開源的 project 用來做為 Continuous Integration (CI) 之後的發佈動作 (Continuous Delivery, CD) 最後一哩路. 而 Spinnaker 在 Github 上面對自己的定位: </p>
+<blockquote>
+<p>Spinnaker is an open source, multi-cloud continuous delivery platform for releasing software changes with high velocity and confidence.</p>
+</blockquote>
+<a id="more"></a>
+
+<p>其中最關鍵一句話: <strong>可以快速部署到多種不同雲的部署平台</strong>. 可以從下圖看到 Spinnaker 概括的開發週期.</p>
+<p><img src="https://chauyanw.files.wordpress.com/2019/07/spinnaker.png" alt="spinnaker.png"><br><em>Spinnaker Adapted Development Cycle</em></p>
+<p>Spinnaker 真正最大的用武之地正在 Github 的 CI (像是 Jenkins, etc.) 結束後的快速部署. </p>
+<h4 id="Core-Feature-Sets"><a href="#Core-Feature-Sets" class="headerlink" title="Core Feature Sets"></a>Core Feature Sets</h4><p>目前 Spinnaker 主要提供 2 種不同的 core feature sets.</p>
+<ul>
+<li>Application Management (應用管理)</li>
+<li>Application Deployment (應用部署)</li>
+</ul>
+<p>以下則針對這兩個不同的特色來稍微介紹一下.</p>
+<p><strong>Application Management (應用管理)</strong></p>
+<p>在 Spinnaker 的服務中有三個主要的角色:</p>
+<ul>
+<li><p>Application (應用)</p>
+<ul>
+<li>簡單來說, 你發佈在 server 上的 - 不管是 Application type, e.g. 某個線上應用, 或者是微服務群 (MicroServices), 都可以對應到 Spinnaker 的 Application 這個概念上. 一個 Application 會包含多個 Cluster (群組). 通常 Application 上面會包含防火牆或者負載平衡. 基本上就是你所發佈 Service 的運行環境集合. </li>
+</ul>
+</li>
+<li><p>Cluster (群組)</p>
+<ul>
+<li>這邊的 Cluster 是指一群 Server Group 的集合, 跟 K8s 上面的所指的 Cluster 不同.</li>
+</ul>
+</li>
+<li><p>Server Group</p>
+<ul>
+<li>這邊的 Server Group 指的是由 VM image, Docker image, 或者 pod 等 source location 所產生的 instance 群組, 包含相關的設定檔案.</li>
+</ul>
+</li>
+</ul>
+<p>可以從底下相關的 diagram 更清楚地暸解全貌:<br><img src="https://www.spinnaker.io/concepts/clusters.png" alt="clusters.png"><br><em>Application, Cluster, and Server Group</em></p>
+<p>其中流量透過負載平衡器經過防火牆進入各種不同 Server Group.</p>
+<p><strong>Application Deployment (應用部署)</strong></p>
+<p>當我們使用 Spinnaker 進行應用部署的時候, 每個階段(stage)可以有各種不同的操作, 可以看一下底下的 Pipeline:</p>
+<p><img src="https://www.spinnaker.io/concepts/pipelines.png" alt="pipelines.png"><br><em>Spinnaker Pipeline</em></p>
+<p>使用 pipeline 的時機點可以非常彈性, 可透過手動啟用 pipeline 或者 透過自動化設定 Event 的方式來啟動一個 pipeline, 像是你 CI server (Jenkins) 完成工作的時候, 送一個 event 到 Spinnaker 來啟動 Auto-deploy. 而 Pipeline 也可以跟常用的 Slack 整合, 你會看到以下的畫面:</p>
+<p><img src="https://programmaticponderings.files.wordpress.com/2018/05/spin46.png" alt="spin46.png"><br><em>Slack Integration</em></p>
+<p>當然整合 Email/SMS 是最基本的功能, 詳細可以看看 Spinnaker 相關的設定. 這邊需要提一下 Stage:</p>
+<blockquote>
+<p>A Stage in Spinnaker is an atomic building block for a pipeline, describing an action that the pipeline will perform. You can sequence stages in a Pipeline in any order, though some stage sequences may be more common than others. Spinnaker provides a number of stages such as Deploy, Resize, Disable, Manual Judgment, and many more. You can see the full list of stages and read about implementation details for each provider in the Reference section.</p>
+</blockquote>
+<p>Stage 在 Pipeline 有著非常重要的地位, 基本上在整個 pipeline 過程中可以給予 Stage 不同的參數來做不同事情, 也可以任意改變 Stage 在 Pipeline 裡面的順序, 彈性相當大. 最後來看看佈署策略, 其實 Spinnaker 提供的部屬策略主要有這幾種:</p>
+<h4 id="Deployment-Strategy"><a href="#Deployment-Strategy" class="headerlink" title="Deployment Strategy"></a>Deployment Strategy</h4><ul>
+<li>Highlander</li>
+<li>Red/Black (紅黑策略, 又稱為藍綠策略)</li>
+<li>Rolling Red/Black</li>
+<li>Canary</li>
+</ul>
+<p>看一下圖例可以更好地瞭解:</p>
+<p><img src="https://www.spinnaker.io/concepts/deployment-strategies.png" alt="deployment-strategies.png"><br><em>Deployment Strategy</em></p>
+<p>詳細的部署策略可以看 [4], 更深入的介紹就留待下一篇了!</p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p>[1] <a href="https://medium.com/netflix-techblog/global-continuous-delivery-with-spinnaker-2a6896c23ba7" target="_blank" rel="noopener">https://medium.com/netflix-techblog/global-continuous-delivery-with-spinnaker-2a6896c23ba7</a><br>[2] <a href="https://programmaticponderings.com/tag/spinnaker/" target="_blank" rel="noopener">https://programmaticponderings.com/tag/spinnaker/</a><br>[3] <a href="https://www.spinnaker.io/concepts/" target="_blank" rel="noopener">https://www.spinnaker.io/concepts/</a><br>[4] <a href="https://blog.armory.io/tag/spinnaker-training-series/" target="_blank" rel="noopener">https://blog.armory.io/tag/spinnaker-training-series/</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CI/" rel="tag"># CI</a>
+              <a href="/tags/CD/" rel="tag"># CD</a>
+              <a href="/tags/Spinnaker/" rel="tag"># Spinnaker</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/07/14/Apple-Park-Visiting/" rel="prev" title="Apple Park Visiting">
+      <i class="fa fa-chevron-left"></i> Apple Park Visiting
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/07/28/EQUIFAX-data-breach/" rel="next" title="EQUIFAX Data Breach">
+      EQUIFAX Data Breach <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/26/Introduction-of-Spinnaker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chauyan">
+      <meta itemprop="description" content="Personal dev blog for sharing what I've learned.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="舊金山周記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Introduction of Spinnaker
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-07-26 16:57:00" itemprop="dateCreated datePublished" datetime="2019-07-26T16:57:00-07:00">2019-07-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-12 00:49:39" itemprop="dateModified" datetime="2020-04-12T00:49:39-07:00">2020-04-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DevOps/" itemprop="url" rel="index"><span itemprop="name">DevOps</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2019/07/26/Introduction-of-Spinnaker/#disqus_thread" itemprop="discussionUrl">
       <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/07/26/Introduction-of-Spinnaker/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -385,12 +527,34 @@
           </div>
           
     
-  <div class="comments" id="comments">
+  <div class="comments">
     <div id="disqus_thread">
       <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
   </div>
   
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -449,16 +613,16 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="twitter fa-fw"></i>Twitter</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="facebook fa-fw"></i>FB Page</a>
       </span>
   </div>
 
@@ -482,15 +646,19 @@
       <div class="footer-inner">
         
 
+        
+
 <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Chauyan</span>
 </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
 
         
 
@@ -501,7 +669,6 @@
 
 
 
-        
       </div>
     </footer>
   </div>
@@ -540,7 +707,6 @@
 
 
 
-
   
 
   
@@ -556,16 +722,16 @@
   window.addEventListener('load', loadCount, false);
 </script>
 <script>
-  function loadComments() {
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/2019/07/26/Introduction-of-Spinnaker/";
+    this.page.identifier = "2019/07/26/Introduction-of-Spinnaker/";
+    this.page.title = "Introduction of Spinnaker";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
       DISQUS.reset({
         reload: true,
-        config: {page: {
-            url: "http://yoursite.com/2019/07/26/Introduction-of-Spinnaker/",
-            identifier: "2019/07/26/Introduction-of-Spinnaker/",
-            title: "Introduction of Spinnaker"
-          }
-        }
+        config: disqus_config
       });
     } else {
       var d = document, s = d.createElement('script');
@@ -573,8 +739,7 @@
       s.setAttribute('data-timestamp', '' + +new Date());
       (d.head || d.body).appendChild(s);
     }
-  }
-    window.addEventListener('load', loadComments, false);
+  });
 </script>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->

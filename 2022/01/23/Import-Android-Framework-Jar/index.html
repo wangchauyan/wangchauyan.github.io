@@ -14,38 +14,12 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    hostname: new URL('http://yoursite.com').hostname,
-    root: '/',
-    scheme: 'Pisces',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}},
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}}};
+  </script>
 
   <meta name="description" content="Import AOSP framework jar fileWhy do we import the AOSP framework jar file to the Android Studio? It’s usually unnecessary to import this jar file to develop a standard application for your project.">
 <meta property="og:type" content="article">
@@ -69,10 +43,9 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
   };
 </script>
 
@@ -125,18 +98,6 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">舊金山周記</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">The Venture of San Francisco</p>
-  </div>
-
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar">
       <span class="toggle-line toggle-line-first"></span>
@@ -144,40 +105,59 @@
       <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">舊金山周記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">The Venture of San Francisco</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
 </div>
 
 
+
+
 <nav class="site-nav">
-  
-  <ul id="menu" class="menu">
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">11</span></a>
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories<span class="badge">11</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
 
   </li>
   </ul>
-
 </nav>
+
+
+
+
 </div>
     </header>
 
@@ -190,14 +170,13 @@
         <div class="content-wrap">
           
 
-          <div class="content">
+          <div class="content post posts-expand">
             
 
-  <div class="posts-expand">
-      
+    
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/01/23/Import-Android-Framework-Jar/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -217,7 +196,7 @@
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
@@ -225,20 +204,18 @@
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
+                  <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2022-02-21 08:24:53" itemprop="dateModified" datetime="2022-02-21T08:24:53-08:00">2022-02-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android-Dev/" itemprop="url" rel="index">
-                    <span itemprop="name">Android Dev</span>
-                  </a>
+                  <a href="/categories/Android-Dev/" itemprop="url" rel="index"><span itemprop="name">Android Dev</span></a>
                 </span>
             </span>
 
@@ -247,11 +224,142 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2022/01/23/Import-Android-Framework-Jar/#comments" itemprop="discussionUrl">
+    <a title="disqus" href="/2022/01/23/Import-Android-Framework-Jar/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/01/23/Import-Android-Framework-Jar/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://lh3.googleusercontent.com/GTmuiIZrppouc6hhdWiocybtRx1Tpbl52eYw4l-nAqHtHd4BpSMEqe-vGv7ZFiaHhG_l4v2m5Fdhapxw9aFLf28ErztHEv5WYIz5fA" alt="Android"></p>
+<h4 id="Import-AOSP-framework-jar-file"><a href="#Import-AOSP-framework-jar-file" class="headerlink" title="Import AOSP framework jar file"></a>Import AOSP framework jar file</h4><p>Why do we import the AOSP framework jar file to the Android Studio? It’s usually unnecessary to import this jar file to develop a standard application for your project. But when you need to build an application that will need to interact with your framework code or do system integration with your hardware, those are two good use-cases to put the framework jar into the Android Studio. </p>
+<p>Here we will show you how to import this framework jar file and use it in your project. </p>
+<span id="more"></span>
+
+<h4 id="Build-out-the-framework-jar"><a href="#Build-out-the-framework-jar" class="headerlink" title="Build out the framework jar."></a>Build out the framework jar.</h4><p>When you run the following commands, </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">source ./build/envsetup.sh </span><br><span class="line">lunch aosp_arm64-eng</span><br><span class="line">make -j24</span><br></pre></td></tr></table></figure>
+
+<p>you can build the AOSP images out and get the class_header.jar file from this path: </p>
+<p><code>path/to/your/AOSP/out/target/common/obj/JAVA_LIBRARIES/framework_intermediates</code></p>
+<p>Here you can find the classes-header.jar file, which is the file we need for the Android Studio. </p>
+<h4 id="Setup-Android-Studio"><a href="#Setup-Android-Studio" class="headerlink" title="Setup Android Studio"></a>Setup Android Studio</h4><p>Open your Android Studio and your system project. Here we need to do some extra settings and import the jar file. </p>
+<h5 id="Create-an-SDK-folder"><a href="#Create-an-SDK-folder" class="headerlink" title="Create an SDK folder"></a>Create an SDK folder</h5><p>You can create an SDK folder in your application root path and put your framework.jar file in this SDK folder. </p>
+<h5 id="Update-project-build-gradle"><a href="#Update-project-build-gradle" class="headerlink" title="Update project build.gradle."></a>Update project build.gradle.</h5><p>We need to update the project level Gradle file and add the following code, </p>
+<p><strong>before Android 4.2</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gradle.projectsEvaluated &#123;</span><br><span class="line">	tasks.withType(JavaCompile) &#123;</span><br><span class="line">		options.compilerArgs.add(&#x27;-Xbootclasspath/p:app/sdk/framework.jar&#x27;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>after Android 4.2</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">gradle.projectsEvaluated &#123;  </span><br><span class="line">    tasks.withType(JavaCompile) &#123;  </span><br><span class="line">        Set&lt;File&gt; fileSet = options.bootstrapClasspath.getFiles()  </span><br><span class="line">        List&lt;File&gt; newFileList = new ArrayList&lt;&gt;();  </span><br><span class="line">        newFileList.add(new File(&quot;./app/sdk/framework.jar&quot;))  </span><br><span class="line">        newFileList.addAll(fileSet)  </span><br><span class="line">        options.bootstrapClasspath = files(newFileList.toArray())  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The concept here is to put the framework.jar to the classpath where the bootstrap class loader can load and find the class. Android Studio will know it needs to put this framework.jar into the classpath to avoid the import error with this setting. After setting up the project build.gradle, you will need to change your application-level build.gradle. </p>
+<h5 id="And-the-framework-jar-to-the-Application-module"><a href="#And-the-framework-jar-to-the-Application-module" class="headerlink" title="And the framework.jar to the Application module"></a>And the framework.jar to the Application module</h5><p>After the changes described above, you will need to add this jar file to the Application module. </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compileOnly files(&#x27;sdk/framework.jar&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>We use <code>compileOnly</code> because the standard Android SDK contains the corresponding APIs, but we can’t access them due to the <code>@SystemApi</code>  annotation. So letting the compiler know this framework jar and leveraging the APIs during the compiling process can bypass the <code>@SystemApi</code> access problem. </p>
+<p>After doing those changes, you should access the framework API in your Android Studio projects. Enjoy, happy coding. </p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Gradle-Dependency/" rel="tag"># Gradle Dependency</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/17/Gradle-dependency-management/" rel="prev" title="Gradle dependency management">
+      <i class="fa fa-chevron-left"></i> Gradle dependency management
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/05/Something-related-to-the-System-App/" rel="next" title="Something related to the System App">
+      Something related to the System App <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/01/23/Import-Android-Framework-Jar/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chauyan">
+      <meta itemprop="description" content="Personal dev blog for sharing what I've learned.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="舊金山周記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Import Android Framework Jar
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-01-23 22:01:51" itemprop="dateCreated datePublished" datetime="2022-01-23T22:01:51-08:00">2022-01-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-02-21 08:24:53" itemprop="dateModified" datetime="2022-02-21T08:24:53-08:00">2022-02-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android-Dev/" itemprop="url" rel="index"><span itemprop="name">Android Dev</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2022/01/23/Import-Android-Framework-Jar/#disqus_thread" itemprop="discussionUrl">
       <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/01/23/Import-Android-Framework-Jar/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -344,12 +452,34 @@
           </div>
           
     
-  <div class="comments" id="comments">
+  <div class="comments">
     <div id="disqus_thread">
       <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
   </div>
   
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -408,16 +538,16 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="twitter fa-fw"></i>Twitter</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="facebook fa-fw"></i>FB Page</a>
       </span>
   </div>
 
@@ -441,15 +571,19 @@
       <div class="footer-inner">
         
 
+        
+
 <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Chauyan</span>
 </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
 
         
 
@@ -460,7 +594,6 @@
 
 
 
-        
       </div>
     </footer>
   </div>
@@ -499,7 +632,6 @@
 
 
 
-
   
 
   
@@ -515,16 +647,16 @@
   window.addEventListener('load', loadCount, false);
 </script>
 <script>
-  function loadComments() {
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/2022/01/23/Import-Android-Framework-Jar/";
+    this.page.identifier = "2022/01/23/Import-Android-Framework-Jar/";
+    this.page.title = "Import Android Framework Jar";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
       DISQUS.reset({
         reload: true,
-        config: {page: {
-            url: "http://yoursite.com/2022/01/23/Import-Android-Framework-Jar/",
-            identifier: "2022/01/23/Import-Android-Framework-Jar/",
-            title: "Import Android Framework Jar"
-          }
-        }
+        config: disqus_config
       });
     } else {
       var d = document, s = d.createElement('script');
@@ -532,8 +664,7 @@
       s.setAttribute('data-timestamp', '' + +new Date());
       (d.head || d.body).appendChild(s);
     }
-  }
-    window.addEventListener('load', loadComments, false);
+  });
 </script>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->

@@ -14,38 +14,12 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    hostname: new URL('http://yoursite.com').hostname,
-    root: '/',
-    scheme: 'Pisces',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}},
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}}};
+  </script>
 
   <meta name="description" content="這篇主要是用來提醒自己, 在美國搬家要注意的相關事項. 畢竟還尚未成為美國公民之前, 在美國國內的搬家相關係法律還是需要遵守, 像是 告知義務  Change of Address InformationWe strongly encourage you to update your address with USCIS to ensure you receive all corresponde">
 <meta property="og:type" content="article">
@@ -70,10 +44,9 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
   };
 </script>
 
@@ -126,18 +99,6 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">舊金山周記</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">The Venture of San Francisco</p>
-  </div>
-
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar">
       <span class="toggle-line toggle-line-first"></span>
@@ -145,40 +106,59 @@
       <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">舊金山周記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">The Venture of San Francisco</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
 </div>
 
 
+
+
 <nav class="site-nav">
-  
-  <ul id="menu" class="menu">
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">11</span></a>
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories<span class="badge">11</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
 
   </li>
   </ul>
-
 </nav>
+
+
+
+
 </div>
     </header>
 
@@ -191,14 +171,13 @@
         <div class="content-wrap">
           
 
-          <div class="content">
+          <div class="content post posts-expand">
             
 
-  <div class="posts-expand">
-      
+    
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/08/Moving-in-the-U-S-the-checking-list/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -218,7 +197,7 @@
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
@@ -226,20 +205,18 @@
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
+                  <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2020-04-12 00:51:19" itemprop="dateModified" datetime="2020-04-12T00:51:19-07:00">2020-04-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Life/" itemprop="url" rel="index">
-                    <span itemprop="name">Life</span>
-                  </a>
+                  <a href="/categories/Life/" itemprop="url" rel="index"><span itemprop="name">Life</span></a>
                 </span>
             </span>
 
@@ -248,11 +225,199 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2019/08/08/Moving-in-the-U-S-the-checking-list/#comments" itemprop="discussionUrl">
+    <a title="disqus" href="/2019/08/08/Moving-in-the-U-S-the-checking-list/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/08/08/Moving-in-the-U-S-the-checking-list/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://chauyanw.files.wordpress.com/2019/08/fs-home-move-page.jpg?w=2924" alt="fs-home-move-page.jpg?w=2924"></p>
+<p>這篇主要是用來提醒自己, 在美國搬家要注意的相關事項. 畢竟還尚未成為美國公民之前, 在美國國內的搬家相關係法律還是需要遵守, 像是 <a href="https://www.uscis.gov/addresschange" target="_blank" rel="noopener">告知義務</a></p>
+<blockquote>
+<p><strong>Change of Address Information</strong><br>We strongly encourage you to update your address with USCIS to ensure you receive all correspondence and benefits from us in a timely manner and avoid possible delays related to your case.</p>
+</blockquote>
+<p>Changing your address with the U.S. Postal Service will not change your address with USCIS. Please update your information with both USCIS and USPS.</p>
+<a id="more"></a>
+
+
+<p>這邊先來記錄一下搬家要做什麼事, 之前我住在公司提供的 temporary housing. 搬過一次到目前的公寓, 其實也做過相同的事, 只是那時候沒有紀錄, 有點可惜趁現在趕快做一下紀錄. </p>
+<h4 id="USCIS-移民局"><a href="#USCIS-移民局" class="headerlink" title="USCIS - 移民局"></a>USCIS - 移民局</h4><p>根據 USCIS 的網頁, 如果你不通知被抓到: </p>
+<ol>
+<li>罰款 $200 以及最高 30 天的牢獄之災 </li>
+<li>有可能驅逐出境</li>
+<li>如果你正在申請綠卡或者其他福利, 可能被取消. </li>
+</ol>
+<p>以下幾種簽證除外. </p>
+<p>Most non U.S. citizens must notify USCIS of a new address within 10 days of moving. Exceptions include:</p>
+<ol>
+<li>Diplomats (visa status A),</li>
+<li>Official government representatives to an international organization (visa status G), and</li>
+<li>Certain nonimmigrants who do not possess a visa and who are in the U.S. for fewer than 30 days.</li>
+</ol>
+<p>可以線上 File AR-11 : <a href="https://www.uscis.gov/ar-11" target="_blank" rel="noopener">https://www.uscis.gov/ar-11</a> </p>
+<h4 id="USPS-美國郵政"><a href="#USPS-美國郵政" class="headerlink" title="USPS - 美國郵政"></a>USPS - 美國郵政</h4><p>這個是ㄧ定要做的動作, 不做的話很多重要的信件, 像是你的信用卡, EAD, 綠卡等等會收不到, 最慘的是如果你不小心有罰單, 一旦因為沒收到而沒有按時繳款, 罰款會越來越多喔!! </p>
+<p>有兩個方式: </p>
+<ol>
+<li>到 USPS 填寫相關資訊, 免費的, 不用擔心. </li>
+<li>到 USPS 網站填寫 <a href="https://moversguide.usps.com/mgo/disclaimer" target="_blank" rel="noopener">https://moversguide.usps.com/mgo/disclaimer</a> </li>
+</ol>
+<p>我記得我去年上網填寫, 有兩個 forward 選項要注意一下: </p>
+<ol>
+<li>Individual Forward:<ul>
+<li>這個是個人 forward 的選項, 如果你是孤家寡人, 選這個就好了. </li>
+</ul>
+</li>
+<li>還是 Family Forward<ul>
+<li>這是家庭信件 forward, 同個姓的 mail 都 forward 到新地址, 但這個有點 tricky. 因爲我去年常常收到一個 跟我一樣 Wang 是 last name 的收件者信件, 原因是因為我用 family forward 把 temp housing 的信件都轉到我這邊, 想想有點對不起新住戶. 我猜他的信應該都轉到我這邊了. </li>
+</ul>
+</li>
+</ol>
+<p>最後搬家的時候 USPS 會送給你很多優惠券 coupon, 裡面常常有驚喜, 可以加減用一下 :)最上面的兩個部分是最重要的, 一定要先做好, 沒做的話你很多重要的信件都收不到. 像是如果你要更新駕照跟車牌登記. 收不到會覺得很心酸. </p>
+<h4 id="DMV-監理所"><a href="#DMV-監理所" class="headerlink" title="DMV - 監理所"></a>DMV - 監理所</h4><p>去年搬家的時候我還沒拿到駕照, 不過今年有駕照了也租了車, 所以要去改一下地址. </p>
+<ol>
+<li><p>駕照</p>
+<ul>
+<li>駕照基本上算是美國最常用的證件, 你訂旅館, 上火車, 上飛機甚至出入 pub, 等等. 大概都需要出示Photo ID, 而駕照就是最常用的 Photo ID. 所以你搬家的時候也需要到 DMV 換發新駕照, 因為駕照上面有你家地址 XD. </li>
+</ul>
+</li>
+<li><p>車輛登記 </p>
+<ul>
+<li><p>像我上一次搬家的時候還沒有車, 所以不用做這個動作, 但是這次有可能搬家就需要通知一下 DMV 家裡地址更改. </p>
+</li>
+<li><p>車輛保險: 這部分就是要看你自己的車輛保險公司怎麼處理, 像我是用 AAA 的保險, 可以直接跟你的 agent 說你要更新地址, 或者上網更新. 關於 <a href="https://personaldevblog.firebaseapp.com/2019/04/19/Car-Insurance-in-US" target="_blank" rel="noopener">美國汽車保險 請參考.</a></p>
+</li>
+</ul>
+</li>
+</ol>
+<p>基本上通知 DMV 有以下幾種方式 (<a href="https://www.dmv.ca.gov/portal/dmv/detail/faq/genfaq" target="_blank" rel="noopener">reference</a>): </p>
+<ol>
+<li><p>Complete your <a href="https://www.dmv.ca.gov/portal/dmv/detail/online/coa/welcome" target="_blank" rel="noopener">Change of Address.</a>/</p>
+</li>
+<li><p>Call any DMV office at 1-800-777-0133 and request that a change of address form be mailed to you. It will take 5 days for you to receive the form. Complete the information required on the form, then mail it to the address listed at the top of the form.</p>
+</li>
+<li><p>Download the <a href="https://www.dmv.ca.gov/portal/dmv/detail/forms/dmv/dmv14" target="_blank" rel="noopener">Change of Address</a> (DMV 14), complete the information, and mail it to the address listed at the top of the form.</p>
+</li>
+<li><p>Visit any DMV office, complete a change of address form, and give it to a representative to submit for processing. The representative will give you a Change of Address Certificate card (DL 43) to complete and carry with your license.</p>
+</li>
+</ol>
+<p>如果是 使用 2 or 3 這兩種方式的話, 也要將相關資訊拿到 DMV office 辦理.</p>
+<h4 id="公司或者學校內部系統"><a href="#公司或者學校內部系統" class="headerlink" title="公司或者學校內部系統"></a>公司或者學校內部系統</h4><p>如果正在上班, 可以透過公司 HR 系統直接更改新地址. 他也會更改 Tax withholding 的相關資訊, 以後要寄稅單給你比較方半. 如果是學生的話, 校內學生資訊系統也可以變更. </p>
+<h4 id="銀行"><a href="#銀行" class="headerlink" title="銀行"></a>銀行</h4><p>這個直接上網更新就好了, 不過像我跟 chase 的行員很熟, 估計如果搬家還是會去找他閑哈拉一下, 更改地址順便聯絡感情, 以後有什麼事情要處理也比較方便. XD</p>
+<h4 id="Utilities-statement-水電瓦斯帳單"><a href="#Utilities-statement-水電瓦斯帳單" class="headerlink" title="Utilities statement 水電瓦斯帳單"></a>Utilities statement 水電瓦斯帳單</h4><p>一般來說不用太擔心這個, 如果你找的新住所有幫忙負擔部分或者全部的 utilities, 可以直接跳過這個部分. 如果沒有, 直接上網更改即可. 像我現在住的的 Apartment 雖然要自己負全部的 utilities, 但是 {水費, 污水處理費, 瓦斯, 垃圾} 等是條列在 rent 裡面, 所以我不用自己更換, 除了 PG&amp;E 需要到他們網站去更新之外, 其他倒是還好. </p>
+<h4 id="註銷原本的付費服務"><a href="#註銷原本的付費服務" class="headerlink" title="註銷原本的付費服務"></a>註銷原本的付費服務</h4><p>像是: </p>
+<ol>
+<li><p>網路 (目前使用 Webpass, 原本的 Google Fiber, 年繳), 工商時間: 最近他們有活動, 需要的可以跟我說.<br><img src="https://chauyanw.files.wordpress.com/2019/08/unnamed.png" alt="unnamed.png"></p>
+</li>
+<li><p>Cable 電視 (我沒開, 但公寓這邊提供的是 xfinity 服務, 需要自己去關掉). </p>
+</li>
+<li><p>Subscriptions: 像是雜誌啦, 報紙啦, 你如果有使用藥局的定期送藥服務 也算, Amazon 上面的 subscribe 貨物, 等等, 自己都要去取消或者送到新地址. </p>
+</li>
+</ol>
+<p>目前大概是這樣, 有想到再補充.  </p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Moving/" rel="tag"># Moving</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/07/28/EQUIFAX-data-breach/" rel="prev" title="EQUIFAX Data Breach">
+      <i class="fa fa-chevron-left"></i> EQUIFAX Data Breach
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/08/10/Use-ESLint-and-Prettier-to-format-your-code-in-TypeScript/" rel="next" title="Use ESLint and Prettier to format your code in TypeScript">
+      Use ESLint and Prettier to format your code in TypeScript <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/08/Moving-in-the-U-S-the-checking-list/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chauyan">
+      <meta itemprop="description" content="Personal dev blog for sharing what I've learned.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="舊金山周記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Moving in the U.S - the check list
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-08 06:44:00" itemprop="dateCreated datePublished" datetime="2019-08-08T06:44:00-07:00">2019-08-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-12 00:51:19" itemprop="dateModified" datetime="2020-04-12T00:51:19-07:00">2020-04-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Life/" itemprop="url" rel="index"><span itemprop="name">Life</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2019/08/08/Moving-in-the-U-S-the-checking-list/#disqus_thread" itemprop="discussionUrl">
       <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/08/08/Moving-in-the-U-S-the-checking-list/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -402,12 +567,34 @@
           </div>
           
     
-  <div class="comments" id="comments">
+  <div class="comments">
     <div id="disqus_thread">
       <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
   </div>
   
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -466,16 +653,16 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="twitter fa-fw"></i>Twitter</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="facebook fa-fw"></i>FB Page</a>
       </span>
   </div>
 
@@ -499,15 +686,19 @@
       <div class="footer-inner">
         
 
+        
+
 <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Chauyan</span>
 </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
 
         
 
@@ -518,7 +709,6 @@
 
 
 
-        
       </div>
     </footer>
   </div>
@@ -557,7 +747,6 @@
 
 
 
-
   
 
   
@@ -573,16 +762,16 @@
   window.addEventListener('load', loadCount, false);
 </script>
 <script>
-  function loadComments() {
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/2019/08/08/Moving-in-the-U-S-the-checking-list/";
+    this.page.identifier = "2019/08/08/Moving-in-the-U-S-the-checking-list/";
+    this.page.title = "Moving in the U.S - the check list";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
       DISQUS.reset({
         reload: true,
-        config: {page: {
-            url: "http://yoursite.com/2019/08/08/Moving-in-the-U-S-the-checking-list/",
-            identifier: "2019/08/08/Moving-in-the-U-S-the-checking-list/",
-            title: "Moving in the U.S - the check list"
-          }
-        }
+        config: disqus_config
       });
     } else {
       var d = document, s = d.createElement('script');
@@ -590,8 +779,7 @@
       s.setAttribute('data-timestamp', '' + +new Date());
       (d.head || d.body).appendChild(s);
     }
-  }
-    window.addEventListener('load', loadComments, false);
+  });
 </script>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->

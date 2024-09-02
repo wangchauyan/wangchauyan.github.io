@@ -14,38 +14,12 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    hostname: new URL('http://yoursite.com').hostname,
-    root: '/',
-    scheme: 'Pisces',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}},
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}}};
+  </script>
 
   <meta name="description" content="What’s the issue?When using AVPlayer method - SeekToTime, I found there’s an issue that I don’t understand: the position of pointed time is not correct. In other word, the return time slot is not exa">
 <meta property="og:type" content="article">
@@ -71,10 +45,9 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
   };
 </script>
 
@@ -127,18 +100,6 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">舊金山周記</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">The Venture of San Francisco</p>
-  </div>
-
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar">
       <span class="toggle-line toggle-line-first"></span>
@@ -146,40 +107,59 @@
       <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">舊金山周記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">The Venture of San Francisco</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
 </div>
 
 
+
+
 <nav class="site-nav">
-  
-  <ul id="menu" class="menu">
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">11</span></a>
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories<span class="badge">11</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
 
   </li>
   </ul>
-
 </nav>
+
+
+
+
 </div>
     </header>
 
@@ -192,14 +172,13 @@
         <div class="content-wrap">
           
 
-          <div class="content">
+          <div class="content post posts-expand">
             
 
-  <div class="posts-expand">
-      
+    
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/17/How-to-precisely-jump-to-a-specific-time-in-AVPlayer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -219,7 +198,7 @@
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
@@ -227,20 +206,18 @@
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
+                  <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2020-04-12 00:49:15" itemprop="dateModified" datetime="2020-04-12T00:49:15-07:00">2020-04-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS-Dev/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS Dev</span>
-                  </a>
+                  <a href="/categories/iOS-Dev/" itemprop="url" rel="index"><span itemprop="name">iOS Dev</span></a>
                 </span>
             </span>
 
@@ -249,11 +226,169 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2017/02/17/How-to-precisely-jump-to-a-specific-time-in-AVPlayer/#comments" itemprop="discussionUrl">
+    <a title="disqus" href="/2017/02/17/How-to-precisely-jump-to-a-specific-time-in-AVPlayer/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/02/17/How-to-precisely-jump-to-a-specific-time-in-AVPlayer/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://images.pexels.com/photos/9352/glass-time-watch-business.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="glass-time-watch-business.jpg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=750&amp;w=1260"></p>
+<h4 id="What’s-the-issue"><a href="#What’s-the-issue" class="headerlink" title="What’s the issue?"></a>What’s the issue?</h4><p>When using <a href="https://developer.apple.com/reference/avfoundation/avplayer?language=objc" target="_blank" rel="noopener">AVPlayer</a> method - SeekToTime, I found there’s an issue that I don’t understand: the position of pointed time is not correct. In other word, the return time slot is not exactly what you want.</p>
+<a id="more"></a>
+
+<p>To me, that’s a serious problem because when doing the multimedia App by showing the subtitles, it would cause the title and speaking sound asynchronously. The whole App would become a bit weird at that moment on the user experience.</p>
+<p><img src="https://kingworldnews.com/wp-content/uploads/2018/01/King-World-News-WTF-Is-Going-On-Here-864x400_c.jpg" alt="WTF.jpg"><em>This should be what users thought about!</em></p>
+<h4 id="Do-I-have-a-solution-for-this"><a href="#Do-I-have-a-solution-for-this" class="headerlink" title="Do I have a solution for this?"></a>Do I have a solution for this?</h4><p>I’ve tried several ways to get the goal - precisely move the time cursor to the correct position. Unfortunately, I couldn’t find a proper method to achieve this goal. For example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[self.player </span><br><span class="line">  seekToTime: CMTimeMakeWithSeconds(musicTime, 600) </span><br><span class="line">  toleranceBefore: kCMTimeZero</span><br><span class="line">  toleranceAfter: kCMTimeZero</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<p>Back to the code gist, I think I run into a dead end. We should think about: why 600 is the correct time scale to use? Why this magic number 600? </p>
+<p>To answer these questions, I think I should know and explain what a CMTime means. </p>
+<h4 id="What’s-CMTime"><a href="#What’s-CMTime" class="headerlink" title="What’s CMTime?"></a>What’s CMTime?</h4><p>Let’s see the definition from Apple - <a href="https://developer.apple.com/documentation/coremedia/cmtime-u58" target="_blank" rel="noopener">CMTime</a></p>
+<blockquote>
+<p>A struct representing a time value such as a timestamp or duration. Defines a structure that represents a rational time value int64/int32.</p>
+</blockquote>
+<p>So, it’s used to represent a rational number that has a numerator number (an int64 value) and a denominator number (an int32 value). Developers can use those settings to search scene position in Video/Audio Applications. The definition of CMTime structure would be: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">typedef struct</span><br><span class="line">&#123;</span><br><span class="line">   CMTimeValue    value;</span><br><span class="line">   CMTimeScale    timescale;</span><br><span class="line">   CMTimeFlags    flags;</span><br><span class="line">   CMTimeEpoch    epoch;</span><br><span class="line">&#125; CMTime</span><br></pre></td></tr></table></figure>
+
+<h4 id="How-to-create-a-CMTime"><a href="#How-to-create-a-CMTime" class="headerlink" title="How to create a CMTime?"></a>How to create a CMTime?</h4><p>There are two most-used different categories to create a CMTime in Objective-C.</p>
+<ul>
+<li>CMTime CMTimeMakeWithSeconds(Float64 seconds, int32_t preferredTimescale);</li>
+<li>CMTime CMTimeMake(int64_t value, int32_t timescale);</li>
+</ul>
+<p>A larger time scale will result in high precision when it’s performing addition and subtraction operations. So, Apple recommends it’s better to use 600 as a time scale value for video.  Based on the document: <a href="https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/06_MediaRepresentations.html" target="_blank" rel="noopener">Time and Media Representations</a></p>
+<blockquote>
+<p>You frequently use a timescale of 600, because this is a multiple of several commonly used frame rates: 24 fps for film, 30 fps for NTSC (used for TV in North America and Japan), and 25 fps for PAL (used for TV in Europe). </p>
+</blockquote>
+<p>So, it’s a common multiple of 24 fps, 25 fps, 30 fps. </p>
+<h4 id="Does-the-time-scale-equal-to-frame-rate"><a href="#Does-the-time-scale-equal-to-frame-rate" class="headerlink" title="Does the time scale equal to frame rate?"></a>Does the time scale equal to frame rate?</h4><p>I know the description above sounds like a time scale value means the frame rate. So, we can use a 600 <code>frame rate</code> to process the video. It looks like something weird because not every video clip uses then <code>600 frame rate</code>. Then what does the time scale exactly mean? </p>
+<p>Back to the original question, how to indicate a precise time in second? For example, you want to search a scene at 20 mins and 40 seconds in a video, how do you present this? We might show 20:40 in NSTimeInterval that would be 1240.0. That’s a double-precision floating-point number. It seems no question about this. But the problem is the operation of double-precision floating-point numbers would cause inaccuracy in the computer world because we store value in <code>double</code> type, which means in 8 words. So, we don’t use a double-precision floating-point to calculate the time; instead, we use double to calculate, which means the fraction part would be wrong. That’s why Apple provides CMTime structure to solve this issue. Do you remember the structure of CMTime? Here are the definitions of the fields. </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">typedef int64_t CMTimeValue;</span><br><span class="line">typedef int32_t CMTimeScale;</span><br><span class="line">typedef enum CMTimeFlags : uint32_t &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125; CMTimeFlags;</span><br></pre></td></tr></table></figure>
+
+<p>You might remember that I said <code>value</code> is the numerator, and <code>timeScale</code> is the denominator. By using <code>int64</code> and <code>int32</code>, we can avoid the lack of precision of double operation. </p>
+<h4 id="Then-what-does-the-time-exactly-mean"><a href="#Then-what-does-the-time-exactly-mean" class="headerlink" title="Then what does the time exactly mean?"></a>Then what does the time exactly mean?</h4><p>A time scale means the slice numbers in one second. For example, if you use 600 as time scale value, then that means we slice 600 slots in a second. That means, conceptually, the time scale means <code>frame rate</code> but not the real <code>frame rate</code> in a video clip. </p>
+<h4 id="Back-to-the-function"><a href="#Back-to-the-function" class="headerlink" title="Back to the function."></a>Back to the function.</h4><p>For <code>CMTimeMake(200, 10)</code>, it means there are 200 units, and each unit occupies 1/10 of a second. For <code>CMTimeMakeWithSeconds(200, 10)</code>, it means this video clip has 200 seconds, and each unit occupies 1/10 of a second, then how many units can I have? The answer is 2000 units. To get the precise time for the next jump, we need to know what’s the exact time scale value of this video clip: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int32_t currentAssetTimeScale = self.avPlayer.currentItem.asset.duration.timescale;</span><br></pre></td></tr></table></figure>
+
+<p>Then how many units we currently have? </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CMTime nextInterval = CMTimeMake(musicTime, timeScale);</span><br></pre></td></tr></table></figure>
+
+<p>You will get the next start position for playing the video.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[self.player</span><br><span class="line">  seekToTime:nextInterval</span><br><span class="line">  toleranceBefore:kCMTimeZero</span><br><span class="line">  toleranceAfter:kCMTimeZero</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<p>You can jump to the correct start position now. Happy coding.</p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="[Reference]"></a>[Reference]</h4><ol>
+<li><a href="http://www.d2vision.com/blog/simplifiedunderstandingofcmtime.html" target="_blank" rel="noopener">Blog - D2Vision, CMTime for video and audio apps on iOS!</a></li>
+<li><a href="https://warrenmoore.net/understanding-cmtime" target="_blank" rel="noopener">Warren Moore — Understanding CMTime</a></li>
+<li><a href="https://stackoverflow.com/questions/12902410/trying-to-understand-cmtime" target="_blank" rel="noopener">ios - Trying to understand CMTime - Stack Overflow</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Double-precision_floating-point_format" target="_blank" rel="noopener">Double-precision floating-point format - Wikipedia</a></li>
+<li><a href="https://developer.apple.com/documentation/coremedia/cmtimeflags?language=objc" target="_blank" rel="noopener">CMTimeFlags - Core Media | Apple Developer Documentation</a></li>
+<li><a href="https://weekly-geekly.github.io/articles/173897/index.html" target="_blank" rel="noopener">About CMTime</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AVPlayer/" rel="tag"># AVPlayer</a>
+              <a href="/tags/CMTime/" rel="tag"># CMTime</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/02/01/Android-StrictMode-for-Debugging/" rel="prev" title="Android StrictMode for Debugging">
+      <i class="fa fa-chevron-left"></i> Android StrictMode for Debugging
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/04/18/Android-Hopping-Animation/" rel="next" title="Android Hopping Animation">
+      Android Hopping Animation <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/17/How-to-precisely-jump-to-a-specific-time-in-AVPlayer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chauyan">
+      <meta itemprop="description" content="Personal dev blog for sharing what I've learned.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="舊金山周記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          How to precisely jump to a specific time in AVPlayer
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-02-17 06:34:00" itemprop="dateCreated datePublished" datetime="2017-02-17T06:34:00-08:00">2017-02-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-12 00:49:15" itemprop="dateModified" datetime="2020-04-12T00:49:15-07:00">2020-04-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS-Dev/" itemprop="url" rel="index"><span itemprop="name">iOS Dev</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2017/02/17/How-to-precisely-jump-to-a-specific-time-in-AVPlayer/#disqus_thread" itemprop="discussionUrl">
       <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/02/17/How-to-precisely-jump-to-a-specific-time-in-AVPlayer/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -373,12 +508,34 @@
           </div>
           
     
-  <div class="comments" id="comments">
+  <div class="comments">
     <div id="disqus_thread">
       <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
   </div>
   
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -437,16 +594,16 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="twitter fa-fw"></i>Twitter</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="facebook fa-fw"></i>FB Page</a>
       </span>
   </div>
 
@@ -470,15 +627,19 @@
       <div class="footer-inner">
         
 
+        
+
 <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Chauyan</span>
 </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
 
         
 
@@ -489,7 +650,6 @@
 
 
 
-        
       </div>
     </footer>
   </div>
@@ -528,7 +688,6 @@
 
 
 
-
   
 
   
@@ -544,16 +703,16 @@
   window.addEventListener('load', loadCount, false);
 </script>
 <script>
-  function loadComments() {
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/2017/02/17/How-to-precisely-jump-to-a-specific-time-in-AVPlayer/";
+    this.page.identifier = "2017/02/17/How-to-precisely-jump-to-a-specific-time-in-AVPlayer/";
+    this.page.title = "How to precisely jump to a specific time in AVPlayer";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
       DISQUS.reset({
         reload: true,
-        config: {page: {
-            url: "http://yoursite.com/2017/02/17/How-to-precisely-jump-to-a-specific-time-in-AVPlayer/",
-            identifier: "2017/02/17/How-to-precisely-jump-to-a-specific-time-in-AVPlayer/",
-            title: "How to precisely jump to a specific time in AVPlayer"
-          }
-        }
+        config: disqus_config
       });
     } else {
       var d = document, s = d.createElement('script');
@@ -561,8 +720,7 @@
       s.setAttribute('data-timestamp', '' + +new Date());
       (d.head || d.body).appendChild(s);
     }
-  }
-    window.addEventListener('load', loadComments, false);
+  });
 </script>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->

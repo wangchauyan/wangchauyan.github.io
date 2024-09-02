@@ -14,38 +14,12 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    hostname: new URL('http://yoursite.com').hostname,
-    root: '/',
-    scheme: 'Pisces',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}},
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}}};
+  </script>
 
   <meta name="description" content="身份問題我想大家申請個人信用卡，應該是沒什麼太大的問題，對於各個銀行的最新推出的卡片優惠什麼的，只要有長期關注美国信用卡指南 或者我常去看的 Doctor Of Credit 大概都不會錯過相關的ＤＰ或者特別驚喜 (我也特別在 reference 裡面附上我常參與的 FB groups). 不過個人信用卡申請久了，總會想試試看商業信用卡．不過如果常常看華人信用卡社團或者網站裡面看到相關介紹時，第一">
 <meta property="og:type" content="article">
@@ -67,10 +41,9 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
   };
 </script>
 
@@ -123,18 +96,6 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">舊金山周記</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">The Venture of San Francisco</p>
-  </div>
-
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar">
       <span class="toggle-line toggle-line-first"></span>
@@ -142,40 +103,59 @@
       <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">舊金山周記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">The Venture of San Francisco</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
 </div>
 
 
+
+
 <nav class="site-nav">
-  
-  <ul id="menu" class="menu">
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">11</span></a>
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories<span class="badge">11</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
 
   </li>
   </ul>
-
 </nav>
+
+
+
+
 </div>
     </header>
 
@@ -188,14 +168,13 @@
         <div class="content-wrap">
           
 
-          <div class="content">
+          <div class="content post posts-expand">
             
 
-  <div class="posts-expand">
-      
+    
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/12/%E9%97%9C%E6%96%BC%E7%94%B3%E8%AB%8B%E5%95%86%E6%A5%AD%E5%8D%A1%E9%82%A3%E6%AA%94%E4%BA%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -215,7 +194,7 @@
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
               
@@ -224,13 +203,11 @@
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Credit-Card/" itemprop="url" rel="index">
-                    <span itemprop="name">Credit Card</span>
-                  </a>
+                  <a href="/categories/Credit-Card/" itemprop="url" rel="index"><span itemprop="name">Credit Card</span></a>
                 </span>
             </span>
 
@@ -239,11 +216,146 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2020/04/12/%E9%97%9C%E6%96%BC%E7%94%B3%E8%AB%8B%E5%95%86%E6%A5%AD%E5%8D%A1%E9%82%A3%E6%AA%94%E4%BA%8B/#comments" itemprop="discussionUrl">
+    <a title="disqus" href="/2020/04/12/%E9%97%9C%E6%96%BC%E7%94%B3%E8%AB%8B%E5%95%86%E6%A5%AD%E5%8D%A1%E9%82%A3%E6%AA%94%E4%BA%8B/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/12/關於申請商業卡那檔事/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="身份問題"><a href="#身份問題" class="headerlink" title="身份問題"></a>身份問題</h4><p>我想大家申請個人信用卡，應該是沒什麼太大的問題，對於各個銀行的最新推出的卡片優惠什麼的，只要有長期關注<a href="https://www.uscreditcardguide.com/zh/" target="_blank" rel="noopener">美国信用卡指南</a> 或者我常去看的 <a href="https://www.doctorofcredit.com/" target="_blank" rel="noopener">Doctor Of Credit</a> 大概都不會錯過相關的ＤＰ或者特別驚喜 (我也特別在 reference 裡面附上我常參與的 FB groups). 不過個人信用卡申請久了，總會想試試看商業信用卡．不過如果常常看華人信用卡社團或者網站裡面看到相關介紹時，第一話總是：</p>
+<a id="more"></a>
+
+<blockquote>
+<p>強烈建議非具有<code>綠卡</code>或者<code>公民</code>身分，最好不要申請商業信用卡．</p>
+</blockquote>
+<p>我當初剛進信用卡界的時候也真的就徹底觀望了好一陣子，如今身份略有一點點變化，就想要試著暸解看看到底美國的商業信用卡是怎麼一回事，關於商業信用卡必須分為幾個層面來看，分別是：IRS, Bank, 以及 USCIS.</p>
+<p>以下都是參考各方資料所做出的<strong>個人見解</strong>，真的有相關需求，我建議最好找自己的律師問問看.</p>
+<h4 id="IRS"><a href="#IRS" class="headerlink" title="IRS"></a>IRS</h4><p>對 IRS 來說，Business 的定義有以下幾種：</p>
+<ul>
+<li>Solo Proprietorship (獨資經營)</li>
+<li>Partnership (合夥事業)</li>
+<li>Corporation (公司企業) </li>
+</ul>
+<p>這三種是目前在申請商業信用卡的時候需要填寫的企業類別，那麼這三種 Business 類別跟個人(Individual) 有什麼關聯或者關係呢? 很大的一個區別在於: Solo proprietorship 跟 Partnership 的稅表跟你個人的稅表整合在一起 (<a href="https://mashable.com/2013/03/21/taxes-startup-sole-proprietor/" target="_blank" rel="noopener">Filing Taxes as a Sole Proprietor? What You Need to Know</a>), 而 Corporation 需要提供 <a href="https://www.irs.gov/businesses/small-businesses-self-employed/do-you-need-an-ein" target="_blank" rel="noopener">EIN</a> 來申報商業活動所產生的相關稅務. </p>
+<p>以個人(Individual) 來說，我相信來美國的很多人都是持有 F1/H1B/J1 等簽證，而這些簽證是允許 passive income 的，以F1為例子: 拿F1來美最主要的目的是為了求學而不是校外打工，所以任何active income (像是打工所得)是不允許的 (OPT/CPT例外). 所以簡單來說，針對以上 IRS 對於 Business 的定義中的 Solo proprietorship 跟 Partnership 這兩個會是屬於 passive income，譬如說，rent income 或者你買賣 ETF所造成的 income (<a href="https://www.investopedia.com/terms/p/passiveincome.asp" target="_blank" rel="noopener">limited partner</a>) 都屬於此類. </p>
+<h4 id="Bank"><a href="#Bank" class="headerlink" title="Bank"></a>Bank</h4><p>對銀行來說，一個即將進行的事業(先不論是 active 或者 passive)都是一個漫長而艱辛的過程，所以銀行基本上發行信用卡給這些企業主主要會考慮幾個層面: </p>
+<ul>
+<li>Industry type: 你的企業類型是屬於什麼類型的</li>
+<li>Company Structure: 公司的結構，就是我們上述的那三種</li>
+<li>Years in Business: 公司成立多久 </li>
+<li>Number of Employees: 多少員工, 獨立企業通常只有你自己</li>
+<li>Annual Business Revenue: 企業年收入</li>
+<li>Estimated Monthly Spend: 預期企業月支出</li>
+</ul>
+<p>基本上這些因數會影響到銀行會不會核卡，以及核卡後會有多少 Credit Line. 基本上銀行並沒有規定你一定要是 active 的參與一家公司的經營，或者 passive 的參與. 基本上對銀行來說，他的角色是提供給你一個方便的途徑去進行消費(發行信用卡)，跟 IRS 或者 USCIS 不同，並不會把你個人的相關信用卡訊息提供出去. </p>
+<h4 id="USCIS"><a href="#USCIS" class="headerlink" title="USCIS"></a>USCIS</h4><p>對 USCIS 來說，他們最在意的是你在美國的期間有沒有好好的維持身份的合法性，如同上面所敘述的: 你拿F1就應該好好念書，你拿H1B 就只能為特定雇主工作，你拿J1只能做DS2019上面所敘述的事情. 所以<strong>維持身份的合法性</strong>是非常重要的事，我想這也是為什麼很多信用卡網站或者群組直接會建議你不要申辦相關商業信用卡，以免影響到日後申辦綠卡因小失大。</p>
+<p>因此無論何時何處身在哪個企業之中，想要申辦綠卡，唯一的條件就是你在美國生活的期間都有好好正確的維持合法的身份。</p>
+<h4 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h4><p>綜合以上幾個方向來看，基本上不具有綠卡或者公民身份還是可以申辦商業信用卡，所以各位有興趣的朋友不妨好好審視自己的需求，再來看看需不需要申請商業信用卡 :)</p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><ol>
+<li><a href="https://www.doctorofcredit.com/" target="_blank" rel="noopener">Doctor Of Credit - Bank Account &amp; Credit Card Bonuses</a></li>
+<li><a href="https://www.uscreditcardguide.com/zh/" target="_blank" rel="noopener">美国信用卡指南 - 北美省钱必备 只推荐最好的信用卡</a></li>
+<li><a href="https://www.facebook.com/groups/milestaiwan/" target="_blank" rel="noopener">北美華人哩程交流討論 Public Group | Facebook</a></li>
+<li><a href="https://www.facebook.com/WalterCreditCard/" target="_blank" rel="noopener">華特的信用卡客服中心 - Credit Counseling Service - Davis, California - 28 Reviews - 205 Photos | Facebook</a></li>
+<li><a href="https://realpassiveincomeideas.com/43-best-passive-income-streams-opportunities/" target="_blank" rel="noopener">43 Best Passive Income Streams &amp; Opportunities | Income Ideas</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%95%86%E6%A5%AD%E5%8D%A1/" rel="tag"># 商業卡</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/07/AMEX-AmericanExpress-Centurion-Card-Black-Card/" rel="prev" title="[AMEX] AmericanExpress Centurion Card (Black Card)">
+      <i class="fa fa-chevron-left"></i> [AMEX] AmericanExpress Centurion Card (Black Card)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/04/14/New-Java14-enhancement-for-NullPointException/" rel="next" title="New JDK14 enhancement for NullPointException">
+      New JDK14 enhancement for NullPointException <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/12/%E9%97%9C%E6%96%BC%E7%94%B3%E8%AB%8B%E5%95%86%E6%A5%AD%E5%8D%A1%E9%82%A3%E6%AA%94%E4%BA%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chauyan">
+      <meta itemprop="description" content="Personal dev blog for sharing what I've learned.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="舊金山周記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          關於申請商業卡那檔事
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-04-12 21:26:57 / Modified: 23:46:48" itemprop="dateCreated datePublished" datetime="2020-04-12T21:26:57-07:00">2020-04-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Credit-Card/" itemprop="url" rel="index"><span itemprop="name">Credit Card</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2020/04/12/%E9%97%9C%E6%96%BC%E7%94%B3%E8%AB%8B%E5%95%86%E6%A5%AD%E5%8D%A1%E9%82%A3%E6%AA%94%E4%BA%8B/#disqus_thread" itemprop="discussionUrl">
       <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/12/關於申請商業卡那檔事/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -346,12 +458,34 @@
           </div>
           
     
-  <div class="comments" id="comments">
+  <div class="comments">
     <div id="disqus_thread">
       <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
   </div>
   
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -410,16 +544,16 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="twitter fa-fw"></i>Twitter</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="facebook fa-fw"></i>FB Page</a>
       </span>
   </div>
 
@@ -443,15 +577,19 @@
       <div class="footer-inner">
         
 
+        
+
 <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Chauyan</span>
 </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
 
         
 
@@ -462,7 +600,6 @@
 
 
 
-        
       </div>
     </footer>
   </div>
@@ -501,7 +638,6 @@
 
 
 
-
   
 
   
@@ -517,16 +653,16 @@
   window.addEventListener('load', loadCount, false);
 </script>
 <script>
-  function loadComments() {
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/2020/04/12/%E9%97%9C%E6%96%BC%E7%94%B3%E8%AB%8B%E5%95%86%E6%A5%AD%E5%8D%A1%E9%82%A3%E6%AA%94%E4%BA%8B/";
+    this.page.identifier = "2020/04/12/關於申請商業卡那檔事/";
+    this.page.title = "關於申請商業卡那檔事";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
       DISQUS.reset({
         reload: true,
-        config: {page: {
-            url: "http://yoursite.com/2020/04/12/%E9%97%9C%E6%96%BC%E7%94%B3%E8%AB%8B%E5%95%86%E6%A5%AD%E5%8D%A1%E9%82%A3%E6%AA%94%E4%BA%8B/",
-            identifier: "2020/04/12/關於申請商業卡那檔事/",
-            title: "關於申請商業卡那檔事"
-          }
-        }
+        config: disqus_config
       });
     } else {
       var d = document, s = d.createElement('script');
@@ -534,8 +670,7 @@
       s.setAttribute('data-timestamp', '' + +new Date());
       (d.head || d.body).appendChild(s);
     }
-  }
-    window.addEventListener('load', loadComments, false);
+  });
 </script>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->

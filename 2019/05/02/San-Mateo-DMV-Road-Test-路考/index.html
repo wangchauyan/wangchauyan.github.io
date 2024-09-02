@@ -14,38 +14,12 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    hostname: new URL('http://yoursite.com').hostname,
-    root: '/',
-    scheme: 'Pisces',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}},
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}}};
+  </script>
 
   <meta name="description" content="5&#x2F;1 勞動節在台灣的朋友放假的同時, 我終於迎來人生最重要的考驗之一 (是嗎?) - DMV 路考 (behine-the-wheel drive test). 話說本來在考完 筆試 (written test) 之後, 一直想找時間把所有的路考的東西整理一下. 本來我是不打算約 5&#x2F;1 這麼近的時間, 剛考完筆試想要休息一下, 加上工作繁忙 … blah blah (我是不會承認我拖延症復發">
 <meta property="og:type" content="article">
@@ -77,10 +51,9 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
   };
 </script>
 
@@ -133,18 +106,6 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">舊金山周記</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">The Venture of San Francisco</p>
-  </div>
-
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar">
       <span class="toggle-line toggle-line-first"></span>
@@ -152,40 +113,59 @@
       <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">舊金山周記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">The Venture of San Francisco</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
 </div>
 
 
+
+
 <nav class="site-nav">
-  
-  <ul id="menu" class="menu">
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">11</span></a>
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories<span class="badge">11</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
 
   </li>
   </ul>
-
 </nav>
+
+
+
+
 </div>
     </header>
 
@@ -198,14 +178,13 @@
         <div class="content-wrap">
           
 
-          <div class="content">
+          <div class="content post posts-expand">
             
 
-  <div class="posts-expand">
-      
+    
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/02/San-Mateo-DMV-Road-Test-%E8%B7%AF%E8%80%83/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -225,7 +204,7 @@
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
@@ -233,20 +212,18 @@
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
+                  <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2020-04-12 01:04:31" itemprop="dateModified" datetime="2020-04-12T01:04:31-07:00">2020-04-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Life/" itemprop="url" rel="index">
-                    <span itemprop="name">Life</span>
-                  </a>
+                  <a href="/categories/Life/" itemprop="url" rel="index"><span itemprop="name">Life</span></a>
                 </span>
             </span>
 
@@ -255,11 +232,251 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2019/05/02/San-Mateo-DMV-Road-Test-%E8%B7%AF%E8%80%83/#comments" itemprop="discussionUrl">
+    <a title="disqus" href="/2019/05/02/San-Mateo-DMV-Road-Test-%E8%B7%AF%E8%80%83/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/05/02/San-Mateo-DMV-Road-Test-路考/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://chauyanw.files.wordpress.com/2019/05/road-test.jpg?w=2924" alt="road-test.jpg?w=2924"></p>
+<p>5/1 勞動節在台灣的朋友放假的同時, 我終於迎來人生最重要的考驗之一 (是嗎?) - DMV 路考 (behine-the-wheel drive test). 話說本來在考完 筆試 (written test) 之後, 一直想找時間把所有的路考的東西整理一下. 本來我是不打算約 5/1 這麼近的時間, 剛考完筆試想要休息一下, 加上工作繁忙 … blah blah (我是不會承認我拖延症復發的). 原本的路考時間是 7/2, 後來因為<a href="https://personaldevblog.firebaseapp.com/2019/04/19/Car-Insurance-in-US" target="_blank" rel="noopener">保險問題</a>, 就決定還是早早去考比較好, 拿到正式駕照後也好跟他們 nego 一下 保費不是? (後來還是因為太懶沒有打電話去 nego)</p>
+<a id="more"></a>
+
+<p>一直聽說路考對本來就有上路的老司機來說很難, 不考個2,3次是根本過不了的?! 我每每聽完心裡總想: 有這麼誇張嗎? 然而看到一堆分享驗證好像就是這麼誇張, 心裡覺得不是很踏實. 本來想在舊金山市區的 DMV 直接考一考就算了, 想說離家近, 不必跑太遠, 加上我可是老司機了, 有在怕這種區區市區道路嗎? 但實際上開過很多次市區的道路後, 我決定放棄這個不切實際的幻想, 我怕!</p>
+<p>查到很多網友介紹, 基本上大家都推薦這幾個點:</p>
+<ul>
+<li>Daly City DMV</li>
+<li>San Mateo DMV</li>
+<li>Redwood City DMV</li>
+</ul>
+<p>據說路大條又好開, 車流少人也少. 不過根據我上網查這些 DMV 的可以預約時間, 驚為天人. 基本上 .. 都！沒！有！可！預！約！的！時！間！- 附上各考區的 <a href="https://yogov.org/blog/california-dmv-road-test-pass-rates/" target="_blank" rel="noopener">Pass Rate</a>. 看起來 San Mateo 好像沒有很高, 不過我覺得這個要看考官. 考官人好帶你上天堂, 考官人不好讓你住套房.</p>
+<p><img src="https://chauyanw.files.wordpress.com/2019/05/san-francisco-and-oakland-dmv-road-test-pass-rates.jpg" alt="san-francisco-and-oakland-dmv-road-test-pass-rates.jpg"><br><em>Pass Rate for each city in CA</em></p>
+<p>原本我是約到 7/2 Oakland 考場, 加上 Appointment 只能保留一個, 只好每天刷個兩遍 DMV 預約頁面 <a href="https://www.dmv.ca.gov/portal/dmv/detail/portal/foa/welcome" target="_blank" rel="noopener">Appointment System</a> 看看有沒有更早的時間. 不過刷頁面實在太累, 一個攻城師不寫個自動化通知對不起自己, 所以隨手寫了 python 小程式通知可能有較早的新時間通知, 讓我不至於 miss 掉 是否有人 cancel appointment.</p>
+<p>很幸運的是, 5/1 就有一個可以預約的時間,  當下立馬手刀預約, 想說還有2週的時間. 可以慢慢準備一下 (拖延症患者是不可能有時間慢慢準備的, 所以前一天晚上果然出問題 …). 可能你有看到有些網友分享說去 DMV 考路考, 可以直接 walk-in 而且不用帶具有加州駕照朋友一起陪同, 都可以考. 這點是行不通的. 原因是因為 DMV 的 handbook 上面很明白的說明, 考完筆試之後, 你只會拿到 Instruction Permit - 這個 permit 的說明如下.</p>
+<blockquote>
+<p><strong>Adults’ Permit Requirements</strong><br>If you are at least 18 years old, meet the application requirements, and pass the required tests, you may be issued a California instruction permit. You must have an instruction permit while learning to drive. Your accompanying driver must be 18 years old or older and have a valid California DL. This person must be seated close enough to you that they are able to take control of the vehicle at any time. An instruction permit does not permit you to drive alone–not even to a DMV field office to take the driving test.</p>
+</blockquote>
+<p>基本上這個 Permit主要目的是讓你練車用的, 所以你自己單獨上路是不行的. 被警察抓到你就 gg 囉. 另外, 直接 walk-in DMV 考路考, 可能前幾年是可以, 但我問過 DMV 考官, 目前 (2019) 基本上直接 walk-in 是不會有人理你的, 所以大家盡量上網預約吧.</p>
+<p>基本上路考要帶的文件如下</p>
+<ul>
+<li><strong>路考預約單</strong> - 這就是為什麼我說不會有人理你直接 walk-in 的原因</li>
+<li><strong>朋友/家人/教練的加州駕照跟陪同者本人</strong> - 這就是為什麼我說單獨自己去考太傻的原因</li>
+<li><strong>汽車註冊卡</strong> - Vehicle Registration Card</li>
+<li><strong>汽車保險卡</strong> - Auto Insurance Card</li>
+<li><strong>Instruction Permit</strong> - 通過筆試會拿到</li>
+</ul>
+<p>可能需要的文件如下: </p>
+<ul>
+<li>Passport / Photo ID - 可能會用到, 但我沒用到.</li>
+<li>International Driving Permit - 國際駕照, 可能會用到, 但我沒用到.</li>
+</ul>
+<p>如果你租車去考試: </p>
+<ul>
+<li>ZipCar</li>
+<li><ul>
+<li>提早兩週通知 Customer Service, 他們會把汽車保險跟註冊卡資料準備給你, 但 ZipCar 的 <a href="https://support.zipcar.com/hc/en-us/articles/115004485287-Prohibited-Uses" target="_blank" rel="noopener">Prohibited Uses – Zipcar</a> 有說明, 其實他們不允許用來進行路考, 所以這個看估計看你運氣.</li>
+</ul>
+</li>
+<li>Rental Car </li>
+<li><ul>
+<li>基本上要跟租車公司說明你是用於路考, 請他們提供相關資料.</li>
+</ul>
+</li>
+<li>Driving School </li>
+<li><ul>
+<li>這個基本上教練會幫你搞定, 不用擔心.</li>
+</ul>
+</li>
+<li>借朋友的車去考</li>
+<li><ul>
+<li>沒什麼好說的, 記得不要撞壞別人的車.</li>
+</ul>
+</li>
+<li>用自己的車去考<ul>
+<li><strong>新車</strong><br>非常新的車你可能還沒有收到 DMV 寄來的 License Plate, Registration Card 等資料 (這也是我遇到的問題). 你可以用 Dealer 貼在擋風玻璃上的那一張 Temp Doc (上面會有這台車的 VIN 跟其他資料) 來代替. Btw, 路考前一天晚上我才發現我根本不知道什麼 Registration card, 打給 dealer 也沒接, 急急忙忙問了 Tingfan大大, 他還很熱心的幫忙找了資料, 我才知道可以用那張紙. 真是感恩大大.</li>
+<li><strong>舊車</strong><br>沒什麼好說的, 記得不要撞壞自己的車.</li>
+</ul>
+</li>
+</ul>
+<p>準備好資料就可以去 DMV了 !! 當天到 DMV 其實時間很早, 我們提早報到被拒 (15分鐘前報到即可), 只能到附近練習一下並且熟悉一下路況. 不得不說, 這是非常正確的決定了. San Mateo 的路線大概有分成南北兩圈路線:</p>
+<ul>
+<li>北圈 (重點是學校) <a href="https://www.plotaroute.com/route/150252" target="_blank" rel="noopener">DMV San Mateo Route 1 - 5km Route near San Mateo (ID: 150252)</a></li>
+<li>南圈 (重點是紅燈不能右轉) <a href="https://www.plotaroute.com/route/150253" target="_blank" rel="noopener">DMV San Mateo Route 2 - 4km Route near San Mateo (ID: 150253)</a></li>
+</ul>
+<p>這邊有個小訣竅, 最好可以選 Weekday 大概 10-11 am 左右的時間, 既可以避開車潮, 又可以避開學生, 所以你開起來會比較舒服, 南圈的部分比較多大馬路, 所以如果不避開車潮, 可能會在切換線道的時候會比較辛苦. 北圈相對簡單, 但遇到校車或者學生, 這絕對要禮讓以及保持15Mph 的速度, 超過你馬上 GG.</p>
+<p>我南北兩圈各繞一次, 差不多花了一個小時, 也因此才知道為什麼老司機基本上很容易 gg, 新手駕駛的通過率反而比較高, 幾個重點:</p>
+<ul>
+<li>切換車道有沒有轉頭觀看</li>
+<li>左右轉彎方向盤的方向</li>
+<li>行人路權永遠最大</li>
+<li>Stop sign 有沒有完全停止！</li>
+</ul>
+<p>因為在台灣常開車的人都多少有一些不好的駕駛習慣, 所以帶來這邊常常改不了, 譬如說看後照鏡, 看死角, stop sign 要停車等等. 新手沒包袱, 很容易去遵守這些規則, 老司機有自己的開車習慣, 反而容易失敗. 這點要感謝 Tingfan 大大, 整個早上花了 1個多小時確確實實地用英文對話給予各種開車指示練習, 還有一些訣竅的交代, 所以後來考試還滿順利的. </p>
+<p>我這邊要補充一點, 基本上 DMV路考: <strong>不是考你開車技術! 不是考你開車技術! 不是考你開車技術!</strong> 很重要要說三次, 他要知道你有沒有辦法 <strong>“安全” 的開車, 同時也讓其他用路人有安全的感覺</strong>, 所以你就是慢慢開, 安全地開, 安全意識表現出來, 基本上應該都沒問題.</p>
+<p>回到 DMV, 輪到我們的時候, 開始進行路考的第一步就是車檢: </p>
+<ul>
+<li>Turn on/off left signal</li>
+<li>Turn on/off right signal</li>
+<li>Turn on/off head lights</li>
+<li>Turn on/off hazard signal (emergency signal)</li>
+<li>Stop brake</li>
+<li>hand/Foot/Parking brake</li>
+<li>Arm signal (Left, Right, Stop)</li>
+<li>Wipers</li>
+<li>Defosters</li>
+<li>Horn</li>
+<li>Tires</li>
+</ul>
+<p>基本上你只要車子沒問題, 應該基本車檢都會過, 車子有問題是絕對不能上路的. 車檢完才是實際路考. 開始路考有幾個重點特別注意一下:</p>
+<ul>
+<li>整個 DMV Office 包含停車場的速限 - 10mph 以下</li>
+<li>Change lane - 頭要轉一下看死角</li>
+<li>Left/Right turn - 要看一下後視鏡, 跟看死角</li>
+<li>Pull over - 不要間距過大</li>
+<li>Back up - 要直線</li>
+</ul>
+<p>常常有人特別天兵, 在 DMV 停車場就結束冒險旅程的. 沒注意考官還沒繫上安全帶, 或者在 DMV office 開太快沒注意行人, 當場立馬GG. 當天考試考官基本車檢完, 會上車然後先讓你問問題, 我是問了關於 School Zone 速限的問題 (也可能因為問了這個, 所以考北圈). 如果開始之前有問題, 可以提出來問問考官. 基本上北圈考試很舒服, 11點沒有學生, 路算大條. 所以最後回 DMV 考官難得說了一句: you did a perfect job (老司機心裡想: 這肯定的!). 整個過程基本上只被扣了2分, 其他都還好. 考完回來停到 driving test parting lot, 考官會跟你講一下你開車需要注意什麼問題, 如果通過路考就可以進去 DMV office 拿到臨時駕照 (正式駕照大約 4週會收到). 如果失敗的話就至少要等 7天後才能再次預約路考.</p>
+<p>最後附上本人 one time passed 成績單.</p>
+<p><img src="https://chauyanw.files.wordpress.com/2019/05/img_1761.jpg" alt="img_1761.jpg"><br><em>成績單</em></p>
+<p>祝各位考試的朋友一切順利啦!</p>
+<h4 id="05-25-Update"><a href="#05-25-Update" class="headerlink" title="05/25 Update"></a>05/25 Update</h4><p>終於收到車牌啦 !! 🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉 !!<br>其實應該在 05/12 左右就收到車牌 (中間有事回台灣處理一下), 距離我到 Dealership 把車弄好到現在大概一個月左右的時間. 也不算短, 我本來以為會更快, 想不還是等了差不多一個月, 現在就是要把車牌安裝上去了 !!</p>
+<p><img src="https://chauyanw.files.wordpress.com/2019/05/img_5863.jpg" alt="img_5863.jpg"><br><em>New License Plate</em></p>
+<p>立馬到住家停車場安裝一下.</p>
+<p><img src="https://chauyanw.files.wordpress.com/2019/05/img_2612.jpg" alt="img_2612.jpg"><br><em>安裝前 - 使用臨時車牌</em></p>
+<p><img src="https://chauyanw.files.wordpress.com/2019/05/img_2959.jpg" alt="img_2959.jpg"><br><em>安裝後 - 使用正式車牌</em></p>
+<p>總算可以把 WindShield 上面的 貼紙拿掉了, 已經有正式的 Validation Card 就再也不需要它了!</p>
+<h4 id="06-20-Update"><a href="#06-20-Update" class="headerlink" title="06/20 Update"></a>06/20 Update</h4><p>總算收到駕照啦, 可以把 temporary driver license 給丟了 QQ. 等了超久, 中間還一度打電話到 DMV 問問到底怎麼回事, 想說等了超過 6週 (05/01/2019 passed) 也太不合理了, 雖然網路上一堆人說等這麼久的時間很正常, 但我覺得不太對勁, 畢竟新州長就是要整頓 DMV 的效率, 怎麼可能讓你等這麼久, 打電話去問問也好, 打完隔一週差不多就來了.</p>
+<p>底下這張是 TDL, 讓你出門在外暫時可以使用, 原本還在擔心7月過期要去 renew. 現在不用了!!! 就直接撕掉扔到垃圾桶吧 !!</p>
+<p><img src="https://chauyanw.files.wordpress.com/2019/05/tdl.png" alt="tdl.png"><br><em>Temporary Driver Licence</em></p>
+<p>因為申請駕照的時候我是連同 <a href="https://www.dhs.gov/real-id" target="_blank" rel="noopener">REAL ID</a> 一起申請, 所以文件說明會說如果你的駕照上面的加州熊是金色的, 那恭喜你, 這份駕照符合 REAL ID 的資格, 可以用這份駕照當作國內其他證件證明使用, 像是登機, 進入聯邦機構等等.</p>
+<p><img src="https://www.dmv.ca.gov/portal/wcm/connect/2fa59113-e1a3-4da9-9720-d720e5c13ad2/1/REALID_Identification.jpg?MOD=AJPERES&CVID=" alt="REALID_Identification.jpg?MOD=AJPERES&amp;CVID="></p>
+<p>總算啊. 這張駕照要收起來以後可以不用在拿護照在美國境內登機了 QQ. 另外, 還在等駕照的朋友, 其實可以打這兩隻電話去問問看:</p>
+<ul>
+<li>(916)-657-7445</li>
+<li>(916)-657-7790</li>
+</ul>
+<p>第一支電話 我試了很多次, 非常難打, 要不一直在忙線中, 要不就是音樂播超久完全打不進去. 後來放棄, 試了第二支電話. 比較好打一點, 不過音樂也是等很久, 後來選擇 1 專員回撥. 大概等了差不多 一個小時, 就會收到專員電話.</p>
+<p>基本上會跟你核對你的身份, 以及目前臨時駕照的有效期, 我是等了6周才打, 有網友分享太早打過去 DMV 基本上會叫你再等等. 所以差不多抓4 - 6 周可以打過去問問看. 我核對完沒多久, 就收到駕照了, 有需要的朋友可以試試看. 祝大家順利拿到自己的駕照.</p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="[Reference]"></a>[Reference]</h4><p>DMV - Handbook</p>
+<ul>
+<li><a href="https://www.dmv.ca.gov/web/eng_pdf/dl600.pdf" target="_blank" rel="noopener">英文版 handbook</a></li>
+<li><a href="https://www.dmv.ca.gov/portal/wcm/connect/228841fc-37f3-43e1-8ac5-07af94393138/dl600C.pdf?MOD=AJPERES" target="_blank" rel="noopener">&gt;中文版 handbook</a></li>
+</ul>
+<p>DMV - 筆試練習題</p>
+<ul>
+<li><a href="https://www.dmv.ca.gov/portal/dmv/detail/pubs/interactive/tdrive/exam" target="_blank" rel="noopener">加州 DMV 官方考題</a></li>
+<li><a href="https://www.dmv-written-test.com/california/practice-test-1.html#" target="_blank" rel="noopener">民間英文考題 (我有做過, 還可以)</a></li>
+<li><a href="https://pass-dmv-test.com/quiz-1-zh.html" target="_blank" rel="noopener">民間中文考題 (可以做做看, 但我覺得翻譯怪怪的)</a></li>
+</ul>
+<p>DMV - Safety Checklist</p>
+<ul>
+<li><a href="https://www.dmv.ca.gov/portal/dmv/detail/pubs/dl955/checklist" target="_blank" rel="noopener">Pre-Drive Checklist (Safety Criteria)</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/DMV/" rel="tag"># DMV</a>
+              <a href="/tags/Road-Test/" rel="tag"># Road Test</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/04/22/Japan-Town-The-Northern-California-Cherry-Blossom-Festival/" rel="prev" title="Japan Town - The Northern California Cherry Blossom Festival">
+      <i class="fa fa-chevron-left"></i> Japan Town - The Northern California Cherry Blossom Festival
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/05/03/How-Picasso-gets-the-Context-without-parameter-passing/" rel="next" title="How Picasso gets the Context without parameter passing">
+      How Picasso gets the Context without parameter passing <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/02/San-Mateo-DMV-Road-Test-%E8%B7%AF%E8%80%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chauyan">
+      <meta itemprop="description" content="Personal dev blog for sharing what I've learned.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="舊金山周記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          San Mateo DMV Road Test (路考)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-05-02 06:58:00" itemprop="dateCreated datePublished" datetime="2019-05-02T06:58:00-07:00">2019-05-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-12 01:04:31" itemprop="dateModified" datetime="2020-04-12T01:04:31-07:00">2020-04-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Life/" itemprop="url" rel="index"><span itemprop="name">Life</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2019/05/02/San-Mateo-DMV-Road-Test-%E8%B7%AF%E8%80%83/#disqus_thread" itemprop="discussionUrl">
       <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/05/02/San-Mateo-DMV-Road-Test-路考/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -461,12 +678,34 @@
           </div>
           
     
-  <div class="comments" id="comments">
+  <div class="comments">
     <div id="disqus_thread">
       <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
   </div>
   
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -525,16 +764,16 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="twitter fa-fw"></i>Twitter</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="facebook fa-fw"></i>FB Page</a>
       </span>
   </div>
 
@@ -558,15 +797,19 @@
       <div class="footer-inner">
         
 
+        
+
 <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Chauyan</span>
 </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
 
         
 
@@ -577,7 +820,6 @@
 
 
 
-        
       </div>
     </footer>
   </div>
@@ -616,7 +858,6 @@
 
 
 
-
   
 
   
@@ -632,16 +873,16 @@
   window.addEventListener('load', loadCount, false);
 </script>
 <script>
-  function loadComments() {
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/2019/05/02/San-Mateo-DMV-Road-Test-%E8%B7%AF%E8%80%83/";
+    this.page.identifier = "2019/05/02/San-Mateo-DMV-Road-Test-路考/";
+    this.page.title = "San Mateo DMV Road Test (路考)";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
       DISQUS.reset({
         reload: true,
-        config: {page: {
-            url: "http://yoursite.com/2019/05/02/San-Mateo-DMV-Road-Test-%E8%B7%AF%E8%80%83/",
-            identifier: "2019/05/02/San-Mateo-DMV-Road-Test-路考/",
-            title: "San Mateo DMV Road Test (路考)"
-          }
-        }
+        config: disqus_config
       });
     } else {
       var d = document, s = d.createElement('script');
@@ -649,8 +890,7 @@
       s.setAttribute('data-timestamp', '' + +new Date());
       (d.head || d.body).appendChild(s);
     }
-  }
-    window.addEventListener('load', loadComments, false);
+  });
 </script>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->

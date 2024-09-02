@@ -14,38 +14,12 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    hostname: new URL('http://yoursite.com').hostname,
-    root: '/',
-    scheme: 'Pisces',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}},
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}}};
+  </script>
 
   <meta name="description" content="The StoryI recently encountered a question about why it’s better to using interface than inheritance. I have this because we defined lots of interfaces (behaviors) in a recent project. And, I am not">
 <meta property="og:type" content="article">
@@ -70,10 +44,9 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
   };
 </script>
 
@@ -126,18 +99,6 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">舊金山周記</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">The Venture of San Francisco</p>
-  </div>
-
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar">
       <span class="toggle-line toggle-line-first"></span>
@@ -145,40 +106,59 @@
       <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">舊金山周記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">The Venture of San Francisco</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
 </div>
 
 
+
+
 <nav class="site-nav">
-  
-  <ul id="menu" class="menu">
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">11</span></a>
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories<span class="badge">11</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
 
   </li>
   </ul>
-
 </nav>
+
+
+
+
 </div>
     </header>
 
@@ -191,14 +171,13 @@
         <div class="content-wrap">
           
 
-          <div class="content">
+          <div class="content post posts-expand">
             
 
-  <div class="posts-expand">
-      
+    
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/20/Composition-over-the-inheritance/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -218,7 +197,7 @@
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
@@ -226,20 +205,18 @@
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
+                  <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2020-04-12 00:46:31" itemprop="dateModified" datetime="2020-04-12T00:46:31-07:00">2020-04-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Design-Pattern/" itemprop="url" rel="index">
-                    <span itemprop="name">Design Pattern</span>
-                  </a>
+                  <a href="/categories/Design-Pattern/" itemprop="url" rel="index"><span itemprop="name">Design Pattern</span></a>
                 </span>
             </span>
 
@@ -248,11 +225,171 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2019/09/20/Composition-over-the-inheritance/#comments" itemprop="discussionUrl">
+    <a title="disqus" href="/2019/09/20/Composition-over-the-inheritance/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/20/Composition-over-the-inheritance/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://chauyanw.files.wordpress.com/2019/09/design-pattern.png?w=2924" alt="design-pattern.png?w=2924"></p>
+<h4 id="The-Story"><a href="#The-Story" class="headerlink" title="The Story"></a>The Story</h4><p>I recently encountered a question about why it’s better to using interface than inheritance. I have this because we defined lots of interfaces (behaviors) in a recent project. And, I am not saying this is bad, but just because this is not my familiar pattern when trying to design a system and also wanted to think of it deeper why we are doing that. I am confused if some classes share the same behaviors, my first thought from Java world is to create a parent class to define those common behaviors and then derivative classes would get the benefits without implementing the same behaviors again. But someone told me: Using an interface is better. So, I want to figure out why an interface is better than inheritance. According to the wiki description:</p>
+<blockquote>
+<p><a href="https://en.wikipedia.org/wiki/Composition_over_inheritance" target="_blank" rel="noopener">Composition over inheritance - Wikipedia</a><br>Composition over inheritance (or composite reuse principle) in object-oriented programming (OOP) is the principle that classes should achieve polymorphic behavior and code reuse by their Composition (by containing instances of other classes that implement the desired functionality) rather than inheritance from a base or parent class</p>
+</blockquote>
+<a id="more"></a>
+
+<h4 id="Composite-Reuse-Principle"><a href="#Composite-Reuse-Principle" class="headerlink" title="Composite Reuse Principle"></a>Composite Reuse Principle</h4><p>Yes, that’s also called <strong>composite reuse principle</strong>. So, the relationships of inheritance and Composition are referred to as <strong>IS-A</strong> and <strong>HAS-A</strong> relationships. Then why should we use the composition pattern (Interfaces) more? </p>
+<ol>
+<li>Flexibility of reuse </li>
+<li>More precise and readable logic. </li>
+<li>Easily create test cases for components. </li>
+</ol>
+<p>Let’s check an example about the inheritance. You need to remember that’s an <code>IS-A</code> relationship.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">open class Dog &#123;</span><br><span class="line">  fun bark() &#123;</span><br><span class="line">    println(&quot;Bark!&quot;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class GermanShephard : Dog()</span><br><span class="line">var myDog = GermanShephard()</span><br><span class="line">myDog.bark()</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">It&apos;s fundamental. Let&apos;s create a parent `Dog` class with a function called bark. Every derivative class, for example - GermanShephard, would be able to bark because a german Shephard is also a kind of dog (`IS-A`). It looks very reasonable. Let&apos;s add another dog - Belgian malinois, and let these two dogs learn another skill - sniffing drug. </span><br><span class="line"></span><br><span class="line">#### Define more behaviors by inheritance</span><br></pre></td></tr></table></figure>
+
+<p>open class Dog {<br>  fun bark() {<br>    println(“Bark!”)<br>  }<br>}</p>
+<p>class GermanShephard : Dog() {<br>  fun sniffDrugs(drugs: Objects) {<br>    if (drugs != null) bark()<br>  }<br>}</p>
+<p>class BelgianMalinois : Dog() {<br>  fun sniffDrugs(drugs: Objects) {<br>    if (drugs != null) bark()<br>  }<br>}</p>
+<p>class Poodle: Dog()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Well, it still looks reasonable so far, because both german Shephard and Belgian malinois are used to be trained to execute this kind of tasks and they can do this very well. And also, a poodle is a kind of dog, no question about that. From the inheritance point, we usually put the redundant code to parent class, that&apos;s a pretty straightforward mindset (I am doing in this way). Let&apos;s put the function `sniffDrugs` into parent Dog class. Then, you might find something wrong. </span><br><span class="line"></span><br><span class="line">#### Something wrong?</span><br></pre></td></tr></table></figure>
+
+<p>open class Dog {<br>  fun bark() {<br>    println(“Bark!”)<br>  }</p>
+<p>  fun sniffDrugs(drugs: Objects) {<br>    if (drugs != null) bark()<br>  }<br>}</p>
+<p>…</p>
+<p>// Does a poodle can do sniffing drug work?<br>class Poodle: Dog()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">Can a Poodle be trained to sniff drugs? Maybe! But in our example, it seems to be wrong cause a Poodle can&apos;t have this skill. How to solve this? Maybe creating another SniffTrainingDog class is a solution? Let&apos;s see.</span><br></pre></td></tr></table></figure>
+
+<p>open class Dog {<br>  fun bark() {<br>    println(“Bark!”)<br>  }<br>}</p>
+<p>open class SniffTrainingDog: Dog() {<br>  fun sniffDrugs(drugs: Objects) {<br>    if (drugs != null) bark()<br>  }<br>}</p>
+<p>class GermanShephard : SniffTrainingDog() { … }</p>
+<p>class BelgianMalinois : SniffTrainingDog() { … }</p>
+<p>class Poodle: Dog()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">You can find a fact: when we need more behaviors, and those behaviors show the conflict, then we would need more parent classes to contain and define different behaviors. That makes the project a mess, and it&apos;s not a good design. </span><br><span class="line"></span><br><span class="line">#### A clean and simple solution</span><br><span class="line"></span><br><span class="line">Ok, it&apos;s time to try Composition now to clean the design. It looks much better when we add more behaviors for derivative class. You can define several behaviors that a dog can do.</span><br></pre></td></tr></table></figure>
+
+<p>interface Barker {<br>  fun bark()<br>}</p>
+<p>interface Swimmer {<br>  fun swim()<br>}</p>
+<p>interface DrugSniffer{<br>  fun drugSniff()<br>}</p>
+<p>class GermanShephard: Barker, DrugSniffer {<br>  override fun bark() { … }<br>  override fun drugSniff() { … }<br>}</p>
+<pre><code>
+That would be easier to test and define what a german Shephard can do. Is the inheritance dead, and we can&apos;t use it anymore? No, I don&apos;t think so. I think we should carefully choose the design pattern before we start a project. 
+
+
+Happy coding, enjoy. 
+
+
+
+
+#### [Reference]
+
+1. [Composition over inheritance - Wikipedia](https://en.wikipedia.org/wiki/Composition_over_inheritance)
+2. [Composition over Inheritance - Fun Fun Function - Medium](https://medium.com/humans-create-software/composition-over-inheritance-cb6f88070205)
+3. [Interfaces vs Inheritance in Swift - Mike Buss](https://mikebuss.com/2016/01/10/interfaces-vs-inheritance/)
+4. [Protocol-Oriented Programming in Swift - WWDC 2015 - Videos - Apple Developer](https://developer.apple.com/videos/play/wwdc2015/408/)
+5. [OO Design Patterns: Composition Vs. Inheritance - The Startup - Medium](https://medium.com/swlh/oo-design-patterns-composition-vs-inheritance-4206a6b018bb)</code></pre>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Interface/" rel="tag"># Interface</a>
+              <a href="/tags/Inheritance/" rel="tag"># Inheritance</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/09/11/System-loading-test-by-using-Artillery/" rel="prev" title="System loading test by using Artillery">
+      <i class="fa fa-chevron-left"></i> System loading test by using Artillery
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/10/12/Cron-Job-on-TypeScript/" rel="next" title="Cron Job on TypeScript">
+      Cron Job on TypeScript <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/20/Composition-over-the-inheritance/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chauyan">
+      <meta itemprop="description" content="Personal dev blog for sharing what I've learned.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="舊金山周記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Composition over the inheritance
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-09-20 06:39:00" itemprop="dateCreated datePublished" datetime="2019-09-20T06:39:00-07:00">2019-09-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-12 00:46:31" itemprop="dateModified" datetime="2020-04-12T00:46:31-07:00">2020-04-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Design-Pattern/" itemprop="url" rel="index"><span itemprop="name">Design Pattern</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2019/09/20/Composition-over-the-inheritance/#disqus_thread" itemprop="discussionUrl">
       <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/20/Composition-over-the-inheritance/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -374,12 +511,34 @@ Happy coding, enjoy.
           </div>
           
     
-  <div class="comments" id="comments">
+  <div class="comments">
     <div id="disqus_thread">
       <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
   </div>
   
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -438,16 +597,16 @@ Happy coding, enjoy.
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="twitter fa-fw"></i>Twitter</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="facebook fa-fw"></i>FB Page</a>
       </span>
   </div>
 
@@ -471,15 +630,19 @@ Happy coding, enjoy.
       <div class="footer-inner">
         
 
+        
+
 <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Chauyan</span>
 </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
 
         
 
@@ -490,7 +653,6 @@ Happy coding, enjoy.
 
 
 
-        
       </div>
     </footer>
   </div>
@@ -529,7 +691,6 @@ Happy coding, enjoy.
 
 
 
-
   
 
   
@@ -545,16 +706,16 @@ Happy coding, enjoy.
   window.addEventListener('load', loadCount, false);
 </script>
 <script>
-  function loadComments() {
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/2019/09/20/Composition-over-the-inheritance/";
+    this.page.identifier = "2019/09/20/Composition-over-the-inheritance/";
+    this.page.title = "Composition over the inheritance";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
       DISQUS.reset({
         reload: true,
-        config: {page: {
-            url: "http://yoursite.com/2019/09/20/Composition-over-the-inheritance/",
-            identifier: "2019/09/20/Composition-over-the-inheritance/",
-            title: "Composition over the inheritance"
-          }
-        }
+        config: disqus_config
       });
     } else {
       var d = document, s = d.createElement('script');
@@ -562,8 +723,7 @@ Happy coding, enjoy.
       s.setAttribute('data-timestamp', '' + +new Date());
       (d.head || d.body).appendChild(s);
     }
-  }
-    window.addEventListener('load', loadComments, false);
+  });
 </script>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->

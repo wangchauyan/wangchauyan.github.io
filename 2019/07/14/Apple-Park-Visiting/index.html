@@ -14,38 +14,12 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    hostname: new URL('http://yoursite.com').hostname,
-    root: '/',
-    scheme: 'Pisces',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}},
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}}};
+  </script>
 
   <meta name="description" content="趁著老婆生日的機會, 全家往南邊跑, 除了慶生之外, 也順便去看看傳說中的 Apple Park. 不看不知道一看嚇一跳. Apple Park 真的有夠大, 超級大, 世界無敵大. 不禁感嘆: Apple 真有錢 QQ. 先來一點介紹跟比較圖. Apple Park 背景• Apple 總部大樓，環境優美。由 Steve Jobs 生前規劃， 設計靈感來自於 Jobs 對 Stanford U">
 <meta property="og:type" content="article">
@@ -77,10 +51,9 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
   };
 </script>
 
@@ -133,18 +106,6 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">舊金山周記</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">The Venture of San Francisco</p>
-  </div>
-
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar">
       <span class="toggle-line toggle-line-first"></span>
@@ -152,40 +113,59 @@
       <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">舊金山周記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">The Venture of San Francisco</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
 </div>
 
 
+
+
 <nav class="site-nav">
-  
-  <ul id="menu" class="menu">
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">11</span></a>
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories<span class="badge">11</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
 
   </li>
   </ul>
-
 </nav>
+
+
+
+
 </div>
     </header>
 
@@ -198,14 +178,13 @@
         <div class="content-wrap">
           
 
-          <div class="content">
+          <div class="content post posts-expand">
             
 
-  <div class="posts-expand">
-      
+    
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/Apple-Park-Visiting/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -225,7 +204,7 @@
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
@@ -233,20 +212,18 @@
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
+                  <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2020-04-12 01:02:55" itemprop="dateModified" datetime="2020-04-12T01:02:55-07:00">2020-04-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Life/" itemprop="url" rel="index">
-                    <span itemprop="name">Life</span>
-                  </a>
+                  <a href="/categories/Life/" itemprop="url" rel="index"><span itemprop="name">Life</span></a>
                 </span>
             </span>
 
@@ -255,11 +232,144 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2019/07/14/Apple-Park-Visiting/#comments" itemprop="discussionUrl">
+    <a title="disqus" href="/2019/07/14/Apple-Park-Visiting/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/07/14/Apple-Park-Visiting/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://chauyanw.files.wordpress.com/2019/07/hero_large.jpg?w=1024&h=468&crop=1" alt="hero_large.jpg?w=1024&amp;h=468&amp;crop=1"></p>
+<p>趁著老婆生日的機會, 全家往南邊跑, 除了慶生之外, 也順便去看看傳說中的 Apple Park. 不看不知道一看嚇一跳. Apple Park 真的有夠大, 超級大, 世界無敵大. 不禁感嘆: Apple 真有錢 QQ. 先來一點介紹跟比較圖.</p>
+<p><img src="https://deleonrealty.com/wp-content/uploads/2018/08/Apple-Campus.png" alt="Apple-Campus.png"><br><em>Apple Park</em></p>
+<h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>• Apple 總部大樓，環境優美。由 Steve Jobs 生前規劃， 設計靈感來自於 Jobs 對 Stanford University 的回憶， 充滿了可以激發合作和創新性的氛圍。<br>• Apple Park 所在地原先是佔地 500 萬平方英尺的柏油混凝土路面， 現已被鬱鬱蔥蔥的植被覆蓋，有超過 9000 株橡樹、紅杉和 37 種 不同類型的果樹，以及其它產自本地的耐旱性樹木。</p>
+<a id="more"></a>
+
+<h4 id="能源"><a href="#能源" class="headerlink" title="能源"></a>能源</h4><p>• Apple Park 供電完全來自於可再生能源。<br>• Apple Park 的太陽能電板是世界上最大的太陽能發電裝置之一，1700 萬瓦的太陽能電源，滿足園區的電力需求。<br>• Apple Park 是世界上最大的依靠自然通風的建築，一年有 9 個月的時 間不需要暖氣或空調。</p>
+<p><img src="https://media.actualapple.com/wp-content/uploads/2016/01/73cff8819da5c97cb8794b0f608e3ba2.jpg" alt="73cff8819da5c97cb8794b0f608e3ba2.jpg"><br><em>A special vent system, designed for the favorable climate of Northern California, will allow to do without air conditioning or heating air 273 days of the year.</em></p>
+<h4 id="建築"><a href="#建築" class="headerlink" title="建築"></a>建築</h4><p><img src="https://chauyanw.files.wordpress.com/2019/07/donut_opener.jpg?w=1312" alt="donut_opener.jpg?w=1312"></p>
+<p>• 主建築為圓環結構，佔地面積 280 萬平方英尺，由世界上最大的曲面玻璃幕牆覆蓋。<br>• 天花板和地板由「中空樓板」組成， 這些混凝土材料製成的樓板經過精心設計和打磨， 既符合建築的整體美學風格， 又是建築的自然空氣調節系統的一部分， 內藏了水管來調節冷熱溫度。<br>• 主建築安裝在一個巨大的鋼制隔離器上，當地震來臨時， 環形建築可以往水平方向移動最多 4.5 英尺。 屆時底座會隨著地殼移動，但大樓仍保持正常運作。</p>
+<h4 id="園區"><a href="#園區" class="headerlink" title="園區"></a>園區</h4><p>• Apple Park 園區內設有訪客中心，裡面有一個 Apple Store 和一個咖啡廳，均向公眾開放。周圍是茂密的橄欖樹， 以及為 Apple 員工提供的佔地 10 萬平方英尺的健身與健康中心 ，安全研究和設施發展中心，以及 Steve Jobs Theater。園區內還有一個為員工提供的 2 英里的跑道。 在環形大樓區內部，還有果園、牧場和池塘。</p>
+<p>其實開放的部分只有 Apple Park Visitor Center, 我們說的 Apple Park 可能需要等我變成 Apple 的員工(誤)才有辦法進去參觀. Visitor Center 裡面有個很屌的東西就是讓你透過 iPad 的 AR 去看整個 Apple Park 的電力, 散熱系統, 以及整個建築群. 可以看一下這個 youtube video.</p>
+<p><a href="https://www.youtube.com/watch?v=kRowAw4kJeQ" target="_blank" rel="noopener">https://www.youtube.com/watch?v=kRowAw4kJeQ</a></p>
+<p>當天我們是想拍一下 video, 不過抱著小孩真的很不容易, 可以從 video 裡面看到, Apple Park 的太陽能系統, Airflow 的設計, 真的是滿厲害的. 不過可惜我是享受不到了 XDDD. 只能隨便拍幾張照片了.</p>
+<p>[gallery ids=”692,694” type=”square” columns=”2”]</p>
+<p>圖中的模型就是AR的 target. 現場工作人員分給大家一台iPad, 透過 iPad上面的 AR App, 可以看到建築群相關的資訊. 其實做得還不錯, 只能說 Apple 真的滿屌的.</p>
+<p>最後只能在 Visitor Center 來幾張照片.</p>
+<p>外觀:<br><img src="https://chauyanw.files.wordpress.com/2019/07/applepark_outside.png" alt="applepark_outside.png"></p>
+<p>Cafe:<br><img src="https://chauyanw.files.wordpress.com/2019/07/applepark_coffee.png" alt="applepark_coffee.png"></p>
+<p>貳樓觀景台:<br><img src="https://chauyanw.files.wordpress.com/2019/07/applepark_2nd.png" alt="applepark_2nd.png"></p>
+<p>老婆說很像 Dyson 的路燈 (= =!):<br><img src="https://chauyanw.files.wordpress.com/2019/07/applepark_dyson.png" alt="applepark_dyson.png"></p>
+<p>最後祝我老婆生日快樂, 結束這回合!<br><img src="https://chauyanw.files.wordpress.com/2019/07/applepark_happybirthday.png" alt="applepark_happybirthday.png"></p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="[Reference]"></a>[Reference]</h4><ol>
+<li><a href="https://www.inside.com.tw/article/14134-apple-park" target="_blank" rel="noopener">【Apple Park 圖輯】帶你一覽蘋果總部、賈伯斯劇院以及訪客中心 - INSIDE</a></li>
+<li><a href="https://www.wired.com/2017/05/apple-park-new-silicon-valley-campus/" target="_blank" rel="noopener">Apple’s New Campus: An Exclusive Look Inside the Mothership | WIRED</a></li>
+<li><a href="https://actualapple.com/14-interesting-facts-about-the-new-apple-campus/" target="_blank" rel="noopener">https://actualapple.com/14-interesting-facts-about-the-new-apple-campus/</a></li>
+<li><a href="https://deleonrealty.com/2019/silicon-valleys-new-icon-apple-park-campus/" target="_blank" rel="noopener">Silicon Valley’s New Icon: Apple Park Campus | DeLeon Realty</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Apple-Park/" rel="tag"># Apple Park</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/07/05/AMEX-Hilton-Aspire-Card/" rel="prev" title="AMEX 信用卡 Tips - 開卡馬上拿到卡號">
+      <i class="fa fa-chevron-left"></i> AMEX 信用卡 Tips - 開卡馬上拿到卡號
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/07/26/Introduction-of-Spinnaker/" rel="next" title="Introduction of Spinnaker">
+      Introduction of Spinnaker <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/Apple-Park-Visiting/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chauyan">
+      <meta itemprop="description" content="Personal dev blog for sharing what I've learned.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="舊金山周記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Apple Park Visiting
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-07-14 05:35:00" itemprop="dateCreated datePublished" datetime="2019-07-14T05:35:00-07:00">2019-07-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-12 01:02:55" itemprop="dateModified" datetime="2020-04-12T01:02:55-07:00">2020-04-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Life/" itemprop="url" rel="index"><span itemprop="name">Life</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2019/07/14/Apple-Park-Visiting/#disqus_thread" itemprop="discussionUrl">
       <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/07/14/Apple-Park-Visiting/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -354,12 +464,34 @@
           </div>
           
     
-  <div class="comments" id="comments">
+  <div class="comments">
     <div id="disqus_thread">
       <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
   </div>
   
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -418,16 +550,16 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="twitter fa-fw"></i>Twitter</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="facebook fa-fw"></i>FB Page</a>
       </span>
   </div>
 
@@ -451,15 +583,19 @@
       <div class="footer-inner">
         
 
+        
+
 <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Chauyan</span>
 </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
 
         
 
@@ -470,7 +606,6 @@
 
 
 
-        
       </div>
     </footer>
   </div>
@@ -509,7 +644,6 @@
 
 
 
-
   
 
   
@@ -525,16 +659,16 @@
   window.addEventListener('load', loadCount, false);
 </script>
 <script>
-  function loadComments() {
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/2019/07/14/Apple-Park-Visiting/";
+    this.page.identifier = "2019/07/14/Apple-Park-Visiting/";
+    this.page.title = "Apple Park Visiting";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
       DISQUS.reset({
         reload: true,
-        config: {page: {
-            url: "http://yoursite.com/2019/07/14/Apple-Park-Visiting/",
-            identifier: "2019/07/14/Apple-Park-Visiting/",
-            title: "Apple Park Visiting"
-          }
-        }
+        config: disqus_config
       });
     } else {
       var d = document, s = d.createElement('script');
@@ -542,8 +676,7 @@
       s.setAttribute('data-timestamp', '' + +new Date());
       (d.head || d.body).appendChild(s);
     }
-  }
-    window.addEventListener('load', loadComments, false);
+  });
 </script>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->

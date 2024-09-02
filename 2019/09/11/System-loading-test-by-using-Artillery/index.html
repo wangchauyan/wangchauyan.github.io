@@ -14,38 +14,12 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    hostname: new URL('http://yoursite.com').hostname,
-    root: '/',
-    scheme: 'Pisces',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}},
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}}};
+  </script>
 
   <meta name="description" content="There are so many choices for doing a system loading test on backend side. Let’s see the list below:  Gatling Apache JMeter Locust wrk k6  You can read this post to get more detail information. Choos">
 <meta property="og:type" content="article">
@@ -69,10 +43,9 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
   };
 </script>
 
@@ -125,18 +98,6 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">舊金山周記</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">The Venture of San Francisco</p>
-  </div>
-
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar">
       <span class="toggle-line toggle-line-first"></span>
@@ -144,40 +105,59 @@
       <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">舊金山周記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">The Venture of San Francisco</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
 </div>
 
 
+
+
 <nav class="site-nav">
-  
-  <ul id="menu" class="menu">
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">11</span></a>
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories<span class="badge">11</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
 
   </li>
   </ul>
-
 </nav>
+
+
+
+
 </div>
     </header>
 
@@ -190,14 +170,13 @@
         <div class="content-wrap">
           
 
-          <div class="content">
+          <div class="content post posts-expand">
             
 
-  <div class="posts-expand">
-      
+    
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/11/System-loading-test-by-using-Artillery/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -217,7 +196,7 @@
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
@@ -225,20 +204,18 @@
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
+                  <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2020-04-12 00:53:26" itemprop="dateModified" datetime="2020-04-12T00:53:26-07:00">2020-04-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/DevOps/" itemprop="url" rel="index">
-                    <span itemprop="name">DevOps</span>
-                  </a>
+                  <a href="/categories/DevOps/" itemprop="url" rel="index"><span itemprop="name">DevOps</span></a>
                 </span>
             </span>
 
@@ -247,11 +224,184 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2019/09/11/System-loading-test-by-using-Artillery/#comments" itemprop="discussionUrl">
+    <a title="disqus" href="/2019/09/11/System-loading-test-by-using-Artillery/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/11/System-loading-test-by-using-Artillery/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://chauyanw.files.wordpress.com/2019/09/artillery-logo.png?w=2924" alt="artillery-logo.png?w=2924"></p>
+<p>There are so many choices for doing a system loading test on backend side. Let’s see the list below:</p>
+<ul>
+<li><a href="https://gatling.io" target="_blank" rel="noopener">Gatling</a></li>
+<li><a href="https://jmeter.apache.org" target="_blank" rel="noopener">Apache JMeter</a></li>
+<li><a href="https://locust.io" target="_blank" rel="noopener">Locust</a></li>
+<li><a href="https://github.com/wg/wrk" target="_blank" rel="noopener">wrk</a></li>
+<li><a href="https://k6.io" target="_blank" rel="noopener">k6</a></li>
+</ul>
+<p>You can read this <a href="https://blog.loadimpact.com/comparing-load-testing-tools" target="_blank" rel="noopener">post</a> to get more detail information. Choosing Artillery is because it can provide the test scenario for developers to design a test context. After doing some researches and adapting to this tool, I found some advantages for using it to do the web benchmark.</p>
+<a id="more"></a>
+
+<p>Let’s start from scratch. The first step would be installing it.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g artillery</span><br></pre></td></tr></table></figure>
+
+<p>After the installation, you can write some tests for your APIs. Artillery supports the scenarios testing for your APIs, which means you can create different test scenarios for your API endpoints and make sure everything is ok. Let’s check the primary setting of Artillery:</p>
+<p><strong>Hello.yml</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">config:</span></span><br><span class="line"><span class="attr">  target:</span> <span class="string">'https://artillery.io'</span></span><br><span class="line"><span class="attr">  phases:</span></span><br><span class="line"><span class="attr">    - duration:</span> <span class="number">60</span></span><br><span class="line"><span class="attr">      arrivalRate:</span> <span class="number">20</span></span><br><span class="line"><span class="attr">  defaults:</span></span><br><span class="line"><span class="attr">    headers:</span></span><br><span class="line"><span class="attr">      x-my-service-auth:</span> <span class="string">'987401838271002188298567'</span></span><br><span class="line"><span class="attr">scenarios:</span></span><br><span class="line"><span class="attr">  - flow:</span></span><br><span class="line"><span class="attr">    - get:</span></span><br><span class="line"><span class="attr">        url:</span> <span class="string">"/docs"</span></span><br></pre></td></tr></table></figure>
+
+<p>This hello.yml file runs a test that uses the <code>GET</code> method to test the API path <code>/docs</code> on the target server <code>https://artillery.io.</code> It’s pretty self-explained. One of the most significant benefits of using Artillery is that the learning curve is pretty easy for developers. You can execute the yaml file in this way:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">artillery run hello.yml</span><br></pre></td></tr></table></figure>
+
+<p>You might see the result like the following:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">All virtual users finished</span><br><span class="line">Summary report @ 15:02:32(-0700) 2019-09-11</span><br><span class="line">  Scenarios launched:  1200</span><br><span class="line">  Scenarios completed: 1200</span><br><span class="line">  Requests completed:  2400</span><br><span class="line">  RPS sent: 39.72</span><br><span class="line">  Request latency:</span><br><span class="line">    min: 0.4</span><br><span class="line">    max: 9.7</span><br><span class="line">    median: 1.5</span><br><span class="line">    p95: 2.6</span><br><span class="line">    p99: 4</span><br><span class="line">  Scenario counts:</span><br><span class="line">    Get Doc: 1200 (100%)</span><br><span class="line">  Codes:</span><br><span class="line">    200: 2400</span><br></pre></td></tr></table></figure>
+
+<p>There are several terms you might not understand. It’s ok and let’s go through all of them.</p>
+<ul>
+<li><p><strong>Scenarios launched</strong> is the number of virtual users created in the preceding 10 seconds (or in total)</p>
+</li>
+<li><p><strong>Scenarios completed</strong> is the number of virtual users that completed their scenarios in the preceding 10 seconds (or in the whole test). <em>Note: this is the number of completed sessions, not the number of sessions started and completed in a 10-second interval.</em></p>
+</li>
+<li><p><strong>Requests completed</strong> is the number of HTTP requests and responses or WebSocket messages sent</p>
+</li>
+<li><p><strong>RPS sent</strong> is the average number of requests per second completed in the preceding 10 seconds (or throughout the test)</p>
+</li>
+<li><p><strong>Request latency</strong> is in milliseconds, and p95 and p99 values are the 95th and 99th <a href="https://en.wikipedia.org/wiki/Percentile" target="_blank" rel="noopener">percentile</a> values (a request latency p99 value of 500ms means that 99 out of 100 requests took 500ms or less to complete).</p>
+</li>
+<li><p><strong>Codes</strong> provides the breakdown of HTTP response codes received. If you see NaN (“not a number”) reported as a value, that means not enough responses have been received to calculate the percentile.</p>
+</li>
+</ul>
+<p>If there are any errors (such as socket timeouts), those would be printed under Errors in the report as well.</p>
+<p>So, I think it’s quite clear if you check the report. Some people might like the Wrk style report:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Running 30s <span class="built_in">test</span> @ http://127.0.0.1:8080/index.html</span><br><span class="line">  12 threads and 400 connections</span><br><span class="line">  Thread Stats   Avg      Stdev     Max   +/- Stdev</span><br><span class="line">    Latency   635.91us    0.89ms  12.92ms   93.69%</span><br><span class="line">    Req/Sec    56.20k     8.07k   62.00k    86.54%</span><br><span class="line">  22464657 requests <span class="keyword">in</span> 30.00s, 17.76GB <span class="built_in">read</span></span><br><span class="line">Requests/sec: 748868.53</span><br><span class="line">Transfer/sec:    606.33MB</span><br></pre></td></tr></table></figure>
+
+<p>But I think that’s a matter of debate, totally depends on what kind of format you like.</p>
+<p>Let’s check the two different parts of <code>hello.yml</code> file — the first one, <strong>config</strong>. The config part is where you specify the target (such as the address of the API server under test), the load progression (telling Artillery, for example, to create 20 virtual users every second for 10 minutes), and can set a variety of other options such as HTTP timeout settings, or TLS settings.</p>
+<p>The second part, <strong>scenarios</strong>. This section is where you define what virtual users created by Artillery would be doing. A scenario is a description of a typical user session in the application. For example, in an e-commerce application, a common scenario is to search for a product, add it to cart, and checkout. In a chat application, it may be to connect to the server, send a few messages, lurk for a while, and then disconnect. Remember what I mentioned before; you can create different scenarios for different test groups. <strong>Note: you are testing a behavior logic in a scenario</strong>. Here is an example of testing a shopping cart checkout scenario:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">config:</span></span><br><span class="line"><span class="attr">  target:</span> <span class="string">"https://staging1.local"</span></span><br><span class="line"><span class="attr">  phases:</span></span><br><span class="line"><span class="attr">    - duration:</span> <span class="number">60</span></span><br><span class="line"><span class="attr">      arrivalRate:</span> <span class="number">5</span></span><br><span class="line"><span class="attr">    - duration:</span> <span class="number">120</span></span><br><span class="line"><span class="attr">      arrivalRate:</span> <span class="number">5</span></span><br><span class="line"><span class="attr">      rampTo:</span> <span class="number">50</span></span><br><span class="line"><span class="attr">    - duration:</span> <span class="number">600</span></span><br><span class="line"><span class="attr">      arrivalRate:</span> <span class="number">50</span></span><br><span class="line"><span class="attr">  payload:</span></span><br><span class="line"><span class="attr">    path:</span> <span class="string">"keywords.csv"</span></span><br><span class="line"><span class="attr">    fields:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"keywords"</span></span><br><span class="line"><span class="attr">scenarios:</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">"Search and buy"</span></span><br><span class="line"><span class="attr">    flow:</span></span><br><span class="line"><span class="attr">      - post:</span></span><br><span class="line"><span class="attr">          url:</span> <span class="string">"/search"</span></span><br><span class="line"><span class="attr">          body:</span> <span class="string">"kw=<span class="template-variable">&#123;&#123; keywords &#125;&#125;</span>"</span></span><br><span class="line"><span class="attr">          capture:</span></span><br><span class="line"><span class="attr">            json:</span> <span class="string">"$.results[0].id"</span></span><br><span class="line"><span class="attr">            as:</span> <span class="string">"id"</span></span><br><span class="line"><span class="attr">      - get:</span></span><br><span class="line"><span class="attr">          url:</span> <span class="string">"/details/<span class="template-variable">&#123;&#123; id &#125;&#125;</span>"</span></span><br><span class="line"><span class="attr">      - think:</span> <span class="number">3</span></span><br><span class="line"><span class="attr">      - post:</span></span><br><span class="line"><span class="attr">          url:</span> <span class="string">"/cart"</span></span><br><span class="line"><span class="attr">          json:</span></span><br><span class="line"><span class="attr">            productId:</span> <span class="string">"<span class="template-variable">&#123;&#123; id &#125;&#125;</span>"</span></span><br></pre></td></tr></table></figure>
+
+<p>This scenario describes a context that I want to search for something with the keyword variable, which is loaded by the payload path. After I get a specific product, I want to see the product detail information. If I like the product, I’d like to put it into the shopping cart. This context is the so-called <code>scenario testing.</code> You set up a scenario(it’s primarily a use-case) that covers several APIs you want to test.</p>
+<p>Here are some tips I want to share with you:</p>
+<ul>
+<li>Tip: you might have several environments, for instance, staging, production, and other pre-defined environments. What we want to test APIs load in different environments? Artillery gives you this ability, don’t worry.</li>
+</ul>
+<p><strong>your-test-load.yaml</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">config:</span></span><br><span class="line"><span class="attr">  environments:</span> </span><br><span class="line"><span class="attr">    staging:</span> </span><br><span class="line"><span class="attr">      target:</span> <span class="string">'https://your.staging.env'</span></span><br><span class="line"><span class="attr">    production:</span> </span><br><span class="line"><span class="attr">      target:</span> <span class="string">'https://your.production.env'</span></span><br><span class="line"><span class="attr">  phases:</span></span><br><span class="line"><span class="attr">    - duration:</span> <span class="number">60</span></span><br><span class="line"><span class="attr">      arrivalRate:</span> <span class="number">20</span></span><br><span class="line"><span class="attr">  defaults:</span></span><br><span class="line"><span class="attr">    headers:</span></span><br><span class="line"><span class="attr">      x-my-service-auth:</span> <span class="string">'987401838271002188298567'</span></span><br><span class="line"><span class="attr">scenarios:</span></span><br><span class="line"><span class="attr">  - flow:</span></span><br><span class="line"><span class="attr">    - get:</span></span><br><span class="line"><span class="attr">        url:</span> <span class="string">"/docs"</span></span><br></pre></td></tr></table></figure>
+
+<p>You can define an <code>environments</code> tag here, and use the following command:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">artillery run -e staging your-test-load.yaml</span><br></pre></td></tr></table></figure>
+
+<p>You can choose different environments in this way.</p>
+<ul>
+<li>Tip: do you want to cache something from an API call? Try this.</li>
+</ul>
+<p><strong>your-test-load.yaml</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">config:</span></span><br><span class="line"><span class="attr">  environments:</span> </span><br><span class="line"><span class="attr">    staging:</span> </span><br><span class="line"><span class="attr">      target:</span> <span class="string">'https://your.staging.env'</span></span><br><span class="line"><span class="attr">    production:</span> </span><br><span class="line"><span class="attr">      target:</span> <span class="string">'https://your.production.env'</span></span><br><span class="line"><span class="attr">  phases:</span></span><br><span class="line"><span class="attr">    - duration:</span> <span class="number">60</span></span><br><span class="line"><span class="attr">      arrivalRate:</span> <span class="number">20</span></span><br><span class="line"><span class="attr">  defaults:</span></span><br><span class="line"><span class="attr">    headers:</span></span><br><span class="line"><span class="attr">      x-my-service-auth:</span> <span class="string">'987401838271002188298567'</span></span><br><span class="line"><span class="attr">scenarios:</span></span><br><span class="line"><span class="attr">  - flow:</span></span><br><span class="line"><span class="attr">    - get:</span></span><br><span class="line"><span class="attr">        url:</span> <span class="string">"/docs"</span></span><br><span class="line"><span class="attr">        capture:</span></span><br><span class="line"><span class="attr">          json:</span> <span class="string">"$.id"</span></span><br><span class="line"><span class="attr">          as:</span> <span class="string">"id"</span></span><br><span class="line"><span class="attr">    - get:</span> </span><br><span class="line"><span class="attr">        url:</span> <span class="string">"/docs/<span class="template-variable">&#123;&#123; id &#125;&#125;</span>"</span></span><br></pre></td></tr></table></figure>
+
+<p>You might try to capture a field called id from the response. Remember, each JSON should have a paired <code>as</code> keyword. Then you can directly use this id in other APIs.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Loading-test/" rel="tag"># Loading test</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/08/28/The-difference-between-import-from-and-import-require-in-TypeScript/" rel="prev" title="The difference between import from and import require in TypeScript">
+      <i class="fa fa-chevron-left"></i> The difference between import from and import require in TypeScript
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/09/20/Composition-over-the-inheritance/" rel="next" title="Composition over the inheritance">
+      Composition over the inheritance <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/11/System-loading-test-by-using-Artillery/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chauyan">
+      <meta itemprop="description" content="Personal dev blog for sharing what I've learned.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="舊金山周記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          System loading test by using Artillery
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-09-11 17:10:00" itemprop="dateCreated datePublished" datetime="2019-09-11T17:10:00-07:00">2019-09-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-12 00:53:26" itemprop="dateModified" datetime="2020-04-12T00:53:26-07:00">2020-04-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DevOps/" itemprop="url" rel="index"><span itemprop="name">DevOps</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2019/09/11/System-loading-test-by-using-Artillery/#disqus_thread" itemprop="discussionUrl">
       <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/11/System-loading-test-by-using-Artillery/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -386,12 +536,34 @@
           </div>
           
     
-  <div class="comments" id="comments">
+  <div class="comments">
     <div id="disqus_thread">
       <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
   </div>
   
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -449,16 +621,16 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="twitter fa-fw"></i>Twitter</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="facebook fa-fw"></i>FB Page</a>
       </span>
   </div>
 
@@ -482,15 +654,19 @@
       <div class="footer-inner">
         
 
+        
+
 <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Chauyan</span>
 </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
 
         
 
@@ -501,7 +677,6 @@
 
 
 
-        
       </div>
     </footer>
   </div>
@@ -540,7 +715,6 @@
 
 
 
-
   
 
   
@@ -556,16 +730,16 @@
   window.addEventListener('load', loadCount, false);
 </script>
 <script>
-  function loadComments() {
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/2019/09/11/System-loading-test-by-using-Artillery/";
+    this.page.identifier = "2019/09/11/System-loading-test-by-using-Artillery/";
+    this.page.title = "System loading test by using Artillery";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
       DISQUS.reset({
         reload: true,
-        config: {page: {
-            url: "http://yoursite.com/2019/09/11/System-loading-test-by-using-Artillery/",
-            identifier: "2019/09/11/System-loading-test-by-using-Artillery/",
-            title: "System loading test by using Artillery"
-          }
-        }
+        config: disqus_config
       });
     } else {
       var d = document, s = d.createElement('script');
@@ -573,8 +747,7 @@
       s.setAttribute('data-timestamp', '' + +new Date());
       (d.head || d.body).appendChild(s);
     }
-  }
-    window.addEventListener('load', loadComments, false);
+  });
 </script>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->

@@ -14,38 +14,12 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    hostname: new URL('http://yoursite.com').hostname,
-    root: '/',
-    scheme: 'Pisces',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}},
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}}};
+  </script>
 
   <meta name="description" content="Credit by Golang Official Blog In many programming languages such as Java, Kotlin, Objective-C, and Swift, they support the Generic programming. But in Golang, it doesn’t have that kind of feature. Wh">
 <meta property="og:type" content="article">
@@ -70,10 +44,9 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
   };
 </script>
 
@@ -126,18 +99,6 @@
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">舊金山周記</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">The Venture of San Francisco</p>
-  </div>
-
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar">
       <span class="toggle-line toggle-line-first"></span>
@@ -145,40 +106,59 @@
       <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">舊金山周記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">The Venture of San Francisco</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
 </div>
 
 
+
+
 <nav class="site-nav">
-  
-  <ul id="menu" class="menu">
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">11</span></a>
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories<span class="badge">11</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
 
   </li>
   </ul>
-
 </nav>
+
+
+
+
 </div>
     </header>
 
@@ -191,14 +171,13 @@
         <div class="content-wrap">
           
 
-          <div class="content">
+          <div class="content post posts-expand">
             
 
-  <div class="posts-expand">
-      
+    
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/01/Generic-Programming-in-Golang/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -218,7 +197,7 @@
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
@@ -226,20 +205,18 @@
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
+                  <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2020-04-12 01:01:36" itemprop="dateModified" datetime="2020-04-12T01:01:36-07:00">2020-04-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Design-Pattern/" itemprop="url" rel="index">
-                    <span itemprop="name">Design Pattern</span>
-                  </a>
+                  <a href="/categories/Design-Pattern/" itemprop="url" rel="index"><span itemprop="name">Design Pattern</span></a>
                 </span>
             </span>
 
@@ -248,11 +225,175 @@
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
+        <i class="far fa-comment"></i>
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2019/12/01/Generic-Programming-in-Golang/#comments" itemprop="discussionUrl">
+    <a title="disqus" href="/2019/12/01/Generic-Programming-in-Golang/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/12/01/Generic-Programming-in-Golang/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://blog.golang.org/10years/gopher10th-small.jpg" alt="gopher10th-small.jpg"><br><em>Credit by Golang Official Blog</em></p>
+<p>In many programming languages such as <code>Java,</code> <code>Kotlin,</code> <code>Objective-C,</code> and <code>Swift,</code> they support the <a href="https://en.wikipedia.org/w/index.php?title=Generic_programming&gettingStartedReturn=true" target="_blank" rel="noopener">Generic programming</a>. But in Golang, it doesn’t have that kind of feature. What if we want to use this feature, how can we do? Let’s check the <code>Interface</code> in Golang. And how it can achieve the generic programming in Golang. </p>
+<a id="more"></a>
+
+
+<p>Let’s see the definition of <code>Generic Programming</code> from <a href="https://en.wikipedia.org/wiki/Generic_programming" target="_blank">Wikipedia</a>: </p>
+<blockquote>
+<p>Generic programming is defined in Musser &amp; Stepanov (1989) as follows, Generic programming centers around the idea of abstracting from concrete, efficient algorithms to obtain generic algorithms that can be combined with different data representations to produce a wide variety of useful software.</p>
+<p>— Musser, David R.; Stepanov, Alexander A., Generic Programming[5]</p>
+</blockquote>
+<p>The original idea describes that we design an algorithm to solve a problem, but we don’t care about the types of objects involved. We use a sorting algorithm to sort fruits from small sizes to large sizes. This algorithm should be able to apply on apples, oranges, guavas, and other different kinds of fruits. We don’t care about what kind of fruit is, we only focus on the <code>size</code> issue. </p>
+<p>How other languages do generic programming? </p>
+<p><strong>Java</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GenericFoo</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> T foo;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFoo</span><span class="params">(T foo)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.foo = foo;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> T <span class="title">getFoo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> foo;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Kotlin</strong></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GenericFoo</span>&lt;<span class="type">T</span>&gt;</span>() &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">var</span> foo:T</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">fun</span> <span class="title">setFoo</span><span class="params">(foo: <span class="type">T</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.foo = foo</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">fun</span> <span class="title">getFoo</span><span class="params">()</span></span>: T = <span class="keyword">this</span>.foo</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Objective-C</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@interface GenericFoo&lt;ObjectType&gt; : NSObject</span><br><span class="line">- (void) setFoo: (ObjectType) foo; </span><br><span class="line">- (ObjectType) getFoo;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// implementation </span><br><span class="line">@interface GenericFoo()</span><br><span class="line">// some properties here</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation GenericFoo</span><br><span class="line">- (instancetype)init &#123;</span><br><span class="line">  // init some properties here</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void) setFoo: (id) foo &#123;</span><br><span class="line">  ... </span><br><span class="line">&#125;</span><br><span class="line">- (id) getFoo &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<p><strong>Swift</strong></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">GenericFoo</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> foo: <span class="type">T</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">mutating</span> <span class="function"><span class="keyword">func</span> <span class="title">setFoo</span><span class="params">(f: T)</span></span> &#123;</span><br><span class="line">    foo = f</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">mutating</span> <span class="function"><span class="keyword">func</span> <span class="title">getFoo</span><span class="params">()</span></span> -&gt; <span class="type">T</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> foo</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>What about Golang? Can Golang do the same thing as other programming languages do? Unfortunately, Golang doesn’t support <code>generic programming</code> because it does not have that syntax to do. That’s its drawback, but we still have another way to do a similar thing. The answer is <strong>Interface</strong>.</p>
+<p>What’s <code>Interface</code> in Golang? Let’s see an example:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> geometry <span class="keyword">interface</span> &#123;</span><br><span class="line">  area() <span class="keyword">float64</span></span><br><span class="line">  perim() <span class="keyword">float64</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">measure</span><span class="params">(g geometry)</span></span> &#123;</span><br><span class="line">  fmt.Println(g)</span><br><span class="line">  fmt.Println(g.area())</span><br><span class="line">  fmt.Println(g.perim())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>So, we define an interface - <em>geometry</em> with two methods:</p>
+<ol>
+<li>area() // get the geometry area.</li>
+<li>perim() // get the perimeter of this geometry. </li>
+</ol>
+<p>And a measure function that accepts a <code>geometry</code> interface type. How do we use that? You can create two different geometry objects. </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> rect <span class="keyword">struct</span> &#123;</span><br><span class="line">  width, height <span class="keyword">float64</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> circle <span class="keyword">struct</span> &#123;</span><br><span class="line">  radius <span class="keyword">float64</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>A tip here, when you implement all methods in an interface, then you are a type of that interface, which is so-called <a href="https://en.wikipedia.org/wiki/Duck_typing" target="_blank" rel="noopener">Duck typing</a> the core concept of Golang Interface. </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// duck typing</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r rect)</span> <span class="title">area</span><span class="params">()</span> <span class="title">float64</span></span> &#123;</span><br><span class="line">  <span class="keyword">return</span> r.width * r.height</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r rect)</span> <span class="title">perim</span><span class="params">()</span> <span class="title">float64</span></span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">2</span>*r.width + <span class="number">2</span>*r.height</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c circle)</span> <span class="title">area</span><span class="params">()</span> <span class="title">float64</span></span> &#123;</span><br><span class="line">  <span class="keyword">return</span> math.Pi * c.radius * c.radius</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c circle)</span> <span class="title">perim</span><span class="params">()</span> <span class="title">float64</span></span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">2</span> * math.Pi * c.radius</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>That means these two objects are well-defined geometries. We can use both of them in measure function. </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  r := rect&#123;width: <span class="number">3</span>, height: <span class="number">4</span>&#125;</span><br><span class="line">  c := circle&#123;radius: <span class="number">5</span>&#125;</span><br><span class="line"></span><br><span class="line">  measure(r)</span><br><span class="line">  measure(c)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Through the interface design, we can easily do the generic programming on Go. What’s another benefit to using the interface? The most significant benefit is that you can hide your implementation detail. Let’s check <code>Sort.go</code> source code: </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// A type, typically a collection, that satisfies sort.Interface can be</span></span><br><span class="line"><span class="comment">// sorted by the routines in this package. The methods require that the</span></span><br><span class="line"><span class="comment">// elements of the collection be enumerated by an integer index.</span></span><br><span class="line"><span class="keyword">type</span> Interface <span class="keyword">interface</span> &#123;</span><br><span class="line">    <span class="comment">// Len is the number of elements in the collection.</span></span><br><span class="line">    Len() <span class="keyword">int</span></span><br><span class="line">    <span class="comment">// Less reports whether the element with</span></span><br><span class="line">    <span class="comment">// index i should sort before the element with index j.</span></span><br><span class="line">    Less(i, j <span class="keyword">int</span>) <span class="keyword">bool</span></span><br><span class="line">    <span class="comment">// Swap swaps the elements with indexes i and j.</span></span><br><span class="line">    Swap(i, j <span class="keyword">int</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>It defines three methods, <code>Len()</code>, <code>Less() bool</code>, <code>Swap()</code>. When you try to use Sort interface. Just do something like this: </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Insertion sort</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">insertionSort</span><span class="params">(data Interface, a, b <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">for</span> i := a + <span class="number">1</span>; i &lt; b; i++ &#123;</span><br><span class="line">        <span class="keyword">for</span> j := i; j &gt; a &amp;&amp; data.Less(j, j<span class="number">-1</span>); j-- &#123;</span><br><span class="line">            data.Swap(j, j<span class="number">-1</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>You pass a data as an Interface; then we don’t need to care about what the real type of data is, we need to know: we can use the data to do <strong>Swap</strong>. Another interesting thing I want to mention is that the interface allows you to hook/intercept with a customized handler created by you to assemble with other data, which is so-called <strong>dynamic dispatch</strong>. Let’s see an example:</p>
+<p>If you try to use <code>http.Get</code> to get some resources from server-side:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  resp, err := http.Get(<span class="string">"http://www.sampleside.com/robots.txt"</span>)</span><br><span class="line">  ... </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>What if we need to add an authentication token to the header for a request? You might try to use http client to do something like this: </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> header <span class="keyword">struct</span> &#123;</span><br><span class="line">  roundTrip http.RoundTripper</span><br><span class="line">  possibleHeader <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h header)</span> <span class="title">RoundTrip</span><span class="params">(req *http.Request)</span> <span class="params">(*http.Response, error)</span></span> &#123;</span><br><span class="line">  <span class="keyword">for</span> k, v := <span class="keyword">range</span> h.possibleHeader &#123;</span><br><span class="line">    req.Header.Set(k, v)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> h.roundTrip.RoundTrip(req)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">var</span> client = &amp;http.Client&#123;</span><br><span class="line">    Transport: header&#123;</span><br><span class="line">      roundTrip:      http.DefaultTransport,</span><br><span class="line">      possibleHeader: <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span>&#123;<span class="string">"Authorization"</span>: <span class="string">"Bearer this-is-a-token"</span>&#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;</span><br><span class="line">  response, _ := client.Get(<span class="string">"http://www.sampleside.com/robots.txt"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The header implements the <a href="https://golang.org/src/net/http/client.go" target="_blank" rel="noopener">RoundTripper interface</a> that only contains one method - RoundTrip. This interface gives us a chance to put authorization token into every request without manually add it into request header. That’s powerful. </p>
+<p>The interface is a foundational feature in Golang, but some benefits build on the runtime that means performance cost. So we should use them carefully. </p>
+<p>Happy coding. Enjoy!</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Golang/" rel="tag"># Golang</a>
+              <a href="/tags/Generic-Programming/" rel="tag"># Generic Programming</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/01/Personal-Blog-by-Golang/" rel="prev" title="Personal Blog by Golang">
+      <i class="fa fa-chevron-left"></i> Personal Blog by Golang
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/12/07/Dagger-Series-How-do-you-use-it-in-your-Modularization/" rel="next" title="Dagger Series: How do you use it in your Modularization?">
+      Dagger Series: How do you use it in your Modularization? <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/01/Generic-Programming-in-Golang/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chauyan">
+      <meta itemprop="description" content="Personal dev blog for sharing what I've learned.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="舊金山周記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Generic Programming in Golang
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-01 17:57:01" itemprop="dateCreated datePublished" datetime="2019-12-01T17:57:01-08:00">2019-12-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-04-12 01:01:36" itemprop="dateModified" datetime="2020-04-12T01:01:36-07:00">2020-04-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Design-Pattern/" itemprop="url" rel="index"><span itemprop="name">Design Pattern</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2019/12/01/Generic-Programming-in-Golang/#disqus_thread" itemprop="discussionUrl">
       <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/12/01/Generic-Programming-in-Golang/" itemprop="commentCount"></span>
     </a>
   </span>
@@ -378,12 +519,34 @@
           </div>
           
     
-  <div class="comments" id="comments">
+  <div class="comments">
     <div id="disqus_thread">
       <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
   </div>
   
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -441,16 +604,16 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/wangchauyan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangchauyan" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+        <a href="mailto:wang.chauyan@gmail.com" title="E-Mail → mailto:wang.chauyan@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+        <a href="https://twitter.com/deathrid" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;deathrid" rel="noopener" target="_blank"><i class="twitter fa-fw"></i>Twitter</a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+        <a href="https://www.facebook.com/chauyanw/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;chauyanw&#x2F;" rel="noopener" target="_blank"><i class="facebook fa-fw"></i>FB Page</a>
       </span>
   </div>
 
@@ -474,15 +637,19 @@
       <div class="footer-inner">
         
 
+        
+
 <div class="copyright">
   
   &copy; 
   <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Chauyan</span>
 </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
 
         
 
@@ -493,7 +660,6 @@
 
 
 
-        
       </div>
     </footer>
   </div>
@@ -532,7 +698,6 @@
 
 
 
-
   
 
   
@@ -548,16 +713,16 @@
   window.addEventListener('load', loadCount, false);
 </script>
 <script>
-  function loadComments() {
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/2019/12/01/Generic-Programming-in-Golang/";
+    this.page.identifier = "2019/12/01/Generic-Programming-in-Golang/";
+    this.page.title = "Generic Programming in Golang";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
       DISQUS.reset({
         reload: true,
-        config: {page: {
-            url: "http://yoursite.com/2019/12/01/Generic-Programming-in-Golang/",
-            identifier: "2019/12/01/Generic-Programming-in-Golang/",
-            title: "Generic Programming in Golang"
-          }
-        }
+        config: disqus_config
       });
     } else {
       var d = document, s = d.createElement('script');
@@ -565,8 +730,7 @@
       s.setAttribute('data-timestamp', '' + +new Date());
       (d.head || d.body).appendChild(s);
     }
-  }
-    window.addEventListener('load', loadComments, false);
+  });
 </script>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->
