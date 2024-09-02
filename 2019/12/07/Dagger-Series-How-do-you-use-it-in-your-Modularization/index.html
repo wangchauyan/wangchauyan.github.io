@@ -249,13 +249,13 @@
       
         <p><img src="https://chauyanw.files.wordpress.com/2019/07/dependency-injection-modularized-android-application-1.jpg?w=2924" alt="dependency-injection-modularized-android-application-1.jpg?w=2924"></p>
 <h4 id="Story"><a href="#Story" class="headerlink" title="Story"></a>Story</h4><p>I recently encountered an issue that I need to separate the App module (Android project) into several library modules to fulfill the requirements of the <code>Dynamic Feature Module</code> in the future. In the beginning, I thought that should be an easy job, how hard it can be?</p>
-<p><img src="https://chauyanw.files.wordpress.com/2019/07/wait-its-hard.gif" alt="wait-its-hard.gif"><br><em>How hard it can be?</em></p>
-<a id="more"></a>
+<p><img src="https://chauyanw.files.wordpress.com/2019/07/wait-its-hard.gif" alt="wait-its-hard.gif"><br><em>How hard it can be?</em></p>
+<span id="more"></span>
 
 
 <p>We need to move files to different library modules and solve the import path errors, change the implementation path in <code>build.gradle</code> file for different library modules. Then, it’s done easy.</p>
 <p>So easy huh?</p>
-<p><img src="https://miro.medium.com/max/960/1*pPdeVsUU7F4o4tCeHqxgoA.gif" alt="1*pPdeVsUU7F4o4tCeHqxgoA.gif"><br><em>Too young too dumb</em></p>
+<p><img src="https://miro.medium.com/max/960/1*pPdeVsUU7F4o4tCeHqxgoA.gif" alt="1*pPdeVsUU7F4o4tCeHqxgoA.gif"><br><em>Too young too dumb</em></p>
 <p>Unfortunately, if we need to use some 3rd-party libraries like <code>Dagger</code> to help us, the DI graph would be straightforward if we only have one <code>App Module.</code> If we only have one module, then we only need to create one component for this <code>App Module.</code> Once you move files to different library modules or dynamic feature modules (DFMs), there are two main problems you need to solve in this case:</p>
 <ol>
 <li>How do you create different components to let different modules provide resources for consumers?</li>
@@ -263,14 +263,56 @@
 </ol>
 <p>I think the first issue would be much easier to solve. You have several weapons for this issue. In Dagger2, you can use either <code>Component Dependency</code> or <code>Subcomponent</code> to solve it.</p>
 <p>What’s the difference between these two ways? Let’s see the scenario first.</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Father</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Inject</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> car: Car</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">fun</span> <span class="title">drivingToOffice</span><span class="params">()</span></span> &#123;</span><br><span class="line">    car.go()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Son</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Inject</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> car: Car</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">fun</span> <span class="title">drivingToSchool</span><span class="params">()</span></span> &#123;</span><br><span class="line">    car.go()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="keyword">class</span> <span class="title class_">Father</span> &#123;
+  <span class="meta">@Inject</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> car: Car
+  
+  <span class="function"><span class="keyword">fun</span> <span class="title">drivingToOffice</span><span class="params">()</span></span> &#123;
+    car.go()
+  &#125;
+&#125;
+
+<span class="keyword">class</span> <span class="title class_">Son</span> &#123;
+  <span class="meta">@Inject</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> car: Car
+  
+  <span class="function"><span class="keyword">fun</span> <span class="title">drivingToSchool</span><span class="params">()</span></span> &#123;
+    car.go()
+  &#125;
+&#125;</code></pre>
 
 <p>We have two classes <code>Father</code> and <code>Son,</code> and these two classes have the same injected object <code>Car</code> because <code>Father</code> owns the car and <code>Son</code> can borrow this car from his father. What the components look like if we use <code>Dependency</code>?</p>
 <h4 id="Dependency-Way-for-Dagger-Components"><a href="#Dependency-Way-for-Dagger-Components" class="headerlink" title="Dependency Way for Dagger Components"></a>Dependency Way for Dagger Components</h4><p>In the <code>FatherComponent,</code> we need to give it a customized scope, <code>FatherScope,</code> to differentiate from the <code>SonComponent.</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FatherScope</span></span><br><span class="line"><span class="meta">@Component(</span></span><br><span class="line"><span class="meta">  modules = [</span></span><br><span class="line"><span class="meta">    AndroidInjectionModule::class,</span></span><br><span class="line"><span class="meta">    CarModule::class</span></span><br><span class="line"><span class="meta">  ]</span></span><br><span class="line"><span class="meta">)</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">FatherComponent</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Component</span>.Builder</span><br><span class="line">  <span class="class"><span class="keyword">interface</span> <span class="title">Builder</span> </span>&#123;</span><br><span class="line">    <span class="meta">@BindsInstance</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">application</span><span class="params">(application: <span class="type">FatherApplication</span>)</span></span>: Builder</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">build</span><span class="params">()</span></span>: FatherComponent</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// provide car instance for son access </span></span><br><span class="line">  <span class="function"><span class="keyword">fun</span> <span class="title">getCar</span><span class="params">()</span></span>: Car</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="meta">@FatherScope</span>
+<span class="meta">@Component(</span>
+<span class="meta">  modules = [</span>
+<span class="meta">    AndroidInjectionModule::class,</span>
+<span class="meta">    CarModule::class</span>
+<span class="meta">  ]</span>
+<span class="meta">)</span>
+<span class="keyword">interface</span> <span class="title class_">FatherComponent</span> &#123;
+
+  <span class="meta">@Component</span>.Builder
+  <span class="keyword">interface</span> <span class="title class_">Builder</span> &#123;
+    <span class="meta">@BindsInstance</span>
+    <span class="function"><span class="keyword">fun</span> <span class="title">application</span><span class="params">(application: <span class="type">FatherApplication</span>)</span></span>: Builder
+
+    <span class="function"><span class="keyword">fun</span> <span class="title">build</span><span class="params">()</span></span>: FatherComponent
+  &#125;
+  <span class="comment">// provide car instance for son access </span>
+  <span class="function"><span class="keyword">fun</span> <span class="title">getCar</span><span class="params">()</span></span>: Car
+&#125;</code></pre>
 
 <p>In the <code>SonComponent</code>:</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SonScope</span></span><br><span class="line"><span class="meta">@Component(</span></span><br><span class="line"><span class="meta">  dependencies = [</span></span><br><span class="line"><span class="meta">    FatherComponent::class</span></span><br><span class="line"><span class="meta">  ],</span></span><br><span class="line"><span class="meta">  modules = [</span></span><br><span class="line"><span class="meta">    // modules for son component </span></span><br><span class="line"><span class="meta">  ]</span></span><br><span class="line"><span class="meta">)</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">SonComponent</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="meta">@SonScope</span>
+<span class="meta">@Component(</span>
+<span class="meta">  dependencies = [</span>
+<span class="meta">    FatherComponent::class</span>
+<span class="meta">  ],</span>
+<span class="meta">  modules = [</span>
+<span class="meta">    // modules for son component </span>
+<span class="meta">  ]</span>
+<span class="meta">)</span>
+<span class="keyword">interface</span> <span class="title class_">SonComponent</span> &#123;
+&#125;</code></pre>
 
 <p>You can see the<code>SonComponent</code> sets up a component dependency by including the <code>FatherComponent</code>; and <code>FatherComponent</code> exposes his car from <code>CarModule</code> via the function <code>getCar()</code>. By using component dependency, all classes which inject into <code>SonComponent</code> can use any resources exposed from <code>FatherComponent.</code></p>
 <p>But, there are two things you need to know about <code>Component Dependency</code> first:</p>
@@ -282,10 +324,47 @@
 </ul>
 <h4 id="SubComponent-Way-for-Dagger-Components"><a href="#SubComponent-Way-for-Dagger-Components" class="headerlink" title="SubComponent Way for Dagger Components"></a>SubComponent Way for Dagger Components</h4><p>What about the <code>Subcomponent</code> way? Let’s see the code example first.</p>
 <p><strong>FatherComponent</strong></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Module(</span></span><br><span class="line"><span class="meta">  subcomponents = [</span></span><br><span class="line"><span class="meta">    SonComponent::class</span></span><br><span class="line"><span class="meta">  ]</span></span><br><span class="line"><span class="meta">)</span> </span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">CarModule</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@FatherScope</span></span><br><span class="line"><span class="meta">@Component(</span></span><br><span class="line"><span class="meta">  modules = [</span></span><br><span class="line"><span class="meta">    AndroidInjectionModule::class,</span></span><br><span class="line"><span class="meta">    CarModule::class</span></span><br><span class="line"><span class="meta">  ]</span></span><br><span class="line"><span class="meta">)</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">FatherComponent</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Component</span>.Builder</span><br><span class="line">  <span class="class"><span class="keyword">interface</span> <span class="title">Builder</span> </span>&#123;</span><br><span class="line">    <span class="meta">@BindsInstance</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">application</span><span class="params">(application: <span class="type">FatherApplication</span>)</span></span>: Builder</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">build</span><span class="params">()</span></span>: FatherComponent</span><br><span class="line">  &#125;</span><br><span class="line">  sonComponent(): SonComponent.Builder</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="meta">@Module(</span>
+<span class="meta">  subcomponents = [</span>
+<span class="meta">    SonComponent::class</span>
+<span class="meta">  ]</span>
+<span class="meta">)</span> 
+<span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">CarModule</span> &#123;
+&#125;
+
+<span class="meta">@FatherScope</span>
+<span class="meta">@Component(</span>
+<span class="meta">  modules = [</span>
+<span class="meta">    AndroidInjectionModule::class,</span>
+<span class="meta">    CarModule::class</span>
+<span class="meta">  ]</span>
+<span class="meta">)</span>
+<span class="keyword">interface</span> <span class="title class_">FatherComponent</span> &#123;
+
+  <span class="meta">@Component</span>.Builder
+  <span class="keyword">interface</span> <span class="title class_">Builder</span> &#123;
+    <span class="meta">@BindsInstance</span>
+    <span class="function"><span class="keyword">fun</span> <span class="title">application</span><span class="params">(application: <span class="type">FatherApplication</span>)</span></span>: Builder
+
+    <span class="function"><span class="keyword">fun</span> <span class="title">build</span><span class="params">()</span></span>: FatherComponent
+  &#125;
+  sonComponent(): SonComponent.Builder
+&#125;</code></pre>
 
 <p><strong>SonComponent</strong></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SonScope</span></span><br><span class="line"><span class="meta">@Component(</span></span><br><span class="line"><span class="meta">  modules = [</span></span><br><span class="line"><span class="meta">    // modules for son component </span></span><br><span class="line"><span class="meta">  ]</span></span><br><span class="line"><span class="meta">)</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">SonComponent</span> </span>&#123; </span><br><span class="line"><span class="meta">@Component</span>.Builder</span><br><span class="line">  <span class="meta">@Subcomponent</span>.Builder</span><br><span class="line">  <span class="class"><span class="keyword">interface</span> <span class="title">Builder</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">build</span><span class="params">()</span></span>: SonComponent</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="meta">@SonScope</span>
+<span class="meta">@Component(</span>
+<span class="meta">  modules = [</span>
+<span class="meta">    // modules for son component </span>
+<span class="meta">  ]</span>
+<span class="meta">)</span>
+<span class="keyword">interface</span> <span class="title class_">SonComponent</span> &#123; 
+<span class="meta">@Component</span>.Builder
+  <span class="meta">@Subcomponent</span>.Builder
+  <span class="keyword">interface</span> <span class="title class_">Builder</span> &#123;
+    <span class="function"><span class="keyword">fun</span> <span class="title">build</span><span class="params">()</span></span>: SonComponent
+  &#125;
+&#125;</code></pre>
 
 <p>There’re a few changes in these two components. First, you need to create a builder for <code>SonComponent</code> as well,  which’s purpose is to create a <code>SonComponent</code> instance. And in the <code>FatherComponent</code>, we need to do two things:</p>
 <ol>
@@ -293,29 +372,95 @@
 <li><em>Declare the <code>SonComponent</code> builder here to create your own <code>SonComponent.</code></em></li>
 </ol>
 <p>The way you use it would be like this:</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> fatherComponent = DaggerFaComponent.builder()</span><br><span class="line">  .application(<span class="keyword">this</span>)</span><br><span class="line">  .build()</span><br><span class="line"><span class="keyword">val</span> sonComponent = fatherComponent.sonComponent.build()</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="keyword">val</span> fatherComponent = DaggerFaComponent.builder()
+  .application(<span class="keyword">this</span>)
+  .build()
+<span class="keyword">val</span> sonComponent = fatherComponent.sonComponent.build()</code></pre>
 
 <p>The example shows how we are going to solve the first question. Now, it’s time to go on the second question, how do we change module provides dynamically? Let’s use a configuration data class to solve this.</p>
 <h4 id="Dynamically-change-the-content-for-the-injected-object"><a href="#Dynamically-change-the-content-for-the-injected-object" class="headerlink" title="Dynamically change the content for the injected object"></a>Dynamically change the content for the injected object</h4><p>What’s the purpose of using the different content for an injected object at runtime? The possible use cases are running different environments when you are testing, especially when you have several debug modules with various base URLs running on different test servers for the <code>Retrofit</code> library. You would agree that creating different Retrofit instances is tedious. Let’s do only one Retrofit instance and apply for different base URLs.</p>
 <p>First, create your own <code>Configuration</code> data class:</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Configuration</span> </span>(mode: Mode) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">enum</span> <span class="class"><span class="keyword">class</span> <span class="title">Mode</span> </span>&#123;</span><br><span class="line">    Mode_1, Mode_2</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> currentMode = Mode.Mode_1</span><br><span class="line"></span><br><span class="line">  <span class="keyword">init</span> &#123;</span><br><span class="line">    currentMode = mode</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="keyword">class</span> <span class="title class_">Configuration</span> (mode: Mode) &#123;
+
+  <span class="keyword">enum</span> <span class="keyword">class</span> <span class="title class_">Mode</span> &#123;
+    Mode_1, Mode_2
+  &#125;
+
+  <span class="keyword">var</span> currentMode = Mode.Mode_1
+
+  <span class="keyword">init</span> &#123;
+    currentMode = mode
+  &#125;
+&#125;</code></pre>
 
 <p>It’s a pure configuration class, and we use it to know what current mode is. So, how can we use it?</p>
 <p><img src="https://miro.medium.com/max/1220/1*N29K_i5_14LAYG2TtP77aQ.jpeg" alt="1*N29K_i5_14LAYG2TtP77aQ.jpeg"><br><em>Inject it</em></p>
 <p>Let’s use it as a resource provider in components.</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Module</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">ApplicatonModule</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Binds</span></span><br><span class="line">  <span class="keyword">abstract</span> <span class="function"><span class="keyword">fun</span> <span class="title">bindApplicationContext</span><span class="params">(application: <span class="type">BaseApplication</span>)</span></span>: Context</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Module</span></span><br><span class="line">  <span class="keyword">companion</span> <span class="keyword">object</span> &#123;</span><br><span class="line">    <span class="meta">@JvmStatic</span></span><br><span class="line">    <span class="meta">@Provides</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">provideConfiguration</span><span class="params">()</span></span>: Configuration = Configuration(Configuration.currentMode.Mode_1)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="meta">@Module</span>
+<span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">ApplicatonModule</span> &#123;
+  <span class="meta">@Binds</span>
+  <span class="keyword">abstract</span> <span class="function"><span class="keyword">fun</span> <span class="title">bindApplicationContext</span><span class="params">(application: <span class="type">BaseApplication</span>)</span></span>: Context
+
+  <span class="meta">@Module</span>
+  <span class="keyword">companion</span> <span class="keyword">object</span> &#123;
+    <span class="meta">@JvmStatic</span>
+    <span class="meta">@Provides</span>
+    <span class="function"><span class="keyword">fun</span> <span class="title">provideConfiguration</span><span class="params">()</span></span>: Configuration = Configuration(Configuration.currentMode.Mode_1)
+  &#125;
+&#125;</code></pre>
 
 <p>We can directly put it into the application-level module and provide it to the entire App when launching the App. Now you can inject this <code>Configuration</code> into where you want to use in this App. How do we give different URLs based on different mode when we are using Retrofit? In your module, you need to do something like this:</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// In one of your modules:</span></span><br><span class="line"><span class="meta">@JvmStatic</span></span><br><span class="line"><span class="meta">@Provides</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">provideHttpClient</span><span class="params">(config: <span class="type">Configuration</span>)</span></span>: OkHttpClient &#123;</span><br><span class="line">  <span class="keyword">return</span> ServiceFactory.getHttpClient(</span><br><span class="line">    BuildConfig.DEBUG, userAgent,</span><br><span class="line">    <span class="keyword">when</span> (config.currentMode) &#123;</span><br><span class="line">      Configuration.Mode.Mode_1 -&gt; <span class="string">"server url 1"</span></span><br><span class="line">      Configuration.Mode.Mode_2 -&gt; <span class="string">"server url 2"</span></span><br><span class="line">    &#125;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="comment">// In one of your modules:</span>
+<span class="meta">@JvmStatic</span>
+<span class="meta">@Provides</span>
+<span class="function"><span class="keyword">fun</span> <span class="title">provideHttpClient</span><span class="params">(config: <span class="type">Configuration</span>)</span></span>: OkHttpClient &#123;
+  <span class="keyword">return</span> ServiceFactory.getHttpClient(
+    BuildConfig.DEBUG, userAgent,
+    <span class="keyword">when</span> (config.currentMode) &#123;
+      Configuration.Mode.Mode_1 -&gt; <span class="string">&quot;server url 1&quot;</span>
+      Configuration.Mode.Mode_2 -&gt; <span class="string">&quot;server url 2&quot;</span>
+    &#125;
+  )
+&#125;</code></pre>
 
 <p>We can create only one <code>Retrofit</code> with an <code>OkHttpClient.</code> Then, according to our configuration setting, we give it different URLs. Let me dive a little bit deeper into it. We can use <code>Interceptor</code> to change the URL we want to use based on the <code>currentMode</code> value in the <code>Configuration</code> class.</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Provide Okhttp client</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">getHttpClient</span><span class="params">(debugMode: <span class="type">Boolean</span>, userAgent: <span class="type">String</span>, url: <span class="type">String</span>?)</span></span>: OkHttpClient &#123;</span><br><span class="line">  <span class="keyword">return</span> OkHttpClient.Builder()</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * for dynamically changing the url</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    .addInterceptor(URLInterceptor(url))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="comment">/**</span>
+<span class="comment"> * Provide Okhttp client</span>
+<span class="comment"> */</span>
+<span class="function"><span class="keyword">fun</span> <span class="title">getHttpClient</span><span class="params">(debugMode: <span class="type">Boolean</span>, userAgent: <span class="type">String</span>, url: <span class="type">String</span>?)</span></span>: OkHttpClient &#123;
+  <span class="keyword">return</span> OkHttpClient.Builder()
+    <span class="comment">/**</span>
+<span class="comment">     * for dynamically changing the url</span>
+<span class="comment">     */</span>
+    .addInterceptor(URLInterceptor(url))
+&#125;</code></pre>
 
 <p><strong>URLInterceptor</strong></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">URLInterceptor</span> </span>(<span class="keyword">private</span> <span class="keyword">val</span> url: String?): Interceptor &#123;</span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">intercept</span><span class="params">(chain: <span class="type">Interceptor</span>.<span class="type">Chain</span>)</span></span>: Response &#123;</span><br><span class="line">    <span class="keyword">val</span> request = chain.request()</span><br><span class="line"></span><br><span class="line">    url?.let&#123;</span><br><span class="line">      <span class="keyword">return</span> chain.proceed(request</span><br><span class="line">                  .newBuilder()</span><br><span class="line">                  .url(url)</span><br><span class="line">                  .build())</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> chain.proceed(request)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="keyword">class</span> <span class="title class_">URLInterceptor</span> (<span class="keyword">private</span> <span class="keyword">val</span> url: String?): Interceptor &#123;
+  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">intercept</span><span class="params">(chain: <span class="type">Interceptor</span>.<span class="type">Chain</span>)</span></span>: Response &#123;
+    <span class="keyword">val</span> request = chain.request()
+
+    url?.let&#123;
+      <span class="keyword">return</span> chain.proceed(request
+                  .newBuilder()
+                  .url(url)
+                  .build())
+    &#125;
+
+    <span class="keyword">return</span> chain.proceed(request)
+  &#125;
+&#125;</code></pre>
 
 <p>Here we replace the old URL with a new one. Now we are all set. Let’s see how to use it:</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span>: <span class="type">AppCompatActivity</span></span>() &#123;</span><br><span class="line">  <span class="meta">@Inject</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> config: Configuration</span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">()</span></span> &#123; </span><br><span class="line">    <span class="keyword">super</span>.onCreate() </span><br><span class="line">    <span class="comment">// change here if you want</span></span><br><span class="line">    config.currentMode = Configuration.Mode.Mode_2 </span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="keyword">class</span> <span class="title class_">MainActivity</span>: <span class="type">AppCompatActivity</span>() &#123;
+  <span class="meta">@Inject</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> config: Configuration
+  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">()</span></span> &#123; 
+    <span class="keyword">super</span>.onCreate() 
+    <span class="comment">// change here if you want</span>
+    config.currentMode = Configuration.Mode.Mode_2 
+    ...
+  &#125;
+&#125;</code></pre>
 
 <p>And now, we can dynamically change the runtime object content via this configuration object. Happy coding, enjoy.</p>
 
@@ -425,13 +570,13 @@
       
         <p><img src="https://chauyanw.files.wordpress.com/2019/07/dependency-injection-modularized-android-application-1.jpg?w=2924" alt="dependency-injection-modularized-android-application-1.jpg?w=2924"></p>
 <h4 id="Story"><a href="#Story" class="headerlink" title="Story"></a>Story</h4><p>I recently encountered an issue that I need to separate the App module (Android project) into several library modules to fulfill the requirements of the <code>Dynamic Feature Module</code> in the future. In the beginning, I thought that should be an easy job, how hard it can be?</p>
-<p><img src="https://chauyanw.files.wordpress.com/2019/07/wait-its-hard.gif" alt="wait-its-hard.gif"><br><em>How hard it can be?</em></p>
-<a id="more"></a>
+<p><img src="https://chauyanw.files.wordpress.com/2019/07/wait-its-hard.gif" alt="wait-its-hard.gif"><br><em>How hard it can be?</em></p>
+<span id="more"></span>
 
 
 <p>We need to move files to different library modules and solve the import path errors, change the implementation path in <code>build.gradle</code> file for different library modules. Then, it’s done easy.</p>
 <p>So easy huh?</p>
-<p><img src="https://miro.medium.com/max/960/1*pPdeVsUU7F4o4tCeHqxgoA.gif" alt="1*pPdeVsUU7F4o4tCeHqxgoA.gif"><br><em>Too young too dumb</em></p>
+<p><img src="https://miro.medium.com/max/960/1*pPdeVsUU7F4o4tCeHqxgoA.gif" alt="1*pPdeVsUU7F4o4tCeHqxgoA.gif"><br><em>Too young too dumb</em></p>
 <p>Unfortunately, if we need to use some 3rd-party libraries like <code>Dagger</code> to help us, the DI graph would be straightforward if we only have one <code>App Module.</code> If we only have one module, then we only need to create one component for this <code>App Module.</code> Once you move files to different library modules or dynamic feature modules (DFMs), there are two main problems you need to solve in this case:</p>
 <ol>
 <li>How do you create different components to let different modules provide resources for consumers?</li>
@@ -439,14 +584,56 @@
 </ol>
 <p>I think the first issue would be much easier to solve. You have several weapons for this issue. In Dagger2, you can use either <code>Component Dependency</code> or <code>Subcomponent</code> to solve it.</p>
 <p>What’s the difference between these two ways? Let’s see the scenario first.</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Father</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Inject</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> car: Car</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">fun</span> <span class="title">drivingToOffice</span><span class="params">()</span></span> &#123;</span><br><span class="line">    car.go()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Son</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Inject</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> car: Car</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">fun</span> <span class="title">drivingToSchool</span><span class="params">()</span></span> &#123;</span><br><span class="line">    car.go()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="keyword">class</span> <span class="title class_">Father</span> &#123;
+  <span class="meta">@Inject</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> car: Car
+  
+  <span class="function"><span class="keyword">fun</span> <span class="title">drivingToOffice</span><span class="params">()</span></span> &#123;
+    car.go()
+  &#125;
+&#125;
+
+<span class="keyword">class</span> <span class="title class_">Son</span> &#123;
+  <span class="meta">@Inject</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> car: Car
+  
+  <span class="function"><span class="keyword">fun</span> <span class="title">drivingToSchool</span><span class="params">()</span></span> &#123;
+    car.go()
+  &#125;
+&#125;</code></pre>
 
 <p>We have two classes <code>Father</code> and <code>Son,</code> and these two classes have the same injected object <code>Car</code> because <code>Father</code> owns the car and <code>Son</code> can borrow this car from his father. What the components look like if we use <code>Dependency</code>?</p>
 <h4 id="Dependency-Way-for-Dagger-Components"><a href="#Dependency-Way-for-Dagger-Components" class="headerlink" title="Dependency Way for Dagger Components"></a>Dependency Way for Dagger Components</h4><p>In the <code>FatherComponent,</code> we need to give it a customized scope, <code>FatherScope,</code> to differentiate from the <code>SonComponent.</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FatherScope</span></span><br><span class="line"><span class="meta">@Component(</span></span><br><span class="line"><span class="meta">  modules = [</span></span><br><span class="line"><span class="meta">    AndroidInjectionModule::class,</span></span><br><span class="line"><span class="meta">    CarModule::class</span></span><br><span class="line"><span class="meta">  ]</span></span><br><span class="line"><span class="meta">)</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">FatherComponent</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Component</span>.Builder</span><br><span class="line">  <span class="class"><span class="keyword">interface</span> <span class="title">Builder</span> </span>&#123;</span><br><span class="line">    <span class="meta">@BindsInstance</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">application</span><span class="params">(application: <span class="type">FatherApplication</span>)</span></span>: Builder</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">build</span><span class="params">()</span></span>: FatherComponent</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// provide car instance for son access </span></span><br><span class="line">  <span class="function"><span class="keyword">fun</span> <span class="title">getCar</span><span class="params">()</span></span>: Car</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="meta">@FatherScope</span>
+<span class="meta">@Component(</span>
+<span class="meta">  modules = [</span>
+<span class="meta">    AndroidInjectionModule::class,</span>
+<span class="meta">    CarModule::class</span>
+<span class="meta">  ]</span>
+<span class="meta">)</span>
+<span class="keyword">interface</span> <span class="title class_">FatherComponent</span> &#123;
+
+  <span class="meta">@Component</span>.Builder
+  <span class="keyword">interface</span> <span class="title class_">Builder</span> &#123;
+    <span class="meta">@BindsInstance</span>
+    <span class="function"><span class="keyword">fun</span> <span class="title">application</span><span class="params">(application: <span class="type">FatherApplication</span>)</span></span>: Builder
+
+    <span class="function"><span class="keyword">fun</span> <span class="title">build</span><span class="params">()</span></span>: FatherComponent
+  &#125;
+  <span class="comment">// provide car instance for son access </span>
+  <span class="function"><span class="keyword">fun</span> <span class="title">getCar</span><span class="params">()</span></span>: Car
+&#125;</code></pre>
 
 <p>In the <code>SonComponent</code>:</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SonScope</span></span><br><span class="line"><span class="meta">@Component(</span></span><br><span class="line"><span class="meta">  dependencies = [</span></span><br><span class="line"><span class="meta">    FatherComponent::class</span></span><br><span class="line"><span class="meta">  ],</span></span><br><span class="line"><span class="meta">  modules = [</span></span><br><span class="line"><span class="meta">    // modules for son component </span></span><br><span class="line"><span class="meta">  ]</span></span><br><span class="line"><span class="meta">)</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">SonComponent</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="meta">@SonScope</span>
+<span class="meta">@Component(</span>
+<span class="meta">  dependencies = [</span>
+<span class="meta">    FatherComponent::class</span>
+<span class="meta">  ],</span>
+<span class="meta">  modules = [</span>
+<span class="meta">    // modules for son component </span>
+<span class="meta">  ]</span>
+<span class="meta">)</span>
+<span class="keyword">interface</span> <span class="title class_">SonComponent</span> &#123;
+&#125;</code></pre>
 
 <p>You can see the<code>SonComponent</code> sets up a component dependency by including the <code>FatherComponent</code>; and <code>FatherComponent</code> exposes his car from <code>CarModule</code> via the function <code>getCar()</code>. By using component dependency, all classes which inject into <code>SonComponent</code> can use any resources exposed from <code>FatherComponent.</code></p>
 <p>But, there are two things you need to know about <code>Component Dependency</code> first:</p>
@@ -458,10 +645,47 @@
 </ul>
 <h4 id="SubComponent-Way-for-Dagger-Components"><a href="#SubComponent-Way-for-Dagger-Components" class="headerlink" title="SubComponent Way for Dagger Components"></a>SubComponent Way for Dagger Components</h4><p>What about the <code>Subcomponent</code> way? Let’s see the code example first.</p>
 <p><strong>FatherComponent</strong></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Module(</span></span><br><span class="line"><span class="meta">  subcomponents = [</span></span><br><span class="line"><span class="meta">    SonComponent::class</span></span><br><span class="line"><span class="meta">  ]</span></span><br><span class="line"><span class="meta">)</span> </span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">CarModule</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@FatherScope</span></span><br><span class="line"><span class="meta">@Component(</span></span><br><span class="line"><span class="meta">  modules = [</span></span><br><span class="line"><span class="meta">    AndroidInjectionModule::class,</span></span><br><span class="line"><span class="meta">    CarModule::class</span></span><br><span class="line"><span class="meta">  ]</span></span><br><span class="line"><span class="meta">)</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">FatherComponent</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Component</span>.Builder</span><br><span class="line">  <span class="class"><span class="keyword">interface</span> <span class="title">Builder</span> </span>&#123;</span><br><span class="line">    <span class="meta">@BindsInstance</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">application</span><span class="params">(application: <span class="type">FatherApplication</span>)</span></span>: Builder</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">build</span><span class="params">()</span></span>: FatherComponent</span><br><span class="line">  &#125;</span><br><span class="line">  sonComponent(): SonComponent.Builder</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="meta">@Module(</span>
+<span class="meta">  subcomponents = [</span>
+<span class="meta">    SonComponent::class</span>
+<span class="meta">  ]</span>
+<span class="meta">)</span> 
+<span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">CarModule</span> &#123;
+&#125;
+
+<span class="meta">@FatherScope</span>
+<span class="meta">@Component(</span>
+<span class="meta">  modules = [</span>
+<span class="meta">    AndroidInjectionModule::class,</span>
+<span class="meta">    CarModule::class</span>
+<span class="meta">  ]</span>
+<span class="meta">)</span>
+<span class="keyword">interface</span> <span class="title class_">FatherComponent</span> &#123;
+
+  <span class="meta">@Component</span>.Builder
+  <span class="keyword">interface</span> <span class="title class_">Builder</span> &#123;
+    <span class="meta">@BindsInstance</span>
+    <span class="function"><span class="keyword">fun</span> <span class="title">application</span><span class="params">(application: <span class="type">FatherApplication</span>)</span></span>: Builder
+
+    <span class="function"><span class="keyword">fun</span> <span class="title">build</span><span class="params">()</span></span>: FatherComponent
+  &#125;
+  sonComponent(): SonComponent.Builder
+&#125;</code></pre>
 
 <p><strong>SonComponent</strong></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SonScope</span></span><br><span class="line"><span class="meta">@Component(</span></span><br><span class="line"><span class="meta">  modules = [</span></span><br><span class="line"><span class="meta">    // modules for son component </span></span><br><span class="line"><span class="meta">  ]</span></span><br><span class="line"><span class="meta">)</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">SonComponent</span> </span>&#123; </span><br><span class="line"><span class="meta">@Component</span>.Builder</span><br><span class="line">  <span class="meta">@Subcomponent</span>.Builder</span><br><span class="line">  <span class="class"><span class="keyword">interface</span> <span class="title">Builder</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">build</span><span class="params">()</span></span>: SonComponent</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="meta">@SonScope</span>
+<span class="meta">@Component(</span>
+<span class="meta">  modules = [</span>
+<span class="meta">    // modules for son component </span>
+<span class="meta">  ]</span>
+<span class="meta">)</span>
+<span class="keyword">interface</span> <span class="title class_">SonComponent</span> &#123; 
+<span class="meta">@Component</span>.Builder
+  <span class="meta">@Subcomponent</span>.Builder
+  <span class="keyword">interface</span> <span class="title class_">Builder</span> &#123;
+    <span class="function"><span class="keyword">fun</span> <span class="title">build</span><span class="params">()</span></span>: SonComponent
+  &#125;
+&#125;</code></pre>
 
 <p>There’re a few changes in these two components. First, you need to create a builder for <code>SonComponent</code> as well,  which’s purpose is to create a <code>SonComponent</code> instance. And in the <code>FatherComponent</code>, we need to do two things:</p>
 <ol>
@@ -469,29 +693,95 @@
 <li><em>Declare the <code>SonComponent</code> builder here to create your own <code>SonComponent.</code></em></li>
 </ol>
 <p>The way you use it would be like this:</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> fatherComponent = DaggerFaComponent.builder()</span><br><span class="line">  .application(<span class="keyword">this</span>)</span><br><span class="line">  .build()</span><br><span class="line"><span class="keyword">val</span> sonComponent = fatherComponent.sonComponent.build()</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="keyword">val</span> fatherComponent = DaggerFaComponent.builder()
+  .application(<span class="keyword">this</span>)
+  .build()
+<span class="keyword">val</span> sonComponent = fatherComponent.sonComponent.build()</code></pre>
 
 <p>The example shows how we are going to solve the first question. Now, it’s time to go on the second question, how do we change module provides dynamically? Let’s use a configuration data class to solve this.</p>
 <h4 id="Dynamically-change-the-content-for-the-injected-object"><a href="#Dynamically-change-the-content-for-the-injected-object" class="headerlink" title="Dynamically change the content for the injected object"></a>Dynamically change the content for the injected object</h4><p>What’s the purpose of using the different content for an injected object at runtime? The possible use cases are running different environments when you are testing, especially when you have several debug modules with various base URLs running on different test servers for the <code>Retrofit</code> library. You would agree that creating different Retrofit instances is tedious. Let’s do only one Retrofit instance and apply for different base URLs.</p>
 <p>First, create your own <code>Configuration</code> data class:</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Configuration</span> </span>(mode: Mode) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">enum</span> <span class="class"><span class="keyword">class</span> <span class="title">Mode</span> </span>&#123;</span><br><span class="line">    Mode_1, Mode_2</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> currentMode = Mode.Mode_1</span><br><span class="line"></span><br><span class="line">  <span class="keyword">init</span> &#123;</span><br><span class="line">    currentMode = mode</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="keyword">class</span> <span class="title class_">Configuration</span> (mode: Mode) &#123;
+
+  <span class="keyword">enum</span> <span class="keyword">class</span> <span class="title class_">Mode</span> &#123;
+    Mode_1, Mode_2
+  &#125;
+
+  <span class="keyword">var</span> currentMode = Mode.Mode_1
+
+  <span class="keyword">init</span> &#123;
+    currentMode = mode
+  &#125;
+&#125;</code></pre>
 
 <p>It’s a pure configuration class, and we use it to know what current mode is. So, how can we use it?</p>
 <p><img src="https://miro.medium.com/max/1220/1*N29K_i5_14LAYG2TtP77aQ.jpeg" alt="1*N29K_i5_14LAYG2TtP77aQ.jpeg"><br><em>Inject it</em></p>
 <p>Let’s use it as a resource provider in components.</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Module</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">ApplicatonModule</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Binds</span></span><br><span class="line">  <span class="keyword">abstract</span> <span class="function"><span class="keyword">fun</span> <span class="title">bindApplicationContext</span><span class="params">(application: <span class="type">BaseApplication</span>)</span></span>: Context</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Module</span></span><br><span class="line">  <span class="keyword">companion</span> <span class="keyword">object</span> &#123;</span><br><span class="line">    <span class="meta">@JvmStatic</span></span><br><span class="line">    <span class="meta">@Provides</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">provideConfiguration</span><span class="params">()</span></span>: Configuration = Configuration(Configuration.currentMode.Mode_1)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="meta">@Module</span>
+<span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">ApplicatonModule</span> &#123;
+  <span class="meta">@Binds</span>
+  <span class="keyword">abstract</span> <span class="function"><span class="keyword">fun</span> <span class="title">bindApplicationContext</span><span class="params">(application: <span class="type">BaseApplication</span>)</span></span>: Context
+
+  <span class="meta">@Module</span>
+  <span class="keyword">companion</span> <span class="keyword">object</span> &#123;
+    <span class="meta">@JvmStatic</span>
+    <span class="meta">@Provides</span>
+    <span class="function"><span class="keyword">fun</span> <span class="title">provideConfiguration</span><span class="params">()</span></span>: Configuration = Configuration(Configuration.currentMode.Mode_1)
+  &#125;
+&#125;</code></pre>
 
 <p>We can directly put it into the application-level module and provide it to the entire App when launching the App. Now you can inject this <code>Configuration</code> into where you want to use in this App. How do we give different URLs based on different mode when we are using Retrofit? In your module, you need to do something like this:</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// In one of your modules:</span></span><br><span class="line"><span class="meta">@JvmStatic</span></span><br><span class="line"><span class="meta">@Provides</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">provideHttpClient</span><span class="params">(config: <span class="type">Configuration</span>)</span></span>: OkHttpClient &#123;</span><br><span class="line">  <span class="keyword">return</span> ServiceFactory.getHttpClient(</span><br><span class="line">    BuildConfig.DEBUG, userAgent,</span><br><span class="line">    <span class="keyword">when</span> (config.currentMode) &#123;</span><br><span class="line">      Configuration.Mode.Mode_1 -&gt; <span class="string">"server url 1"</span></span><br><span class="line">      Configuration.Mode.Mode_2 -&gt; <span class="string">"server url 2"</span></span><br><span class="line">    &#125;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="comment">// In one of your modules:</span>
+<span class="meta">@JvmStatic</span>
+<span class="meta">@Provides</span>
+<span class="function"><span class="keyword">fun</span> <span class="title">provideHttpClient</span><span class="params">(config: <span class="type">Configuration</span>)</span></span>: OkHttpClient &#123;
+  <span class="keyword">return</span> ServiceFactory.getHttpClient(
+    BuildConfig.DEBUG, userAgent,
+    <span class="keyword">when</span> (config.currentMode) &#123;
+      Configuration.Mode.Mode_1 -&gt; <span class="string">&quot;server url 1&quot;</span>
+      Configuration.Mode.Mode_2 -&gt; <span class="string">&quot;server url 2&quot;</span>
+    &#125;
+  )
+&#125;</code></pre>
 
 <p>We can create only one <code>Retrofit</code> with an <code>OkHttpClient.</code> Then, according to our configuration setting, we give it different URLs. Let me dive a little bit deeper into it. We can use <code>Interceptor</code> to change the URL we want to use based on the <code>currentMode</code> value in the <code>Configuration</code> class.</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Provide Okhttp client</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">getHttpClient</span><span class="params">(debugMode: <span class="type">Boolean</span>, userAgent: <span class="type">String</span>, url: <span class="type">String</span>?)</span></span>: OkHttpClient &#123;</span><br><span class="line">  <span class="keyword">return</span> OkHttpClient.Builder()</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * for dynamically changing the url</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    .addInterceptor(URLInterceptor(url))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="comment">/**</span>
+<span class="comment"> * Provide Okhttp client</span>
+<span class="comment"> */</span>
+<span class="function"><span class="keyword">fun</span> <span class="title">getHttpClient</span><span class="params">(debugMode: <span class="type">Boolean</span>, userAgent: <span class="type">String</span>, url: <span class="type">String</span>?)</span></span>: OkHttpClient &#123;
+  <span class="keyword">return</span> OkHttpClient.Builder()
+    <span class="comment">/**</span>
+<span class="comment">     * for dynamically changing the url</span>
+<span class="comment">     */</span>
+    .addInterceptor(URLInterceptor(url))
+&#125;</code></pre>
 
 <p><strong>URLInterceptor</strong></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">URLInterceptor</span> </span>(<span class="keyword">private</span> <span class="keyword">val</span> url: String?): Interceptor &#123;</span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">intercept</span><span class="params">(chain: <span class="type">Interceptor</span>.<span class="type">Chain</span>)</span></span>: Response &#123;</span><br><span class="line">    <span class="keyword">val</span> request = chain.request()</span><br><span class="line"></span><br><span class="line">    url?.let&#123;</span><br><span class="line">      <span class="keyword">return</span> chain.proceed(request</span><br><span class="line">                  .newBuilder()</span><br><span class="line">                  .url(url)</span><br><span class="line">                  .build())</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> chain.proceed(request)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="keyword">class</span> <span class="title class_">URLInterceptor</span> (<span class="keyword">private</span> <span class="keyword">val</span> url: String?): Interceptor &#123;
+  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">intercept</span><span class="params">(chain: <span class="type">Interceptor</span>.<span class="type">Chain</span>)</span></span>: Response &#123;
+    <span class="keyword">val</span> request = chain.request()
+
+    url?.let&#123;
+      <span class="keyword">return</span> chain.proceed(request
+                  .newBuilder()
+                  .url(url)
+                  .build())
+    &#125;
+
+    <span class="keyword">return</span> chain.proceed(request)
+  &#125;
+&#125;</code></pre>
 
 <p>Here we replace the old URL with a new one. Now we are all set. Let’s see how to use it:</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span>: <span class="type">AppCompatActivity</span></span>() &#123;</span><br><span class="line">  <span class="meta">@Inject</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> config: Configuration</span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">()</span></span> &#123; </span><br><span class="line">    <span class="keyword">super</span>.onCreate() </span><br><span class="line">    <span class="comment">// change here if you want</span></span><br><span class="line">    config.currentMode = Configuration.Mode.Mode_2 </span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="keyword">class</span> <span class="title class_">MainActivity</span>: <span class="type">AppCompatActivity</span>() &#123;
+  <span class="meta">@Inject</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> config: Configuration
+  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">()</span></span> &#123; 
+    <span class="keyword">super</span>.onCreate() 
+    <span class="comment">// change here if you want</span>
+    config.currentMode = Configuration.Mode.Mode_2 
+    ...
+  &#125;
+&#125;</code></pre>
 
 <p>And now, we can dynamically change the runtime object content via this configuration object. Happy coding, enjoy.</p>
 

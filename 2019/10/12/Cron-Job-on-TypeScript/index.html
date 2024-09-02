@@ -247,7 +247,7 @@
       
         <p><img src="https://chauyanw.files.wordpress.com/2019/07/typescriptimage.jpeg?w=2924" alt="typescriptimage.jpeg?w=2924"></p>
 <h4 id="What-is-Cron"><a href="#What-is-Cron" class="headerlink" title="What is Cron?"></a>What is Cron?</h4><p>Cron is a classic utility found on Linux and UNIX systems for running tasks at pre-determined times or intervals. These tasks are referred to as <strong>Cron tasks</strong> or <strong>Cron jobs</strong>. Use Cron to schedule automated updates, report generation, or check for available disk space every day and send you an email if it falls below a certain amount.</p>
-<a id="more"></a>
+<span id="more"></span>
 
 <h4 id="Basic-formatting"><a href="#Basic-formatting" class="headerlink" title="Basic formatting"></a>Basic formatting</h4><p>The Cron time string is five values separated by spaces, based on the following information:</p>
 <table>
@@ -318,13 +318,17 @@
 <td>Execute a command every Sunday</td>
 </tr>
 </tbody></table>
-<p></p>
+</p>
 
 <h4 id="NodeJS-cron-job"><a href="#NodeJS-cron-job" class="headerlink" title="NodeJS cron job"></a>NodeJS cron job</h4><p>We need to install <code>node-cron</code> package first.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install node-cron</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">npm install node-cron</code></pre>
 
 <p>After installation, let’s do setup: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import cron from &quot;node-cron&quot;;</span><br><span class="line"></span><br><span class="line">cron.schedule(&quot;* * * * *&quot;, () =&gt; &#123;</span><br><span class="line">	console.log(`this message logs every minute`);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">import cron from &quot;node-cron&quot;;
+
+cron.schedule(&quot;* * * * *&quot;, () =&gt; &#123;
+	console.log(`this message logs every minute`);
+&#125;);</code></pre>
 
 <p>And now, you can start using cron-jobs in your project.<br>Happy coding, enjoy.</p>
 
@@ -435,7 +439,7 @@
       
         <p><img src="https://chauyanw.files.wordpress.com/2019/07/typescriptimage.jpeg?w=2924" alt="typescriptimage.jpeg?w=2924"></p>
 <h4 id="What-is-Cron"><a href="#What-is-Cron" class="headerlink" title="What is Cron?"></a>What is Cron?</h4><p>Cron is a classic utility found on Linux and UNIX systems for running tasks at pre-determined times or intervals. These tasks are referred to as <strong>Cron tasks</strong> or <strong>Cron jobs</strong>. Use Cron to schedule automated updates, report generation, or check for available disk space every day and send you an email if it falls below a certain amount.</p>
-<a id="more"></a>
+<span id="more"></span>
 
 <h4 id="Basic-formatting"><a href="#Basic-formatting" class="headerlink" title="Basic formatting"></a>Basic formatting</h4><p>The Cron time string is five values separated by spaces, based on the following information:</p>
 <table>
@@ -506,13 +510,17 @@
 <td>Execute a command every Sunday</td>
 </tr>
 </tbody></table>
-<p></p>
+</p>
 
 <h4 id="NodeJS-cron-job"><a href="#NodeJS-cron-job" class="headerlink" title="NodeJS cron job"></a>NodeJS cron job</h4><p>We need to install <code>node-cron</code> package first.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install node-cron</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">npm install node-cron</code></pre>
 
 <p>After installation, let’s do setup: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import cron from &quot;node-cron&quot;;</span><br><span class="line"></span><br><span class="line">cron.schedule(&quot;* * * * *&quot;, () =&gt; &#123;</span><br><span class="line">	console.log(`this message logs every minute`);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">import cron from &quot;node-cron&quot;;
+
+cron.schedule(&quot;* * * * *&quot;, () =&gt; &#123;
+	console.log(`this message logs every minute`);
+&#125;);</code></pre>
 
 <p>And now, you can start using cron-jobs in your project.<br>Happy coding, enjoy.</p>
 

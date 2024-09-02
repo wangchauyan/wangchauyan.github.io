@@ -244,12 +244,14 @@
       
         <p><strong>Question:</strong><br>Given a list of words and two words <em>word1</em> and <em>word2</em>, return the shortest distance between these two words in the list.</p>
 <p><em>word1</em> and <em>word2</em> may be the same, and they represent two individual words in the list.</p>
-<a id="more"></a>
+<span id="more"></span>
 
-<p>Example:<br>Assume that words = <code>[&quot;practice&quot;, &quot;makes&quot;, &quot;perfect&quot;, &quot;coding&quot;, &quot;makes&quot;]</code>.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: word1 = “makes”, word2 = “coding”</span><br><span class="line">Output: 1</span><br></pre></td></tr></table></figure>
+<p>Example:<br>Assume that words &#x3D; <code>[&quot;practice&quot;, &quot;makes&quot;, &quot;perfect&quot;, &quot;coding&quot;, &quot;makes&quot;]</code>.</p>
+<pre><code class="highlight plaintext">Input: word1 = “makes”, word2 = “coding”
+Output: 1</code></pre>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: word1 = &quot;makes&quot;, word2 = &quot;makes&quot;</span><br><span class="line">Output: 3</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">Input: word1 = &quot;makes&quot;, word2 = &quot;makes&quot;
+Output: 3</code></pre>
 
 <p><strong>Note:</strong><br>You may assume <em>word1</em> and <em>word2</em> are both on the list.</p>
 <p><strong>Analysis:</strong></p>
@@ -258,7 +260,38 @@
 <li>If the word dictionary has only the same elements, for example, [“ABC”, “ABC”]</li>
 </ul>
 <p>Let’s see how to solve this question.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">  fun shortestWordDistance(</span><br><span class="line">    words: Array&lt;String&gt;, </span><br><span class="line">    word1: String, </span><br><span class="line">    word2: String</span><br><span class="line">  ): Int &#123;</span><br><span class="line">    if (words.size == 0) return -1</span><br><span class="line"></span><br><span class="line">    // step1, initialize word indices and the answer</span><br><span class="line">    var w1: Int = -1</span><br><span class="line">    var w2: Int = -1 </span><br><span class="line">    var distance = Int.MAX_VALUE </span><br><span class="line"></span><br><span class="line">    words.forEachIndexed &#123; i, w -&gt; </span><br><span class="line">      if(w.equals(word1)) &#123; </span><br><span class="line">        w1 = i </span><br><span class="line">        if (w2 != -1) &#123;</span><br><span class="line">          distance = Math.min(distance, Math.abs(w1-w2))</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      // Step2. test the edge case. </span><br><span class="line">      if (w.equals(word2)) &#123;</span><br><span class="line">        w2 = i </span><br><span class="line">        if (w1 != -1 &amp;&amp; w1 != w2) &#123;</span><br><span class="line">          distance = Math.min(distance, Math.abs(w1-w2))</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return distance</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">class Solution &#123;
+  fun shortestWordDistance(
+    words: Array&lt;String&gt;, 
+    word1: String, 
+    word2: String
+  ): Int &#123;
+    if (words.size == 0) return -1
+
+    // step1, initialize word indices and the answer
+    var w1: Int = -1
+    var w2: Int = -1 
+    var distance = Int.MAX_VALUE 
+
+    words.forEachIndexed &#123; i, w -&gt; 
+      if(w.equals(word1)) &#123; 
+        w1 = i 
+        if (w2 != -1) &#123;
+          distance = Math.min(distance, Math.abs(w1-w2))
+        &#125;
+      &#125;
+      // Step2. test the edge case. 
+      if (w.equals(word2)) &#123;
+        w2 = i 
+        if (w1 != -1 &amp;&amp; w1 != w2) &#123;
+          distance = Math.min(distance, Math.abs(w1-w2))
+        &#125;
+      &#125;
+    &#125;
+
+    return distance
+  &#125;
+&#125;</code></pre>
 
 <p>The time complexity of this class is <code>O(n)</code> because you need to run through all the elements. The space complexity is <code>O(1)</code>.</p>
 
@@ -368,12 +401,14 @@
       
         <p><strong>Question:</strong><br>Given a list of words and two words <em>word1</em> and <em>word2</em>, return the shortest distance between these two words in the list.</p>
 <p><em>word1</em> and <em>word2</em> may be the same, and they represent two individual words in the list.</p>
-<a id="more"></a>
+<span id="more"></span>
 
-<p>Example:<br>Assume that words = <code>[&quot;practice&quot;, &quot;makes&quot;, &quot;perfect&quot;, &quot;coding&quot;, &quot;makes&quot;]</code>.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: word1 = “makes”, word2 = “coding”</span><br><span class="line">Output: 1</span><br></pre></td></tr></table></figure>
+<p>Example:<br>Assume that words &#x3D; <code>[&quot;practice&quot;, &quot;makes&quot;, &quot;perfect&quot;, &quot;coding&quot;, &quot;makes&quot;]</code>.</p>
+<pre><code class="highlight plaintext">Input: word1 = “makes”, word2 = “coding”
+Output: 1</code></pre>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: word1 = &quot;makes&quot;, word2 = &quot;makes&quot;</span><br><span class="line">Output: 3</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">Input: word1 = &quot;makes&quot;, word2 = &quot;makes&quot;
+Output: 3</code></pre>
 
 <p><strong>Note:</strong><br>You may assume <em>word1</em> and <em>word2</em> are both on the list.</p>
 <p><strong>Analysis:</strong></p>
@@ -382,7 +417,38 @@
 <li>If the word dictionary has only the same elements, for example, [“ABC”, “ABC”]</li>
 </ul>
 <p>Let’s see how to solve this question.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">  fun shortestWordDistance(</span><br><span class="line">    words: Array&lt;String&gt;, </span><br><span class="line">    word1: String, </span><br><span class="line">    word2: String</span><br><span class="line">  ): Int &#123;</span><br><span class="line">    if (words.size == 0) return -1</span><br><span class="line"></span><br><span class="line">    // step1, initialize word indices and the answer</span><br><span class="line">    var w1: Int = -1</span><br><span class="line">    var w2: Int = -1 </span><br><span class="line">    var distance = Int.MAX_VALUE </span><br><span class="line"></span><br><span class="line">    words.forEachIndexed &#123; i, w -&gt; </span><br><span class="line">      if(w.equals(word1)) &#123; </span><br><span class="line">        w1 = i </span><br><span class="line">        if (w2 != -1) &#123;</span><br><span class="line">          distance = Math.min(distance, Math.abs(w1-w2))</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      // Step2. test the edge case. </span><br><span class="line">      if (w.equals(word2)) &#123;</span><br><span class="line">        w2 = i </span><br><span class="line">        if (w1 != -1 &amp;&amp; w1 != w2) &#123;</span><br><span class="line">          distance = Math.min(distance, Math.abs(w1-w2))</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return distance</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">class Solution &#123;
+  fun shortestWordDistance(
+    words: Array&lt;String&gt;, 
+    word1: String, 
+    word2: String
+  ): Int &#123;
+    if (words.size == 0) return -1
+
+    // step1, initialize word indices and the answer
+    var w1: Int = -1
+    var w2: Int = -1 
+    var distance = Int.MAX_VALUE 
+
+    words.forEachIndexed &#123; i, w -&gt; 
+      if(w.equals(word1)) &#123; 
+        w1 = i 
+        if (w2 != -1) &#123;
+          distance = Math.min(distance, Math.abs(w1-w2))
+        &#125;
+      &#125;
+      // Step2. test the edge case. 
+      if (w.equals(word2)) &#123;
+        w2 = i 
+        if (w1 != -1 &amp;&amp; w1 != w2) &#123;
+          distance = Math.min(distance, Math.abs(w1-w2))
+        &#125;
+      &#125;
+    &#125;
+
+    return distance
+  &#125;
+&#125;</code></pre>
 
 <p>The time complexity of this class is <code>O(n)</code> because you need to run through all the elements. The space complexity is <code>O(1)</code>.</p>
 

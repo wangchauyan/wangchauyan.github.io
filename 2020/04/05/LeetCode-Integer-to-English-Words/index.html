@@ -31,11 +31,11 @@
 <meta property="article:published_time" content="2020-04-06T00:18:12.000Z">
 <meta property="article:modified_time" content="2020-04-12T07:50:41.885Z">
 <meta property="article:author" content="Chauyan">
-<meta property="article:tag" content="Google">
 <meta property="article:tag" content="Facebook">
 <meta property="article:tag" content="Amazon">
 <meta property="article:tag" content="Microsoft">
 <meta property="article:tag" content="Walmart Labs">
+<meta property="article:tag" content="Google">
 <meta property="article:tag" content="Apple">
 <meta property="article:tag" content="Tesla">
 <meta property="article:tag" content="Zillow">
@@ -250,23 +250,79 @@
 
       
         <p><strong>Question:</strong><br>Convert a non-negative integer to its English words representation. Given input is guaranteed to be less than 2^31 - 1.</p>
-<a id="more"></a>
+<span id="more"></span>
 
 <p>Example 1:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: 123</span><br><span class="line">Output: &quot;One Hundred Twenty Three&quot;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">Input: 123
+Output: &quot;One Hundred Twenty Three&quot;</code></pre>
 
 <p>Example 2:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: 12345</span><br><span class="line">Output: &quot;Twelve Thousand Three Hundred Forty Five&quot;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">Input: 12345
+Output: &quot;Twelve Thousand Three Hundred Forty Five&quot;</code></pre>
 
 <p>Example 3:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: 1234567</span><br><span class="line">Output: &quot;One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven&quot;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">Input: 1234567
+Output: &quot;One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven&quot;</code></pre>
 
 <p>Example 4:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: 1234567891</span><br><span class="line">Output: &quot;One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Thousand Eight Hundred Ninety One&quot;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">Input: 1234567891
+Output: &quot;One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Thousand Eight Hundred Ninety One&quot;</code></pre>
 
 <p><strong>Analysis:</strong></p>
 <p>To be honest, this question is not that hard. We need to know the logic of these sentences here. You need to know the rules of the counting and can solve it quickly. Let us see how to solve this question.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">  public String numberToWords(int num) &#123;</span><br><span class="line">    if (num == 0) return &quot;Zero&quot;; </span><br><span class="line"></span><br><span class="line">    int billions = num/1000000000;</span><br><span class="line">    num %= 1000000000;</span><br><span class="line"></span><br><span class="line">    int millions = num/1000000;</span><br><span class="line">    num %= 1000000;</span><br><span class="line"></span><br><span class="line">    int thousands = num/1000;</span><br><span class="line">    num %= 1000;</span><br><span class="line"></span><br><span class="line">    StringBuilder string = new StringBuilder();</span><br><span class="line">    if (billions &gt; 0)</span><br><span class="line">      string.append(helper(billions) + &quot;Billion &quot;);</span><br><span class="line">    if (millions &gt; 0)</span><br><span class="line">      string.append(helper(millions) + &quot;Million &quot;);</span><br><span class="line">    if (thousands &gt; 0)</span><br><span class="line">      string.append(helper(thousands) + &quot;Thousand &quot;);</span><br><span class="line">    if (num &gt; 0)</span><br><span class="line">      string.append(helper(num));</span><br><span class="line"></span><br><span class="line">    return string.toString().trim();</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public String helper(int num) &#123;</span><br><span class="line">    String[] numbers = &#123;</span><br><span class="line">  &quot;&quot;, &quot;One &quot;, &quot;Two &quot;, &quot;Three &quot;, &quot;Four &quot;, &quot;Five &quot;, &quot;Six &quot;, &quot;Seven &quot;, &quot;Eight &quot;, &quot;Nine &quot;, &quot;Ten &quot;,</span><br><span class="line">  &quot;Eleven &quot;, &quot;Twelve &quot;, &quot;Thirteen &quot;, &quot;Fourteen &quot;, &quot;Fifteen &quot;, &quot;Sixteen &quot;, &quot;Seventeen &quot;, &quot;Eighteen &quot;, &quot;Nineteen &quot;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">    String[] tens = &#123;</span><br><span class="line">      &quot;&quot;, &quot;&quot;, &quot;Twenty &quot;, &quot;Thirty &quot;, &quot;Forty &quot;, &quot;Fifty &quot;, &quot;Sixty &quot;, &quot;Seventy &quot;, &quot;Eighty &quot;, &quot;Ninety &quot;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    int hundred = num/100; </span><br><span class="line">    num %= 100; </span><br><span class="line"></span><br><span class="line">    StringBuilder string = new StringBuilder(); </span><br><span class="line">    if (hundred != 0) string.append(numbers[hundred] + &quot;Hundred &quot;);</span><br><span class="line"></span><br><span class="line">    if (num &lt; 20) &#123;</span><br><span class="line">      string.append(numbers[num]);</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">      string.append(tens[num/10] + numbers[num%10]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return string.toString();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">class Solution &#123;
+  public String numberToWords(int num) &#123;
+    if (num == 0) return &quot;Zero&quot;; 
+
+    int billions = num/1000000000;
+    num %= 1000000000;
+
+    int millions = num/1000000;
+    num %= 1000000;
+
+    int thousands = num/1000;
+    num %= 1000;
+
+    StringBuilder string = new StringBuilder();
+    if (billions &gt; 0)
+      string.append(helper(billions) + &quot;Billion &quot;);
+    if (millions &gt; 0)
+      string.append(helper(millions) + &quot;Million &quot;);
+    if (thousands &gt; 0)
+      string.append(helper(thousands) + &quot;Thousand &quot;);
+    if (num &gt; 0)
+      string.append(helper(num));
+
+    return string.toString().trim();
+
+  &#125;
+
+  public String helper(int num) &#123;
+    String[] numbers = &#123;
+  &quot;&quot;, &quot;One &quot;, &quot;Two &quot;, &quot;Three &quot;, &quot;Four &quot;, &quot;Five &quot;, &quot;Six &quot;, &quot;Seven &quot;, &quot;Eight &quot;, &quot;Nine &quot;, &quot;Ten &quot;,
+  &quot;Eleven &quot;, &quot;Twelve &quot;, &quot;Thirteen &quot;, &quot;Fourteen &quot;, &quot;Fifteen &quot;, &quot;Sixteen &quot;, &quot;Seventeen &quot;, &quot;Eighteen &quot;, &quot;Nineteen &quot;
+&#125;;
+
+    String[] tens = &#123;
+      &quot;&quot;, &quot;&quot;, &quot;Twenty &quot;, &quot;Thirty &quot;, &quot;Forty &quot;, &quot;Fifty &quot;, &quot;Sixty &quot;, &quot;Seventy &quot;, &quot;Eighty &quot;, &quot;Ninety &quot;
+    &#125;;
+
+    int hundred = num/100; 
+    num %= 100; 
+
+    StringBuilder string = new StringBuilder(); 
+    if (hundred != 0) string.append(numbers[hundred] + &quot;Hundred &quot;);
+
+    if (num &lt; 20) &#123;
+      string.append(numbers[num]);
+    &#125;
+    else &#123;
+      string.append(tens[num/10] + numbers[num%10]);
+    &#125;
+
+    return string.toString();
+  &#125;
+&#125;</code></pre>
     </div>
 
     
@@ -275,11 +331,11 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Google/" rel="tag"># Google</a>
               <a href="/tags/Facebook/" rel="tag"># Facebook</a>
               <a href="/tags/Amazon/" rel="tag"># Amazon</a>
               <a href="/tags/Microsoft/" rel="tag"># Microsoft</a>
               <a href="/tags/Walmart-Labs/" rel="tag"># Walmart Labs</a>
+              <a href="/tags/Google/" rel="tag"># Google</a>
               <a href="/tags/Apple/" rel="tag"># Apple</a>
               <a href="/tags/Tesla/" rel="tag"># Tesla</a>
               <a href="/tags/Zillow/" rel="tag"># Zillow</a>
@@ -379,23 +435,79 @@
 
       
         <p><strong>Question:</strong><br>Convert a non-negative integer to its English words representation. Given input is guaranteed to be less than 2^31 - 1.</p>
-<a id="more"></a>
+<span id="more"></span>
 
 <p>Example 1:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: 123</span><br><span class="line">Output: &quot;One Hundred Twenty Three&quot;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">Input: 123
+Output: &quot;One Hundred Twenty Three&quot;</code></pre>
 
 <p>Example 2:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: 12345</span><br><span class="line">Output: &quot;Twelve Thousand Three Hundred Forty Five&quot;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">Input: 12345
+Output: &quot;Twelve Thousand Three Hundred Forty Five&quot;</code></pre>
 
 <p>Example 3:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: 1234567</span><br><span class="line">Output: &quot;One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven&quot;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">Input: 1234567
+Output: &quot;One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven&quot;</code></pre>
 
 <p>Example 4:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: 1234567891</span><br><span class="line">Output: &quot;One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Thousand Eight Hundred Ninety One&quot;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">Input: 1234567891
+Output: &quot;One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Thousand Eight Hundred Ninety One&quot;</code></pre>
 
 <p><strong>Analysis:</strong></p>
 <p>To be honest, this question is not that hard. We need to know the logic of these sentences here. You need to know the rules of the counting and can solve it quickly. Let us see how to solve this question.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">  public String numberToWords(int num) &#123;</span><br><span class="line">    if (num == 0) return &quot;Zero&quot;; </span><br><span class="line"></span><br><span class="line">    int billions = num/1000000000;</span><br><span class="line">    num %= 1000000000;</span><br><span class="line"></span><br><span class="line">    int millions = num/1000000;</span><br><span class="line">    num %= 1000000;</span><br><span class="line"></span><br><span class="line">    int thousands = num/1000;</span><br><span class="line">    num %= 1000;</span><br><span class="line"></span><br><span class="line">    StringBuilder string = new StringBuilder();</span><br><span class="line">    if (billions &gt; 0)</span><br><span class="line">      string.append(helper(billions) + &quot;Billion &quot;);</span><br><span class="line">    if (millions &gt; 0)</span><br><span class="line">      string.append(helper(millions) + &quot;Million &quot;);</span><br><span class="line">    if (thousands &gt; 0)</span><br><span class="line">      string.append(helper(thousands) + &quot;Thousand &quot;);</span><br><span class="line">    if (num &gt; 0)</span><br><span class="line">      string.append(helper(num));</span><br><span class="line"></span><br><span class="line">    return string.toString().trim();</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public String helper(int num) &#123;</span><br><span class="line">    String[] numbers = &#123;</span><br><span class="line">  &quot;&quot;, &quot;One &quot;, &quot;Two &quot;, &quot;Three &quot;, &quot;Four &quot;, &quot;Five &quot;, &quot;Six &quot;, &quot;Seven &quot;, &quot;Eight &quot;, &quot;Nine &quot;, &quot;Ten &quot;,</span><br><span class="line">  &quot;Eleven &quot;, &quot;Twelve &quot;, &quot;Thirteen &quot;, &quot;Fourteen &quot;, &quot;Fifteen &quot;, &quot;Sixteen &quot;, &quot;Seventeen &quot;, &quot;Eighteen &quot;, &quot;Nineteen &quot;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">    String[] tens = &#123;</span><br><span class="line">      &quot;&quot;, &quot;&quot;, &quot;Twenty &quot;, &quot;Thirty &quot;, &quot;Forty &quot;, &quot;Fifty &quot;, &quot;Sixty &quot;, &quot;Seventy &quot;, &quot;Eighty &quot;, &quot;Ninety &quot;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    int hundred = num/100; </span><br><span class="line">    num %= 100; </span><br><span class="line"></span><br><span class="line">    StringBuilder string = new StringBuilder(); </span><br><span class="line">    if (hundred != 0) string.append(numbers[hundred] + &quot;Hundred &quot;);</span><br><span class="line"></span><br><span class="line">    if (num &lt; 20) &#123;</span><br><span class="line">      string.append(numbers[num]);</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">      string.append(tens[num/10] + numbers[num%10]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return string.toString();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">class Solution &#123;
+  public String numberToWords(int num) &#123;
+    if (num == 0) return &quot;Zero&quot;; 
+
+    int billions = num/1000000000;
+    num %= 1000000000;
+
+    int millions = num/1000000;
+    num %= 1000000;
+
+    int thousands = num/1000;
+    num %= 1000;
+
+    StringBuilder string = new StringBuilder();
+    if (billions &gt; 0)
+      string.append(helper(billions) + &quot;Billion &quot;);
+    if (millions &gt; 0)
+      string.append(helper(millions) + &quot;Million &quot;);
+    if (thousands &gt; 0)
+      string.append(helper(thousands) + &quot;Thousand &quot;);
+    if (num &gt; 0)
+      string.append(helper(num));
+
+    return string.toString().trim();
+
+  &#125;
+
+  public String helper(int num) &#123;
+    String[] numbers = &#123;
+  &quot;&quot;, &quot;One &quot;, &quot;Two &quot;, &quot;Three &quot;, &quot;Four &quot;, &quot;Five &quot;, &quot;Six &quot;, &quot;Seven &quot;, &quot;Eight &quot;, &quot;Nine &quot;, &quot;Ten &quot;,
+  &quot;Eleven &quot;, &quot;Twelve &quot;, &quot;Thirteen &quot;, &quot;Fourteen &quot;, &quot;Fifteen &quot;, &quot;Sixteen &quot;, &quot;Seventeen &quot;, &quot;Eighteen &quot;, &quot;Nineteen &quot;
+&#125;;
+
+    String[] tens = &#123;
+      &quot;&quot;, &quot;&quot;, &quot;Twenty &quot;, &quot;Thirty &quot;, &quot;Forty &quot;, &quot;Fifty &quot;, &quot;Sixty &quot;, &quot;Seventy &quot;, &quot;Eighty &quot;, &quot;Ninety &quot;
+    &#125;;
+
+    int hundred = num/100; 
+    num %= 100; 
+
+    StringBuilder string = new StringBuilder(); 
+    if (hundred != 0) string.append(numbers[hundred] + &quot;Hundred &quot;);
+
+    if (num &lt; 20) &#123;
+      string.append(numbers[num]);
+    &#125;
+    else &#123;
+      string.append(tens[num/10] + numbers[num%10]);
+    &#125;
+
+    return string.toString();
+  &#125;
+&#125;</code></pre>
     </div>
 
     
@@ -404,11 +516,11 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Google/" rel="tag"># Google</a>
               <a href="/tags/Facebook/" rel="tag"># Facebook</a>
               <a href="/tags/Amazon/" rel="tag"># Amazon</a>
               <a href="/tags/Microsoft/" rel="tag"># Microsoft</a>
               <a href="/tags/Walmart-Labs/" rel="tag"># Walmart Labs</a>
+              <a href="/tags/Google/" rel="tag"># Google</a>
               <a href="/tags/Apple/" rel="tag"># Apple</a>
               <a href="/tags/Tesla/" rel="tag"># Tesla</a>
               <a href="/tags/Zillow/" rel="tag"># Zillow</a>

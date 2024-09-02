@@ -239,7 +239,13 @@
         <h4 id="Something-related-to-the-System-Application"><a href="#Something-related-to-the-System-Application" class="headerlink" title="Something related to the System Application"></a>Something related to the System Application</h4><p>You might wonder how to deploy your App as a system application. There are two cases we can talk about. First one, on a rooted device, you can simply put your App into either &#x2F;system&#x2F;app or &#x2F;system&#x2F;priv-app by using this way:</p>
 <span id="more"></span>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$adb root </span><br><span class="line">$adb remount</span><br><span class="line">$adb push your_app.apk /sdcard/ </span><br><span class="line"></span><br><span class="line">$adb shell </span><br><span class="line">$su </span><br><span class="line">$cd /sdcard/ &amp; mv your_app.apk /system/priv-app</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight script">$adb root 
+$adb remount
+$adb push your_app.apk /sdcard/ 
+
+$adb shell 
+$su 
+$cd /sdcard/ &amp; mv your_app.apk /system/priv-app</code></pre>
 
 <p>This is an easier way to make your application access @systemApi without pain. What about the second case? We can download the AOSP source code, put our application into the build process, and make the App a system application when building the AOSP source. </p>
 <h5 id="Where-to-put-your-App"><a href="#Where-to-put-your-App" class="headerlink" title="Where to put your App"></a>Where to put your App</h5><p>You can put your App in these two folders: </p>
@@ -248,18 +254,37 @@
 <li>your_aosp_project_folder&#x2F;vendor&#x2F;your_project&#x2F;packages&#x2F;apps&#x2F;your_app_folder</li>
 </ul>
 <p>For the last folder, you have to create that yourself by using:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p vendor/your_project/packages/apps/your_app_folder. </span><br></pre></td></tr></table></figure>
+<pre><code class="highlight script">mkdir -p vendor/your_project/packages/apps/your_app_folder.</code></pre>
 
 <p>You can simply put a prebuilt Apk or the entire project source code into the AOSP build. I will simply go over the prebuilt Apk way, but the concepts are the same. Here is the example of preparing the Android.mk or Android.bp for the AOSP build. </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">LOCAL_PATH := $(call my-dir)</span><br><span class="line">include $(CLEAR_VARS)</span><br><span class="line"></span><br><span class="line">LOCAL_MODULE_TAGS := optional</span><br><span class="line"></span><br><span class="line">LOCAL_UNINSTALLABLE_MODULE := true</span><br><span class="line">LOCAL_MODULE_PATH := $(TARGET_OUT_APPS)</span><br><span class="line"></span><br><span class="line">LOCAL_MODULE := your_app_folder_name</span><br><span class="line">LOCAL_SRC_FILES := $(LOCAL_MODULE).apk </span><br><span class="line"></span><br><span class="line">LOCAL_MODULE_CLASS := APPS </span><br><span class="line"></span><br><span class="line">LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX) </span><br><span class="line"></span><br><span class="line"># If you simply wanted to include your App into the AOSP, use PRESIGNED.</span><br><span class="line"># If you wanted to make your App as a system App (Android.uid.system), use platform</span><br><span class="line">LOCAL_CERTIFICATE := PRESIGNED</span><br><span class="line"></span><br><span class="line">include $(BUILD_PREBUILT)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">LOCAL_PATH := $(call my-dir)
+include $(CLEAR_VARS)
+
+LOCAL_MODULE_TAGS := optional
+
+LOCAL_UNINSTALLABLE_MODULE := true
+LOCAL_MODULE_PATH := $(TARGET_OUT_APPS)
+
+LOCAL_MODULE := your_app_folder_name
+LOCAL_SRC_FILES := $(LOCAL_MODULE).apk 
+
+LOCAL_MODULE_CLASS := APPS 
+
+LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX) 
+
+# If you simply wanted to include your App into the AOSP, use PRESIGNED.
+# If you wanted to make your App as a system App (Android.uid.system), use platform
+LOCAL_CERTIFICATE := PRESIGNED
+
+include $(BUILD_PREBUILT)</code></pre>
 
 <h5 id="The-key-and-Keystore"><a href="#The-key-and-Keystore" class="headerlink" title="The key and Keystore"></a>The key and Keystore</h5><p>Please note that if you want to make your application a system App, you will need to add <code>android.uid.system</code>  to your AndroidManifest.xml. This setting will make your application share the same system uid with other system applications. And by using this way, you will need to provide the platform key to sign your application: </p>
 <p><strong>Manually sign</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -Djava.library.path=out/host/linux-x86/lib64 -jar out/host/linux-x86/framework/signapk.jar build/target/product/security/platform.x509.pem build/target/product/security/platform.pk8 your_debug_app.apk your_debug_app_signed.apk</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight shell">java -Djava.library.path=out/host/linux-x86/lib64 -jar out/host/linux-x86/framework/signapk.jar build/target/product/security/platform.x509.pem build/target/product/security/platform.pk8 your_debug_app.apk your_debug_app_signed.apk</code></pre>
 
 
 <p><strong>Sign your app by using Android Studio</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keytool-importkeypair -k ~/.android/platform.keystore -p android -pk8 platform.pk8 -cert platform.x509.pem -alias platform</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight shell">keytool-importkeypair -k ~/.android/platform.keystore -p android -pk8 platform.pk8 -cert platform.x509.pem -alias platform</code></pre>
 
 <p>After creating the Keystore file, you can use this Keystore file in your Android Studio and set up the SignConfig to sign your application. </p>
 <pre><code>signingConfigs &#123;   
@@ -373,7 +398,13 @@
         <h4 id="Something-related-to-the-System-Application"><a href="#Something-related-to-the-System-Application" class="headerlink" title="Something related to the System Application"></a>Something related to the System Application</h4><p>You might wonder how to deploy your App as a system application. There are two cases we can talk about. First one, on a rooted device, you can simply put your App into either &#x2F;system&#x2F;app or &#x2F;system&#x2F;priv-app by using this way:</p>
 <span id="more"></span>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$adb root </span><br><span class="line">$adb remount</span><br><span class="line">$adb push your_app.apk /sdcard/ </span><br><span class="line"></span><br><span class="line">$adb shell </span><br><span class="line">$su </span><br><span class="line">$cd /sdcard/ &amp; mv your_app.apk /system/priv-app</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight script">$adb root 
+$adb remount
+$adb push your_app.apk /sdcard/ 
+
+$adb shell 
+$su 
+$cd /sdcard/ &amp; mv your_app.apk /system/priv-app</code></pre>
 
 <p>This is an easier way to make your application access @systemApi without pain. What about the second case? We can download the AOSP source code, put our application into the build process, and make the App a system application when building the AOSP source. </p>
 <h5 id="Where-to-put-your-App"><a href="#Where-to-put-your-App" class="headerlink" title="Where to put your App"></a>Where to put your App</h5><p>You can put your App in these two folders: </p>
@@ -382,18 +413,37 @@
 <li>your_aosp_project_folder&#x2F;vendor&#x2F;your_project&#x2F;packages&#x2F;apps&#x2F;your_app_folder</li>
 </ul>
 <p>For the last folder, you have to create that yourself by using:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p vendor/your_project/packages/apps/your_app_folder. </span><br></pre></td></tr></table></figure>
+<pre><code class="highlight script">mkdir -p vendor/your_project/packages/apps/your_app_folder.</code></pre>
 
 <p>You can simply put a prebuilt Apk or the entire project source code into the AOSP build. I will simply go over the prebuilt Apk way, but the concepts are the same. Here is the example of preparing the Android.mk or Android.bp for the AOSP build. </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">LOCAL_PATH := $(call my-dir)</span><br><span class="line">include $(CLEAR_VARS)</span><br><span class="line"></span><br><span class="line">LOCAL_MODULE_TAGS := optional</span><br><span class="line"></span><br><span class="line">LOCAL_UNINSTALLABLE_MODULE := true</span><br><span class="line">LOCAL_MODULE_PATH := $(TARGET_OUT_APPS)</span><br><span class="line"></span><br><span class="line">LOCAL_MODULE := your_app_folder_name</span><br><span class="line">LOCAL_SRC_FILES := $(LOCAL_MODULE).apk </span><br><span class="line"></span><br><span class="line">LOCAL_MODULE_CLASS := APPS </span><br><span class="line"></span><br><span class="line">LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX) </span><br><span class="line"></span><br><span class="line"># If you simply wanted to include your App into the AOSP, use PRESIGNED.</span><br><span class="line"># If you wanted to make your App as a system App (Android.uid.system), use platform</span><br><span class="line">LOCAL_CERTIFICATE := PRESIGNED</span><br><span class="line"></span><br><span class="line">include $(BUILD_PREBUILT)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">LOCAL_PATH := $(call my-dir)
+include $(CLEAR_VARS)
+
+LOCAL_MODULE_TAGS := optional
+
+LOCAL_UNINSTALLABLE_MODULE := true
+LOCAL_MODULE_PATH := $(TARGET_OUT_APPS)
+
+LOCAL_MODULE := your_app_folder_name
+LOCAL_SRC_FILES := $(LOCAL_MODULE).apk 
+
+LOCAL_MODULE_CLASS := APPS 
+
+LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX) 
+
+# If you simply wanted to include your App into the AOSP, use PRESIGNED.
+# If you wanted to make your App as a system App (Android.uid.system), use platform
+LOCAL_CERTIFICATE := PRESIGNED
+
+include $(BUILD_PREBUILT)</code></pre>
 
 <h5 id="The-key-and-Keystore"><a href="#The-key-and-Keystore" class="headerlink" title="The key and Keystore"></a>The key and Keystore</h5><p>Please note that if you want to make your application a system App, you will need to add <code>android.uid.system</code>  to your AndroidManifest.xml. This setting will make your application share the same system uid with other system applications. And by using this way, you will need to provide the platform key to sign your application: </p>
 <p><strong>Manually sign</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -Djava.library.path=out/host/linux-x86/lib64 -jar out/host/linux-x86/framework/signapk.jar build/target/product/security/platform.x509.pem build/target/product/security/platform.pk8 your_debug_app.apk your_debug_app_signed.apk</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight shell">java -Djava.library.path=out/host/linux-x86/lib64 -jar out/host/linux-x86/framework/signapk.jar build/target/product/security/platform.x509.pem build/target/product/security/platform.pk8 your_debug_app.apk your_debug_app_signed.apk</code></pre>
 
 
 <p><strong>Sign your app by using Android Studio</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keytool-importkeypair -k ~/.android/platform.keystore -p android -pk8 platform.pk8 -cert platform.x509.pem -alias platform</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight shell">keytool-importkeypair -k ~/.android/platform.keystore -p android -pk8 platform.pk8 -cert platform.x509.pem -alias platform</code></pre>
 
 <p>After creating the Keystore file, you can use this Keystore file in your Android Studio and set up the SignConfig to sign your application. </p>
 <pre><code>signingConfigs &#123;   

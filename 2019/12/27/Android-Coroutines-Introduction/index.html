@@ -246,59 +246,134 @@
       
         <p><img src="https://chauyanw.files.wordpress.com/2019/08/kotlin-coroutines-1.png?w=2924" alt="kotlin-coroutines-1.png?w=2924"></p>
 <p>I recently read the source code of <code>Coroutines.</code> It’s pretty fun, and I’ve learned a lot from the source code. I am going to share some I learned here. I would break the learning into several parts. I hope everyone can find something useful for your projects.</p>
-<a id="more"></a>
+<span id="more"></span>
 
-<p>I download the latest master branch code at <a href="https://github.com/Kotlin/kotlinx.coroutines" target="_blank" rel="noopener"><strong>HERE</strong></a>, and if you are interested, you can just download the official release version to try. So, it’s up to you to choose either the official release version or the latest master branch. And the Kotlin version is <code>1.3.61</code> check <a href="https://github.com/Kotlin/kotlinx.coroutines/blob/master/README.md" target="_blank" rel="noopener">README</a> here.</p>
+<p>I download the latest master branch code at <a href="https://github.com/Kotlin/kotlinx.coroutines"><strong>HERE</strong></a>, and if you are interested, you can just download the official release version to try. So, it’s up to you to choose either the official release version or the latest master branch. And the Kotlin version is <code>1.3.61</code> check <a href="https://github.com/Kotlin/kotlinx.coroutines/blob/master/README.md">README</a> here.</p>
 <h4 id="Part1-Introduction"><a href="#Part1-Introduction" class="headerlink" title="Part1 - Introduction"></a>Part1 - Introduction</h4><p>Before starting the introduction, let’s think of a question: how do you handle the CPU-consuming tasks or networking accessing works? We can’t do these tasks in the main thread (in Android, which is UIThread). Then we need to think about using the multiple threading techniques to solve our questions. In Java, you can use <code>Thread</code> to do this.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Runnable task = () -&gt; &#123;</span><br><span class="line">  String threadName = Thread.currentThread().getName();</span><br><span class="line">  System.out.println(<span class="string">"Hello "</span> + threadName);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Thread thread = <span class="keyword">new</span> Thread(task);</span><br><span class="line">thread.start();</span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">"Done!"</span>);</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java"><span class="type">Runnable</span> <span class="variable">task</span> <span class="operator">=</span> () -&gt; &#123;
+  <span class="type">String</span> <span class="variable">threadName</span> <span class="operator">=</span> Thread.currentThread().getName();
+  System.out.println(<span class="string">&quot;Hello &quot;</span> + threadName);
+&#125;;
+
+<span class="type">Thread</span> <span class="variable">thread</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(task);
+thread.start();
+
+System.out.println(<span class="string">&quot;Done!&quot;</span>);</code></pre>
 
 <p>You can see the result:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Hello Thread-0</span><br><span class="line">Done!</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash">Hello Thread-0
+Done!</code></pre>
 
 <p>or</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Done!</span><br><span class="line">Hello Thread-0</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash">Done!
+Hello Thread-0</code></pre>
 
 <p>But creating threads frequently is a resource-consuming behavior, you would want to create a <code>ThreadPool</code> to reduce the cost.</p>
 <p>In Android, we have several options for concurrency tasks. For example, you can use the <code>AsyncTask,</code> <code>Background Service,</code> and <code>Handler</code> in the Android projects.</p>
 <p>The second question is: how do you communicate between two different threads? In Java, you need to manipulate the <code>Thread</code> interaction by using <code>IPC</code> mechanism, for example, shared memory, Pipe, named Pipe, mapped memory, semaphore, socket, message, and signals. There are many techniques we can use. What about concurrency in Kotlin’s world? Do we have any weapons for arming? Fortunately, we can still use the same techniques from the Java world. But Kotlin gives us a more powerful weapon, Coroutines, to use.</p>
 <p>Let’s see an example first. We have three functions which need the results from the previous one finished the job.</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">requestToken</span><span class="params">()</span></span>: Token &#123; ... &#125;</span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">createPost</span><span class="params">(token: <span class="type">Token</span>, item: <span class="type">Item</span>)</span></span>: Post &#123; ... &#125;</span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">processPost</span><span class="params">(post: <span class="type">Post</span>)</span></span> &#123; ... &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// post a specific item</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">postItem</span><span class="params">(item: <span class="type">Item</span>)</span></span> &#123;</span><br><span class="line">  <span class="keyword">val</span> token = requestToken()</span><br><span class="line">  <span class="keyword">val</span> post = createPost(token, item)</span><br><span class="line">  processPost(post)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="function"><span class="keyword">fun</span> <span class="title">requestToken</span><span class="params">()</span></span>: Token &#123; ... &#125;
+<span class="function"><span class="keyword">fun</span> <span class="title">createPost</span><span class="params">(token: <span class="type">Token</span>, item: <span class="type">Item</span>)</span></span>: Post &#123; ... &#125;
+<span class="function"><span class="keyword">fun</span> <span class="title">processPost</span><span class="params">(post: <span class="type">Post</span>)</span></span> &#123; ... &#125;
+
+<span class="comment">// post a specific item</span>
+<span class="function"><span class="keyword">fun</span> <span class="title">postItem</span><span class="params">(item: <span class="type">Item</span>)</span></span> &#123;
+  <span class="keyword">val</span> token = requestToken()
+  <span class="keyword">val</span> post = createPost(token, item)
+  processPost(post)
+&#125;</code></pre>
 
 <p>These three functions are probably time-consuming tasks. Hence, it’s not able to put them in the UI thread in the Android project. What can we do now?</p>
 <h5 id="By-using-a-Thread"><a href="#By-using-a-Thread" class="headerlink" title="By using a Thread"></a>By using a Thread</h5><p>As I mentioned before, create a thread to run it.</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Thread(&#123;</span><br><span class="line">  postItem(item)</span><br><span class="line">&#125;).start()</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin">Thread(&#123;
+  postItem(item)
+&#125;).start()</code></pre>
 
 <p>Keeping this in mind: thread is not cheap. You would need to do context-switch, which is costly.</p>
 <h5 id="By-using-a-Callback"><a href="#By-using-a-Callback" class="headerlink" title="By using a Callback"></a>By using a Callback</h5><p>We can also use a callback function plus threading to catch the result from each function.</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">postItem</span><span class="params">(item: <span class="type">Item</span>)</span></span> &#123;</span><br><span class="line">  preparePostAsync &#123; token -&gt;</span><br><span class="line">    submitPostAsync(token, item) &#123; post -&gt;</span><br><span class="line">      processPost(post)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">preparePostAsync</span><span class="params">(callback: (<span class="type">Token</span>) -&gt; <span class="type">Unit</span>)</span></span> &#123;</span><br><span class="line">  <span class="comment">// make request and return immediately</span></span><br><span class="line">  <span class="comment">// arrange callback to be invoked later</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="function"><span class="keyword">fun</span> <span class="title">postItem</span><span class="params">(item: <span class="type">Item</span>)</span></span> &#123;
+  preparePostAsync &#123; token -&gt;
+    submitPostAsync(token, item) &#123; post -&gt;
+      processPost(post)
+    &#125;
+  &#125;
+&#125;
+
+<span class="function"><span class="keyword">fun</span> <span class="title">preparePostAsync</span><span class="params">(callback: (<span class="type">Token</span>) -&gt; <span class="type">Unit</span>)</span></span> &#123;
+  <span class="comment">// make request and return immediately</span>
+  <span class="comment">// arrange callback to be invoked later</span>
+&#125;</code></pre>
 
 <p>What’s the drawback of using callback? The most known pitfall is the <code>callback hell.</code> That makes you hardly debug and read the source code.</p>
 <h5 id="By-using-Java-Future"><a href="#By-using-Java-Future" class="headerlink" title="By using Java Future"></a>By using Java <code>Future</code></h5><p>In Java 8, it introduces the <code>CompletableFuture.</code> This feature lets you connect several tasks.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">fun <span class="title">requestToken</span><span class="params">()</span>: CompletableFuture </span>&#123; ... &#125;</span><br><span class="line"><span class="function">fun <span class="title">createPost</span><span class="params">(token: Token, item: Item)</span>: CompletableFuture </span>&#123; ... &#125;</span><br><span class="line"><span class="function">fun <span class="title">processPost</span><span class="params">(post: Post)</span> </span>&#123; ... &#125;</span><br><span class="line"></span><br><span class="line"><span class="function">fun <span class="title">postItem</span><span class="params">(item: Item)</span> </span>&#123;</span><br><span class="line">  requestToken()</span><br><span class="line">    .thenCompose &#123; token -&gt; createPost(token, item) &#125;</span><br><span class="line">    .thenAccept &#123; post -&gt; processPost(post) &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">fun <span class="title function_">requestToken</span><span class="params">()</span>: CompletableFuture &#123; ... &#125;
+fun <span class="title function_">createPost</span><span class="params">(token: Token, item: Item)</span>: CompletableFuture &#123; ... &#125;
+fun <span class="title function_">processPost</span><span class="params">(post: Post)</span> &#123; ... &#125;
+
+fun <span class="title function_">postItem</span><span class="params">(item: Item)</span> &#123;
+  requestToken()
+    .thenCompose &#123; token -&gt; createPost(token, item) &#125;
+    .thenAccept &#123; post -&gt; processPost(post) &#125;
+&#125;</code></pre>
 
 <h5 id="Rx-Extension"><a href="#Rx-Extension" class="headerlink" title="Rx Extension"></a>Rx Extension</h5><p>I believe there must be many developers who use this library.</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Single.fromCallable &#123; requestToken() &#125;</span><br><span class="line">  .map &#123; token -&gt; createPost(token, item) &#125;</span><br><span class="line">  .subscribe(</span><br><span class="line">    &#123; post -&gt; processPost(post) &#125;,</span><br><span class="line">    &#123; e -&gt; e.printStackTrace() &#125;</span><br><span class="line">  )</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin">Single.fromCallable &#123; requestToken() &#125;
+  .map &#123; token -&gt; createPost(token, item) &#125;
+  .subscribe(
+    &#123; post -&gt; processPost(post) &#125;,
+    &#123; e -&gt; e.printStackTrace() &#125;
+  )</code></pre>
 
 <p>I think the biggest problem for me when using Rx is that the exception log is pretty hard to read. And it also creates too many instances that Rx needs and consumes too much memory.</p>
 <p>Here’s why Coroutines show and want to give developers another solution.</p>
-<h5 id="Coroutines"><a href="#Coroutines" class="headerlink" title="Coroutines"></a>Coroutines</h5><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">requestToken</span><span class="params">()</span></span>: Token &#123; ... &#125;</span><br><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">createPost</span><span class="params">(token: <span class="type">Token</span>, item: <span class="type">Item</span>)</span></span>: Post &#123; ... &#125;</span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">processPost</span><span class="params">(post: <span class="type">Post</span>)</span></span> &#123; ... &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">postItem</span><span class="params">(item: <span class="type">Item</span>)</span></span> &#123;</span><br><span class="line">  GlobalScope.launch &#123;</span><br><span class="line">    <span class="keyword">val</span> token = requestToken()</span><br><span class="line">    <span class="keyword">val</span> post = createPost(token, item)</span><br><span class="line">    processPost(post)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="Coroutines"><a href="#Coroutines" class="headerlink" title="Coroutines"></a>Coroutines</h5><pre><code class="highlight kotlin"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">requestToken</span><span class="params">()</span></span>: Token &#123; ... &#125;
+<span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">createPost</span><span class="params">(token: <span class="type">Token</span>, item: <span class="type">Item</span>)</span></span>: Post &#123; ... &#125;
+<span class="function"><span class="keyword">fun</span> <span class="title">processPost</span><span class="params">(post: <span class="type">Post</span>)</span></span> &#123; ... &#125;
+
+<span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">postItem</span><span class="params">(item: <span class="type">Item</span>)</span></span> &#123;
+  GlobalScope.launch &#123;
+    <span class="keyword">val</span> token = requestToken()
+    <span class="keyword">val</span> post = createPost(token, item)
+    processPost(post)
+  &#125;
+&#125;</code></pre>
 
 <p>It looks just like the previous code snap, doesn’t it? If we want to add a <code>try-catch</code> block inside the <code>postItem</code> function. Just add it. We don’t need any extra effort to handle it.</p>
 <p>First of all, let’s check how a coroutine works. A <code>Coroutine</code> is like a <code>Thread</code> in concept. But it’s much more lightweight than a real <code>Thread.</code> Several different coroutines can run on a <code>Thread,</code> and the Coroutine runtime manages them. You might remember the thread itself is not that cheap as you think because the system controls the threads, and it needs to do context-switch for you. </p>
 <p>Another reason that a thread is costly is because it would spend more resource on the creation and termination. So the good practice is to use a thread pool (to create some threads inside first) in advance. Let’s back to <code>Coroutines.</code> The <code>Coroutines</code> don’t have the same problem. It’s very lightweight, which means you can create a Coroutine anytime, anywhere. It’s controlled by Kotlin runtime, not by system.</p>
 <p>What’s the <code>Suspend</code> keyword? You would call suspending functions in the coroutines, just like regular functions. To call a suspending function, you need to declare the caller function as a suspending function as well. A suspending function can only be used in a coroutine or another suspending function.</p>
 <p>When you try to launch a coroutine, it would be like this:</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GlobalScope.launch &#123;</span><br><span class="line">  processPost(post)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin">GlobalScope.launch &#123;
+  processPost(post)
+&#125;</code></pre>
 
 <p>Check the launch function itself:</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> CoroutineScope.<span class="title">launch</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  context: <span class="type">CoroutineContext</span> = EmptyCoroutineContext,</span></span></span><br><span class="line"><span class="function"><span class="params">  start: <span class="type">CoroutineStart</span> = CoroutineStart.DEFAULT,</span></span></span><br><span class="line"><span class="function"><span class="params">  block: <span class="type">suspend</span> <span class="type">CoroutineScope</span>.() -&gt; <span class="type">Unit</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>: Job</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> CoroutineScope.<span class="title">launch</span><span class="params">(</span></span>
+<span class="params"><span class="function">  context: <span class="type">CoroutineContext</span> = EmptyCoroutineContext,</span></span>
+<span class="params"><span class="function">  start: <span class="type">CoroutineStart</span> = CoroutineStart.DEFAULT,</span></span>
+<span class="params"><span class="function">  block: <span class="type">suspend</span> <span class="type">CoroutineScope</span>.() -&gt; <span class="type">Unit</span></span></span>
+<span class="params"><span class="function">)</span></span>: Job</code></pre>
 
 <p>It launches a new coroutine without blocking the current thread and returns a reference to the coroutine as a <code>Job.</code> You can use this <code>Job</code> object to cancel the coroutine execution by calling <code>Job.cancel().</code> A CoroutineScope defines a scope for new coroutines. It contains a <code>CoroutineContext</code> variable, which describes what factors would be involved in the CoroutineScope by setting up the <code>Element.</code></p>
 <p>Which thread would host a specific coroutine? In launch function, if you don’t assign a dispatcher, it would use <code>Dispatchers. Default</code>.</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> CoroutineScope.<span class="title">launch</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  context: <span class="type">CoroutineContext</span> = EmptyCoroutineContext,</span></span></span><br><span class="line"><span class="function"><span class="params">  start: <span class="type">CoroutineStart</span> = CoroutineStart.DEFAULT,</span></span></span><br><span class="line"><span class="function"><span class="params">  block: <span class="type">suspend</span> <span class="type">CoroutineScope</span>.() -&gt; <span class="type">Unit</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>: Job &#123;</span><br><span class="line">  <span class="keyword">val</span> newContext = newCoroutineContext(context)</span><br><span class="line">  <span class="keyword">val</span> coroutine = <span class="keyword">if</span> (start.isLazy)</span><br><span class="line">  LazyStandaloneCoroutine(newContext, block) <span class="keyword">else</span></span><br><span class="line">  StandaloneCoroutine(newContext, active = <span class="literal">true</span>)</span><br><span class="line">  coroutine.start(start, coroutine, block)</span><br><span class="line">  <span class="keyword">return</span> coroutine</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> CoroutineScope.<span class="title">launch</span><span class="params">(</span></span>
+<span class="params"><span class="function">  context: <span class="type">CoroutineContext</span> = EmptyCoroutineContext,</span></span>
+<span class="params"><span class="function">  start: <span class="type">CoroutineStart</span> = CoroutineStart.DEFAULT,</span></span>
+<span class="params"><span class="function">  block: <span class="type">suspend</span> <span class="type">CoroutineScope</span>.() -&gt; <span class="type">Unit</span></span></span>
+<span class="params"><span class="function">)</span></span>: Job &#123;
+  <span class="keyword">val</span> newContext = newCoroutineContext(context)
+  <span class="keyword">val</span> coroutine = <span class="keyword">if</span> (start.isLazy)
+  LazyStandaloneCoroutine(newContext, block) <span class="keyword">else</span>
+  StandaloneCoroutine(newContext, active = <span class="literal">true</span>)
+  coroutine.start(start, coroutine, block)
+  <span class="keyword">return</span> coroutine
+&#125;</code></pre>
 
 <p>in <code>newCoroutineContext</code>, it will use <code>Dispatchers.Default</code> to find a thread to host a coroutine. There are several Dispatchers types:</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">actual</span> <span class="keyword">val</span> Default: CoroutineDispatcher</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">actual</span> <span class="keyword">val</span> Main: MainCoroutineDispatcher</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">actual</span> <span class="keyword">val</span> Unconfined: CoroutineDispatcher</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">val</span> IO: CoroutineDispatcher</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="keyword">public</span> <span class="keyword">actual</span> <span class="keyword">val</span> Default: CoroutineDispatcher
+<span class="keyword">public</span> <span class="keyword">actual</span> <span class="keyword">val</span> Main: MainCoroutineDispatcher
+<span class="keyword">public</span> <span class="keyword">actual</span> <span class="keyword">val</span> Unconfined: CoroutineDispatcher
+<span class="keyword">public</span> <span class="keyword">val</span> IO: CoroutineDispatcher</code></pre>
 
 <p>In the launch function, if the context does not have any dispatcher nor any other <code>ContinuationInterceptor,</code> then <code>Dispatchers. Default</code> would be used. The <code>Default</code> is a <code>CoroutineDispatcher,</code> which has a shared thread pool to use.</p>
 <p>What’s a <code>Job</code>? The most basic instances of <code>Job</code> are created with <code>launch</code> function of coroutine builder or with a <code>Job()</code> factory function. By default, a failure of any of the job’s children leads to an immediate failure of its parent and cancellation of the rest of its children. This behavior can be customized using <code>SupervisorJob</code>. Job has a simple life-cycle:</p>
@@ -462,59 +537,134 @@
       
         <p><img src="https://chauyanw.files.wordpress.com/2019/08/kotlin-coroutines-1.png?w=2924" alt="kotlin-coroutines-1.png?w=2924"></p>
 <p>I recently read the source code of <code>Coroutines.</code> It’s pretty fun, and I’ve learned a lot from the source code. I am going to share some I learned here. I would break the learning into several parts. I hope everyone can find something useful for your projects.</p>
-<a id="more"></a>
+<span id="more"></span>
 
-<p>I download the latest master branch code at <a href="https://github.com/Kotlin/kotlinx.coroutines" target="_blank" rel="noopener"><strong>HERE</strong></a>, and if you are interested, you can just download the official release version to try. So, it’s up to you to choose either the official release version or the latest master branch. And the Kotlin version is <code>1.3.61</code> check <a href="https://github.com/Kotlin/kotlinx.coroutines/blob/master/README.md" target="_blank" rel="noopener">README</a> here.</p>
+<p>I download the latest master branch code at <a href="https://github.com/Kotlin/kotlinx.coroutines"><strong>HERE</strong></a>, and if you are interested, you can just download the official release version to try. So, it’s up to you to choose either the official release version or the latest master branch. And the Kotlin version is <code>1.3.61</code> check <a href="https://github.com/Kotlin/kotlinx.coroutines/blob/master/README.md">README</a> here.</p>
 <h4 id="Part1-Introduction"><a href="#Part1-Introduction" class="headerlink" title="Part1 - Introduction"></a>Part1 - Introduction</h4><p>Before starting the introduction, let’s think of a question: how do you handle the CPU-consuming tasks or networking accessing works? We can’t do these tasks in the main thread (in Android, which is UIThread). Then we need to think about using the multiple threading techniques to solve our questions. In Java, you can use <code>Thread</code> to do this.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Runnable task = () -&gt; &#123;</span><br><span class="line">  String threadName = Thread.currentThread().getName();</span><br><span class="line">  System.out.println(<span class="string">"Hello "</span> + threadName);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Thread thread = <span class="keyword">new</span> Thread(task);</span><br><span class="line">thread.start();</span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">"Done!"</span>);</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java"><span class="type">Runnable</span> <span class="variable">task</span> <span class="operator">=</span> () -&gt; &#123;
+  <span class="type">String</span> <span class="variable">threadName</span> <span class="operator">=</span> Thread.currentThread().getName();
+  System.out.println(<span class="string">&quot;Hello &quot;</span> + threadName);
+&#125;;
+
+<span class="type">Thread</span> <span class="variable">thread</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(task);
+thread.start();
+
+System.out.println(<span class="string">&quot;Done!&quot;</span>);</code></pre>
 
 <p>You can see the result:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Hello Thread-0</span><br><span class="line">Done!</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash">Hello Thread-0
+Done!</code></pre>
 
 <p>or</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Done!</span><br><span class="line">Hello Thread-0</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash">Done!
+Hello Thread-0</code></pre>
 
 <p>But creating threads frequently is a resource-consuming behavior, you would want to create a <code>ThreadPool</code> to reduce the cost.</p>
 <p>In Android, we have several options for concurrency tasks. For example, you can use the <code>AsyncTask,</code> <code>Background Service,</code> and <code>Handler</code> in the Android projects.</p>
 <p>The second question is: how do you communicate between two different threads? In Java, you need to manipulate the <code>Thread</code> interaction by using <code>IPC</code> mechanism, for example, shared memory, Pipe, named Pipe, mapped memory, semaphore, socket, message, and signals. There are many techniques we can use. What about concurrency in Kotlin’s world? Do we have any weapons for arming? Fortunately, we can still use the same techniques from the Java world. But Kotlin gives us a more powerful weapon, Coroutines, to use.</p>
 <p>Let’s see an example first. We have three functions which need the results from the previous one finished the job.</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">requestToken</span><span class="params">()</span></span>: Token &#123; ... &#125;</span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">createPost</span><span class="params">(token: <span class="type">Token</span>, item: <span class="type">Item</span>)</span></span>: Post &#123; ... &#125;</span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">processPost</span><span class="params">(post: <span class="type">Post</span>)</span></span> &#123; ... &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// post a specific item</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">postItem</span><span class="params">(item: <span class="type">Item</span>)</span></span> &#123;</span><br><span class="line">  <span class="keyword">val</span> token = requestToken()</span><br><span class="line">  <span class="keyword">val</span> post = createPost(token, item)</span><br><span class="line">  processPost(post)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="function"><span class="keyword">fun</span> <span class="title">requestToken</span><span class="params">()</span></span>: Token &#123; ... &#125;
+<span class="function"><span class="keyword">fun</span> <span class="title">createPost</span><span class="params">(token: <span class="type">Token</span>, item: <span class="type">Item</span>)</span></span>: Post &#123; ... &#125;
+<span class="function"><span class="keyword">fun</span> <span class="title">processPost</span><span class="params">(post: <span class="type">Post</span>)</span></span> &#123; ... &#125;
+
+<span class="comment">// post a specific item</span>
+<span class="function"><span class="keyword">fun</span> <span class="title">postItem</span><span class="params">(item: <span class="type">Item</span>)</span></span> &#123;
+  <span class="keyword">val</span> token = requestToken()
+  <span class="keyword">val</span> post = createPost(token, item)
+  processPost(post)
+&#125;</code></pre>
 
 <p>These three functions are probably time-consuming tasks. Hence, it’s not able to put them in the UI thread in the Android project. What can we do now?</p>
 <h5 id="By-using-a-Thread"><a href="#By-using-a-Thread" class="headerlink" title="By using a Thread"></a>By using a Thread</h5><p>As I mentioned before, create a thread to run it.</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Thread(&#123;</span><br><span class="line">  postItem(item)</span><br><span class="line">&#125;).start()</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin">Thread(&#123;
+  postItem(item)
+&#125;).start()</code></pre>
 
 <p>Keeping this in mind: thread is not cheap. You would need to do context-switch, which is costly.</p>
 <h5 id="By-using-a-Callback"><a href="#By-using-a-Callback" class="headerlink" title="By using a Callback"></a>By using a Callback</h5><p>We can also use a callback function plus threading to catch the result from each function.</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">postItem</span><span class="params">(item: <span class="type">Item</span>)</span></span> &#123;</span><br><span class="line">  preparePostAsync &#123; token -&gt;</span><br><span class="line">    submitPostAsync(token, item) &#123; post -&gt;</span><br><span class="line">      processPost(post)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">preparePostAsync</span><span class="params">(callback: (<span class="type">Token</span>) -&gt; <span class="type">Unit</span>)</span></span> &#123;</span><br><span class="line">  <span class="comment">// make request and return immediately</span></span><br><span class="line">  <span class="comment">// arrange callback to be invoked later</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="function"><span class="keyword">fun</span> <span class="title">postItem</span><span class="params">(item: <span class="type">Item</span>)</span></span> &#123;
+  preparePostAsync &#123; token -&gt;
+    submitPostAsync(token, item) &#123; post -&gt;
+      processPost(post)
+    &#125;
+  &#125;
+&#125;
+
+<span class="function"><span class="keyword">fun</span> <span class="title">preparePostAsync</span><span class="params">(callback: (<span class="type">Token</span>) -&gt; <span class="type">Unit</span>)</span></span> &#123;
+  <span class="comment">// make request and return immediately</span>
+  <span class="comment">// arrange callback to be invoked later</span>
+&#125;</code></pre>
 
 <p>What’s the drawback of using callback? The most known pitfall is the <code>callback hell.</code> That makes you hardly debug and read the source code.</p>
 <h5 id="By-using-Java-Future"><a href="#By-using-Java-Future" class="headerlink" title="By using Java Future"></a>By using Java <code>Future</code></h5><p>In Java 8, it introduces the <code>CompletableFuture.</code> This feature lets you connect several tasks.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">fun <span class="title">requestToken</span><span class="params">()</span>: CompletableFuture </span>&#123; ... &#125;</span><br><span class="line"><span class="function">fun <span class="title">createPost</span><span class="params">(token: Token, item: Item)</span>: CompletableFuture </span>&#123; ... &#125;</span><br><span class="line"><span class="function">fun <span class="title">processPost</span><span class="params">(post: Post)</span> </span>&#123; ... &#125;</span><br><span class="line"></span><br><span class="line"><span class="function">fun <span class="title">postItem</span><span class="params">(item: Item)</span> </span>&#123;</span><br><span class="line">  requestToken()</span><br><span class="line">    .thenCompose &#123; token -&gt; createPost(token, item) &#125;</span><br><span class="line">    .thenAccept &#123; post -&gt; processPost(post) &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">fun <span class="title function_">requestToken</span><span class="params">()</span>: CompletableFuture &#123; ... &#125;
+fun <span class="title function_">createPost</span><span class="params">(token: Token, item: Item)</span>: CompletableFuture &#123; ... &#125;
+fun <span class="title function_">processPost</span><span class="params">(post: Post)</span> &#123; ... &#125;
+
+fun <span class="title function_">postItem</span><span class="params">(item: Item)</span> &#123;
+  requestToken()
+    .thenCompose &#123; token -&gt; createPost(token, item) &#125;
+    .thenAccept &#123; post -&gt; processPost(post) &#125;
+&#125;</code></pre>
 
 <h5 id="Rx-Extension"><a href="#Rx-Extension" class="headerlink" title="Rx Extension"></a>Rx Extension</h5><p>I believe there must be many developers who use this library.</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Single.fromCallable &#123; requestToken() &#125;</span><br><span class="line">  .map &#123; token -&gt; createPost(token, item) &#125;</span><br><span class="line">  .subscribe(</span><br><span class="line">    &#123; post -&gt; processPost(post) &#125;,</span><br><span class="line">    &#123; e -&gt; e.printStackTrace() &#125;</span><br><span class="line">  )</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin">Single.fromCallable &#123; requestToken() &#125;
+  .map &#123; token -&gt; createPost(token, item) &#125;
+  .subscribe(
+    &#123; post -&gt; processPost(post) &#125;,
+    &#123; e -&gt; e.printStackTrace() &#125;
+  )</code></pre>
 
 <p>I think the biggest problem for me when using Rx is that the exception log is pretty hard to read. And it also creates too many instances that Rx needs and consumes too much memory.</p>
 <p>Here’s why Coroutines show and want to give developers another solution.</p>
-<h5 id="Coroutines"><a href="#Coroutines" class="headerlink" title="Coroutines"></a>Coroutines</h5><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">requestToken</span><span class="params">()</span></span>: Token &#123; ... &#125;</span><br><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">createPost</span><span class="params">(token: <span class="type">Token</span>, item: <span class="type">Item</span>)</span></span>: Post &#123; ... &#125;</span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">processPost</span><span class="params">(post: <span class="type">Post</span>)</span></span> &#123; ... &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">postItem</span><span class="params">(item: <span class="type">Item</span>)</span></span> &#123;</span><br><span class="line">  GlobalScope.launch &#123;</span><br><span class="line">    <span class="keyword">val</span> token = requestToken()</span><br><span class="line">    <span class="keyword">val</span> post = createPost(token, item)</span><br><span class="line">    processPost(post)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="Coroutines"><a href="#Coroutines" class="headerlink" title="Coroutines"></a>Coroutines</h5><pre><code class="highlight kotlin"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">requestToken</span><span class="params">()</span></span>: Token &#123; ... &#125;
+<span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">createPost</span><span class="params">(token: <span class="type">Token</span>, item: <span class="type">Item</span>)</span></span>: Post &#123; ... &#125;
+<span class="function"><span class="keyword">fun</span> <span class="title">processPost</span><span class="params">(post: <span class="type">Post</span>)</span></span> &#123; ... &#125;
+
+<span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">postItem</span><span class="params">(item: <span class="type">Item</span>)</span></span> &#123;
+  GlobalScope.launch &#123;
+    <span class="keyword">val</span> token = requestToken()
+    <span class="keyword">val</span> post = createPost(token, item)
+    processPost(post)
+  &#125;
+&#125;</code></pre>
 
 <p>It looks just like the previous code snap, doesn’t it? If we want to add a <code>try-catch</code> block inside the <code>postItem</code> function. Just add it. We don’t need any extra effort to handle it.</p>
 <p>First of all, let’s check how a coroutine works. A <code>Coroutine</code> is like a <code>Thread</code> in concept. But it’s much more lightweight than a real <code>Thread.</code> Several different coroutines can run on a <code>Thread,</code> and the Coroutine runtime manages them. You might remember the thread itself is not that cheap as you think because the system controls the threads, and it needs to do context-switch for you. </p>
 <p>Another reason that a thread is costly is because it would spend more resource on the creation and termination. So the good practice is to use a thread pool (to create some threads inside first) in advance. Let’s back to <code>Coroutines.</code> The <code>Coroutines</code> don’t have the same problem. It’s very lightweight, which means you can create a Coroutine anytime, anywhere. It’s controlled by Kotlin runtime, not by system.</p>
 <p>What’s the <code>Suspend</code> keyword? You would call suspending functions in the coroutines, just like regular functions. To call a suspending function, you need to declare the caller function as a suspending function as well. A suspending function can only be used in a coroutine or another suspending function.</p>
 <p>When you try to launch a coroutine, it would be like this:</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GlobalScope.launch &#123;</span><br><span class="line">  processPost(post)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin">GlobalScope.launch &#123;
+  processPost(post)
+&#125;</code></pre>
 
 <p>Check the launch function itself:</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> CoroutineScope.<span class="title">launch</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  context: <span class="type">CoroutineContext</span> = EmptyCoroutineContext,</span></span></span><br><span class="line"><span class="function"><span class="params">  start: <span class="type">CoroutineStart</span> = CoroutineStart.DEFAULT,</span></span></span><br><span class="line"><span class="function"><span class="params">  block: <span class="type">suspend</span> <span class="type">CoroutineScope</span>.() -&gt; <span class="type">Unit</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>: Job</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> CoroutineScope.<span class="title">launch</span><span class="params">(</span></span>
+<span class="params"><span class="function">  context: <span class="type">CoroutineContext</span> = EmptyCoroutineContext,</span></span>
+<span class="params"><span class="function">  start: <span class="type">CoroutineStart</span> = CoroutineStart.DEFAULT,</span></span>
+<span class="params"><span class="function">  block: <span class="type">suspend</span> <span class="type">CoroutineScope</span>.() -&gt; <span class="type">Unit</span></span></span>
+<span class="params"><span class="function">)</span></span>: Job</code></pre>
 
 <p>It launches a new coroutine without blocking the current thread and returns a reference to the coroutine as a <code>Job.</code> You can use this <code>Job</code> object to cancel the coroutine execution by calling <code>Job.cancel().</code> A CoroutineScope defines a scope for new coroutines. It contains a <code>CoroutineContext</code> variable, which describes what factors would be involved in the CoroutineScope by setting up the <code>Element.</code></p>
 <p>Which thread would host a specific coroutine? In launch function, if you don’t assign a dispatcher, it would use <code>Dispatchers. Default</code>.</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> CoroutineScope.<span class="title">launch</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  context: <span class="type">CoroutineContext</span> = EmptyCoroutineContext,</span></span></span><br><span class="line"><span class="function"><span class="params">  start: <span class="type">CoroutineStart</span> = CoroutineStart.DEFAULT,</span></span></span><br><span class="line"><span class="function"><span class="params">  block: <span class="type">suspend</span> <span class="type">CoroutineScope</span>.() -&gt; <span class="type">Unit</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>: Job &#123;</span><br><span class="line">  <span class="keyword">val</span> newContext = newCoroutineContext(context)</span><br><span class="line">  <span class="keyword">val</span> coroutine = <span class="keyword">if</span> (start.isLazy)</span><br><span class="line">  LazyStandaloneCoroutine(newContext, block) <span class="keyword">else</span></span><br><span class="line">  StandaloneCoroutine(newContext, active = <span class="literal">true</span>)</span><br><span class="line">  coroutine.start(start, coroutine, block)</span><br><span class="line">  <span class="keyword">return</span> coroutine</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> CoroutineScope.<span class="title">launch</span><span class="params">(</span></span>
+<span class="params"><span class="function">  context: <span class="type">CoroutineContext</span> = EmptyCoroutineContext,</span></span>
+<span class="params"><span class="function">  start: <span class="type">CoroutineStart</span> = CoroutineStart.DEFAULT,</span></span>
+<span class="params"><span class="function">  block: <span class="type">suspend</span> <span class="type">CoroutineScope</span>.() -&gt; <span class="type">Unit</span></span></span>
+<span class="params"><span class="function">)</span></span>: Job &#123;
+  <span class="keyword">val</span> newContext = newCoroutineContext(context)
+  <span class="keyword">val</span> coroutine = <span class="keyword">if</span> (start.isLazy)
+  LazyStandaloneCoroutine(newContext, block) <span class="keyword">else</span>
+  StandaloneCoroutine(newContext, active = <span class="literal">true</span>)
+  coroutine.start(start, coroutine, block)
+  <span class="keyword">return</span> coroutine
+&#125;</code></pre>
 
 <p>in <code>newCoroutineContext</code>, it will use <code>Dispatchers.Default</code> to find a thread to host a coroutine. There are several Dispatchers types:</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">actual</span> <span class="keyword">val</span> Default: CoroutineDispatcher</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">actual</span> <span class="keyword">val</span> Main: MainCoroutineDispatcher</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">actual</span> <span class="keyword">val</span> Unconfined: CoroutineDispatcher</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">val</span> IO: CoroutineDispatcher</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="keyword">public</span> <span class="keyword">actual</span> <span class="keyword">val</span> Default: CoroutineDispatcher
+<span class="keyword">public</span> <span class="keyword">actual</span> <span class="keyword">val</span> Main: MainCoroutineDispatcher
+<span class="keyword">public</span> <span class="keyword">actual</span> <span class="keyword">val</span> Unconfined: CoroutineDispatcher
+<span class="keyword">public</span> <span class="keyword">val</span> IO: CoroutineDispatcher</code></pre>
 
 <p>In the launch function, if the context does not have any dispatcher nor any other <code>ContinuationInterceptor,</code> then <code>Dispatchers. Default</code> would be used. The <code>Default</code> is a <code>CoroutineDispatcher,</code> which has a shared thread pool to use.</p>
 <p>What’s a <code>Job</code>? The most basic instances of <code>Job</code> are created with <code>launch</code> function of coroutine builder or with a <code>Job()</code> factory function. By default, a failure of any of the job’s children leads to an immediate failure of its parent and cancellation of the rest of its children. This behavior can be customized using <code>SupervisorJob</code>. Job has a simple life-cycle:</p>

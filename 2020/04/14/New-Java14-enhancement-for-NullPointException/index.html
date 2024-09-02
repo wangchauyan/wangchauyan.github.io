@@ -241,34 +241,79 @@
 
       
         <h4 id="JEP-358-Helpful-NullPointerExceptions"><a href="#JEP-358-Helpful-NullPointerExceptions" class="headerlink" title="JEP 358: Helpful NullPointerExceptions"></a>JEP 358: Helpful NullPointerExceptions</h4><p>There is an enhancement for NPE on JDK14, which shows precisely which variable in your project was null. Let’s see the original NPE message by an example:</p>
-<a id="more"></a>
+<span id="more"></span>
 
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NPETest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">SomeClass</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> SomeClass2 someClass2;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">SomeClass2</span> </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    SomeClass someClass = <span class="keyword">null</span>;</span><br><span class="line">    System.out.println(someClass.someClass2);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">NPETest</span> &#123;
+
+  <span class="keyword">class</span> <span class="title class_">SomeClass</span> &#123;
+    <span class="keyword">public</span> SomeClass2 someClass2;
+  &#125;
+
+  <span class="keyword">class</span> <span class="title class_">SomeClass2</span> &#123;
+  &#125;
+
+  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;
+    <span class="type">SomeClass</span> <span class="variable">someClass</span> <span class="operator">=</span> <span class="literal">null</span>;
+    System.out.println(someClass.someClass2);
+  &#125;
+&#125;</code></pre>
 
 <p>We have two classes <code>SomeClass</code> and <code>SomeClass2</code> in the <code>NPETest</code> class. We just declare a variable called <code>someClass</code> in the main function. When you try to run this example, you would see the <code>NullPointException</code> in the console like this: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread &quot;main&quot; java.lang.NullPointerException</span><br><span class="line">    at NPETest.main(NPETest.java:12)</span><br><span class="line">    at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</span><br><span class="line">    at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)</span><br><span class="line">    at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)</span><br><span class="line">    at java.lang.reflect.Method.invoke(Method.java:498)</span><br><span class="line">    at com.intellij.uiDesigner.snapShooter.SnapShooter.main(SnapShooter.java:58)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">Exception in thread &quot;main&quot; java.lang.NullPointerException
+    at NPETest.main(NPETest.java:12)
+    at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+    at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+    at java.lang.reflect.Method.invoke(Method.java:498)
+    at com.intellij.uiDesigner.snapShooter.SnapShooter.main(SnapShooter.java:58)</code></pre>
 
 <p>Now you can see it warns you that you have an NPE at line 12 in the <code>NPETest.main</code> function. In fact, We have no idea about which variable is null. Is <code>someClass</code> or <code>someClass2</code> null? We need to add more logs to verify which one is null or both are null. It would take some time to debug. That’s the reason why this enhancement is fantastic. Let’s see when you switch to JDK14 and what the log looks like:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread &quot;main&quot; java.lang.NullPointerException: Cannot read field &quot;someClass2&quot; because &quot;someClass&quot; is null</span><br><span class="line">    at NPETest.main(NPETest.java:12)</span><br><span class="line">    at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</span><br><span class="line">    at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)</span><br><span class="line">    at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)</span><br><span class="line">    at java.base/java.lang.reflect.Method.invoke(Method.java:564)</span><br><span class="line">    at com.intellij.uiDesigner.snapShooter.SnapShooter.main(SnapShooter.java:58)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">Exception in thread &quot;main&quot; java.lang.NullPointerException: Cannot read field &quot;someClass2&quot; because &quot;someClass&quot; is null
+    at NPETest.main(NPETest.java:12)
+    at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+    at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+    at java.base/java.lang.reflect.Method.invoke(Method.java:564)
+    at com.intellij.uiDesigner.snapShooter.SnapShooter.main(SnapShooter.java:58)</code></pre>
 
 <p>It’s much better now. It points out that <code>someClass</code> is null, and this is the exact point that causes the NPE. It saves lots of time to debug. Let’s see how to enable this feature to help us. </p>
 <p>Here is the IDE version I use to develop, and it supports JDK14.<br><img src="https://personaldevblog.firebaseapp.com/2020/04/14/New-Java14-enhancement-for-NullPointException/IDE.png" alt="IDE"></p>
 <p>In the project configuration, you also need to set up the VM option: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:+ShowCodeDetailsInExceptionMessages</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">-XX:+ShowCodeDetailsInExceptionMessages</code></pre>
 
 <p>This option would enable the VM to give you more information about the NPE. It’s off by default. Please check the image below for more details:<br><img src="https://personaldevblog.firebaseapp.com/2020/04/14/New-Java14-enhancement-for-NullPointException/VM.png" alt="VM"></p>
 <p>After doing all of these, you can enjoy the more precise information provided by VM. You might wonder why Java provides such useful enhancement so late (<em>until JDK14</em>). Before JDK14, you probably know <code>Optional</code> this keyword. It tries to let developers avoid the NPE. Here is an example: </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NPETest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">SomeClass</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> SomeClass2 someClass2;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">SomeClass2</span> </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Optional&lt;SomeClass&gt; optional = Optional.empty();</span><br><span class="line">    SomeClass someClass = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (optional.ofNullable(someClass).isPresent()) &#123;</span><br><span class="line">      System.out.println(someClass.someClass2);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      System.out.println(<span class="string">"null object"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">NPETest</span> &#123;
+
+  <span class="keyword">class</span> <span class="title class_">SomeClass</span> &#123;
+    <span class="keyword">public</span> SomeClass2 someClass2;
+  &#125;
+
+  <span class="keyword">class</span> <span class="title class_">SomeClass2</span> &#123;
+  &#125;
+
+  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;
+    Optional&lt;SomeClass&gt; optional = Optional.empty();
+    <span class="type">SomeClass</span> <span class="variable">someClass</span> <span class="operator">=</span> <span class="literal">null</span>;
+    <span class="keyword">if</span> (optional.ofNullable(someClass).isPresent()) &#123;
+      System.out.println(someClass.someClass2);
+    &#125;
+    <span class="keyword">else</span> &#123;
+      System.out.println(<span class="string">&quot;null object&quot;</span>);
+    &#125;
+  &#125;
+&#125;</code></pre>
 
 <p>We can check a variable beforehand to avoid a possible NPE. The drawback is we need to write more code for the check. The philosophy of JEP 358 is that if we can’t prevent NPE in a Java project, then we should show more details at least. </p>
 <h4 id="What-about-Kotlin"><a href="#What-about-Kotlin" class="headerlink" title="What about Kotlin?"></a>What about Kotlin?</h4><p>Let’s see how Kotlin handles a possible null object. </p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> someClass: SomeClass? = <span class="literal">null</span> </span><br><span class="line">println(someClass.someClass2)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="keyword">var</span> someClass: SomeClass? = <span class="literal">null</span> 
+println(someClass.someClass2)</code></pre>
 
 <p>You would get a compiler error said you should use <code>?</code> for a nullable variable. </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error:(16, 22) Kotlin: Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type SomeClass?</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">Error:(16, 22) Kotlin: Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type SomeClass?</code></pre>
 
 <p>It’s much <code>smarter</code> to let you know the error in advance. It is also one of the main reasons I would recommend that developers should try Kotlin. You would enjoy the benefits that Kotlin brings to you.</p>
-<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p><a href="https://openjdk.java.net/jeps/358" target="_blank" rel="noopener">JEP 358: Helpful NullPointerExceptions</a></p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p><a href="https://openjdk.java.net/jeps/358">JEP 358: Helpful NullPointerExceptions</a></p>
 
     </div>
 
@@ -370,34 +415,79 @@
 
       
         <h4 id="JEP-358-Helpful-NullPointerExceptions"><a href="#JEP-358-Helpful-NullPointerExceptions" class="headerlink" title="JEP 358: Helpful NullPointerExceptions"></a>JEP 358: Helpful NullPointerExceptions</h4><p>There is an enhancement for NPE on JDK14, which shows precisely which variable in your project was null. Let’s see the original NPE message by an example:</p>
-<a id="more"></a>
+<span id="more"></span>
 
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NPETest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">SomeClass</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> SomeClass2 someClass2;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">SomeClass2</span> </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    SomeClass someClass = <span class="keyword">null</span>;</span><br><span class="line">    System.out.println(someClass.someClass2);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">NPETest</span> &#123;
+
+  <span class="keyword">class</span> <span class="title class_">SomeClass</span> &#123;
+    <span class="keyword">public</span> SomeClass2 someClass2;
+  &#125;
+
+  <span class="keyword">class</span> <span class="title class_">SomeClass2</span> &#123;
+  &#125;
+
+  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;
+    <span class="type">SomeClass</span> <span class="variable">someClass</span> <span class="operator">=</span> <span class="literal">null</span>;
+    System.out.println(someClass.someClass2);
+  &#125;
+&#125;</code></pre>
 
 <p>We have two classes <code>SomeClass</code> and <code>SomeClass2</code> in the <code>NPETest</code> class. We just declare a variable called <code>someClass</code> in the main function. When you try to run this example, you would see the <code>NullPointException</code> in the console like this: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread &quot;main&quot; java.lang.NullPointerException</span><br><span class="line">    at NPETest.main(NPETest.java:12)</span><br><span class="line">    at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</span><br><span class="line">    at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)</span><br><span class="line">    at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)</span><br><span class="line">    at java.lang.reflect.Method.invoke(Method.java:498)</span><br><span class="line">    at com.intellij.uiDesigner.snapShooter.SnapShooter.main(SnapShooter.java:58)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">Exception in thread &quot;main&quot; java.lang.NullPointerException
+    at NPETest.main(NPETest.java:12)
+    at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+    at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+    at java.lang.reflect.Method.invoke(Method.java:498)
+    at com.intellij.uiDesigner.snapShooter.SnapShooter.main(SnapShooter.java:58)</code></pre>
 
 <p>Now you can see it warns you that you have an NPE at line 12 in the <code>NPETest.main</code> function. In fact, We have no idea about which variable is null. Is <code>someClass</code> or <code>someClass2</code> null? We need to add more logs to verify which one is null or both are null. It would take some time to debug. That’s the reason why this enhancement is fantastic. Let’s see when you switch to JDK14 and what the log looks like:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread &quot;main&quot; java.lang.NullPointerException: Cannot read field &quot;someClass2&quot; because &quot;someClass&quot; is null</span><br><span class="line">    at NPETest.main(NPETest.java:12)</span><br><span class="line">    at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</span><br><span class="line">    at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)</span><br><span class="line">    at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)</span><br><span class="line">    at java.base/java.lang.reflect.Method.invoke(Method.java:564)</span><br><span class="line">    at com.intellij.uiDesigner.snapShooter.SnapShooter.main(SnapShooter.java:58)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">Exception in thread &quot;main&quot; java.lang.NullPointerException: Cannot read field &quot;someClass2&quot; because &quot;someClass&quot; is null
+    at NPETest.main(NPETest.java:12)
+    at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+    at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+    at java.base/java.lang.reflect.Method.invoke(Method.java:564)
+    at com.intellij.uiDesigner.snapShooter.SnapShooter.main(SnapShooter.java:58)</code></pre>
 
 <p>It’s much better now. It points out that <code>someClass</code> is null, and this is the exact point that causes the NPE. It saves lots of time to debug. Let’s see how to enable this feature to help us. </p>
 <p>Here is the IDE version I use to develop, and it supports JDK14.<br><img src="https://personaldevblog.firebaseapp.com/2020/04/14/New-Java14-enhancement-for-NullPointException/IDE.png" alt="IDE"></p>
 <p>In the project configuration, you also need to set up the VM option: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:+ShowCodeDetailsInExceptionMessages</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">-XX:+ShowCodeDetailsInExceptionMessages</code></pre>
 
 <p>This option would enable the VM to give you more information about the NPE. It’s off by default. Please check the image below for more details:<br><img src="https://personaldevblog.firebaseapp.com/2020/04/14/New-Java14-enhancement-for-NullPointException/VM.png" alt="VM"></p>
 <p>After doing all of these, you can enjoy the more precise information provided by VM. You might wonder why Java provides such useful enhancement so late (<em>until JDK14</em>). Before JDK14, you probably know <code>Optional</code> this keyword. It tries to let developers avoid the NPE. Here is an example: </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NPETest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">SomeClass</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> SomeClass2 someClass2;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">SomeClass2</span> </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Optional&lt;SomeClass&gt; optional = Optional.empty();</span><br><span class="line">    SomeClass someClass = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (optional.ofNullable(someClass).isPresent()) &#123;</span><br><span class="line">      System.out.println(someClass.someClass2);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      System.out.println(<span class="string">"null object"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">NPETest</span> &#123;
+
+  <span class="keyword">class</span> <span class="title class_">SomeClass</span> &#123;
+    <span class="keyword">public</span> SomeClass2 someClass2;
+  &#125;
+
+  <span class="keyword">class</span> <span class="title class_">SomeClass2</span> &#123;
+  &#125;
+
+  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;
+    Optional&lt;SomeClass&gt; optional = Optional.empty();
+    <span class="type">SomeClass</span> <span class="variable">someClass</span> <span class="operator">=</span> <span class="literal">null</span>;
+    <span class="keyword">if</span> (optional.ofNullable(someClass).isPresent()) &#123;
+      System.out.println(someClass.someClass2);
+    &#125;
+    <span class="keyword">else</span> &#123;
+      System.out.println(<span class="string">&quot;null object&quot;</span>);
+    &#125;
+  &#125;
+&#125;</code></pre>
 
 <p>We can check a variable beforehand to avoid a possible NPE. The drawback is we need to write more code for the check. The philosophy of JEP 358 is that if we can’t prevent NPE in a Java project, then we should show more details at least. </p>
 <h4 id="What-about-Kotlin"><a href="#What-about-Kotlin" class="headerlink" title="What about Kotlin?"></a>What about Kotlin?</h4><p>Let’s see how Kotlin handles a possible null object. </p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> someClass: SomeClass? = <span class="literal">null</span> </span><br><span class="line">println(someClass.someClass2)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="keyword">var</span> someClass: SomeClass? = <span class="literal">null</span> 
+println(someClass.someClass2)</code></pre>
 
 <p>You would get a compiler error said you should use <code>?</code> for a nullable variable. </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error:(16, 22) Kotlin: Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type SomeClass?</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">Error:(16, 22) Kotlin: Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type SomeClass?</code></pre>
 
 <p>It’s much <code>smarter</code> to let you know the error in advance. It is also one of the main reasons I would recommend that developers should try Kotlin. You would enjoy the benefits that Kotlin brings to you.</p>
-<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p><a href="https://openjdk.java.net/jeps/358" target="_blank" rel="noopener">JEP 358: Helpful NullPointerExceptions</a></p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p><a href="https://openjdk.java.net/jeps/358">JEP 358: Helpful NullPointerExceptions</a></p>
 
     </div>
 

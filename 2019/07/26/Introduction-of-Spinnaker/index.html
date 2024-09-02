@@ -257,7 +257,7 @@
 <blockquote>
 <p>Spinnaker is an open source, multi-cloud continuous delivery platform for releasing software changes with high velocity and confidence.</p>
 </blockquote>
-<a id="more"></a>
+<span id="more"></span>
 
 <p>其中最關鍵一句話: <strong>可以快速部署到多種不同雲的部署平台</strong>. 可以從下圖看到 Spinnaker 概括的開發週期.</p>
 <p><img src="https://chauyanw.files.wordpress.com/2019/07/spinnaker.png" alt="spinnaker.png"><br><em>Spinnaker Adapted Development Cycle</em></p>
@@ -273,7 +273,7 @@
 <ul>
 <li><p>Application (應用)</p>
 <ul>
-<li>簡單來說, 你發佈在 server 上的 - 不管是 Application type, e.g. 某個線上應用, 或者是微服務群 (MicroServices), 都可以對應到 Spinnaker 的 Application 這個概念上. 一個 Application 會包含多個 Cluster (群組). 通常 Application 上面會包含防火牆或者負載平衡. 基本上就是你所發佈 Service 的運行環境集合. </li>
+<li>簡單來說, 你發佈在 server 上的 - 不管是 Application type, e.g. 某個線上應用, 或者是微服務群 (MicroServices), 都可以對應到 Spinnaker 的 Application 這個概念上. 一個 Application 會包含多個 Cluster (群組). 通常 Application 上面會包含防火牆或者負載平衡. 基本上就是你所發佈 Service 的運行環境集合.</li>
 </ul>
 </li>
 <li><p>Cluster (群組)</p>
@@ -294,21 +294,21 @@
 <p><img src="https://www.spinnaker.io/concepts/pipelines.png" alt="pipelines.png"><br><em>Spinnaker Pipeline</em></p>
 <p>使用 pipeline 的時機點可以非常彈性, 可透過手動啟用 pipeline 或者 透過自動化設定 Event 的方式來啟動一個 pipeline, 像是你 CI server (Jenkins) 完成工作的時候, 送一個 event 到 Spinnaker 來啟動 Auto-deploy. 而 Pipeline 也可以跟常用的 Slack 整合, 你會看到以下的畫面:</p>
 <p><img src="https://programmaticponderings.files.wordpress.com/2018/05/spin46.png" alt="spin46.png"><br><em>Slack Integration</em></p>
-<p>當然整合 Email/SMS 是最基本的功能, 詳細可以看看 Spinnaker 相關的設定. 這邊需要提一下 Stage:</p>
+<p>當然整合 Email&#x2F;SMS 是最基本的功能, 詳細可以看看 Spinnaker 相關的設定. 這邊需要提一下 Stage:</p>
 <blockquote>
 <p>A Stage in Spinnaker is an atomic building block for a pipeline, describing an action that the pipeline will perform. You can sequence stages in a Pipeline in any order, though some stage sequences may be more common than others. Spinnaker provides a number of stages such as Deploy, Resize, Disable, Manual Judgment, and many more. You can see the full list of stages and read about implementation details for each provider in the Reference section.</p>
 </blockquote>
 <p>Stage 在 Pipeline 有著非常重要的地位, 基本上在整個 pipeline 過程中可以給予 Stage 不同的參數來做不同事情, 也可以任意改變 Stage 在 Pipeline 裡面的順序, 彈性相當大. 最後來看看佈署策略, 其實 Spinnaker 提供的部屬策略主要有這幾種:</p>
 <h4 id="Deployment-Strategy"><a href="#Deployment-Strategy" class="headerlink" title="Deployment Strategy"></a>Deployment Strategy</h4><ul>
 <li>Highlander</li>
-<li>Red/Black (紅黑策略, 又稱為藍綠策略)</li>
-<li>Rolling Red/Black</li>
+<li>Red&#x2F;Black (紅黑策略, 又稱為藍綠策略)</li>
+<li>Rolling Red&#x2F;Black</li>
 <li>Canary</li>
 </ul>
 <p>看一下圖例可以更好地瞭解:</p>
 <p><img src="https://www.spinnaker.io/concepts/deployment-strategies.png" alt="deployment-strategies.png"><br><em>Deployment Strategy</em></p>
 <p>詳細的部署策略可以看 [4], 更深入的介紹就留待下一篇了!</p>
-<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p>[1] <a href="https://medium.com/netflix-techblog/global-continuous-delivery-with-spinnaker-2a6896c23ba7" target="_blank" rel="noopener">https://medium.com/netflix-techblog/global-continuous-delivery-with-spinnaker-2a6896c23ba7</a><br>[2] <a href="https://programmaticponderings.com/tag/spinnaker/" target="_blank" rel="noopener">https://programmaticponderings.com/tag/spinnaker/</a><br>[3] <a href="https://www.spinnaker.io/concepts/" target="_blank" rel="noopener">https://www.spinnaker.io/concepts/</a><br>[4] <a href="https://blog.armory.io/tag/spinnaker-training-series/" target="_blank" rel="noopener">https://blog.armory.io/tag/spinnaker-training-series/</a></p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p>[1] <a href="https://medium.com/netflix-techblog/global-continuous-delivery-with-spinnaker-2a6896c23ba7">https://medium.com/netflix-techblog/global-continuous-delivery-with-spinnaker-2a6896c23ba7</a><br>[2] <a href="https://programmaticponderings.com/tag/spinnaker/">https://programmaticponderings.com/tag/spinnaker/</a><br>[3] <a href="https://www.spinnaker.io/concepts/">https://www.spinnaker.io/concepts/</a><br>[4] <a href="https://blog.armory.io/tag/spinnaker-training-series/">https://blog.armory.io/tag/spinnaker-training-series/</a></p>
 
     </div>
 
@@ -422,7 +422,7 @@
 <blockquote>
 <p>Spinnaker is an open source, multi-cloud continuous delivery platform for releasing software changes with high velocity and confidence.</p>
 </blockquote>
-<a id="more"></a>
+<span id="more"></span>
 
 <p>其中最關鍵一句話: <strong>可以快速部署到多種不同雲的部署平台</strong>. 可以從下圖看到 Spinnaker 概括的開發週期.</p>
 <p><img src="https://chauyanw.files.wordpress.com/2019/07/spinnaker.png" alt="spinnaker.png"><br><em>Spinnaker Adapted Development Cycle</em></p>
@@ -438,7 +438,7 @@
 <ul>
 <li><p>Application (應用)</p>
 <ul>
-<li>簡單來說, 你發佈在 server 上的 - 不管是 Application type, e.g. 某個線上應用, 或者是微服務群 (MicroServices), 都可以對應到 Spinnaker 的 Application 這個概念上. 一個 Application 會包含多個 Cluster (群組). 通常 Application 上面會包含防火牆或者負載平衡. 基本上就是你所發佈 Service 的運行環境集合. </li>
+<li>簡單來說, 你發佈在 server 上的 - 不管是 Application type, e.g. 某個線上應用, 或者是微服務群 (MicroServices), 都可以對應到 Spinnaker 的 Application 這個概念上. 一個 Application 會包含多個 Cluster (群組). 通常 Application 上面會包含防火牆或者負載平衡. 基本上就是你所發佈 Service 的運行環境集合.</li>
 </ul>
 </li>
 <li><p>Cluster (群組)</p>
@@ -459,21 +459,21 @@
 <p><img src="https://www.spinnaker.io/concepts/pipelines.png" alt="pipelines.png"><br><em>Spinnaker Pipeline</em></p>
 <p>使用 pipeline 的時機點可以非常彈性, 可透過手動啟用 pipeline 或者 透過自動化設定 Event 的方式來啟動一個 pipeline, 像是你 CI server (Jenkins) 完成工作的時候, 送一個 event 到 Spinnaker 來啟動 Auto-deploy. 而 Pipeline 也可以跟常用的 Slack 整合, 你會看到以下的畫面:</p>
 <p><img src="https://programmaticponderings.files.wordpress.com/2018/05/spin46.png" alt="spin46.png"><br><em>Slack Integration</em></p>
-<p>當然整合 Email/SMS 是最基本的功能, 詳細可以看看 Spinnaker 相關的設定. 這邊需要提一下 Stage:</p>
+<p>當然整合 Email&#x2F;SMS 是最基本的功能, 詳細可以看看 Spinnaker 相關的設定. 這邊需要提一下 Stage:</p>
 <blockquote>
 <p>A Stage in Spinnaker is an atomic building block for a pipeline, describing an action that the pipeline will perform. You can sequence stages in a Pipeline in any order, though some stage sequences may be more common than others. Spinnaker provides a number of stages such as Deploy, Resize, Disable, Manual Judgment, and many more. You can see the full list of stages and read about implementation details for each provider in the Reference section.</p>
 </blockquote>
 <p>Stage 在 Pipeline 有著非常重要的地位, 基本上在整個 pipeline 過程中可以給予 Stage 不同的參數來做不同事情, 也可以任意改變 Stage 在 Pipeline 裡面的順序, 彈性相當大. 最後來看看佈署策略, 其實 Spinnaker 提供的部屬策略主要有這幾種:</p>
 <h4 id="Deployment-Strategy"><a href="#Deployment-Strategy" class="headerlink" title="Deployment Strategy"></a>Deployment Strategy</h4><ul>
 <li>Highlander</li>
-<li>Red/Black (紅黑策略, 又稱為藍綠策略)</li>
-<li>Rolling Red/Black</li>
+<li>Red&#x2F;Black (紅黑策略, 又稱為藍綠策略)</li>
+<li>Rolling Red&#x2F;Black</li>
 <li>Canary</li>
 </ul>
 <p>看一下圖例可以更好地瞭解:</p>
 <p><img src="https://www.spinnaker.io/concepts/deployment-strategies.png" alt="deployment-strategies.png"><br><em>Deployment Strategy</em></p>
 <p>詳細的部署策略可以看 [4], 更深入的介紹就留待下一篇了!</p>
-<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p>[1] <a href="https://medium.com/netflix-techblog/global-continuous-delivery-with-spinnaker-2a6896c23ba7" target="_blank" rel="noopener">https://medium.com/netflix-techblog/global-continuous-delivery-with-spinnaker-2a6896c23ba7</a><br>[2] <a href="https://programmaticponderings.com/tag/spinnaker/" target="_blank" rel="noopener">https://programmaticponderings.com/tag/spinnaker/</a><br>[3] <a href="https://www.spinnaker.io/concepts/" target="_blank" rel="noopener">https://www.spinnaker.io/concepts/</a><br>[4] <a href="https://blog.armory.io/tag/spinnaker-training-series/" target="_blank" rel="noopener">https://blog.armory.io/tag/spinnaker-training-series/</a></p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p>[1] <a href="https://medium.com/netflix-techblog/global-continuous-delivery-with-spinnaker-2a6896c23ba7">https://medium.com/netflix-techblog/global-continuous-delivery-with-spinnaker-2a6896c23ba7</a><br>[2] <a href="https://programmaticponderings.com/tag/spinnaker/">https://programmaticponderings.com/tag/spinnaker/</a><br>[3] <a href="https://www.spinnaker.io/concepts/">https://www.spinnaker.io/concepts/</a><br>[4] <a href="https://blog.armory.io/tag/spinnaker-training-series/">https://blog.armory.io/tag/spinnaker-training-series/</a></p>
 
     </div>
 

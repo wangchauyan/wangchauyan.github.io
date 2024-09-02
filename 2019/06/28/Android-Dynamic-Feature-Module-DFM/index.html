@@ -257,11 +257,11 @@
 <p>Google Play’s new app serving model, called Dynamic Delivery, then uses your app bundle to generate and serve optimized APKs for each user’s device configuration, so they download only the code and resources they need to run your app. You no longer have to build, sign, and manage multiple APKs to support different devices, and users get smaller, more optimized downloads.</p>
 <p>– from Google Developer </p>
 </blockquote>
-<a id="more"></a>
+<span id="more"></span>
 
 
 
-<p>The most significant benefit of the aab format is to allow Google play store to send different feature combinations and different resource settings of your App to various user devices according to the device hardware spec. That helps to reduce the download time. Why? if users want to use one or two features from your App, they can download the parts they want or the parts they are interested in instead of downloading full feature-set App at one time. This way allows us to decrease the APK size, eliminate the downloading time[1], and increase the App download rate/retention rate.</p>
+<p>The most significant benefit of the aab format is to allow Google play store to send different feature combinations and different resource settings of your App to various user devices according to the device hardware spec. That helps to reduce the download time. Why? if users want to use one or two features from your App, they can download the parts they want or the parts they are interested in instead of downloading full feature-set App at one time. This way allows us to decrease the APK size, eliminate the downloading time[1], and increase the App download rate&#x2F;retention rate.</p>
 <p>Let’s see how it works.</p>
 <p><img src="https://chauyanw.files.wordpress.com/2019/06/aab_format-2x.png" alt="aab_format-2x.png"></p>
 <p>You can see the above architecture: developers should separate their features into different feature modules. In this diagram, it has one base module and two different feature modules. The Google play store controls the process of generating different APK packages for users. When a new user tries to download your App. It will process and form a new suitable version to this user like this:</p>
@@ -281,22 +281,91 @@
 <p>Two things need to mention here.</p>
 <ol>
 <li><strong>On-Demand</strong> Specifies whether the module should be available as an on-demand download. That is if this attribute sets to <code>true,</code> the module is not available at install time, but your app may request to download it later. If this attribute sets to <code>false,</code> the dynamic feature module is included when the user first downloads and installs your app.</li>
-<li><strong>Fusing</strong>: Specifies whether to include the module in multi-APKs that target devices are running Android 4.4 (API level 20) and lower. <strong><em>Note: only dynamic feature modules that set this property to true are included in the universal APK when you use bundleTool to generate APKs.</em></strong></li>
+<li><strong>Fusing</strong>: Specifies whether to include the module in multi-APKs that target devices are running Android 4.4 (API level 20) and lower. <em><strong>Note: only dynamic feature modules that set this property to true are included in the universal APK when you use bundleTool to generate APKs.</strong></em></li>
 </ol>
 <p>So far, you should see a feature module has been added to your project. But it’s sometimes not so easy to create a feature module. You might see the following errors.</p>
 <p><img src="https://chauyanw.files.wordpress.com/2019/06/dynamic_feature_module_errors.png" alt="dynamic_feature_module_errors.png"><br><em>Feature module errors</em></p>
 <p>Then, what’s going on? Here’s the reason. In your <strong>base module</strong>, you might use the <code>productFlavors</code> to define different build variants.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">... </span><br><span class="line"></span><br><span class="line">flavorDimensions &quot;domestic&quot;</span><br><span class="line">productFlavors &#123;</span><br><span class="line">    area1 &#123;</span><br><span class="line">        applicationIdSuffix &quot;.area1&quot;</span><br><span class="line">        dimension &quot;domestic&quot;</span><br><span class="line">    &#125;</span><br><span class="line">    area2 &#123;</span><br><span class="line">        dimension &quot;domestic&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dynamicFeatures = [&quot;:dynamic_feature&quot;]</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">... 
+
+flavorDimensions &quot;domestic&quot;
+productFlavors &#123;
+    area1 &#123;
+        applicationIdSuffix &quot;.area1&quot;
+        dimension &quot;domestic&quot;
+    &#125;
+    area2 &#123;
+        dimension &quot;domestic&quot;
+    &#125;
+&#125;
+
+dynamicFeatures = [&quot;:dynamic_feature&quot;]
+...</code></pre>
+
 
 <p>All you need to do is to set up the same <code>productFlavors</code> into your dynamic feature module. Then the problem has been solved.</p>
 <p>Ok, then what? How do we download the dynamic feature and track current status? Here you go:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">private fun manageFeatureModules() &#123;</span><br><span class="line">  val manager = SplitInstallManagerFactory.create(this)</span><br><span class="line">  val request =</span><br><span class="line">      SplitInstallRequest.newBuilder()</span><br><span class="line">                         .addModule(&quot;dynamic_feature&quot;)</span><br><span class="line">                         .build()</span><br><span class="line"></span><br><span class="line">  var sessionId = 0</span><br><span class="line">  val listener = object: SplitInstallStateUpdatedListener &#123;</span><br><span class="line">    override fun onStateUpdate(state: SplitInstallSessionState?) &#123;</span><br><span class="line">      if (state.sessionId() == sessionId) &#123;</span><br><span class="line">        when (state.status()) &#123;</span><br><span class="line">          // handle error case</span><br><span class="line">          SplitInstallSessionStatus.FAILED -&gt; &#123;</span><br><span class="line">            when (state.errorCode()) &#123;</span><br><span class="line">              // handle different error codes</span><br><span class="line">              SplitInstallErrorCode.SERVICE_DIED -&gt; &#123;&#125;</span><br><span class="line">              SplitInstallErrorCode.NETWORK_ERROR -&gt; &#123;&#125;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          // handle downloading status</span><br><span class="line">          SplitInstallSessionStatus.DOWNLOADING -&gt; &#123;&#125;</span><br><span class="line">          </span><br><span class="line">          // handle downloaded status</span><br><span class="line">          SplitInstallSessionStatus.DOWNLOADED -&gt; &#123;&#125;</span><br><span class="line">          </span><br><span class="line">          // handle installing status</span><br><span class="line">          SplitInstallSessionStatus.INSTALLING -&gt; &#123;&#125;</span><br><span class="line">          </span><br><span class="line">          // handle installed status</span><br><span class="line">          SplitInstallSessionStatus.INSTALLED -&gt; &#123;&#125;</span><br><span class="line">          </span><br><span class="line">          // handle canceling status</span><br><span class="line">          SplitInstallSessionStatus.CANCELING -&gt; &#123;&#125;</span><br><span class="line">          </span><br><span class="line">          // handle canceled status</span><br><span class="line">          SplitInstallSessionStatus.CANCELED -&gt; &#123;&#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  // register listener</span><br><span class="line">  manager.registerListener(listener)</span><br><span class="line">  manager.startInstall(request)</span><br><span class="line">      .addOnSuccessListener &#123; sessionId = it &#125;</span><br><span class="line">      .addOnFailureListener &#123; exception -&gt;</span><br><span class="line">          exception.printStackTrace()</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">  // unregister listener when you don&apos;t want to use it.</span><br><span class="line">  //manager.unregisterListener(listener)</span><br><span class="line"></span><br><span class="line">  // cancel installation by using your session ID</span><br><span class="line">  //manager.cancelInstall(sessionId)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">private fun manageFeatureModules() &#123;
+  val manager = SplitInstallManagerFactory.create(this)
+  val request =
+      SplitInstallRequest.newBuilder()
+                         .addModule(&quot;dynamic_feature&quot;)
+                         .build()
+
+  var sessionId = 0
+  val listener = object: SplitInstallStateUpdatedListener &#123;
+    override fun onStateUpdate(state: SplitInstallSessionState?) &#123;
+      if (state.sessionId() == sessionId) &#123;
+        when (state.status()) &#123;
+          // handle error case
+          SplitInstallSessionStatus.FAILED -&gt; &#123;
+            when (state.errorCode()) &#123;
+              // handle different error codes
+              SplitInstallErrorCode.SERVICE_DIED -&gt; &#123;&#125;
+              SplitInstallErrorCode.NETWORK_ERROR -&gt; &#123;&#125;
+            &#125;
+          &#125;
+          // handle downloading status
+          SplitInstallSessionStatus.DOWNLOADING -&gt; &#123;&#125;
+          
+          // handle downloaded status
+          SplitInstallSessionStatus.DOWNLOADED -&gt; &#123;&#125;
+          
+          // handle installing status
+          SplitInstallSessionStatus.INSTALLING -&gt; &#123;&#125;
+          
+          // handle installed status
+          SplitInstallSessionStatus.INSTALLED -&gt; &#123;&#125;
+          
+          // handle canceling status
+          SplitInstallSessionStatus.CANCELING -&gt; &#123;&#125;
+          
+          // handle canceled status
+          SplitInstallSessionStatus.CANCELED -&gt; &#123;&#125;
+        &#125;
+      &#125;
+    &#125;
+  &#125;
+  // register listener
+  manager.registerListener(listener)
+  manager.startInstall(request)
+      .addOnSuccessListener &#123; sessionId = it &#125;
+      .addOnFailureListener &#123; exception -&gt;
+          exception.printStackTrace()
+      &#125;
+
+  // unregister listener when you don&#x27;t want to use it.
+  //manager.unregisterListener(listener)
+
+  // cancel installation by using your session ID
+  //manager.cancelInstall(sessionId)
+&#125;</code></pre>
 
 <p>Happy coding.</p>
 <h4 id="Reference"><a href="#Reference" class="headerlink" title="[Reference]"></a>[Reference]</h4><p>[References]</p>
 <ol>
-<li><a href="https://medium.com/googleplaydev/what-a-new-publishing-format-means-for-the-future-of-android-2e34981793a" target="_blank" rel="noopener">What a new publishing format means for the future of Android</a></li>
-<li><a href="https://medium.com/linedevth/build-your-android-app-faster-and-smaller-than-ever-25f53fdd3cdc" target="_blank" rel="noopener">Build your Android app Faster and Smaller than ever</a></li>
+<li><a href="https://medium.com/googleplaydev/what-a-new-publishing-format-means-for-the-future-of-android-2e34981793a">What a new publishing format means for the future of Android</a></li>
+<li><a href="https://medium.com/linedevth/build-your-android-app-faster-and-smaller-than-ever-25f53fdd3cdc">Build your Android app Faster and Smaller than ever</a></li>
 </ol>
 
     </div>
@@ -410,11 +479,11 @@
 <p>Google Play’s new app serving model, called Dynamic Delivery, then uses your app bundle to generate and serve optimized APKs for each user’s device configuration, so they download only the code and resources they need to run your app. You no longer have to build, sign, and manage multiple APKs to support different devices, and users get smaller, more optimized downloads.</p>
 <p>– from Google Developer </p>
 </blockquote>
-<a id="more"></a>
+<span id="more"></span>
 
 
 
-<p>The most significant benefit of the aab format is to allow Google play store to send different feature combinations and different resource settings of your App to various user devices according to the device hardware spec. That helps to reduce the download time. Why? if users want to use one or two features from your App, they can download the parts they want or the parts they are interested in instead of downloading full feature-set App at one time. This way allows us to decrease the APK size, eliminate the downloading time[1], and increase the App download rate/retention rate.</p>
+<p>The most significant benefit of the aab format is to allow Google play store to send different feature combinations and different resource settings of your App to various user devices according to the device hardware spec. That helps to reduce the download time. Why? if users want to use one or two features from your App, they can download the parts they want or the parts they are interested in instead of downloading full feature-set App at one time. This way allows us to decrease the APK size, eliminate the downloading time[1], and increase the App download rate&#x2F;retention rate.</p>
 <p>Let’s see how it works.</p>
 <p><img src="https://chauyanw.files.wordpress.com/2019/06/aab_format-2x.png" alt="aab_format-2x.png"></p>
 <p>You can see the above architecture: developers should separate their features into different feature modules. In this diagram, it has one base module and two different feature modules. The Google play store controls the process of generating different APK packages for users. When a new user tries to download your App. It will process and form a new suitable version to this user like this:</p>
@@ -434,22 +503,91 @@
 <p>Two things need to mention here.</p>
 <ol>
 <li><strong>On-Demand</strong> Specifies whether the module should be available as an on-demand download. That is if this attribute sets to <code>true,</code> the module is not available at install time, but your app may request to download it later. If this attribute sets to <code>false,</code> the dynamic feature module is included when the user first downloads and installs your app.</li>
-<li><strong>Fusing</strong>: Specifies whether to include the module in multi-APKs that target devices are running Android 4.4 (API level 20) and lower. <strong><em>Note: only dynamic feature modules that set this property to true are included in the universal APK when you use bundleTool to generate APKs.</em></strong></li>
+<li><strong>Fusing</strong>: Specifies whether to include the module in multi-APKs that target devices are running Android 4.4 (API level 20) and lower. <em><strong>Note: only dynamic feature modules that set this property to true are included in the universal APK when you use bundleTool to generate APKs.</strong></em></li>
 </ol>
 <p>So far, you should see a feature module has been added to your project. But it’s sometimes not so easy to create a feature module. You might see the following errors.</p>
 <p><img src="https://chauyanw.files.wordpress.com/2019/06/dynamic_feature_module_errors.png" alt="dynamic_feature_module_errors.png"><br><em>Feature module errors</em></p>
 <p>Then, what’s going on? Here’s the reason. In your <strong>base module</strong>, you might use the <code>productFlavors</code> to define different build variants.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">... </span><br><span class="line"></span><br><span class="line">flavorDimensions &quot;domestic&quot;</span><br><span class="line">productFlavors &#123;</span><br><span class="line">    area1 &#123;</span><br><span class="line">        applicationIdSuffix &quot;.area1&quot;</span><br><span class="line">        dimension &quot;domestic&quot;</span><br><span class="line">    &#125;</span><br><span class="line">    area2 &#123;</span><br><span class="line">        dimension &quot;domestic&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dynamicFeatures = [&quot;:dynamic_feature&quot;]</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">... 
+
+flavorDimensions &quot;domestic&quot;
+productFlavors &#123;
+    area1 &#123;
+        applicationIdSuffix &quot;.area1&quot;
+        dimension &quot;domestic&quot;
+    &#125;
+    area2 &#123;
+        dimension &quot;domestic&quot;
+    &#125;
+&#125;
+
+dynamicFeatures = [&quot;:dynamic_feature&quot;]
+...</code></pre>
+
 
 <p>All you need to do is to set up the same <code>productFlavors</code> into your dynamic feature module. Then the problem has been solved.</p>
 <p>Ok, then what? How do we download the dynamic feature and track current status? Here you go:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">private fun manageFeatureModules() &#123;</span><br><span class="line">  val manager = SplitInstallManagerFactory.create(this)</span><br><span class="line">  val request =</span><br><span class="line">      SplitInstallRequest.newBuilder()</span><br><span class="line">                         .addModule(&quot;dynamic_feature&quot;)</span><br><span class="line">                         .build()</span><br><span class="line"></span><br><span class="line">  var sessionId = 0</span><br><span class="line">  val listener = object: SplitInstallStateUpdatedListener &#123;</span><br><span class="line">    override fun onStateUpdate(state: SplitInstallSessionState?) &#123;</span><br><span class="line">      if (state.sessionId() == sessionId) &#123;</span><br><span class="line">        when (state.status()) &#123;</span><br><span class="line">          // handle error case</span><br><span class="line">          SplitInstallSessionStatus.FAILED -&gt; &#123;</span><br><span class="line">            when (state.errorCode()) &#123;</span><br><span class="line">              // handle different error codes</span><br><span class="line">              SplitInstallErrorCode.SERVICE_DIED -&gt; &#123;&#125;</span><br><span class="line">              SplitInstallErrorCode.NETWORK_ERROR -&gt; &#123;&#125;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          // handle downloading status</span><br><span class="line">          SplitInstallSessionStatus.DOWNLOADING -&gt; &#123;&#125;</span><br><span class="line">          </span><br><span class="line">          // handle downloaded status</span><br><span class="line">          SplitInstallSessionStatus.DOWNLOADED -&gt; &#123;&#125;</span><br><span class="line">          </span><br><span class="line">          // handle installing status</span><br><span class="line">          SplitInstallSessionStatus.INSTALLING -&gt; &#123;&#125;</span><br><span class="line">          </span><br><span class="line">          // handle installed status</span><br><span class="line">          SplitInstallSessionStatus.INSTALLED -&gt; &#123;&#125;</span><br><span class="line">          </span><br><span class="line">          // handle canceling status</span><br><span class="line">          SplitInstallSessionStatus.CANCELING -&gt; &#123;&#125;</span><br><span class="line">          </span><br><span class="line">          // handle canceled status</span><br><span class="line">          SplitInstallSessionStatus.CANCELED -&gt; &#123;&#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  // register listener</span><br><span class="line">  manager.registerListener(listener)</span><br><span class="line">  manager.startInstall(request)</span><br><span class="line">      .addOnSuccessListener &#123; sessionId = it &#125;</span><br><span class="line">      .addOnFailureListener &#123; exception -&gt;</span><br><span class="line">          exception.printStackTrace()</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">  // unregister listener when you don&apos;t want to use it.</span><br><span class="line">  //manager.unregisterListener(listener)</span><br><span class="line"></span><br><span class="line">  // cancel installation by using your session ID</span><br><span class="line">  //manager.cancelInstall(sessionId)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">private fun manageFeatureModules() &#123;
+  val manager = SplitInstallManagerFactory.create(this)
+  val request =
+      SplitInstallRequest.newBuilder()
+                         .addModule(&quot;dynamic_feature&quot;)
+                         .build()
+
+  var sessionId = 0
+  val listener = object: SplitInstallStateUpdatedListener &#123;
+    override fun onStateUpdate(state: SplitInstallSessionState?) &#123;
+      if (state.sessionId() == sessionId) &#123;
+        when (state.status()) &#123;
+          // handle error case
+          SplitInstallSessionStatus.FAILED -&gt; &#123;
+            when (state.errorCode()) &#123;
+              // handle different error codes
+              SplitInstallErrorCode.SERVICE_DIED -&gt; &#123;&#125;
+              SplitInstallErrorCode.NETWORK_ERROR -&gt; &#123;&#125;
+            &#125;
+          &#125;
+          // handle downloading status
+          SplitInstallSessionStatus.DOWNLOADING -&gt; &#123;&#125;
+          
+          // handle downloaded status
+          SplitInstallSessionStatus.DOWNLOADED -&gt; &#123;&#125;
+          
+          // handle installing status
+          SplitInstallSessionStatus.INSTALLING -&gt; &#123;&#125;
+          
+          // handle installed status
+          SplitInstallSessionStatus.INSTALLED -&gt; &#123;&#125;
+          
+          // handle canceling status
+          SplitInstallSessionStatus.CANCELING -&gt; &#123;&#125;
+          
+          // handle canceled status
+          SplitInstallSessionStatus.CANCELED -&gt; &#123;&#125;
+        &#125;
+      &#125;
+    &#125;
+  &#125;
+  // register listener
+  manager.registerListener(listener)
+  manager.startInstall(request)
+      .addOnSuccessListener &#123; sessionId = it &#125;
+      .addOnFailureListener &#123; exception -&gt;
+          exception.printStackTrace()
+      &#125;
+
+  // unregister listener when you don&#x27;t want to use it.
+  //manager.unregisterListener(listener)
+
+  // cancel installation by using your session ID
+  //manager.cancelInstall(sessionId)
+&#125;</code></pre>
 
 <p>Happy coding.</p>
 <h4 id="Reference"><a href="#Reference" class="headerlink" title="[Reference]"></a>[Reference]</h4><p>[References]</p>
 <ol>
-<li><a href="https://medium.com/googleplaydev/what-a-new-publishing-format-means-for-the-future-of-android-2e34981793a" target="_blank" rel="noopener">What a new publishing format means for the future of Android</a></li>
-<li><a href="https://medium.com/linedevth/build-your-android-app-faster-and-smaller-than-ever-25f53fdd3cdc" target="_blank" rel="noopener">Build your Android app Faster and Smaller than ever</a></li>
+<li><a href="https://medium.com/googleplaydev/what-a-new-publishing-format-means-for-the-future-of-android-2e34981793a">What a new publishing format means for the future of Android</a></li>
+<li><a href="https://medium.com/linedevth/build-your-android-app-faster-and-smaller-than-ever-25f53fdd3cdc">Build your Android app Faster and Smaller than ever</a></li>
 </ol>
 
     </div>

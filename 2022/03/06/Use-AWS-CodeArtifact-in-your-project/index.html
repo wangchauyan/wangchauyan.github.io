@@ -244,10 +244,10 @@
 
 <h5 id="What’s-the-pain-point"><a href="#What’s-the-pain-point" class="headerlink" title="What’s the pain point"></a>What’s the pain point</h5><p>The pain point of using CodeArtifact is that the authentication token will be expired every <a href="https://docs.aws.amazon.com/codeartifact/latest/ug/tokens-authentication.html">12 hours</a>. So, you would need to update the token every day for syncing the latest libraries from the CodeArtifact. I have to say this is quite annoying for the Devs. Is there any better way to solve this issue? Yes, thanks <a href="https://plugins.gradle.org/plugin/ai.clarity.codeartifact">Clarity</a> for developing a Gradle plugin to solve this issue. Here are the steps for integrating this plugin with CodeArtifact. </p>
 <h5 id="Basic-setup-AWS-CLI-tool-installation"><a href="#Basic-setup-AWS-CLI-tool-installation" class="headerlink" title="Basic setup - AWS CLI tool installation"></a>Basic setup - AWS CLI tool installation</h5><p>You have to install the <a href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html">AWS CLI</a> tool and set up the access key id and secret key string. </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws configure</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight script">aws configure</code></pre>
 
 <p>And then input your region, output format, and the access key config. After that, check if everything is good.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws configure list</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight script">aws configure list</code></pre>
 
 <p>If you can see the configuration showing correctly, you are ready to go to the next step. Otherwise, please the related configuration before setting up the plugin. </p>
 <h5 id="Plugin-setup"><a href="#Plugin-setup" class="headerlink" title="Plugin setup"></a>Plugin setup</h5><p>There are four ways to set up your AWS profile for this plugin. </p>
@@ -257,18 +257,69 @@
 <li><p>Set the <strong>CODEARTIFACT_PROFILE</strong>  environment variable with the selected profile name. </p>
 </li>
 <li><p>Set the profile using a <strong>system property</strong> in the gradle.properties. </p>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemProp.codeartifact.profile=[your_profile_name]</span><br></pre></td></tr></table></figure>
+ <pre><code class="highlight script">systemProp.codeartifact.profile=[your_profile_name]</code></pre>
 </li>
 <li><p>Add the profile name to the repository URL as a <strong>query parameter</strong>. </p>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">repositories &#123;</span><br><span class="line">    maven &#123;</span><br><span class="line">	    url &#x27;https://domain-id.d.codeartifact.eu-central-1.amazonaws.com/maven/repository/?profile=[your_profile_name]&#x27;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+ <pre><code class="highlight script">repositories &#123;
+    maven &#123;
+	    url &#x27;https://domain-id.d.codeartifact.eu-central-1.amazonaws.com/maven/repository/?profile=[your_profile_name]&#x27;
+	&#125;
+&#125;</code></pre></li>
 </ol>
 <p>After the profile setup ready, you now need to update your build.gradle fiile (project level), please check the following code: </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;  </span><br><span class="line"> // Automatically get BuildArtifact token  </span><br><span class="line"> id &#x27;maven-publish&#x27;  </span><br><span class="line"> id &#x27;ai.clarity.codeartifact&#x27; version &#x27;0.0.12&#x27;  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">allprojects &#123;   </span><br><span class="line">  repositories &#123;  </span><br><span class="line">    maven &#123;  </span><br><span class="line">      url &#x27;https://domain-id.d.codeartifact.eu-central-1.amazonaws.com/maven/repository/&#x27;</span><br><span class="line">    &#125;  </span><br><span class="line">  &#125;  </span><br><span class="line"> </span><br><span class="line">  </span><br><span class="line">  publishing &#123;  </span><br><span class="line">    repositories &#123;  </span><br><span class="line">      maven &#123;</span><br><span class="line">	    url &#x27;https://domain-id.d.codeartifact.eu-central-1.amazonaws.com/maven/repository/&#x27;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight script">plugins &#123;  
+ // Automatically get BuildArtifact token  
+ id &#x27;maven-publish&#x27;  
+ id &#x27;ai.clarity.codeartifact&#x27; version &#x27;0.0.12&#x27;  
+&#125;
+
+allprojects &#123;   
+  repositories &#123;  
+    maven &#123;  
+      url &#x27;https://domain-id.d.codeartifact.eu-central-1.amazonaws.com/maven/repository/&#x27;
+    &#125;  
+  &#125;  
+ 
+  
+  publishing &#123;  
+    repositories &#123;  
+      maven &#123;
+	    url &#x27;https://domain-id.d.codeartifact.eu-central-1.amazonaws.com/maven/repository/&#x27;
+      &#125;
+    &#125;
+  &#125;
+&#125;</code></pre>
 
 <p>After this setting, you are ready for happy coding now! </p>
 <h5 id="Integrate-with-the-AWS-CodePipeline"><a href="#Integrate-with-the-AWS-CodePipeline" class="headerlink" title="Integrate with the AWS CodePipeline"></a>Integrate with the AWS CodePipeline</h5><p>If you use the above setting locally, you should be good and worry about nothing. What if you wanted to use it with your CodePipeline? You will need to modify the setting and make it work as expected. </p>
 <p><strong>Update your buildspec.yml</strong></p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="number">0.2</span>  </span><br><span class="line"><span class="attr">env:</span>  </span><br><span class="line">  <span class="attr">parameter-store:</span>  </span><br><span class="line">    <span class="attr">ACCESS_KEY_ID:</span> <span class="string">/CodeBuild/access_key_id</span>  </span><br><span class="line">    <span class="attr">SECRET_ACCESS_KEY:</span> <span class="string">/CodeBuild/secret_access_key</span>  </span><br><span class="line">  </span><br><span class="line"><span class="attr">phases:</span>  </span><br><span class="line">  <span class="attr">build:</span>  </span><br><span class="line">    <span class="attr">commands:</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">echo</span> <span class="string">&quot;Start building the project&quot;</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">curl</span> <span class="string">&quot;https://s3.amazonaws.com/aws-cli/awscli-bundle.zip&quot;</span> <span class="string">-o</span> <span class="string">&quot;awscli-bundle.zip&quot;</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">unzip</span> <span class="string">awscli-bundle.zip</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">./awscli-bundle/install</span> <span class="string">-b</span> <span class="string">~/bin/aws</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">region</span> <span class="string">&quot;your_aws_region&quot;</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">output</span> <span class="string">&quot;your_wanted_format&quot;</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">aws_access_key_id</span> <span class="string">$ACCESS_KEY_ID</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">aws_secret_access_key</span> <span class="string">$SECRET_ACCESS_KEY</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">list</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">./gradlew</span> <span class="string">build</span></span><br><span class="line">  </span><br><span class="line">  <span class="attr">post_build:</span>  </span><br><span class="line">    <span class="attr">commands:</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">echo</span> <span class="string">&quot;Cleaning the environment variables&quot;</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">region</span> <span class="string">&quot;&quot;</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">output</span> <span class="string">&quot;&quot;</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">aws_access_key_id</span> <span class="string">&quot;&quot;</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">aws_secret_access_key</span> <span class="string">&quot;&quot;</span>  </span><br></pre></td></tr></table></figure>
+<pre><code class="highlight yaml"><span class="attr">version:</span> <span class="number">0.2</span>  
+<span class="attr">env:</span>  
+  <span class="attr">parameter-store:</span>  
+    <span class="attr">ACCESS_KEY_ID:</span> <span class="string">/CodeBuild/access_key_id</span>  
+    <span class="attr">SECRET_ACCESS_KEY:</span> <span class="string">/CodeBuild/secret_access_key</span>  
+  
+<span class="attr">phases:</span>  
+  <span class="attr">build:</span>  
+    <span class="attr">commands:</span>  
+      <span class="bullet">-</span> <span class="string">echo</span> <span class="string">&quot;Start building the project&quot;</span>  
+      <span class="bullet">-</span> <span class="string">curl</span> <span class="string">&quot;https://s3.amazonaws.com/aws-cli/awscli-bundle.zip&quot;</span> <span class="string">-o</span> <span class="string">&quot;awscli-bundle.zip&quot;</span>  
+      <span class="bullet">-</span> <span class="string">unzip</span> <span class="string">awscli-bundle.zip</span>  
+      <span class="bullet">-</span> <span class="string">./awscli-bundle/install</span> <span class="string">-b</span> <span class="string">~/bin/aws</span>  
+      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">region</span> <span class="string">&quot;your_aws_region&quot;</span>  
+      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">output</span> <span class="string">&quot;your_wanted_format&quot;</span>  
+      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">aws_access_key_id</span> <span class="string">$ACCESS_KEY_ID</span>  
+      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">aws_secret_access_key</span> <span class="string">$SECRET_ACCESS_KEY</span>  
+      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">list</span>  
+      <span class="bullet">-</span> <span class="string">./gradlew</span> <span class="string">build</span>
+  
+  <span class="attr">post_build:</span>  
+    <span class="attr">commands:</span>  
+      <span class="bullet">-</span> <span class="string">echo</span> <span class="string">&quot;Cleaning the environment variables&quot;</span>  
+      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">region</span> <span class="string">&quot;&quot;</span>  
+      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">output</span> <span class="string">&quot;&quot;</span>  
+      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">aws_access_key_id</span> <span class="string">&quot;&quot;</span>  
+      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">aws_secret_access_key</span> <span class="string">&quot;&quot;</span></code></pre>
 
 <p>You will need to define your AWS profile before building the project. I recommend that you store your access_key_id and secret_access_key into the AWS system manager instead of using them as plaintext. </p>
 <p><strong>Update your build.gradle</strong></p>
@@ -278,7 +329,21 @@
 <li>Update the build.gradle to get the authentication token if you can’t access the profile.</li>
 </ul>
 <p>The second way is much easier. Let’s see how to use it. </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">allprojects &#123;   </span><br><span class="line">  repositories &#123;  </span><br><span class="line">    maven &#123;  </span><br><span class="line">      url &#x27;https://domain-id.d.codeartifact.eu-central-1.amazonaws.com/maven/repository/&#x27;</span><br><span class="line">	    credentials &#123;  </span><br><span class="line">        def getToken = &quot;aws codeartifact get-authorization-token --domain your_domain_id --domain-owner your_account_id --query authorizationToken --output text&quot;</span><br><span class="line">        def profile = System.env.CODEARTIFACT_PROFILE  </span><br><span class="line">        username &quot;aws&quot;  </span><br><span class="line">        password profile == null ? </span><br><span class="line">		    getToken.execute().text :  </span><br><span class="line">            &quot;$getToken --profile $profile&quot;.execute().text  </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;  </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight script">allprojects &#123;   
+  repositories &#123;  
+    maven &#123;  
+      url &#x27;https://domain-id.d.codeartifact.eu-central-1.amazonaws.com/maven/repository/&#x27;
+	    credentials &#123;  
+        def getToken = &quot;aws codeartifact get-authorization-token --domain your_domain_id --domain-owner your_account_id --query authorizationToken --output text&quot;
+        def profile = System.env.CODEARTIFACT_PROFILE  
+        username &quot;aws&quot;  
+        password profile == null ? 
+		    getToken.execute().text :  
+            &quot;$getToken --profile $profile&quot;.execute().text  
+      &#125;
+    &#125;  
+  &#125;
+&#125;</code></pre>
 
 <p>We will need to leverage the AWS CLI tool to get the authentication token and check if we can get the profile. If we can’t successfully get the profile to do authentication, we use AWS CLI to fetch your CodeArtifact token. </p>
 <p>That’s it. Happy coding.</p>
@@ -388,10 +453,10 @@
 
 <h5 id="What’s-the-pain-point"><a href="#What’s-the-pain-point" class="headerlink" title="What’s the pain point"></a>What’s the pain point</h5><p>The pain point of using CodeArtifact is that the authentication token will be expired every <a href="https://docs.aws.amazon.com/codeartifact/latest/ug/tokens-authentication.html">12 hours</a>. So, you would need to update the token every day for syncing the latest libraries from the CodeArtifact. I have to say this is quite annoying for the Devs. Is there any better way to solve this issue? Yes, thanks <a href="https://plugins.gradle.org/plugin/ai.clarity.codeartifact">Clarity</a> for developing a Gradle plugin to solve this issue. Here are the steps for integrating this plugin with CodeArtifact. </p>
 <h5 id="Basic-setup-AWS-CLI-tool-installation"><a href="#Basic-setup-AWS-CLI-tool-installation" class="headerlink" title="Basic setup - AWS CLI tool installation"></a>Basic setup - AWS CLI tool installation</h5><p>You have to install the <a href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html">AWS CLI</a> tool and set up the access key id and secret key string. </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws configure</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight script">aws configure</code></pre>
 
 <p>And then input your region, output format, and the access key config. After that, check if everything is good.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws configure list</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight script">aws configure list</code></pre>
 
 <p>If you can see the configuration showing correctly, you are ready to go to the next step. Otherwise, please the related configuration before setting up the plugin. </p>
 <h5 id="Plugin-setup"><a href="#Plugin-setup" class="headerlink" title="Plugin setup"></a>Plugin setup</h5><p>There are four ways to set up your AWS profile for this plugin. </p>
@@ -401,18 +466,69 @@
 <li><p>Set the <strong>CODEARTIFACT_PROFILE</strong>  environment variable with the selected profile name. </p>
 </li>
 <li><p>Set the profile using a <strong>system property</strong> in the gradle.properties. </p>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemProp.codeartifact.profile=[your_profile_name]</span><br></pre></td></tr></table></figure>
+ <pre><code class="highlight script">systemProp.codeartifact.profile=[your_profile_name]</code></pre>
 </li>
 <li><p>Add the profile name to the repository URL as a <strong>query parameter</strong>. </p>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">repositories &#123;</span><br><span class="line">    maven &#123;</span><br><span class="line">	    url &#x27;https://domain-id.d.codeartifact.eu-central-1.amazonaws.com/maven/repository/?profile=[your_profile_name]&#x27;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+ <pre><code class="highlight script">repositories &#123;
+    maven &#123;
+	    url &#x27;https://domain-id.d.codeartifact.eu-central-1.amazonaws.com/maven/repository/?profile=[your_profile_name]&#x27;
+	&#125;
+&#125;</code></pre></li>
 </ol>
 <p>After the profile setup ready, you now need to update your build.gradle fiile (project level), please check the following code: </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;  </span><br><span class="line"> // Automatically get BuildArtifact token  </span><br><span class="line"> id &#x27;maven-publish&#x27;  </span><br><span class="line"> id &#x27;ai.clarity.codeartifact&#x27; version &#x27;0.0.12&#x27;  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">allprojects &#123;   </span><br><span class="line">  repositories &#123;  </span><br><span class="line">    maven &#123;  </span><br><span class="line">      url &#x27;https://domain-id.d.codeartifact.eu-central-1.amazonaws.com/maven/repository/&#x27;</span><br><span class="line">    &#125;  </span><br><span class="line">  &#125;  </span><br><span class="line"> </span><br><span class="line">  </span><br><span class="line">  publishing &#123;  </span><br><span class="line">    repositories &#123;  </span><br><span class="line">      maven &#123;</span><br><span class="line">	    url &#x27;https://domain-id.d.codeartifact.eu-central-1.amazonaws.com/maven/repository/&#x27;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight script">plugins &#123;  
+ // Automatically get BuildArtifact token  
+ id &#x27;maven-publish&#x27;  
+ id &#x27;ai.clarity.codeartifact&#x27; version &#x27;0.0.12&#x27;  
+&#125;
+
+allprojects &#123;   
+  repositories &#123;  
+    maven &#123;  
+      url &#x27;https://domain-id.d.codeartifact.eu-central-1.amazonaws.com/maven/repository/&#x27;
+    &#125;  
+  &#125;  
+ 
+  
+  publishing &#123;  
+    repositories &#123;  
+      maven &#123;
+	    url &#x27;https://domain-id.d.codeartifact.eu-central-1.amazonaws.com/maven/repository/&#x27;
+      &#125;
+    &#125;
+  &#125;
+&#125;</code></pre>
 
 <p>After this setting, you are ready for happy coding now! </p>
 <h5 id="Integrate-with-the-AWS-CodePipeline"><a href="#Integrate-with-the-AWS-CodePipeline" class="headerlink" title="Integrate with the AWS CodePipeline"></a>Integrate with the AWS CodePipeline</h5><p>If you use the above setting locally, you should be good and worry about nothing. What if you wanted to use it with your CodePipeline? You will need to modify the setting and make it work as expected. </p>
 <p><strong>Update your buildspec.yml</strong></p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="number">0.2</span>  </span><br><span class="line"><span class="attr">env:</span>  </span><br><span class="line">  <span class="attr">parameter-store:</span>  </span><br><span class="line">    <span class="attr">ACCESS_KEY_ID:</span> <span class="string">/CodeBuild/access_key_id</span>  </span><br><span class="line">    <span class="attr">SECRET_ACCESS_KEY:</span> <span class="string">/CodeBuild/secret_access_key</span>  </span><br><span class="line">  </span><br><span class="line"><span class="attr">phases:</span>  </span><br><span class="line">  <span class="attr">build:</span>  </span><br><span class="line">    <span class="attr">commands:</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">echo</span> <span class="string">&quot;Start building the project&quot;</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">curl</span> <span class="string">&quot;https://s3.amazonaws.com/aws-cli/awscli-bundle.zip&quot;</span> <span class="string">-o</span> <span class="string">&quot;awscli-bundle.zip&quot;</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">unzip</span> <span class="string">awscli-bundle.zip</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">./awscli-bundle/install</span> <span class="string">-b</span> <span class="string">~/bin/aws</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">region</span> <span class="string">&quot;your_aws_region&quot;</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">output</span> <span class="string">&quot;your_wanted_format&quot;</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">aws_access_key_id</span> <span class="string">$ACCESS_KEY_ID</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">aws_secret_access_key</span> <span class="string">$SECRET_ACCESS_KEY</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">list</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">./gradlew</span> <span class="string">build</span></span><br><span class="line">  </span><br><span class="line">  <span class="attr">post_build:</span>  </span><br><span class="line">    <span class="attr">commands:</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">echo</span> <span class="string">&quot;Cleaning the environment variables&quot;</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">region</span> <span class="string">&quot;&quot;</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">output</span> <span class="string">&quot;&quot;</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">aws_access_key_id</span> <span class="string">&quot;&quot;</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">aws_secret_access_key</span> <span class="string">&quot;&quot;</span>  </span><br></pre></td></tr></table></figure>
+<pre><code class="highlight yaml"><span class="attr">version:</span> <span class="number">0.2</span>  
+<span class="attr">env:</span>  
+  <span class="attr">parameter-store:</span>  
+    <span class="attr">ACCESS_KEY_ID:</span> <span class="string">/CodeBuild/access_key_id</span>  
+    <span class="attr">SECRET_ACCESS_KEY:</span> <span class="string">/CodeBuild/secret_access_key</span>  
+  
+<span class="attr">phases:</span>  
+  <span class="attr">build:</span>  
+    <span class="attr">commands:</span>  
+      <span class="bullet">-</span> <span class="string">echo</span> <span class="string">&quot;Start building the project&quot;</span>  
+      <span class="bullet">-</span> <span class="string">curl</span> <span class="string">&quot;https://s3.amazonaws.com/aws-cli/awscli-bundle.zip&quot;</span> <span class="string">-o</span> <span class="string">&quot;awscli-bundle.zip&quot;</span>  
+      <span class="bullet">-</span> <span class="string">unzip</span> <span class="string">awscli-bundle.zip</span>  
+      <span class="bullet">-</span> <span class="string">./awscli-bundle/install</span> <span class="string">-b</span> <span class="string">~/bin/aws</span>  
+      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">region</span> <span class="string">&quot;your_aws_region&quot;</span>  
+      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">output</span> <span class="string">&quot;your_wanted_format&quot;</span>  
+      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">aws_access_key_id</span> <span class="string">$ACCESS_KEY_ID</span>  
+      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">aws_secret_access_key</span> <span class="string">$SECRET_ACCESS_KEY</span>  
+      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">list</span>  
+      <span class="bullet">-</span> <span class="string">./gradlew</span> <span class="string">build</span>
+  
+  <span class="attr">post_build:</span>  
+    <span class="attr">commands:</span>  
+      <span class="bullet">-</span> <span class="string">echo</span> <span class="string">&quot;Cleaning the environment variables&quot;</span>  
+      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">region</span> <span class="string">&quot;&quot;</span>  
+      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">output</span> <span class="string">&quot;&quot;</span>  
+      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">aws_access_key_id</span> <span class="string">&quot;&quot;</span>  
+      <span class="bullet">-</span> <span class="string">aws</span> <span class="string">configure</span> <span class="string">set</span> <span class="string">aws_secret_access_key</span> <span class="string">&quot;&quot;</span></code></pre>
 
 <p>You will need to define your AWS profile before building the project. I recommend that you store your access_key_id and secret_access_key into the AWS system manager instead of using them as plaintext. </p>
 <p><strong>Update your build.gradle</strong></p>
@@ -422,7 +538,21 @@
 <li>Update the build.gradle to get the authentication token if you can’t access the profile.</li>
 </ul>
 <p>The second way is much easier. Let’s see how to use it. </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">allprojects &#123;   </span><br><span class="line">  repositories &#123;  </span><br><span class="line">    maven &#123;  </span><br><span class="line">      url &#x27;https://domain-id.d.codeartifact.eu-central-1.amazonaws.com/maven/repository/&#x27;</span><br><span class="line">	    credentials &#123;  </span><br><span class="line">        def getToken = &quot;aws codeartifact get-authorization-token --domain your_domain_id --domain-owner your_account_id --query authorizationToken --output text&quot;</span><br><span class="line">        def profile = System.env.CODEARTIFACT_PROFILE  </span><br><span class="line">        username &quot;aws&quot;  </span><br><span class="line">        password profile == null ? </span><br><span class="line">		    getToken.execute().text :  </span><br><span class="line">            &quot;$getToken --profile $profile&quot;.execute().text  </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;  </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight script">allprojects &#123;   
+  repositories &#123;  
+    maven &#123;  
+      url &#x27;https://domain-id.d.codeartifact.eu-central-1.amazonaws.com/maven/repository/&#x27;
+	    credentials &#123;  
+        def getToken = &quot;aws codeartifact get-authorization-token --domain your_domain_id --domain-owner your_account_id --query authorizationToken --output text&quot;
+        def profile = System.env.CODEARTIFACT_PROFILE  
+        username &quot;aws&quot;  
+        password profile == null ? 
+		    getToken.execute().text :  
+            &quot;$getToken --profile $profile&quot;.execute().text  
+      &#125;
+    &#125;  
+  &#125;
+&#125;</code></pre>
 
 <p>We will need to leverage the AWS CLI tool to get the authentication token and check if we can get the profile. If we can’t successfully get the profile to do authentication, we use AWS CLI to fetch your CodeArtifact token. </p>
 <p>That’s it. Happy coding.</p>

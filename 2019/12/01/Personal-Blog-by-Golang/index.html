@@ -250,9 +250,9 @@
         <p><img src="https://chauyanw.files.wordpress.com/2019/07/logos.jpg?w=2924" alt="logos.jpg?w=2924"></p>
 <h4 id="Why"><a href="#Why" class="headerlink" title="Why"></a>Why</h4><p>I used to use <code>Wordpress</code> to write my blog. But I recently think of creating the blog system by <code>Golang</code> and make it for fun. Here is what I am doing now. The main reason I start doing is that I found the markdown support in Wordpress is slightly weird and hard to use. When I try to change some blog content, the markdown style sometimes won’t show correctly. That makes me feel frustrated. I think that probably might because I am using the free plan in wordpress.com and have less control of my blog.</p>
 <p>So, my goal is quite simple and straightforward. The new blog should fully support markdown content. And it should serve a clean and straightforward interface. Let’s see how I am going to do it.</p>
-<a id="more"></a>
+<span id="more"></span>
 
-<p>Due to the two goals above, here I choose to create it from scratch. I choose to use <a href="https://github.com/gin-gonic/gin" target="_blank" rel="noopener">Go-Gin</a> and <a href="https://github.com/russross/blackfriday" target="_blank" rel="noopener">Blackfriday</a> to build the blog system.</p>
+<p>Due to the two goals above, here I choose to create it from scratch. I choose to use <a href="https://github.com/gin-gonic/gin">Go-Gin</a> and <a href="https://github.com/russross/blackfriday">Blackfriday</a> to build the blog system.</p>
 <p><img src="https://chauyanw.files.wordpress.com/2019/07/quote-talk-is-cheap-show-me-the-code-linus-torvalds-273528.jpg" alt="quote-talk-is-cheap-show-me-the-code-linus-torvalds-273528.jpg"></p>
 <h4 id="Do-it"><a href="#Do-it" class="headerlink" title="Do it"></a>Do it</h4><p><strong>Go Gin</strong></p>
 <blockquote>
@@ -266,21 +266,167 @@
 <p>The first step, create your blog folders with two sub-folder, markdowns, and templates. <code>Markdowns</code> folder is for your blog content post. <code>Templates</code> folder is for the HTML template, which we load posts list and content into an HTML page.</p>
 <p>Let’s check HTML template files first.</p>
 <p><strong>index.html</strong></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"IE=edge"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Chauyan's Murmur<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"dark_theme.css"</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">type</span>=<span class="string">"text/css"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">      &#123;&#123; range .posts &#125;&#125;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/&#123;&#123; . &#125;&#125;"</span>&gt;</span>&#123;&#123; . &#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      &#123;&#123; end &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<pre><code class="highlight html"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span>
+<span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span>
+<span class="tag">&lt;<span class="name">head</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>/&gt;</span>
+  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge&quot;</span>/&gt;</span>
+  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1&quot;</span>/&gt;</span>
+  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Chauyan&#x27;s Murmur<span class="tag">&lt;/<span class="name">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&quot;dark_theme.css&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span>/&gt;</span>
+<span class="tag">&lt;/<span class="name">head</span>&gt;</span>
+<span class="tag">&lt;<span class="name">body</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">ul</span>&gt;</span>
+      &#123;&#123; range .posts &#125;&#125;
+        <span class="tag">&lt;<span class="name">li</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/&#123;&#123; . &#125;&#125;&quot;</span>&gt;</span>&#123;&#123; . &#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">li</span>&gt;</span>
+      &#123;&#123; end &#125;&#125;
+    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span>
+  <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">html</span>&gt;</span></code></pre>
 
 <p>It’s pretty simple. It’s just a simple home page with a list of web posts. You can see the </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; &#125;&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="highlight plaintext">&#123;&#123; &#125;&#125;</code></pre>
 <p>buckets wrapped in the template, which is the <code>action</code> in the template by module <code>html/template</code> in Go.</p>
 <p><strong>post.html</strong></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"IE=edge"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>&#123;&#123;.Title&#125;&#125;<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"dark_theme.css"</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">type</span>=<span class="string">"text/css"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">    &#123;&#123;.Content&#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<pre><code class="highlight html"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span>
+<span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span>
+<span class="tag">&lt;<span class="name">head</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>/&gt;</span>
+  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge&quot;</span>/&gt;</span>
+  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1&quot;</span>/&gt;</span>
+  <span class="tag">&lt;<span class="name">title</span>&gt;</span>&#123;&#123;.Title&#125;&#125;<span class="tag">&lt;/<span class="name">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&quot;dark_theme.css&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span>/&gt;</span>
+<span class="tag">&lt;/<span class="name">head</span>&gt;</span>
+<span class="tag">&lt;<span class="name">body</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span>
+    &#123;&#123;.Content&#125;&#125;
+  <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">html</span>&gt;</span></code></pre>
 
 <p><strong>error.html - 404 not found page</strong></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"IE=edge"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>We've got some trouble | 404 - Resource not found<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"dark_theme.css"</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">type</span>=<span class="string">"text/css"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"cover"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Resource not found</span><br><span class="line">        <span class="tag">&lt;<span class="name">small</span>&gt;</span>Error 404<span class="tag">&lt;/<span class="name">small</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"lead"</span>&gt;</span>The requested resource could not be found but may be available again in the future. <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/"</span>&gt;</span>Go back now!<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">footer</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>Technical Contact: <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"wang.chauyan@gmail.com"</span>&gt;</span>e-mail me<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<pre><code class="highlight html"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span>
+<span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span>
+<span class="tag">&lt;<span class="name">head</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>/&gt;</span>
+    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge&quot;</span>/&gt;</span>
+    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1&quot;</span>/&gt;</span>
+    <span class="tag">&lt;<span class="name">title</span>&gt;</span>We&#x27;ve got some trouble | 404 - Resource not found<span class="tag">&lt;/<span class="name">title</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&quot;dark_theme.css&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span>/&gt;</span>
+<span class="tag">&lt;/<span class="name">head</span>&gt;</span>
+<span class="tag">&lt;<span class="name">body</span>&gt;</span>
+<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;cover&quot;</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Resource not found
+        <span class="tag">&lt;<span class="name">small</span>&gt;</span>Error 404<span class="tag">&lt;/<span class="name">small</span>&gt;</span>
+    <span class="tag">&lt;/<span class="name">h1</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;lead&quot;</span>&gt;</span>The requested resource could not be found but may be available again in the future. <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/&quot;</span>&gt;</span>Go back now!<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+<span class="tag">&lt;<span class="name">footer</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>Technical Contact: <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;wang.chauyan@gmail.com&quot;</span>&gt;</span>e-mail me<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">footer</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">html</span>&gt;</span></code></pre>
 
 <p>Gin would load these template files into our primary function. Let’s take a look of the <code>main.go</code> source code here.</p>
 <p><strong>main.go</strong></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">  <span class="string">"fmt"</span></span><br><span class="line">  <span class="string">"github.com/gin-gonic/gin"</span></span><br><span class="line">  <span class="string">"gopkg.in/russross/blackfriday.v2"</span></span><br><span class="line">  <span class="string">"html/template"</span></span><br><span class="line">  <span class="string">"io/ioutil"</span></span><br><span class="line">  <span class="string">"log"</span></span><br><span class="line">  <span class="string">"net/http"</span></span><br><span class="line">  <span class="string">"os"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> markdownPath =  <span class="string">"./markdowns/"</span></span><br><span class="line"><span class="keyword">const</span> templatePath =  <span class="string">"./templates/"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Post <span class="keyword">struct</span> &#123;</span><br><span class="line">  Title   <span class="keyword">string</span></span><br><span class="line">  Content template.HTML</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">initServer</span><span class="params">()</span> *<span class="title">gin</span>.<span class="title">Engine</span></span> &#123;</span><br><span class="line">  server := gin.Default()</span><br><span class="line">  server.Use(gin.Logger())</span><br><span class="line">  server.Delims(<span class="string">"&#123;&#123;"</span>, <span class="string">"&#125;&#125;"</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// load html template files</span></span><br><span class="line">  server.LoadHTMLGlob(templatePath + <span class="string">"*.html"</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> server</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">setupRootAPI</span><span class="params">(server *gin.Engine)</span></span> &#123;</span><br><span class="line">  <span class="comment">// handle the root access</span></span><br><span class="line">  server.GET(<span class="string">"/"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> posts []<span class="keyword">string</span></span><br><span class="line"></span><br><span class="line">    files, err := ioutil.ReadDir(markdownPath)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">      log.Fatal(err)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> _, file := <span class="keyword">range</span> files &#123;</span><br><span class="line">      fmt.Println(file.Name())</span><br><span class="line">      posts = <span class="built_in">append</span>(posts, file.Name())</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    c.HTML(</span><br><span class="line">      http.StatusOK, </span><br><span class="line">      <span class="string">"index.html"</span>, </span><br><span class="line">      gin.H &#123;<span class="string">"posts"</span>: posts,&#125;</span><br><span class="line">    )</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">setupPostAPI</span><span class="params">(server *gin.Engine)</span></span> &#123;</span><br><span class="line">  server.GET(<span class="string">"/:postName"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    postName := c.Param(<span class="string">"postName"</span>)</span><br><span class="line"></span><br><span class="line">    mdfile, err := ioutil.ReadFile(markdownPath + postName)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">      fmt.Println(err)</span><br><span class="line">      <span class="comment">// handle the error page access</span></span><br><span class="line">      c.HTML(http.StatusNotFound, <span class="string">"error.html"</span>, <span class="literal">nil</span>)</span><br><span class="line">      c.Abort()</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    postHTML := template.HTML(blackfriday.Run([]<span class="keyword">byte</span>(mdfile)))</span><br><span class="line"></span><br><span class="line">    post := Post&#123;Title: postName, Content: postHTML&#125;</span><br><span class="line"></span><br><span class="line">    c.HTML(</span><br><span class="line">      http.StatusOK, </span><br><span class="line">      <span class="string">"post.html"</span>, </span><br><span class="line">      gin.H&#123;</span><br><span class="line">        <span class="string">"Title"</span>:   post.Title,</span><br><span class="line">        <span class="string">"Content"</span>: post.Content,</span><br><span class="line">      &#125;</span><br><span class="line">    )</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>  &#123;</span><br><span class="line">  server := initServer()</span><br><span class="line"></span><br><span class="line">  <span class="comment">// setup home API</span></span><br><span class="line">  setupRootAPI(server)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// handle the post access</span></span><br><span class="line">  setupPostAPI(server)</span><br><span class="line"></span><br><span class="line">  server.Run(<span class="string">":"</span> + os.Args[<span class="number">1</span>])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight go"><span class="keyword">package</span> main
+
+<span class="keyword">import</span> (
+  <span class="string">&quot;fmt&quot;</span>
+  <span class="string">&quot;github.com/gin-gonic/gin&quot;</span>
+  <span class="string">&quot;gopkg.in/russross/blackfriday.v2&quot;</span>
+  <span class="string">&quot;html/template&quot;</span>
+  <span class="string">&quot;io/ioutil&quot;</span>
+  <span class="string">&quot;log&quot;</span>
+  <span class="string">&quot;net/http&quot;</span>
+  <span class="string">&quot;os&quot;</span>
+)
+
+<span class="keyword">const</span> markdownPath =  <span class="string">&quot;./markdowns/&quot;</span>
+<span class="keyword">const</span> templatePath =  <span class="string">&quot;./templates/&quot;</span>
+
+<span class="keyword">type</span> Post <span class="keyword">struct</span> &#123;
+  Title   <span class="type">string</span>
+  Content template.HTML
+&#125;
+
+<span class="function"><span class="keyword">func</span> <span class="title">initServer</span><span class="params">()</span></span> *gin.Engine &#123;
+  server := gin.Default()
+  server.Use(gin.Logger())
+  server.Delims(<span class="string">&quot;&#123;&#123;&quot;</span>, <span class="string">&quot;&#125;&#125;&quot;</span>)
+
+  <span class="comment">// load html template files</span>
+  server.LoadHTMLGlob(templatePath + <span class="string">&quot;*.html&quot;</span>)
+
+  <span class="keyword">return</span> server
+&#125;
+
+<span class="function"><span class="keyword">func</span> <span class="title">setupRootAPI</span><span class="params">(server *gin.Engine)</span></span> &#123;
+  <span class="comment">// handle the root access</span>
+  server.GET(<span class="string">&quot;/&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;
+    <span class="keyword">var</span> posts []<span class="type">string</span>
+
+    files, err := ioutil.ReadDir(markdownPath)
+    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;
+      log.Fatal(err)
+    &#125;
+
+    <span class="keyword">for</span> _, file := <span class="keyword">range</span> files &#123;
+      fmt.Println(file.Name())
+      posts = <span class="built_in">append</span>(posts, file.Name())
+    &#125;
+
+    c.HTML(
+      http.StatusOK, 
+      <span class="string">&quot;index.html&quot;</span>, 
+      gin.H &#123;<span class="string">&quot;posts&quot;</span>: posts,&#125;
+    )
+  &#125;)
+&#125;
+
+<span class="function"><span class="keyword">func</span> <span class="title">setupPostAPI</span><span class="params">(server *gin.Engine)</span></span> &#123;
+  server.GET(<span class="string">&quot;/:postName&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;
+    postName := c.Param(<span class="string">&quot;postName&quot;</span>)
+
+    mdfile, err := ioutil.ReadFile(markdownPath + postName)
+
+    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;
+      fmt.Println(err)
+      <span class="comment">// handle the error page access</span>
+      c.HTML(http.StatusNotFound, <span class="string">&quot;error.html&quot;</span>, <span class="literal">nil</span>)
+      c.Abort()
+      <span class="keyword">return</span>
+    &#125;
+
+    postHTML := template.HTML(blackfriday.Run([]<span class="type">byte</span>(mdfile)))
+
+    post := Post&#123;Title: postName, Content: postHTML&#125;
+
+    c.HTML(
+      http.StatusOK, 
+      <span class="string">&quot;post.html&quot;</span>, 
+      gin.H&#123;
+        <span class="string">&quot;Title&quot;</span>:   post.Title,
+        <span class="string">&quot;Content&quot;</span>: post.Content,
+      &#125;
+    )
+  &#125;)
+&#125;
+
+
+<span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>  &#123;
+  server := initServer()
+
+  <span class="comment">// setup home API</span>
+  setupRootAPI(server)
+
+  <span class="comment">// handle the post access</span>
+  setupPostAPI(server)
+
+  server.Run(<span class="string">&quot;:&quot;</span> + os.Args[<span class="number">1</span>])
+&#125;</code></pre>
+
 
 <h4 id="Functionality"><a href="#Functionality" class="headerlink" title="Functionality"></a>Functionality</h4><p>Let’s check the main function first. We have 4 steps to run this blog system: </p>
 <ul>
@@ -289,7 +435,7 @@
 <li><strong>setupPostAPI</strong> to set up how to send back the selected post content back to the user.</li>
 <li><strong>server.Run</strong> to run up the server-side.</li>
 </ul>
-<p>It’s pretty straightforward and easy to understand. I think the next step I would need to have  the theme support in this simple blog system like<br><a href="https://ghost.org/marketplace/" target="_blank" rel="noopener">Ghost Themes</a>. You can find the whole project in my Github repo - <a href="https://github.com/wangchauyan/shuyueh-blog" target="_blank" rel="noopener">Mini blog system in Go</a></p>
+<p>It’s pretty straightforward and easy to understand. I think the next step I would need to have  the theme support in this simple blog system like<br><a href="https://ghost.org/marketplace/">Ghost Themes</a>. You can find the whole project in my Github repo - <a href="https://github.com/wangchauyan/shuyueh-blog">Mini blog system in Go</a></p>
 <p>Happy coding. Enjoy.</p>
 
     </div>
@@ -401,9 +547,9 @@
         <p><img src="https://chauyanw.files.wordpress.com/2019/07/logos.jpg?w=2924" alt="logos.jpg?w=2924"></p>
 <h4 id="Why"><a href="#Why" class="headerlink" title="Why"></a>Why</h4><p>I used to use <code>Wordpress</code> to write my blog. But I recently think of creating the blog system by <code>Golang</code> and make it for fun. Here is what I am doing now. The main reason I start doing is that I found the markdown support in Wordpress is slightly weird and hard to use. When I try to change some blog content, the markdown style sometimes won’t show correctly. That makes me feel frustrated. I think that probably might because I am using the free plan in wordpress.com and have less control of my blog.</p>
 <p>So, my goal is quite simple and straightforward. The new blog should fully support markdown content. And it should serve a clean and straightforward interface. Let’s see how I am going to do it.</p>
-<a id="more"></a>
+<span id="more"></span>
 
-<p>Due to the two goals above, here I choose to create it from scratch. I choose to use <a href="https://github.com/gin-gonic/gin" target="_blank" rel="noopener">Go-Gin</a> and <a href="https://github.com/russross/blackfriday" target="_blank" rel="noopener">Blackfriday</a> to build the blog system.</p>
+<p>Due to the two goals above, here I choose to create it from scratch. I choose to use <a href="https://github.com/gin-gonic/gin">Go-Gin</a> and <a href="https://github.com/russross/blackfriday">Blackfriday</a> to build the blog system.</p>
 <p><img src="https://chauyanw.files.wordpress.com/2019/07/quote-talk-is-cheap-show-me-the-code-linus-torvalds-273528.jpg" alt="quote-talk-is-cheap-show-me-the-code-linus-torvalds-273528.jpg"></p>
 <h4 id="Do-it"><a href="#Do-it" class="headerlink" title="Do it"></a>Do it</h4><p><strong>Go Gin</strong></p>
 <blockquote>
@@ -417,21 +563,167 @@
 <p>The first step, create your blog folders with two sub-folder, markdowns, and templates. <code>Markdowns</code> folder is for your blog content post. <code>Templates</code> folder is for the HTML template, which we load posts list and content into an HTML page.</p>
 <p>Let’s check HTML template files first.</p>
 <p><strong>index.html</strong></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"IE=edge"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Chauyan's Murmur<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"dark_theme.css"</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">type</span>=<span class="string">"text/css"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">      &#123;&#123; range .posts &#125;&#125;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/&#123;&#123; . &#125;&#125;"</span>&gt;</span>&#123;&#123; . &#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      &#123;&#123; end &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<pre><code class="highlight html"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span>
+<span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span>
+<span class="tag">&lt;<span class="name">head</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>/&gt;</span>
+  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge&quot;</span>/&gt;</span>
+  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1&quot;</span>/&gt;</span>
+  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Chauyan&#x27;s Murmur<span class="tag">&lt;/<span class="name">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&quot;dark_theme.css&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span>/&gt;</span>
+<span class="tag">&lt;/<span class="name">head</span>&gt;</span>
+<span class="tag">&lt;<span class="name">body</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">ul</span>&gt;</span>
+      &#123;&#123; range .posts &#125;&#125;
+        <span class="tag">&lt;<span class="name">li</span>&gt;</span>
+          <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/&#123;&#123; . &#125;&#125;&quot;</span>&gt;</span>&#123;&#123; . &#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span>
+        <span class="tag">&lt;/<span class="name">li</span>&gt;</span>
+      &#123;&#123; end &#125;&#125;
+    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span>
+  <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">html</span>&gt;</span></code></pre>
 
 <p>It’s pretty simple. It’s just a simple home page with a list of web posts. You can see the </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; &#125;&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="highlight plaintext">&#123;&#123; &#125;&#125;</code></pre>
 <p>buckets wrapped in the template, which is the <code>action</code> in the template by module <code>html/template</code> in Go.</p>
 <p><strong>post.html</strong></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"IE=edge"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>&#123;&#123;.Title&#125;&#125;<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"dark_theme.css"</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">type</span>=<span class="string">"text/css"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">    &#123;&#123;.Content&#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<pre><code class="highlight html"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span>
+<span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span>
+<span class="tag">&lt;<span class="name">head</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>/&gt;</span>
+  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge&quot;</span>/&gt;</span>
+  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1&quot;</span>/&gt;</span>
+  <span class="tag">&lt;<span class="name">title</span>&gt;</span>&#123;&#123;.Title&#125;&#125;<span class="tag">&lt;/<span class="name">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&quot;dark_theme.css&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span>/&gt;</span>
+<span class="tag">&lt;/<span class="name">head</span>&gt;</span>
+<span class="tag">&lt;<span class="name">body</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span>
+    &#123;&#123;.Content&#125;&#125;
+  <span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">html</span>&gt;</span></code></pre>
 
 <p><strong>error.html - 404 not found page</strong></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"IE=edge"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>We've got some trouble | 404 - Resource not found<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"dark_theme.css"</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">type</span>=<span class="string">"text/css"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"cover"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Resource not found</span><br><span class="line">        <span class="tag">&lt;<span class="name">small</span>&gt;</span>Error 404<span class="tag">&lt;/<span class="name">small</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"lead"</span>&gt;</span>The requested resource could not be found but may be available again in the future. <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/"</span>&gt;</span>Go back now!<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">footer</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>Technical Contact: <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"wang.chauyan@gmail.com"</span>&gt;</span>e-mail me<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<pre><code class="highlight html"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span>
+<span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span>
+<span class="tag">&lt;<span class="name">head</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>/&gt;</span>
+    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge&quot;</span>/&gt;</span>
+    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1&quot;</span>/&gt;</span>
+    <span class="tag">&lt;<span class="name">title</span>&gt;</span>We&#x27;ve got some trouble | 404 - Resource not found<span class="tag">&lt;/<span class="name">title</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&quot;dark_theme.css&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span>/&gt;</span>
+<span class="tag">&lt;/<span class="name">head</span>&gt;</span>
+<span class="tag">&lt;<span class="name">body</span>&gt;</span>
+<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;cover&quot;</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Resource not found
+        <span class="tag">&lt;<span class="name">small</span>&gt;</span>Error 404<span class="tag">&lt;/<span class="name">small</span>&gt;</span>
+    <span class="tag">&lt;/<span class="name">h1</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;lead&quot;</span>&gt;</span>The requested resource could not be found but may be available again in the future. <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/&quot;</span>&gt;</span>Go back now!<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+<span class="tag">&lt;<span class="name">footer</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>Technical Contact: <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;wang.chauyan@gmail.com&quot;</span>&gt;</span>e-mail me<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">footer</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">html</span>&gt;</span></code></pre>
 
 <p>Gin would load these template files into our primary function. Let’s take a look of the <code>main.go</code> source code here.</p>
 <p><strong>main.go</strong></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">  <span class="string">"fmt"</span></span><br><span class="line">  <span class="string">"github.com/gin-gonic/gin"</span></span><br><span class="line">  <span class="string">"gopkg.in/russross/blackfriday.v2"</span></span><br><span class="line">  <span class="string">"html/template"</span></span><br><span class="line">  <span class="string">"io/ioutil"</span></span><br><span class="line">  <span class="string">"log"</span></span><br><span class="line">  <span class="string">"net/http"</span></span><br><span class="line">  <span class="string">"os"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> markdownPath =  <span class="string">"./markdowns/"</span></span><br><span class="line"><span class="keyword">const</span> templatePath =  <span class="string">"./templates/"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Post <span class="keyword">struct</span> &#123;</span><br><span class="line">  Title   <span class="keyword">string</span></span><br><span class="line">  Content template.HTML</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">initServer</span><span class="params">()</span> *<span class="title">gin</span>.<span class="title">Engine</span></span> &#123;</span><br><span class="line">  server := gin.Default()</span><br><span class="line">  server.Use(gin.Logger())</span><br><span class="line">  server.Delims(<span class="string">"&#123;&#123;"</span>, <span class="string">"&#125;&#125;"</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// load html template files</span></span><br><span class="line">  server.LoadHTMLGlob(templatePath + <span class="string">"*.html"</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> server</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">setupRootAPI</span><span class="params">(server *gin.Engine)</span></span> &#123;</span><br><span class="line">  <span class="comment">// handle the root access</span></span><br><span class="line">  server.GET(<span class="string">"/"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> posts []<span class="keyword">string</span></span><br><span class="line"></span><br><span class="line">    files, err := ioutil.ReadDir(markdownPath)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">      log.Fatal(err)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> _, file := <span class="keyword">range</span> files &#123;</span><br><span class="line">      fmt.Println(file.Name())</span><br><span class="line">      posts = <span class="built_in">append</span>(posts, file.Name())</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    c.HTML(</span><br><span class="line">      http.StatusOK, </span><br><span class="line">      <span class="string">"index.html"</span>, </span><br><span class="line">      gin.H &#123;<span class="string">"posts"</span>: posts,&#125;</span><br><span class="line">    )</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">setupPostAPI</span><span class="params">(server *gin.Engine)</span></span> &#123;</span><br><span class="line">  server.GET(<span class="string">"/:postName"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    postName := c.Param(<span class="string">"postName"</span>)</span><br><span class="line"></span><br><span class="line">    mdfile, err := ioutil.ReadFile(markdownPath + postName)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">      fmt.Println(err)</span><br><span class="line">      <span class="comment">// handle the error page access</span></span><br><span class="line">      c.HTML(http.StatusNotFound, <span class="string">"error.html"</span>, <span class="literal">nil</span>)</span><br><span class="line">      c.Abort()</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    postHTML := template.HTML(blackfriday.Run([]<span class="keyword">byte</span>(mdfile)))</span><br><span class="line"></span><br><span class="line">    post := Post&#123;Title: postName, Content: postHTML&#125;</span><br><span class="line"></span><br><span class="line">    c.HTML(</span><br><span class="line">      http.StatusOK, </span><br><span class="line">      <span class="string">"post.html"</span>, </span><br><span class="line">      gin.H&#123;</span><br><span class="line">        <span class="string">"Title"</span>:   post.Title,</span><br><span class="line">        <span class="string">"Content"</span>: post.Content,</span><br><span class="line">      &#125;</span><br><span class="line">    )</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>  &#123;</span><br><span class="line">  server := initServer()</span><br><span class="line"></span><br><span class="line">  <span class="comment">// setup home API</span></span><br><span class="line">  setupRootAPI(server)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// handle the post access</span></span><br><span class="line">  setupPostAPI(server)</span><br><span class="line"></span><br><span class="line">  server.Run(<span class="string">":"</span> + os.Args[<span class="number">1</span>])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight go"><span class="keyword">package</span> main
+
+<span class="keyword">import</span> (
+  <span class="string">&quot;fmt&quot;</span>
+  <span class="string">&quot;github.com/gin-gonic/gin&quot;</span>
+  <span class="string">&quot;gopkg.in/russross/blackfriday.v2&quot;</span>
+  <span class="string">&quot;html/template&quot;</span>
+  <span class="string">&quot;io/ioutil&quot;</span>
+  <span class="string">&quot;log&quot;</span>
+  <span class="string">&quot;net/http&quot;</span>
+  <span class="string">&quot;os&quot;</span>
+)
+
+<span class="keyword">const</span> markdownPath =  <span class="string">&quot;./markdowns/&quot;</span>
+<span class="keyword">const</span> templatePath =  <span class="string">&quot;./templates/&quot;</span>
+
+<span class="keyword">type</span> Post <span class="keyword">struct</span> &#123;
+  Title   <span class="type">string</span>
+  Content template.HTML
+&#125;
+
+<span class="function"><span class="keyword">func</span> <span class="title">initServer</span><span class="params">()</span></span> *gin.Engine &#123;
+  server := gin.Default()
+  server.Use(gin.Logger())
+  server.Delims(<span class="string">&quot;&#123;&#123;&quot;</span>, <span class="string">&quot;&#125;&#125;&quot;</span>)
+
+  <span class="comment">// load html template files</span>
+  server.LoadHTMLGlob(templatePath + <span class="string">&quot;*.html&quot;</span>)
+
+  <span class="keyword">return</span> server
+&#125;
+
+<span class="function"><span class="keyword">func</span> <span class="title">setupRootAPI</span><span class="params">(server *gin.Engine)</span></span> &#123;
+  <span class="comment">// handle the root access</span>
+  server.GET(<span class="string">&quot;/&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;
+    <span class="keyword">var</span> posts []<span class="type">string</span>
+
+    files, err := ioutil.ReadDir(markdownPath)
+    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;
+      log.Fatal(err)
+    &#125;
+
+    <span class="keyword">for</span> _, file := <span class="keyword">range</span> files &#123;
+      fmt.Println(file.Name())
+      posts = <span class="built_in">append</span>(posts, file.Name())
+    &#125;
+
+    c.HTML(
+      http.StatusOK, 
+      <span class="string">&quot;index.html&quot;</span>, 
+      gin.H &#123;<span class="string">&quot;posts&quot;</span>: posts,&#125;
+    )
+  &#125;)
+&#125;
+
+<span class="function"><span class="keyword">func</span> <span class="title">setupPostAPI</span><span class="params">(server *gin.Engine)</span></span> &#123;
+  server.GET(<span class="string">&quot;/:postName&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;
+    postName := c.Param(<span class="string">&quot;postName&quot;</span>)
+
+    mdfile, err := ioutil.ReadFile(markdownPath + postName)
+
+    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;
+      fmt.Println(err)
+      <span class="comment">// handle the error page access</span>
+      c.HTML(http.StatusNotFound, <span class="string">&quot;error.html&quot;</span>, <span class="literal">nil</span>)
+      c.Abort()
+      <span class="keyword">return</span>
+    &#125;
+
+    postHTML := template.HTML(blackfriday.Run([]<span class="type">byte</span>(mdfile)))
+
+    post := Post&#123;Title: postName, Content: postHTML&#125;
+
+    c.HTML(
+      http.StatusOK, 
+      <span class="string">&quot;post.html&quot;</span>, 
+      gin.H&#123;
+        <span class="string">&quot;Title&quot;</span>:   post.Title,
+        <span class="string">&quot;Content&quot;</span>: post.Content,
+      &#125;
+    )
+  &#125;)
+&#125;
+
+
+<span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>  &#123;
+  server := initServer()
+
+  <span class="comment">// setup home API</span>
+  setupRootAPI(server)
+
+  <span class="comment">// handle the post access</span>
+  setupPostAPI(server)
+
+  server.Run(<span class="string">&quot;:&quot;</span> + os.Args[<span class="number">1</span>])
+&#125;</code></pre>
+
 
 <h4 id="Functionality"><a href="#Functionality" class="headerlink" title="Functionality"></a>Functionality</h4><p>Let’s check the main function first. We have 4 steps to run this blog system: </p>
 <ul>
@@ -440,7 +732,7 @@
 <li><strong>setupPostAPI</strong> to set up how to send back the selected post content back to the user.</li>
 <li><strong>server.Run</strong> to run up the server-side.</li>
 </ul>
-<p>It’s pretty straightforward and easy to understand. I think the next step I would need to have  the theme support in this simple blog system like<br><a href="https://ghost.org/marketplace/" target="_blank" rel="noopener">Ghost Themes</a>. You can find the whole project in my Github repo - <a href="https://github.com/wangchauyan/shuyueh-blog" target="_blank" rel="noopener">Mini blog system in Go</a></p>
+<p>It’s pretty straightforward and easy to understand. I think the next step I would need to have  the theme support in this simple blog system like<br><a href="https://ghost.org/marketplace/">Ghost Themes</a>. You can find the whole project in my Github repo - <a href="https://github.com/wangchauyan/shuyueh-blog">Mini blog system in Go</a></p>
 <p>Happy coding. Enjoy.</p>
 
     </div>

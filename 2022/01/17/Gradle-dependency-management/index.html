@@ -246,23 +246,50 @@
       
         <p><img src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Gradle_logo.png" alt="gradle logo"></p>
 <h3 id="Gradle-Dependency-Management"><a href="#Gradle-Dependency-Management" class="headerlink" title="Gradle Dependency Management"></a>Gradle Dependency Management</h3><p>If you are using single module architecture in your project, there’s no problem. But multi-module Android projects are the primary way to develop an Android App now, and it’s highly recommended to use this way to take advantage of performance improvements with Android Gradle Plugin (AGP) 3+. However, when the module size increases, we encounter a big issue - dependency management in each module.</p>
-<a id="more"></a>
+<span id="more"></span>
 
 <p>Here we are going to introduce some solutions for Gradle dependency management. </p>
 <h4 id="Manual-management"><a href="#Manual-management" class="headerlink" title="Manual management"></a>Manual management</h4><p>Not a recommended way to do, you might see there are many duplicated dependency code in different modules, for example: </p>
-<p><strong>Module_A/build.gradle</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">implementation &quot;com.android.support:support-annotations:27.0.2&quot;</span><br><span class="line">implementation &quot;com.android.support:appcompat-v7:27.0.2&quot;</span><br><span class="line">implementation &quot;com.squareup.retrofit2:retrofit:2.3.0&quot;</span><br><span class="line">implementation &quot;com.squareup.retrofit2:adapter-rxjava2:2.3.0&quot;</span><br><span class="line">implementation &quot;io.reactivex.rxjava2:rxjava:2.1.9&quot;</span><br></pre></td></tr></table></figure>
+<p><strong>Module_A&#x2F;build.gradle</strong></p>
+<pre><code class="highlight script">implementation &quot;com.android.support:support-annotations:27.0.2&quot;
+implementation &quot;com.android.support:appcompat-v7:27.0.2&quot;
+implementation &quot;com.squareup.retrofit2:retrofit:2.3.0&quot;
+implementation &quot;com.squareup.retrofit2:adapter-rxjava2:2.3.0&quot;
+implementation &quot;io.reactivex.rxjava2:rxjava:2.1.9&quot;</code></pre>
 
-<p><strong>Module_B/build.gradle</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">implementation &quot;com.android.support:support-annotations:27.0.2&quot;</span><br><span class="line">implementation &quot;com.android.support:appcompat-v7:27.0.2&quot;</span><br><span class="line">implementation &quot;com.squareup.retrofit2:retrofit:2.3.0&quot;</span><br><span class="line">implementation &quot;com.squareup.retrofit2:adapter-rxjava2:2.3.0&quot;</span><br><span class="line">implementation &quot;io.reactivex.rxjava2:rxjava:2.1.9&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Module_B&#x2F;build.gradle</strong></p>
+<pre><code class="highlight script">implementation &quot;com.android.support:support-annotations:27.0.2&quot;
+implementation &quot;com.android.support:appcompat-v7:27.0.2&quot;
+implementation &quot;com.squareup.retrofit2:retrofit:2.3.0&quot;
+implementation &quot;com.squareup.retrofit2:adapter-rxjava2:2.3.0&quot;
+implementation &quot;io.reactivex.rxjava2:rxjava:2.1.9&quot;</code></pre>
 
 <p>This is not a good way and is painful. You will need to dive into different modules and copy-paste almost the same dependencies for each module. </p>
 <h4 id="Google-Ext-Section"><a href="#Google-Ext-Section" class="headerlink" title="Google Ext Section"></a>Google Ext Section</h4><p>This is the way recommended by <a href="!https://developer.android.com/studio/build/gradle-tips#configure-project-wide-properties">Google</a>. First of all, we need to define a project-level build.gradle and put the version and library information inside. </p>
 <p><strong>Project-level build.Gradle</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">buildscript &#123;...&#125;</span><br><span class="line">allprojects &#123;...&#125;  </span><br><span class="line">  </span><br><span class="line">// The following are only a few examples of the types of properties you can define.  </span><br><span class="line">extra[&quot;sdkVersion&quot;] = 28  </span><br><span class="line">extra[&quot;supportLibVersion&quot;] = &quot;28.0.0&quot;  </span><br><span class="line">  </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight script">buildscript &#123;...&#125;
+allprojects &#123;...&#125;  
+  
+// The following are only a few examples of the types of properties you can define.  
+extra[&quot;sdkVersion&quot;] = 28  
+extra[&quot;supportLibVersion&quot;] = &quot;28.0.0&quot;  
+  
+...</code></pre>
 
 <p>After that, we need to define the module-level build.gradle file, </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">android &#123;  </span><br><span class="line">// Use the following syntax to access properties you define at the project level:  // rootProject.ext.property_name  </span><br><span class="line">  val sdkVersion: Int by rootProject.extra  </span><br><span class="line">  compileSdkVersion(sdkVersion)  </span><br><span class="line">  ...  </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">dependencies &#123; </span><br><span class="line">	implementation(&quot;com.android.support:appcompat-v7:$&#123;rootProject.extra[&quot;supportLibVersion&quot;]&#125;&quot;)  ...  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight script">android &#123;  
+// Use the following syntax to access properties you define at the project level:  // rootProject.ext.property_name  
+  val sdkVersion: Int by rootProject.extra  
+  compileSdkVersion(sdkVersion)  
+  ...  
+&#125; 
+
+...
+
+dependencies &#123; 
+	implementation(&quot;com.android.support:appcompat-v7:$&#123;rootProject.extra[&quot;supportLibVersion&quot;]&#125;&quot;)  ...  
+&#125;</code></pre>
 
 <p>By using this way, it’s very convenient to manage all dependencies in a single file. That’s a considerable improvement. </p>
 <h4 id="Kotlin-buildSrc"><a href="#Kotlin-buildSrc" class="headerlink" title="Kotlin buildSrc"></a>Kotlin buildSrc</h4><p>When I was at Cruse, we switched our dependency management to this way. You need to create a <code>buildSrc</code> module with Kotlin code to manage dependencies. The most significant benefit you can gain is leveraging the IDE completion support when importing a dependency. </p>
@@ -271,26 +298,55 @@
 <li><p>Create a <code>buildSrc</code> module </p>
 </li>
 <li><p>Create <code>build.gradle.kts</code> file to enable this feature. </p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    `kotlin-dsl`</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ <pre><code class="highlight script">plugins &#123;
+    `kotlin-dsl`
+&#125;</code></pre>
 </li>
 <li><p>Create your dependency file, for example, ProjectDependency.kt</p>
 </li>
 </ol>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">object</span> Versions &#123;</span><br><span class="line">    <span class="keyword">val</span> retrofit = <span class="string">"x.y.z"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">object</span> Libs &#123;</span><br><span class="line">	<span class="keyword">val</span> retrofit = <span class="string">"com.squareup.retrofit2:retrofit:<span class="subst">$&#123;Versions.retrofit&#125;</span>"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="keyword">object</span> Versions &#123;
+    <span class="keyword">val</span> retrofit = <span class="string">&quot;x.y.z&quot;</span>
+&#125;
+
+<span class="keyword">object</span> Libs &#123;
+	<span class="keyword">val</span> retrofit = <span class="string">&quot;com.squareup.retrofit2:retrofit:<span class="subst">$&#123;Versions.retrofit&#125;</span>&quot;</span>
+&#125;</code></pre>
 
 <p>After creating those files, we can start using those defined dependencies in our module-level build.gradle files. </p>
 <h4 id="Gradle-Version-Catalog"><a href="#Gradle-Version-Catalog" class="headerlink" title="Gradle Version Catalog"></a>Gradle Version Catalog</h4><p>Based on the Gradle <a href="!https://docs.gradle.org/current/userguide/platforms.html">document</a>, central declaration of dependencies is an incubating feature. It requires the activation of the <code>VERSION_CATALOGS</code> : </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">enableFeaturePreview(&apos;VERSION_CATALOGS&apos;)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight script">enableFeaturePreview(&#x27;VERSION_CATALOGS&#x27;)</code></pre>
 
 <p>Here is an example to show how to define your version catalog: </p>
 <p><strong>settings.gradle.kts</strong></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">dependencyResolutionManagement &#123;</span><br><span class="line">	versionCatalogs &#123;</span><br><span class="line">		create(<span class="string">"libs"</span>) &#123;</span><br><span class="line">			alias(<span class="string">"groovy-core"</span>).to(<span class="string">"org.codehaus.groovy:groovy:3.0.5"</span>)</span><br><span class="line">			alias(<span class="string">"groovy-json"</span>).to(<span class="string">"org.codehaus.groovy:groovy-json:3.0.5"</span>)</span><br><span class="line">			alias(<span class="string">"groovy-nio"</span>).to(<span class="string">"org.codehaus.groovy:groovy-nio:3.0.5"</span>)</span><br><span class="line">			alias(<span class="string">"commons-lang3"</span>).to(<span class="string">"org.apache.commons"</span>, <span class="string">"commons-lang3"</span>).version &#123;</span><br><span class="line">				strictly(<span class="string">"[3.8, 4.0["</span>)</span><br><span class="line">				prefer(<span class="string">"3.9"</span>)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight Kotlin">dependencyResolutionManagement &#123;
+	versionCatalogs &#123;
+		create(<span class="string">&quot;libs&quot;</span>) &#123;
+			alias(<span class="string">&quot;groovy-core&quot;</span>).to(<span class="string">&quot;org.codehaus.groovy:groovy:3.0.5&quot;</span>)
+			alias(<span class="string">&quot;groovy-json&quot;</span>).to(<span class="string">&quot;org.codehaus.groovy:groovy-json:3.0.5&quot;</span>)
+			alias(<span class="string">&quot;groovy-nio&quot;</span>).to(<span class="string">&quot;org.codehaus.groovy:groovy-nio:3.0.5&quot;</span>)
+			alias(<span class="string">&quot;commons-lang3&quot;</span>).to(<span class="string">&quot;org.apache.commons&quot;</span>, <span class="string">&quot;commons-lang3&quot;</span>).version &#123;
+				strictly(<span class="string">&quot;[3.8, 4.0[&quot;</span>)
+				prefer(<span class="string">&quot;3.9&quot;</span>)
+			&#125;
+		&#125;
+	&#125;
+&#125;</code></pre>
 
 <p>Based on this example, you can find the rules as following: </p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">dependencyResolutionManagement &#123;  </span><br><span class="line">	versionCatalogs &#123;  </span><br><span class="line">		create(<span class="string">"libs"</span>) &#123;  </span><br><span class="line">			version(<span class="string">'version name'</span>, <span class="string">'version code'</span>)  </span><br><span class="line">			alias(<span class="string">'alias-sample'</span>).to(<span class="string">'group'</span>, <span class="string">'artifact'</span>).versionRef(<span class="string">'version name'</span>)  </span><br><span class="line">			alias(<span class="string">'alias.sample'</span>).to(<span class="string">'group'</span>, <span class="string">'artifact'</span>).versionRef(<span class="string">'version name'</span>)  </span><br><span class="line">			bundle(<span class="string">'bundle-set'</span>, [<span class="string">'alias-sample'</span>, <span class="string">'alias.sample'</span>])  </span><br><span class="line">		&#125;  </span><br><span class="line">	&#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin">dependencyResolutionManagement &#123;  
+	versionCatalogs &#123;  
+		create(<span class="string">&quot;libs&quot;</span>) &#123;  
+			version(<span class="string">&#x27;version name&#x27;</span>, <span class="string">&#x27;version code&#x27;</span>)  
+			alias(<span class="string">&#x27;alias-sample&#x27;</span>).to(<span class="string">&#x27;group&#x27;</span>, <span class="string">&#x27;artifact&#x27;</span>).versionRef(<span class="string">&#x27;version name&#x27;</span>)  
+			alias(<span class="string">&#x27;alias.sample&#x27;</span>).to(<span class="string">&#x27;group&#x27;</span>, <span class="string">&#x27;artifact&#x27;</span>).versionRef(<span class="string">&#x27;version name&#x27;</span>)  
+			bundle(<span class="string">&#x27;bundle-set&#x27;</span>, [<span class="string">&#x27;alias-sample&#x27;</span>, <span class="string">&#x27;alias.sample&#x27;</span>])  
+		&#125;  
+	&#125;  
+&#125;</code></pre>
 
 <p>It enables you to define your alias and bundle at the top level. You can use them in different modules like, <code>libs.alias.sample</code> or <code>bundle.bundle.set</code> . Version catalogs support autocompletion in the IDE through their type-safe accessors generated by Gradle.</p>
-<p>Gradle also supports TOML for the version catalog feature. You would need to create a file called <code>libs.versions.toml</code> in the <code>gradle</code> subdirectory of the root build, then a catalog will be automatically declared with the contents of this file. The <a href="https://toml.io/" target="_blank" rel="noopener">TOML</a> file consists of 4 major sections:</p>
+<p>Gradle also supports TOML for the version catalog feature. You would need to create a file called <code>libs.versions.toml</code> in the <code>gradle</code> subdirectory of the root build, then a catalog will be automatically declared with the contents of this file. The <a href="https://toml.io/">TOML</a> file consists of 4 major sections:</p>
 <ul>
 <li>the <code>[versions]</code> section is used to declare versions that dependencies can reference</li>
 <li>the <code>[libraries]</code> section is used to declare the aliases to coordinates</li>
@@ -298,13 +354,38 @@
 <li>the <code>[plugins]</code> section is used to declare plugins</li>
 </ul>
 <p>Here is an example for this file: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[versions]</span><br><span class="line">groovy = &quot;3.0.5&quot;</span><br><span class="line">checkstyle = &quot;8.37&quot;</span><br><span class="line"></span><br><span class="line">[libraries]</span><br><span class="line">groovy-core = &#123; module = &quot;org.codehaus.groovy:groovy&quot;, version.ref = &quot;groovy&quot; &#125;</span><br><span class="line">groovy-json = &#123; module = &quot;org.codehaus.groovy:groovy-json&quot;, version.ref = &quot;groovy&quot; &#125;</span><br><span class="line">groovy-nio = &#123; module = &quot;org.codehaus.groovy:groovy-nio&quot;, version.ref = &quot;groovy&quot; &#125;</span><br><span class="line">commons-lang3 = &#123; group = &quot;org.apache.commons&quot;, name = &quot;commons-lang3&quot;, version = &#123; strictly = &quot;[3.8, 4.0[&quot;, prefer=&quot;3.9&quot; &#125; &#125;</span><br><span class="line"></span><br><span class="line">[bundles]</span><br><span class="line">groovy = [&quot;groovy-core&quot;, &quot;groovy-json&quot;, &quot;groovy-nio&quot;]</span><br><span class="line"></span><br><span class="line">[plugins]</span><br><span class="line">jmh = &#123; id = &quot;me.champeau.jmh&quot;, version = &quot;0.6.5&quot; &#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight script">[versions]
+groovy = &quot;3.0.5&quot;
+checkstyle = &quot;8.37&quot;
+
+[libraries]
+groovy-core = &#123; module = &quot;org.codehaus.groovy:groovy&quot;, version.ref = &quot;groovy&quot; &#125;
+groovy-json = &#123; module = &quot;org.codehaus.groovy:groovy-json&quot;, version.ref = &quot;groovy&quot; &#125;
+groovy-nio = &#123; module = &quot;org.codehaus.groovy:groovy-nio&quot;, version.ref = &quot;groovy&quot; &#125;
+commons-lang3 = &#123; group = &quot;org.apache.commons&quot;, name = &quot;commons-lang3&quot;, version = &#123; strictly = &quot;[3.8, 4.0[&quot;, prefer=&quot;3.9&quot; &#125; &#125;
+
+[bundles]
+groovy = [&quot;groovy-core&quot;, &quot;groovy-json&quot;, &quot;groovy-nio&quot;]
+
+[plugins]
+jmh = &#123; id = &quot;me.champeau.jmh&quot;, version = &quot;0.6.5&quot; &#125;</code></pre>
 
 <p>The usage is very similar when you define those parameters in your gradle files. For example, </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// access version section </span><br><span class="line">buildscript &#123;</span><br><span class="line">	dependencies &#123;</span><br><span class="line">		classpath &quot;lib.x.y.z:$&#123;libs.versions.groovy.get()&#125;&quot;  </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// access a single dependency</span><br><span class="line">implementation libs.groovy.core</span><br><span class="line"></span><br><span class="line">// access a bundle </span><br><span class="line">implementation libs.bundles.groovy</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight script">// access version section 
+buildscript &#123;
+	dependencies &#123;
+		classpath &quot;lib.x.y.z:$&#123;libs.versions.groovy.get()&#125;&quot;  
+	&#125;
+&#125;
+
+// access a single dependency
+implementation libs.groovy.core
+
+// access a bundle 
+implementation libs.bundles.groovy</code></pre>
 
 <p>That’s it. Enjoy the coding. </p>
-<p>#Android #Android/Gradle/VersionCatalog </p>
+<p>#Android #Android&#x2F;Gradle&#x2F;VersionCatalog </p>
 
     </div>
 
@@ -412,23 +493,50 @@
       
         <p><img src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Gradle_logo.png" alt="gradle logo"></p>
 <h3 id="Gradle-Dependency-Management"><a href="#Gradle-Dependency-Management" class="headerlink" title="Gradle Dependency Management"></a>Gradle Dependency Management</h3><p>If you are using single module architecture in your project, there’s no problem. But multi-module Android projects are the primary way to develop an Android App now, and it’s highly recommended to use this way to take advantage of performance improvements with Android Gradle Plugin (AGP) 3+. However, when the module size increases, we encounter a big issue - dependency management in each module.</p>
-<a id="more"></a>
+<span id="more"></span>
 
 <p>Here we are going to introduce some solutions for Gradle dependency management. </p>
 <h4 id="Manual-management"><a href="#Manual-management" class="headerlink" title="Manual management"></a>Manual management</h4><p>Not a recommended way to do, you might see there are many duplicated dependency code in different modules, for example: </p>
-<p><strong>Module_A/build.gradle</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">implementation &quot;com.android.support:support-annotations:27.0.2&quot;</span><br><span class="line">implementation &quot;com.android.support:appcompat-v7:27.0.2&quot;</span><br><span class="line">implementation &quot;com.squareup.retrofit2:retrofit:2.3.0&quot;</span><br><span class="line">implementation &quot;com.squareup.retrofit2:adapter-rxjava2:2.3.0&quot;</span><br><span class="line">implementation &quot;io.reactivex.rxjava2:rxjava:2.1.9&quot;</span><br></pre></td></tr></table></figure>
+<p><strong>Module_A&#x2F;build.gradle</strong></p>
+<pre><code class="highlight script">implementation &quot;com.android.support:support-annotations:27.0.2&quot;
+implementation &quot;com.android.support:appcompat-v7:27.0.2&quot;
+implementation &quot;com.squareup.retrofit2:retrofit:2.3.0&quot;
+implementation &quot;com.squareup.retrofit2:adapter-rxjava2:2.3.0&quot;
+implementation &quot;io.reactivex.rxjava2:rxjava:2.1.9&quot;</code></pre>
 
-<p><strong>Module_B/build.gradle</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">implementation &quot;com.android.support:support-annotations:27.0.2&quot;</span><br><span class="line">implementation &quot;com.android.support:appcompat-v7:27.0.2&quot;</span><br><span class="line">implementation &quot;com.squareup.retrofit2:retrofit:2.3.0&quot;</span><br><span class="line">implementation &quot;com.squareup.retrofit2:adapter-rxjava2:2.3.0&quot;</span><br><span class="line">implementation &quot;io.reactivex.rxjava2:rxjava:2.1.9&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Module_B&#x2F;build.gradle</strong></p>
+<pre><code class="highlight script">implementation &quot;com.android.support:support-annotations:27.0.2&quot;
+implementation &quot;com.android.support:appcompat-v7:27.0.2&quot;
+implementation &quot;com.squareup.retrofit2:retrofit:2.3.0&quot;
+implementation &quot;com.squareup.retrofit2:adapter-rxjava2:2.3.0&quot;
+implementation &quot;io.reactivex.rxjava2:rxjava:2.1.9&quot;</code></pre>
 
 <p>This is not a good way and is painful. You will need to dive into different modules and copy-paste almost the same dependencies for each module. </p>
 <h4 id="Google-Ext-Section"><a href="#Google-Ext-Section" class="headerlink" title="Google Ext Section"></a>Google Ext Section</h4><p>This is the way recommended by <a href="!https://developer.android.com/studio/build/gradle-tips#configure-project-wide-properties">Google</a>. First of all, we need to define a project-level build.gradle and put the version and library information inside. </p>
 <p><strong>Project-level build.Gradle</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">buildscript &#123;...&#125;</span><br><span class="line">allprojects &#123;...&#125;  </span><br><span class="line">  </span><br><span class="line">// The following are only a few examples of the types of properties you can define.  </span><br><span class="line">extra[&quot;sdkVersion&quot;] = 28  </span><br><span class="line">extra[&quot;supportLibVersion&quot;] = &quot;28.0.0&quot;  </span><br><span class="line">  </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight script">buildscript &#123;...&#125;
+allprojects &#123;...&#125;  
+  
+// The following are only a few examples of the types of properties you can define.  
+extra[&quot;sdkVersion&quot;] = 28  
+extra[&quot;supportLibVersion&quot;] = &quot;28.0.0&quot;  
+  
+...</code></pre>
 
 <p>After that, we need to define the module-level build.gradle file, </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">android &#123;  </span><br><span class="line">// Use the following syntax to access properties you define at the project level:  // rootProject.ext.property_name  </span><br><span class="line">  val sdkVersion: Int by rootProject.extra  </span><br><span class="line">  compileSdkVersion(sdkVersion)  </span><br><span class="line">  ...  </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">dependencies &#123; </span><br><span class="line">	implementation(&quot;com.android.support:appcompat-v7:$&#123;rootProject.extra[&quot;supportLibVersion&quot;]&#125;&quot;)  ...  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight script">android &#123;  
+// Use the following syntax to access properties you define at the project level:  // rootProject.ext.property_name  
+  val sdkVersion: Int by rootProject.extra  
+  compileSdkVersion(sdkVersion)  
+  ...  
+&#125; 
+
+...
+
+dependencies &#123; 
+	implementation(&quot;com.android.support:appcompat-v7:$&#123;rootProject.extra[&quot;supportLibVersion&quot;]&#125;&quot;)  ...  
+&#125;</code></pre>
 
 <p>By using this way, it’s very convenient to manage all dependencies in a single file. That’s a considerable improvement. </p>
 <h4 id="Kotlin-buildSrc"><a href="#Kotlin-buildSrc" class="headerlink" title="Kotlin buildSrc"></a>Kotlin buildSrc</h4><p>When I was at Cruse, we switched our dependency management to this way. You need to create a <code>buildSrc</code> module with Kotlin code to manage dependencies. The most significant benefit you can gain is leveraging the IDE completion support when importing a dependency. </p>
@@ -437,26 +545,55 @@
 <li><p>Create a <code>buildSrc</code> module </p>
 </li>
 <li><p>Create <code>build.gradle.kts</code> file to enable this feature. </p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    `kotlin-dsl`</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ <pre><code class="highlight script">plugins &#123;
+    `kotlin-dsl`
+&#125;</code></pre>
 </li>
 <li><p>Create your dependency file, for example, ProjectDependency.kt</p>
 </li>
 </ol>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">object</span> Versions &#123;</span><br><span class="line">    <span class="keyword">val</span> retrofit = <span class="string">"x.y.z"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">object</span> Libs &#123;</span><br><span class="line">	<span class="keyword">val</span> retrofit = <span class="string">"com.squareup.retrofit2:retrofit:<span class="subst">$&#123;Versions.retrofit&#125;</span>"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin"><span class="keyword">object</span> Versions &#123;
+    <span class="keyword">val</span> retrofit = <span class="string">&quot;x.y.z&quot;</span>
+&#125;
+
+<span class="keyword">object</span> Libs &#123;
+	<span class="keyword">val</span> retrofit = <span class="string">&quot;com.squareup.retrofit2:retrofit:<span class="subst">$&#123;Versions.retrofit&#125;</span>&quot;</span>
+&#125;</code></pre>
 
 <p>After creating those files, we can start using those defined dependencies in our module-level build.gradle files. </p>
 <h4 id="Gradle-Version-Catalog"><a href="#Gradle-Version-Catalog" class="headerlink" title="Gradle Version Catalog"></a>Gradle Version Catalog</h4><p>Based on the Gradle <a href="!https://docs.gradle.org/current/userguide/platforms.html">document</a>, central declaration of dependencies is an incubating feature. It requires the activation of the <code>VERSION_CATALOGS</code> : </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">enableFeaturePreview(&apos;VERSION_CATALOGS&apos;)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight script">enableFeaturePreview(&#x27;VERSION_CATALOGS&#x27;)</code></pre>
 
 <p>Here is an example to show how to define your version catalog: </p>
 <p><strong>settings.gradle.kts</strong></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">dependencyResolutionManagement &#123;</span><br><span class="line">	versionCatalogs &#123;</span><br><span class="line">		create(<span class="string">"libs"</span>) &#123;</span><br><span class="line">			alias(<span class="string">"groovy-core"</span>).to(<span class="string">"org.codehaus.groovy:groovy:3.0.5"</span>)</span><br><span class="line">			alias(<span class="string">"groovy-json"</span>).to(<span class="string">"org.codehaus.groovy:groovy-json:3.0.5"</span>)</span><br><span class="line">			alias(<span class="string">"groovy-nio"</span>).to(<span class="string">"org.codehaus.groovy:groovy-nio:3.0.5"</span>)</span><br><span class="line">			alias(<span class="string">"commons-lang3"</span>).to(<span class="string">"org.apache.commons"</span>, <span class="string">"commons-lang3"</span>).version &#123;</span><br><span class="line">				strictly(<span class="string">"[3.8, 4.0["</span>)</span><br><span class="line">				prefer(<span class="string">"3.9"</span>)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight Kotlin">dependencyResolutionManagement &#123;
+	versionCatalogs &#123;
+		create(<span class="string">&quot;libs&quot;</span>) &#123;
+			alias(<span class="string">&quot;groovy-core&quot;</span>).to(<span class="string">&quot;org.codehaus.groovy:groovy:3.0.5&quot;</span>)
+			alias(<span class="string">&quot;groovy-json&quot;</span>).to(<span class="string">&quot;org.codehaus.groovy:groovy-json:3.0.5&quot;</span>)
+			alias(<span class="string">&quot;groovy-nio&quot;</span>).to(<span class="string">&quot;org.codehaus.groovy:groovy-nio:3.0.5&quot;</span>)
+			alias(<span class="string">&quot;commons-lang3&quot;</span>).to(<span class="string">&quot;org.apache.commons&quot;</span>, <span class="string">&quot;commons-lang3&quot;</span>).version &#123;
+				strictly(<span class="string">&quot;[3.8, 4.0[&quot;</span>)
+				prefer(<span class="string">&quot;3.9&quot;</span>)
+			&#125;
+		&#125;
+	&#125;
+&#125;</code></pre>
 
 <p>Based on this example, you can find the rules as following: </p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">dependencyResolutionManagement &#123;  </span><br><span class="line">	versionCatalogs &#123;  </span><br><span class="line">		create(<span class="string">"libs"</span>) &#123;  </span><br><span class="line">			version(<span class="string">'version name'</span>, <span class="string">'version code'</span>)  </span><br><span class="line">			alias(<span class="string">'alias-sample'</span>).to(<span class="string">'group'</span>, <span class="string">'artifact'</span>).versionRef(<span class="string">'version name'</span>)  </span><br><span class="line">			alias(<span class="string">'alias.sample'</span>).to(<span class="string">'group'</span>, <span class="string">'artifact'</span>).versionRef(<span class="string">'version name'</span>)  </span><br><span class="line">			bundle(<span class="string">'bundle-set'</span>, [<span class="string">'alias-sample'</span>, <span class="string">'alias.sample'</span>])  </span><br><span class="line">		&#125;  </span><br><span class="line">	&#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight kotlin">dependencyResolutionManagement &#123;  
+	versionCatalogs &#123;  
+		create(<span class="string">&quot;libs&quot;</span>) &#123;  
+			version(<span class="string">&#x27;version name&#x27;</span>, <span class="string">&#x27;version code&#x27;</span>)  
+			alias(<span class="string">&#x27;alias-sample&#x27;</span>).to(<span class="string">&#x27;group&#x27;</span>, <span class="string">&#x27;artifact&#x27;</span>).versionRef(<span class="string">&#x27;version name&#x27;</span>)  
+			alias(<span class="string">&#x27;alias.sample&#x27;</span>).to(<span class="string">&#x27;group&#x27;</span>, <span class="string">&#x27;artifact&#x27;</span>).versionRef(<span class="string">&#x27;version name&#x27;</span>)  
+			bundle(<span class="string">&#x27;bundle-set&#x27;</span>, [<span class="string">&#x27;alias-sample&#x27;</span>, <span class="string">&#x27;alias.sample&#x27;</span>])  
+		&#125;  
+	&#125;  
+&#125;</code></pre>
 
 <p>It enables you to define your alias and bundle at the top level. You can use them in different modules like, <code>libs.alias.sample</code> or <code>bundle.bundle.set</code> . Version catalogs support autocompletion in the IDE through their type-safe accessors generated by Gradle.</p>
-<p>Gradle also supports TOML for the version catalog feature. You would need to create a file called <code>libs.versions.toml</code> in the <code>gradle</code> subdirectory of the root build, then a catalog will be automatically declared with the contents of this file. The <a href="https://toml.io/" target="_blank" rel="noopener">TOML</a> file consists of 4 major sections:</p>
+<p>Gradle also supports TOML for the version catalog feature. You would need to create a file called <code>libs.versions.toml</code> in the <code>gradle</code> subdirectory of the root build, then a catalog will be automatically declared with the contents of this file. The <a href="https://toml.io/">TOML</a> file consists of 4 major sections:</p>
 <ul>
 <li>the <code>[versions]</code> section is used to declare versions that dependencies can reference</li>
 <li>the <code>[libraries]</code> section is used to declare the aliases to coordinates</li>
@@ -464,13 +601,38 @@
 <li>the <code>[plugins]</code> section is used to declare plugins</li>
 </ul>
 <p>Here is an example for this file: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[versions]</span><br><span class="line">groovy = &quot;3.0.5&quot;</span><br><span class="line">checkstyle = &quot;8.37&quot;</span><br><span class="line"></span><br><span class="line">[libraries]</span><br><span class="line">groovy-core = &#123; module = &quot;org.codehaus.groovy:groovy&quot;, version.ref = &quot;groovy&quot; &#125;</span><br><span class="line">groovy-json = &#123; module = &quot;org.codehaus.groovy:groovy-json&quot;, version.ref = &quot;groovy&quot; &#125;</span><br><span class="line">groovy-nio = &#123; module = &quot;org.codehaus.groovy:groovy-nio&quot;, version.ref = &quot;groovy&quot; &#125;</span><br><span class="line">commons-lang3 = &#123; group = &quot;org.apache.commons&quot;, name = &quot;commons-lang3&quot;, version = &#123; strictly = &quot;[3.8, 4.0[&quot;, prefer=&quot;3.9&quot; &#125; &#125;</span><br><span class="line"></span><br><span class="line">[bundles]</span><br><span class="line">groovy = [&quot;groovy-core&quot;, &quot;groovy-json&quot;, &quot;groovy-nio&quot;]</span><br><span class="line"></span><br><span class="line">[plugins]</span><br><span class="line">jmh = &#123; id = &quot;me.champeau.jmh&quot;, version = &quot;0.6.5&quot; &#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight script">[versions]
+groovy = &quot;3.0.5&quot;
+checkstyle = &quot;8.37&quot;
+
+[libraries]
+groovy-core = &#123; module = &quot;org.codehaus.groovy:groovy&quot;, version.ref = &quot;groovy&quot; &#125;
+groovy-json = &#123; module = &quot;org.codehaus.groovy:groovy-json&quot;, version.ref = &quot;groovy&quot; &#125;
+groovy-nio = &#123; module = &quot;org.codehaus.groovy:groovy-nio&quot;, version.ref = &quot;groovy&quot; &#125;
+commons-lang3 = &#123; group = &quot;org.apache.commons&quot;, name = &quot;commons-lang3&quot;, version = &#123; strictly = &quot;[3.8, 4.0[&quot;, prefer=&quot;3.9&quot; &#125; &#125;
+
+[bundles]
+groovy = [&quot;groovy-core&quot;, &quot;groovy-json&quot;, &quot;groovy-nio&quot;]
+
+[plugins]
+jmh = &#123; id = &quot;me.champeau.jmh&quot;, version = &quot;0.6.5&quot; &#125;</code></pre>
 
 <p>The usage is very similar when you define those parameters in your gradle files. For example, </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// access version section </span><br><span class="line">buildscript &#123;</span><br><span class="line">	dependencies &#123;</span><br><span class="line">		classpath &quot;lib.x.y.z:$&#123;libs.versions.groovy.get()&#125;&quot;  </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// access a single dependency</span><br><span class="line">implementation libs.groovy.core</span><br><span class="line"></span><br><span class="line">// access a bundle </span><br><span class="line">implementation libs.bundles.groovy</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight script">// access version section 
+buildscript &#123;
+	dependencies &#123;
+		classpath &quot;lib.x.y.z:$&#123;libs.versions.groovy.get()&#125;&quot;  
+	&#125;
+&#125;
+
+// access a single dependency
+implementation libs.groovy.core
+
+// access a bundle 
+implementation libs.bundles.groovy</code></pre>
 
 <p>That’s it. Enjoy the coding. </p>
-<p>#Android #Android/Gradle/VersionCatalog </p>
+<p>#Android #Android&#x2F;Gradle&#x2F;VersionCatalog </p>
 
     </div>
 

@@ -245,7 +245,7 @@
 <ul>
 <li>OS version : macOS Monterey 12.1 Beta (21C5021h)</li>
 <li>Chipset: Apple M1 </li>
-<li>Memory size: 16 GB </li>
+<li>Memory size: 16 GB</li>
 </ul>
           <!--noindex-->
             <div class="post-button">
@@ -341,16 +341,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Android-Emulator-on-Apple-M1"><a href="#Android-Emulator-on-Apple-M1" class="headerlink" title="Android Emulator on Apple M1"></a>Android Emulator on Apple M1</h2><p><img src="https://i.ytimg.com/vi/-HOWvvOnhHQ/maxresdefault.jpg" alt="maxresdefault.jpg"><br><strong><em>credit: Alexander Ziskind</em></strong></p>
+          <h2 id="Android-Emulator-on-Apple-M1"><a href="#Android-Emulator-on-Apple-M1" class="headerlink" title="Android Emulator on Apple M1"></a>Android Emulator on Apple M1</h2><p><img src="https://i.ytimg.com/vi/-HOWvvOnhHQ/maxresdefault.jpg" alt="maxresdefault.jpg"><br><em><strong>credit: Alexander Ziskind</strong></em></p>
 <h4 id="New-Apple-M1"><a href="#New-Apple-M1" class="headerlink" title="New Apple M1"></a>New Apple M1</h4><p>As you know, the Android emulator can’t run on the Apple M1 with the HAXM and VT-x, which means the performance would be affected, and a better option is to use the physical device. So, when you try to install a new android virtual device (the emulator). You will see this screen:<br><img src="https://i.stack.imgur.com/x3TJ4.png" alt="Not Support Screen"></p>
 <p>You can only select arm64 images in the <code>Other Images</code> category. </p>
 <h4 id="ARM64-Image"><a href="#ARM64-Image" class="headerlink" title="ARM64 Image"></a>ARM64 Image</h4><p>So, this is not an issue even we choose to use ARM64 images. The point is that when you launch the emulator, you always see the emulator status is offline. The reason why it’s always offline is that the image under the system-images folder is damaged, and you need to replace it with a workable one. </p>
 <h4 id="How-to-solve"><a href="#How-to-solve" class="headerlink" title="How to solve?"></a>How to solve?</h4><p>Try to download one of these two images [2], [3]. After downloading one of those two images, unzip the file and replace the folder <code>arm64-v8a</code> under <code>~/Library/Android/SDK/system-images/android-S</code> (if you choose to install Android S). Then restart the emulator. You can see the emulator should be back online again. </p>
 <h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><ol>
-<li><a href="https://androidstudio.googleblog.com/2020/12/android-emulator-apple-silicon-preview.html" target="_blank" rel="noopener">Android Studio Release Updates: Android Emulator Apple Silicon Preview</a></li>
-<li><a href="https://dl.google.com/android/repository/sys-img/google_apis_playstore/arm64-v8a-S_r02-darwin.zip" target="_blank" rel="noopener">Google Play ARM 64 v8a System Image (revision: 2)
+<li><a href="https://androidstudio.googleblog.com/2020/12/android-emulator-apple-silicon-preview.html">Android Studio Release Updates: Android Emulator Apple Silicon Preview</a></li>
+<li><a href="https://dl.google.com/android/repository/sys-img/google_apis_playstore/arm64-v8a-S_r02-darwin.zip">Google Play ARM 64 v8a System Image (revision: 2)
 </a></li>
-<li><a href="https://dl.google.com/android/repository/sys-img/google_apis/arm64-v8a-S_r02.zip" target="_blank" rel="noopener">Google APIs ARM 64 v8a System Image (revision: 2)</a></li>
+<li><a href="https://dl.google.com/android/repository/sys-img/google_apis/arm64-v8a-S_r02.zip">Google APIs ARM 64 v8a System Image (revision: 2)</a></li>
 </ol>
 
       
@@ -634,7 +634,7 @@
 
       
           <p><img src="https://miro.medium.com/max/2000/1*YIQHQmS_wneHSl3Ur055OA.png" alt="1*YIQHQmS_wneHSl3Ur055OA.png"></p>
-<h4 id="What’s-the-problem"><a href="#What’s-the-problem" class="headerlink" title="What’s the problem?"></a>What’s the problem?</h4><p>I recently write a take-home assignment for the interview of Venmo, check this <a href="https://github.com/wangchauyan/iTunesSearch" target="_blank" rel="noopener">repo</a>. I want to try Android <a href="https://developer.android.com/guide/navigation?gclid=Cj0KCQjwwr32BRD4ARIsAAJNf_1V5Zi0OI1VZnAX0qalR40_vh9lfTVcIXVZbgLY4ZqJ-xm3BjayhiMaAqqXEALw_wcB&gclsrc=aw.ds" target="_blank" rel="noopener">navigation</a> out and see if I can gain some particular ideas by this side-project. </p>
+<h4 id="What’s-the-problem"><a href="#What’s-the-problem" class="headerlink" title="What’s the problem?"></a>What’s the problem?</h4><p>I recently write a take-home assignment for the interview of Venmo, check this <a href="https://github.com/wangchauyan/iTunesSearch">repo</a>. I want to try Android <a href="https://developer.android.com/guide/navigation?gclid=Cj0KCQjwwr32BRD4ARIsAAJNf_1V5Zi0OI1VZnAX0qalR40_vh9lfTVcIXVZbgLY4ZqJ-xm3BjayhiMaAqqXEALw_wcB&gclsrc=aw.ds">navigation</a> out and see if I can gain some particular ideas by this side-project. </p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/05/25/Android-Jetpack-Navigation-Controller/#more" rel="contents">

@@ -247,85 +247,214 @@
 
       
         <p>Here are some interesting tips when you are using Kotlin. Let’s take a look at something about <code>object,</code> <code>invoke operator,</code> and <code>destructuring.</code></p>
-<a id="more"></a>
+<span id="more"></span>
 
-<h4 id="object-trick"><a href="#object-trick" class="headerlink" title="object trick"></a>object trick</h4><p>The keyword <code>object</code> has many different functions in the Kotlin. One of its functionality is to create a <a href="https://en.wikipedia.org/wiki/Singleton_pattern" target="_blank" rel="noopener">singleton instance</a>.  </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">object DataProviderManager &#123;</span><br><span class="line">  <span class="function">fun <span class="title">registerDataProvider</span><span class="params">(provider: DataProvider)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  val allDataProviders: Collection&lt;DataProvider&gt;</span><br><span class="line">    get() = <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="object-trick"><a href="#object-trick" class="headerlink" title="object trick"></a>object trick</h4><p>The keyword <code>object</code> has many different functions in the Kotlin. One of its functionality is to create a <a href="https://en.wikipedia.org/wiki/Singleton_pattern">singleton instance</a>.  </p>
+<pre><code class="highlight java">object DataProviderManager &#123;
+  fun <span class="title function_">registerDataProvider</span><span class="params">(provider: DataProvider)</span> &#123;
+    <span class="comment">// ...</span>
+  &#125;
+
+  val allDataProviders: Collection&lt;DataProvider&gt;
+    <span class="title function_">get</span><span class="params">()</span> = <span class="comment">// ...</span>
+&#125;</code></pre>
 
 <p>Except the singleton object, you can use <code>object</code> to instantiate an anonoymous class intance, for example: </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">layout.setOnTouchListener(object : View.OnTouchListener &#123;</span><br><span class="line">  <span class="function">override fun <span class="title">onTouch</span><span class="params">(v: View, m: MotionEvent)</span>: Boolean </span>&#123;</span><br><span class="line">    <span class="comment">// Perform tasks here</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">layout.setOnTouchListener(object : View.OnTouchListener &#123;
+  override fun <span class="title function_">onTouch</span><span class="params">(v: View, m: MotionEvent)</span>: Boolean &#123;
+    <span class="comment">// Perform tasks here</span>
+    <span class="keyword">return</span> <span class="literal">true</span>
+  &#125;
+&#125;)</code></pre>
 
 <p>What about a companion? You know there’s no <code>static</code> keyword in Kotlin world. So we have another weapon <code>companion</code> to do also the same thing. And, there’s one drawback for <code>object</code> class which is that you are not able to send a parameter to this singleton class, how can we leverage <code>companion</code> and <code>object</code> to do this?</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">data class <span class="title">SomeData</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  val aString: String</span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">class SomeClass </span>&#123;</span><br><span class="line">  companion object &#123;</span><br><span class="line">    <span class="keyword">protected</span> lateinit <span class="keyword">var</span> inClassData: SomeData</span><br><span class="line">    <span class="function">fun <span class="title">getInstance</span><span class="params">(initData: SomeData)</span>: SomeClass </span>&#123;</span><br><span class="line">      inClassData = initData</span><br><span class="line">      <span class="keyword">return</span> SomeClass()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function">fun <span class="title">doSomething</span><span class="params">()</span>: SomeData </span>&#123;</span><br><span class="line">    println(<span class="string">"my data : "</span> + inClassData.aString)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// put your calculation logic here</span></span><br><span class="line">    <span class="keyword">return</span> inClassData</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">data <span class="keyword">class</span> <span class="title class_">SomeData</span>(
+  val aString: String
+)
+
+<span class="keyword">class</span> <span class="title class_">SomeClass</span> &#123;
+  companion object &#123;
+    <span class="keyword">protected</span> lateinit <span class="keyword">var</span> inClassData: SomeData
+    fun <span class="title function_">getInstance</span><span class="params">(initData: SomeData)</span>: SomeClass &#123;
+      inClassData = initData
+      <span class="keyword">return</span> SomeClass()
+    &#125;
+  &#125;
+
+  fun <span class="title function_">doSomething</span><span class="params">()</span>: SomeData &#123;
+    println(<span class="string">&quot;my data : &quot;</span> + inClassData.aString)
+    
+    <span class="comment">// put your calculation logic here</span>
+    <span class="keyword">return</span> inClassData
+  &#125;
+&#125;</code></pre>
 
 <p>So, you can easily pass in a <code>SomeData</code> data class into this singleton instance.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val myData = SomeData(<span class="string">"data"</span>)</span><br><span class="line">val singleton = SomeClass.getInstance(myData)</span><br><span class="line">singleton.doSomething()</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java"><span class="type">val</span> <span class="variable">myData</span> <span class="operator">=</span> SomeData(<span class="string">&quot;data&quot;</span>)
+<span class="type">val</span> <span class="variable">singleton</span> <span class="operator">=</span> SomeClass.getInstance(myData)
+singleton.doSomething()</code></pre>
 
 <p>Can we do furthermore by using this concept? Yes, it gives us the ability to separate the operation logic from a refactoring class. And, it would be convenient for developers if they are refactoring their project at a particular stage.</p>
 <p><strong>Note that even though the members of companion objects look like static members in other languages, but they are instance members of real objects at runtime which means they can implement interfaces</strong>:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">data class <span class="title">SomeData</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">interface Operations&lt;T&gt; </span>&#123;</span><br><span class="line">  <span class="function">fun <span class="title">print</span><span class="params">(initData: SomeData)</span>: T</span></span><br><span class="line"><span class="function">&#125;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">class SomeClass </span>&#123;</span><br><span class="line">  companion object: Operations&lt;SomeClass&gt; &#123;</span><br><span class="line">    <span class="keyword">protected</span> lateinit <span class="keyword">var</span> inClassData: SomeData</span><br><span class="line">    <span class="function">override fun <span class="title">print</span><span class="params">(initData: SomeData)</span>: SomeClass </span>&#123;</span><br><span class="line">      inClassData = initData</span><br><span class="line">      <span class="keyword">return</span> SomeClass()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function">fun <span class="title">doSomething</span><span class="params">()</span>: SomeData </span>&#123;</span><br><span class="line">    println(<span class="string">"my data : "</span> + inClassData.aString)</span><br><span class="line">    <span class="comment">// put your calculation logic here</span></span><br><span class="line">    <span class="keyword">return</span> inClassData</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">data <span class="keyword">class</span> <span class="title class_">SomeData</span>()
+
+<span class="keyword">interface</span> <span class="title class_">Operations</span>&lt;T&gt; &#123;
+  fun <span class="title function_">print</span><span class="params">(initData: SomeData)</span>: T
+&#125;
+
+<span class="keyword">class</span> <span class="title class_">SomeClass</span> &#123;
+  companion object: Operations&lt;SomeClass&gt; &#123;
+    <span class="keyword">protected</span> lateinit <span class="keyword">var</span> inClassData: SomeData
+    override fun <span class="title function_">print</span><span class="params">(initData: SomeData)</span>: SomeClass &#123;
+      inClassData = initData
+      <span class="keyword">return</span> SomeClass()
+    &#125;
+  &#125;
+
+  fun <span class="title function_">doSomething</span><span class="params">()</span>: SomeData &#123;
+    println(<span class="string">&quot;my data : &quot;</span> + inClassData.aString)
+    <span class="comment">// put your calculation logic here</span>
+    <span class="keyword">return</span> inClassData
+  &#125;
+&#125;</code></pre>
 
 <p>So, you can separate some logic from the class to an interface, that would make your code more clear. Here is another useful example to show how can we change the behavior of a singleton instance:</p>
 <p><strong>VehicleManager</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">object VehicleManager &#123;</span><br><span class="line">  <span class="function">fun <span class="title">vehicleStatus</span><span class="params">()</span>: String </span>= <span class="string">"driving"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">fun <span class="title">start</span><span class="params">(manager: VehicleManager)</span> </span>&#123;</span><br><span class="line">  println(<span class="string">"Current status : "</span> + manager.vehicleStatus())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">object VehicleManager &#123;
+  fun <span class="title function_">vehicleStatus</span><span class="params">()</span>: String = <span class="string">&quot;driving&quot;</span>
+&#125;
+
+fun <span class="title function_">start</span><span class="params">(manager: VehicleManager)</span> &#123;
+  println(<span class="string">&quot;Current status : &quot;</span> + manager.vehicleStatus())
+&#125;</code></pre>
 
 <p>If you try to print out the vehicle’s status, do this: </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start(VehicleManager)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">start(VehicleManager)</code></pre>
 
 <p>Let’s not use the <code>object</code> to create a singleton instance and give the App more flexibility by using the interface:</p>
 <p><strong>VehicleManager Interface</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">VehicleManager</span> </span>&#123;</span><br><span class="line">  companion object: VehicleManager &#123;</span><br><span class="line">    <span class="function">override fun <span class="title">vehicleStatus</span><span class="params">()</span>: String </span>= <span class="string">"driving"</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function">fun <span class="title">vehicleStatus</span><span class="params">()</span>: String</span></span><br><span class="line"><span class="function">&#125;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">fun <span class="title">start</span><span class="params">(manager: VehicleManager)</span> </span>&#123;</span><br><span class="line">  println(<span class="string">"Current status : "</span> + manager.vehicleStatus())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java"><span class="keyword">interface</span> <span class="title class_">VehicleManager</span> &#123;
+  companion object: VehicleManager &#123;
+    override fun <span class="title function_">vehicleStatus</span><span class="params">()</span>: String = <span class="string">&quot;driving&quot;</span>
+  &#125;
+  fun <span class="title function_">vehicleStatus</span><span class="params">()</span>: String
+&#125;
+
+fun <span class="title function_">start</span><span class="params">(manager: VehicleManager)</span> &#123;
+  println(<span class="string">&quot;Current status : &quot;</span> + manager.vehicleStatus())
+&#125;</code></pre>
 
 <p>You need to change to this way to use it: </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start(VehicleManager.Companion)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">start(VehicleManager.Companion)</code></pre>
 
 <p>By using this way, it would be easier for the developer who is refactoring the <code>VehicleManager</code> or can create another class inherited from <code>VehicleManager</code> and has more operations.</p>
 <h4 id="Invoke-operator"><a href="#Invoke-operator" class="headerlink" title="Invoke operator"></a>Invoke operator</h4><p>Let’s see an example first.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Result</span></span></span><br><span class="line"><span class="class"><span class="title">abstract</span> <span class="title">class</span> <span class="title">Socket</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">abstract</span> fun <span class="title">openURL</span><span class="params">(url: String)</span>: Result</span></span><br><span class="line"><span class="function">&#125;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">class SocketImpl: <span class="title">Socket</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="function">override fun <span class="title">openURL</span><span class="params">(url: String)</span>: Result </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Result()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class URLHandler (socket: Socket) &#123;</span><br><span class="line"></span><br><span class="line">  val socket: Socket = socket</span><br><span class="line">  <span class="function">operator fun <span class="title">invoke</span><span class="params">(url: String)</span>: Result </span>&#123;</span><br><span class="line">    println(<span class="string">"launch socket to open URL"</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.socket.openURL(url)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java"><span class="keyword">class</span> <span class="title class_">Result</span>
+<span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Socket</span> &#123;
+  <span class="keyword">abstract</span> fun <span class="title function_">openURL</span><span class="params">(url: String)</span>: Result
+&#125;
+
+<span class="keyword">class</span> <span class="title class_">SocketImpl</span>: Socket() &#123;
+  override fun <span class="title function_">openURL</span><span class="params">(url: String)</span>: Result &#123;
+    <span class="keyword">return</span> Result()
+  &#125;
+&#125;
+
+<span class="keyword">class</span> <span class="title class_">URLHandler</span> (socket: Socket) &#123;
+
+  val socket: Socket = socket
+  operator fun <span class="title function_">invoke</span><span class="params">(url: String)</span>: Result &#123;
+    println(<span class="string">&quot;launch socket to open URL&quot;</span>)
+    <span class="keyword">return</span> <span class="built_in">this</span>.socket.openURL(url)
+  &#125;
+&#125;</code></pre>
 
 <p>We create a URLHandler to process a specific URL that would use a <code>Socket</code> class to open the URL we passed in. In the <code>URLHandler</code> class, we implement the <code>invoke</code> operator function, which is unique in the Kotlin world. Let’s see what’s the tricky part here. </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val urlHandler = URLHandler(SocketImpl())</span><br><span class="line">urlHandler(<span class="string">"www.google.com"</span>)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java"><span class="type">val</span> <span class="variable">urlHandler</span> <span class="operator">=</span> URLHandler(SocketImpl())
+urlHandler(<span class="string">&quot;www.google.com&quot;</span>)</code></pre>
 
 <p>If you implement the <code>invoke</code> operator function, you can directly use the class instance to open the passed in URL string without any function call, which means it would automatically be invoked. It’s just like this instance to be a function.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">30712-30712/idv.chauyan.androidcoroutine I/System.out: launch socket to open URL</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash">30712-30712/idv.chauyan.androidcoroutine I/System.out: launch socket to open URL</code></pre>
 
-<p>Where can we find this in Kotlin? In Kotlin, you can see this:<a href="https://github.com/JetBrains/kotlin/blob/d3156c33be09fae459df1247476a401605ae92ae/libraries/stdlib/jvm/runtime/kotlin/jvm/functions/Functions.kt" target="_blank" rel="noopener">Function Interfaces</a></p>
+<p>Where can we find this in Kotlin? In Kotlin, you can see this:<a href="https://github.com/JetBrains/kotlin/blob/d3156c33be09fae459df1247476a401605ae92ae/libraries/stdlib/jvm/runtime/kotlin/jvm/functions/Functions.kt">Function Interfaces</a></p>
 <p>So, when you try to use the lambda function, which is defined by these interfaces, we can directly use the lambda function. </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val lambda = &#123;name: String -&gt; <span class="string">"Hello, "</span>.plus(name)&#125;</span><br><span class="line">println(lambda(<span class="string">"chauyan"</span>))</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java"><span class="type">val</span> <span class="variable">lambda</span> <span class="operator">=</span> &#123;name: String -&gt; <span class="string">&quot;Hello, &quot;</span>.plus(name)&#125;
+println(lambda(<span class="string">&quot;chauyan&quot;</span>))</code></pre>
 
 <p>The result would be <code>Hello, chauyan.</code></p>
 <h4 id="Destructuring"><a href="#Destructuring" class="headerlink" title="Destructuring"></a>Destructuring</h4><p>Kotlin supports the <code>Destructuring</code> feature, let’s see what’s <code>Destructuring</code> and what pro and con it has.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">data class <span class="title">Person</span> <span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  val id: Int,</span></span></span><br><span class="line"><span class="function"><span class="params">  val name: String, </span></span></span><br><span class="line"><span class="function"><span class="params">  val age: Int</span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">fun <span class="title">main</span><span class="params">(args: Array)</span> </span>&#123;</span><br><span class="line">  val person = Person(<span class="number">1</span>, <span class="string">"test person"</span>, <span class="number">40</span>)</span><br><span class="line">  println(<span class="string">"Name of Person: "</span> + person.name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">data <span class="keyword">class</span> <span class="title class_">Person</span> (
+  val id: Int,
+  val name: String, 
+  val age: Int
+)
+
+fun <span class="title function_">main</span><span class="params">(args: Array)</span> &#123;
+  <span class="type">val</span> <span class="variable">person</span> <span class="operator">=</span> Person(<span class="number">1</span>, <span class="string">&quot;test person&quot;</span>, <span class="number">40</span>)
+  println(<span class="string">&quot;Name of Person: &quot;</span> + person.name);
+&#125;</code></pre>
 
 <p>We have a data class <code>Person</code> which has three member variables - <code>id,</code> <code>name,</code> and <code>age.</code> In general, if we want to access the member variables of a class, we usually use this way: <code>person.id,</code> <code>person.name,</code> etc. We can use <code>destructuring</code> to benefit us and write less code: </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">data class <span class="title">Person</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  ...</span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">fun <span class="title">main</span><span class="params">(args: Array)</span> </span>&#123;</span><br><span class="line">  val person = Person(<span class="number">1</span>, <span class="string">"test person"</span>, <span class="number">40</span>)</span><br><span class="line">  val (_, name, age) = person</span><br><span class="line">  println(<span class="string">"Name of Person: "</span> + name)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">data <span class="keyword">class</span> <span class="title class_">Person</span>(
+  ...
+)
+
+fun <span class="title function_">main</span><span class="params">(args: Array)</span> &#123;
+  <span class="type">val</span> <span class="variable">person</span> <span class="operator">=</span> Person(<span class="number">1</span>, <span class="string">&quot;test person&quot;</span>, <span class="number">40</span>)
+  val (_, name, age) = person
+  <span class="title function_">println</span><span class="params">(<span class="string">&quot;Name of Person: &quot;</span> + name)</span>
+&#125;</code></pre>
 
 <p>It’s more intuitive, and you can easily understand what you get from this data class - <code>Person.</code> What else can we do by using <code>destructuring</code>?</p>
 <p><strong>Destructuring the return value of a function</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">data class <span class="title">Result</span><span class="params">(val error: Error, val result: Int)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">fun <span class="title">function</span><span class="params">(...)</span>: Result </span>&#123;</span><br><span class="line">  ...  </span><br><span class="line">  <span class="keyword">return</span> Result(error, result)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">val (error, result) = function(...)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">data <span class="keyword">class</span> <span class="title class_">Result</span>(val error: Error, val result: Int)
+
+fun <span class="title function_">function</span><span class="params">(...)</span>: Result &#123;
+  ...  
+  <span class="keyword">return</span> Result(error, result)
+&#125;
+
+val (error, result) = function(...)</code></pre>
 
 <p>We can directly get the computed result from this function without assigning a variable to it. If we want to check the result quickly, we can ignore the error (not good habit, just for example) like this:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val (_, result) = function(...)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">val (_, result) = function(...)</code></pre>
 
 <p><strong>Destructuring in a for-loop</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> ((key, value) in map) &#123;</span><br><span class="line"> <span class="comment">// do something with the key and the value</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java"><span class="keyword">for</span> ((key, value) in map) &#123;
+ <span class="comment">// do something with the key and the value</span>
+&#125;</code></pre>
 
 <p>It’s more clear if we try to access something in a collection. Also, if you use lambda functions in your project, especially RxJava, you might change to use in this way:</p>
 <p><strong>Destructuring in a lambda function</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// normal usage</span></span><br><span class="line">map.mapValues &#123; entry -&gt; <span class="string">"$&#123;entry.value&#125;!"</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// with destructuring way</span></span><br><span class="line">map.mapValues &#123; (key, value) -&gt; <span class="string">"$value!"</span> &#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java"><span class="comment">// normal usage</span>
+map.mapValues &#123; entry -&gt; <span class="string">&quot;$&#123;entry.value&#125;!&quot;</span> &#125;
+
+<span class="comment">// with destructuring way</span>
+map.mapValues &#123; (key, value) -&gt; <span class="string">&quot;$value!&quot;</span> &#125;</code></pre>
 
 <p><strong>Limitations of the destructuring</strong></p>
 <p>When you are using the destructuring feature, you need to handle the variable types carefully. If you change the data class fields (no matter increasing or decreasing), you also need to update your <code>destructuring</code> declaration. In our example, <code>Person</code> data class, we add another field called occupation above the <code>age</code> as a string type.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">data class <span class="title">Person</span> <span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  val id: Int,</span></span></span><br><span class="line"><span class="function"><span class="params">  val name: String, </span></span></span><br><span class="line"><span class="function"><span class="params">  val occupation: String,</span></span></span><br><span class="line"><span class="function"><span class="params">  val age: Int</span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span></span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">data <span class="keyword">class</span> <span class="title class_">Person</span> (
+  val id: Int,
+  val name: String, 
+  val occupation: String,
+  val age: Int
+)</code></pre>
 
 <p>If we don’t change the previous code in the main function, you will get the wrong value:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">fun <span class="title">main</span><span class="params">(args: Array)</span> </span>&#123;</span><br><span class="line">  val person = Person(<span class="number">1</span>, <span class="string">"test person"</span>, <span class="string">"engineer"</span>, <span class="number">40</span>)</span><br><span class="line">  val (_, name, age) = person</span><br><span class="line"></span><br><span class="line">  println(<span class="string">"name : "</span> + name);</span><br><span class="line">  println(<span class="string">"age : "</span> + age);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">fun <span class="title function_">main</span><span class="params">(args: Array)</span> &#123;
+  <span class="type">val</span> <span class="variable">person</span> <span class="operator">=</span> Person(<span class="number">1</span>, <span class="string">&quot;test person&quot;</span>, <span class="string">&quot;engineer&quot;</span>, <span class="number">40</span>)
+  val (_, name, age) = person
+
+  <span class="title function_">println</span><span class="params">(<span class="string">&quot;name : &quot;</span> + name)</span>;
+  println(<span class="string">&quot;age : &quot;</span> + age);
+&#125;</code></pre>
 
 <p>What is your expectation of the value of age? It should be 40, but it will print out the value - <code>engineer.</code> That’s the reason why if we want to change to the field, then we need to update the destructuring declaration as well. And, do we have any way to avoid this? Yes, we do. </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val (_, name: String, age: Int) = person</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">val (_, name: String, age: Int) = person</code></pre>
 
 <p>Explicitly declare what kind of type you want, and let the compiler to help you. </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'component3()'</span> function returns <span class="string">'String'</span>, but <span class="string">'Int'</span> is expected</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java"><span class="string">&#x27;component3()&#x27;</span> function returns <span class="string">&#x27;String&#x27;</span>, but <span class="string">&#x27;Int&#x27;</span> is expected</code></pre>
 
 
     </div>
@@ -437,85 +566,214 @@
 
       
         <p>Here are some interesting tips when you are using Kotlin. Let’s take a look at something about <code>object,</code> <code>invoke operator,</code> and <code>destructuring.</code></p>
-<a id="more"></a>
+<span id="more"></span>
 
-<h4 id="object-trick"><a href="#object-trick" class="headerlink" title="object trick"></a>object trick</h4><p>The keyword <code>object</code> has many different functions in the Kotlin. One of its functionality is to create a <a href="https://en.wikipedia.org/wiki/Singleton_pattern" target="_blank" rel="noopener">singleton instance</a>.  </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">object DataProviderManager &#123;</span><br><span class="line">  <span class="function">fun <span class="title">registerDataProvider</span><span class="params">(provider: DataProvider)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  val allDataProviders: Collection&lt;DataProvider&gt;</span><br><span class="line">    get() = <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="object-trick"><a href="#object-trick" class="headerlink" title="object trick"></a>object trick</h4><p>The keyword <code>object</code> has many different functions in the Kotlin. One of its functionality is to create a <a href="https://en.wikipedia.org/wiki/Singleton_pattern">singleton instance</a>.  </p>
+<pre><code class="highlight java">object DataProviderManager &#123;
+  fun <span class="title function_">registerDataProvider</span><span class="params">(provider: DataProvider)</span> &#123;
+    <span class="comment">// ...</span>
+  &#125;
+
+  val allDataProviders: Collection&lt;DataProvider&gt;
+    <span class="title function_">get</span><span class="params">()</span> = <span class="comment">// ...</span>
+&#125;</code></pre>
 
 <p>Except the singleton object, you can use <code>object</code> to instantiate an anonoymous class intance, for example: </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">layout.setOnTouchListener(object : View.OnTouchListener &#123;</span><br><span class="line">  <span class="function">override fun <span class="title">onTouch</span><span class="params">(v: View, m: MotionEvent)</span>: Boolean </span>&#123;</span><br><span class="line">    <span class="comment">// Perform tasks here</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">layout.setOnTouchListener(object : View.OnTouchListener &#123;
+  override fun <span class="title function_">onTouch</span><span class="params">(v: View, m: MotionEvent)</span>: Boolean &#123;
+    <span class="comment">// Perform tasks here</span>
+    <span class="keyword">return</span> <span class="literal">true</span>
+  &#125;
+&#125;)</code></pre>
 
 <p>What about a companion? You know there’s no <code>static</code> keyword in Kotlin world. So we have another weapon <code>companion</code> to do also the same thing. And, there’s one drawback for <code>object</code> class which is that you are not able to send a parameter to this singleton class, how can we leverage <code>companion</code> and <code>object</code> to do this?</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">data class <span class="title">SomeData</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  val aString: String</span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">class SomeClass </span>&#123;</span><br><span class="line">  companion object &#123;</span><br><span class="line">    <span class="keyword">protected</span> lateinit <span class="keyword">var</span> inClassData: SomeData</span><br><span class="line">    <span class="function">fun <span class="title">getInstance</span><span class="params">(initData: SomeData)</span>: SomeClass </span>&#123;</span><br><span class="line">      inClassData = initData</span><br><span class="line">      <span class="keyword">return</span> SomeClass()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function">fun <span class="title">doSomething</span><span class="params">()</span>: SomeData </span>&#123;</span><br><span class="line">    println(<span class="string">"my data : "</span> + inClassData.aString)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// put your calculation logic here</span></span><br><span class="line">    <span class="keyword">return</span> inClassData</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">data <span class="keyword">class</span> <span class="title class_">SomeData</span>(
+  val aString: String
+)
+
+<span class="keyword">class</span> <span class="title class_">SomeClass</span> &#123;
+  companion object &#123;
+    <span class="keyword">protected</span> lateinit <span class="keyword">var</span> inClassData: SomeData
+    fun <span class="title function_">getInstance</span><span class="params">(initData: SomeData)</span>: SomeClass &#123;
+      inClassData = initData
+      <span class="keyword">return</span> SomeClass()
+    &#125;
+  &#125;
+
+  fun <span class="title function_">doSomething</span><span class="params">()</span>: SomeData &#123;
+    println(<span class="string">&quot;my data : &quot;</span> + inClassData.aString)
+    
+    <span class="comment">// put your calculation logic here</span>
+    <span class="keyword">return</span> inClassData
+  &#125;
+&#125;</code></pre>
 
 <p>So, you can easily pass in a <code>SomeData</code> data class into this singleton instance.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val myData = SomeData(<span class="string">"data"</span>)</span><br><span class="line">val singleton = SomeClass.getInstance(myData)</span><br><span class="line">singleton.doSomething()</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java"><span class="type">val</span> <span class="variable">myData</span> <span class="operator">=</span> SomeData(<span class="string">&quot;data&quot;</span>)
+<span class="type">val</span> <span class="variable">singleton</span> <span class="operator">=</span> SomeClass.getInstance(myData)
+singleton.doSomething()</code></pre>
 
 <p>Can we do furthermore by using this concept? Yes, it gives us the ability to separate the operation logic from a refactoring class. And, it would be convenient for developers if they are refactoring their project at a particular stage.</p>
 <p><strong>Note that even though the members of companion objects look like static members in other languages, but they are instance members of real objects at runtime which means they can implement interfaces</strong>:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">data class <span class="title">SomeData</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">interface Operations&lt;T&gt; </span>&#123;</span><br><span class="line">  <span class="function">fun <span class="title">print</span><span class="params">(initData: SomeData)</span>: T</span></span><br><span class="line"><span class="function">&#125;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">class SomeClass </span>&#123;</span><br><span class="line">  companion object: Operations&lt;SomeClass&gt; &#123;</span><br><span class="line">    <span class="keyword">protected</span> lateinit <span class="keyword">var</span> inClassData: SomeData</span><br><span class="line">    <span class="function">override fun <span class="title">print</span><span class="params">(initData: SomeData)</span>: SomeClass </span>&#123;</span><br><span class="line">      inClassData = initData</span><br><span class="line">      <span class="keyword">return</span> SomeClass()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function">fun <span class="title">doSomething</span><span class="params">()</span>: SomeData </span>&#123;</span><br><span class="line">    println(<span class="string">"my data : "</span> + inClassData.aString)</span><br><span class="line">    <span class="comment">// put your calculation logic here</span></span><br><span class="line">    <span class="keyword">return</span> inClassData</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">data <span class="keyword">class</span> <span class="title class_">SomeData</span>()
+
+<span class="keyword">interface</span> <span class="title class_">Operations</span>&lt;T&gt; &#123;
+  fun <span class="title function_">print</span><span class="params">(initData: SomeData)</span>: T
+&#125;
+
+<span class="keyword">class</span> <span class="title class_">SomeClass</span> &#123;
+  companion object: Operations&lt;SomeClass&gt; &#123;
+    <span class="keyword">protected</span> lateinit <span class="keyword">var</span> inClassData: SomeData
+    override fun <span class="title function_">print</span><span class="params">(initData: SomeData)</span>: SomeClass &#123;
+      inClassData = initData
+      <span class="keyword">return</span> SomeClass()
+    &#125;
+  &#125;
+
+  fun <span class="title function_">doSomething</span><span class="params">()</span>: SomeData &#123;
+    println(<span class="string">&quot;my data : &quot;</span> + inClassData.aString)
+    <span class="comment">// put your calculation logic here</span>
+    <span class="keyword">return</span> inClassData
+  &#125;
+&#125;</code></pre>
 
 <p>So, you can separate some logic from the class to an interface, that would make your code more clear. Here is another useful example to show how can we change the behavior of a singleton instance:</p>
 <p><strong>VehicleManager</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">object VehicleManager &#123;</span><br><span class="line">  <span class="function">fun <span class="title">vehicleStatus</span><span class="params">()</span>: String </span>= <span class="string">"driving"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">fun <span class="title">start</span><span class="params">(manager: VehicleManager)</span> </span>&#123;</span><br><span class="line">  println(<span class="string">"Current status : "</span> + manager.vehicleStatus())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">object VehicleManager &#123;
+  fun <span class="title function_">vehicleStatus</span><span class="params">()</span>: String = <span class="string">&quot;driving&quot;</span>
+&#125;
+
+fun <span class="title function_">start</span><span class="params">(manager: VehicleManager)</span> &#123;
+  println(<span class="string">&quot;Current status : &quot;</span> + manager.vehicleStatus())
+&#125;</code></pre>
 
 <p>If you try to print out the vehicle’s status, do this: </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start(VehicleManager)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">start(VehicleManager)</code></pre>
 
 <p>Let’s not use the <code>object</code> to create a singleton instance and give the App more flexibility by using the interface:</p>
 <p><strong>VehicleManager Interface</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">VehicleManager</span> </span>&#123;</span><br><span class="line">  companion object: VehicleManager &#123;</span><br><span class="line">    <span class="function">override fun <span class="title">vehicleStatus</span><span class="params">()</span>: String </span>= <span class="string">"driving"</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function">fun <span class="title">vehicleStatus</span><span class="params">()</span>: String</span></span><br><span class="line"><span class="function">&#125;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">fun <span class="title">start</span><span class="params">(manager: VehicleManager)</span> </span>&#123;</span><br><span class="line">  println(<span class="string">"Current status : "</span> + manager.vehicleStatus())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java"><span class="keyword">interface</span> <span class="title class_">VehicleManager</span> &#123;
+  companion object: VehicleManager &#123;
+    override fun <span class="title function_">vehicleStatus</span><span class="params">()</span>: String = <span class="string">&quot;driving&quot;</span>
+  &#125;
+  fun <span class="title function_">vehicleStatus</span><span class="params">()</span>: String
+&#125;
+
+fun <span class="title function_">start</span><span class="params">(manager: VehicleManager)</span> &#123;
+  println(<span class="string">&quot;Current status : &quot;</span> + manager.vehicleStatus())
+&#125;</code></pre>
 
 <p>You need to change to this way to use it: </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start(VehicleManager.Companion)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">start(VehicleManager.Companion)</code></pre>
 
 <p>By using this way, it would be easier for the developer who is refactoring the <code>VehicleManager</code> or can create another class inherited from <code>VehicleManager</code> and has more operations.</p>
 <h4 id="Invoke-operator"><a href="#Invoke-operator" class="headerlink" title="Invoke operator"></a>Invoke operator</h4><p>Let’s see an example first.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Result</span></span></span><br><span class="line"><span class="class"><span class="title">abstract</span> <span class="title">class</span> <span class="title">Socket</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">abstract</span> fun <span class="title">openURL</span><span class="params">(url: String)</span>: Result</span></span><br><span class="line"><span class="function">&#125;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">class SocketImpl: <span class="title">Socket</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="function">override fun <span class="title">openURL</span><span class="params">(url: String)</span>: Result </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Result()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class URLHandler (socket: Socket) &#123;</span><br><span class="line"></span><br><span class="line">  val socket: Socket = socket</span><br><span class="line">  <span class="function">operator fun <span class="title">invoke</span><span class="params">(url: String)</span>: Result </span>&#123;</span><br><span class="line">    println(<span class="string">"launch socket to open URL"</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.socket.openURL(url)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java"><span class="keyword">class</span> <span class="title class_">Result</span>
+<span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Socket</span> &#123;
+  <span class="keyword">abstract</span> fun <span class="title function_">openURL</span><span class="params">(url: String)</span>: Result
+&#125;
+
+<span class="keyword">class</span> <span class="title class_">SocketImpl</span>: Socket() &#123;
+  override fun <span class="title function_">openURL</span><span class="params">(url: String)</span>: Result &#123;
+    <span class="keyword">return</span> Result()
+  &#125;
+&#125;
+
+<span class="keyword">class</span> <span class="title class_">URLHandler</span> (socket: Socket) &#123;
+
+  val socket: Socket = socket
+  operator fun <span class="title function_">invoke</span><span class="params">(url: String)</span>: Result &#123;
+    println(<span class="string">&quot;launch socket to open URL&quot;</span>)
+    <span class="keyword">return</span> <span class="built_in">this</span>.socket.openURL(url)
+  &#125;
+&#125;</code></pre>
 
 <p>We create a URLHandler to process a specific URL that would use a <code>Socket</code> class to open the URL we passed in. In the <code>URLHandler</code> class, we implement the <code>invoke</code> operator function, which is unique in the Kotlin world. Let’s see what’s the tricky part here. </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val urlHandler = URLHandler(SocketImpl())</span><br><span class="line">urlHandler(<span class="string">"www.google.com"</span>)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java"><span class="type">val</span> <span class="variable">urlHandler</span> <span class="operator">=</span> URLHandler(SocketImpl())
+urlHandler(<span class="string">&quot;www.google.com&quot;</span>)</code></pre>
 
 <p>If you implement the <code>invoke</code> operator function, you can directly use the class instance to open the passed in URL string without any function call, which means it would automatically be invoked. It’s just like this instance to be a function.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">30712-30712/idv.chauyan.androidcoroutine I/System.out: launch socket to open URL</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash">30712-30712/idv.chauyan.androidcoroutine I/System.out: launch socket to open URL</code></pre>
 
-<p>Where can we find this in Kotlin? In Kotlin, you can see this:<a href="https://github.com/JetBrains/kotlin/blob/d3156c33be09fae459df1247476a401605ae92ae/libraries/stdlib/jvm/runtime/kotlin/jvm/functions/Functions.kt" target="_blank" rel="noopener">Function Interfaces</a></p>
+<p>Where can we find this in Kotlin? In Kotlin, you can see this:<a href="https://github.com/JetBrains/kotlin/blob/d3156c33be09fae459df1247476a401605ae92ae/libraries/stdlib/jvm/runtime/kotlin/jvm/functions/Functions.kt">Function Interfaces</a></p>
 <p>So, when you try to use the lambda function, which is defined by these interfaces, we can directly use the lambda function. </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val lambda = &#123;name: String -&gt; <span class="string">"Hello, "</span>.plus(name)&#125;</span><br><span class="line">println(lambda(<span class="string">"chauyan"</span>))</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java"><span class="type">val</span> <span class="variable">lambda</span> <span class="operator">=</span> &#123;name: String -&gt; <span class="string">&quot;Hello, &quot;</span>.plus(name)&#125;
+println(lambda(<span class="string">&quot;chauyan&quot;</span>))</code></pre>
 
 <p>The result would be <code>Hello, chauyan.</code></p>
 <h4 id="Destructuring"><a href="#Destructuring" class="headerlink" title="Destructuring"></a>Destructuring</h4><p>Kotlin supports the <code>Destructuring</code> feature, let’s see what’s <code>Destructuring</code> and what pro and con it has.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">data class <span class="title">Person</span> <span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  val id: Int,</span></span></span><br><span class="line"><span class="function"><span class="params">  val name: String, </span></span></span><br><span class="line"><span class="function"><span class="params">  val age: Int</span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">fun <span class="title">main</span><span class="params">(args: Array)</span> </span>&#123;</span><br><span class="line">  val person = Person(<span class="number">1</span>, <span class="string">"test person"</span>, <span class="number">40</span>)</span><br><span class="line">  println(<span class="string">"Name of Person: "</span> + person.name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">data <span class="keyword">class</span> <span class="title class_">Person</span> (
+  val id: Int,
+  val name: String, 
+  val age: Int
+)
+
+fun <span class="title function_">main</span><span class="params">(args: Array)</span> &#123;
+  <span class="type">val</span> <span class="variable">person</span> <span class="operator">=</span> Person(<span class="number">1</span>, <span class="string">&quot;test person&quot;</span>, <span class="number">40</span>)
+  println(<span class="string">&quot;Name of Person: &quot;</span> + person.name);
+&#125;</code></pre>
 
 <p>We have a data class <code>Person</code> which has three member variables - <code>id,</code> <code>name,</code> and <code>age.</code> In general, if we want to access the member variables of a class, we usually use this way: <code>person.id,</code> <code>person.name,</code> etc. We can use <code>destructuring</code> to benefit us and write less code: </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">data class <span class="title">Person</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  ...</span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">fun <span class="title">main</span><span class="params">(args: Array)</span> </span>&#123;</span><br><span class="line">  val person = Person(<span class="number">1</span>, <span class="string">"test person"</span>, <span class="number">40</span>)</span><br><span class="line">  val (_, name, age) = person</span><br><span class="line">  println(<span class="string">"Name of Person: "</span> + name)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">data <span class="keyword">class</span> <span class="title class_">Person</span>(
+  ...
+)
+
+fun <span class="title function_">main</span><span class="params">(args: Array)</span> &#123;
+  <span class="type">val</span> <span class="variable">person</span> <span class="operator">=</span> Person(<span class="number">1</span>, <span class="string">&quot;test person&quot;</span>, <span class="number">40</span>)
+  val (_, name, age) = person
+  <span class="title function_">println</span><span class="params">(<span class="string">&quot;Name of Person: &quot;</span> + name)</span>
+&#125;</code></pre>
 
 <p>It’s more intuitive, and you can easily understand what you get from this data class - <code>Person.</code> What else can we do by using <code>destructuring</code>?</p>
 <p><strong>Destructuring the return value of a function</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">data class <span class="title">Result</span><span class="params">(val error: Error, val result: Int)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">fun <span class="title">function</span><span class="params">(...)</span>: Result </span>&#123;</span><br><span class="line">  ...  </span><br><span class="line">  <span class="keyword">return</span> Result(error, result)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">val (error, result) = function(...)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">data <span class="keyword">class</span> <span class="title class_">Result</span>(val error: Error, val result: Int)
+
+fun <span class="title function_">function</span><span class="params">(...)</span>: Result &#123;
+  ...  
+  <span class="keyword">return</span> Result(error, result)
+&#125;
+
+val (error, result) = function(...)</code></pre>
 
 <p>We can directly get the computed result from this function without assigning a variable to it. If we want to check the result quickly, we can ignore the error (not good habit, just for example) like this:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val (_, result) = function(...)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">val (_, result) = function(...)</code></pre>
 
 <p><strong>Destructuring in a for-loop</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> ((key, value) in map) &#123;</span><br><span class="line"> <span class="comment">// do something with the key and the value</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java"><span class="keyword">for</span> ((key, value) in map) &#123;
+ <span class="comment">// do something with the key and the value</span>
+&#125;</code></pre>
 
 <p>It’s more clear if we try to access something in a collection. Also, if you use lambda functions in your project, especially RxJava, you might change to use in this way:</p>
 <p><strong>Destructuring in a lambda function</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// normal usage</span></span><br><span class="line">map.mapValues &#123; entry -&gt; <span class="string">"$&#123;entry.value&#125;!"</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// with destructuring way</span></span><br><span class="line">map.mapValues &#123; (key, value) -&gt; <span class="string">"$value!"</span> &#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java"><span class="comment">// normal usage</span>
+map.mapValues &#123; entry -&gt; <span class="string">&quot;$&#123;entry.value&#125;!&quot;</span> &#125;
+
+<span class="comment">// with destructuring way</span>
+map.mapValues &#123; (key, value) -&gt; <span class="string">&quot;$value!&quot;</span> &#125;</code></pre>
 
 <p><strong>Limitations of the destructuring</strong></p>
 <p>When you are using the destructuring feature, you need to handle the variable types carefully. If you change the data class fields (no matter increasing or decreasing), you also need to update your <code>destructuring</code> declaration. In our example, <code>Person</code> data class, we add another field called occupation above the <code>age</code> as a string type.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">data class <span class="title">Person</span> <span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  val id: Int,</span></span></span><br><span class="line"><span class="function"><span class="params">  val name: String, </span></span></span><br><span class="line"><span class="function"><span class="params">  val occupation: String,</span></span></span><br><span class="line"><span class="function"><span class="params">  val age: Int</span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span></span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">data <span class="keyword">class</span> <span class="title class_">Person</span> (
+  val id: Int,
+  val name: String, 
+  val occupation: String,
+  val age: Int
+)</code></pre>
 
 <p>If we don’t change the previous code in the main function, you will get the wrong value:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">fun <span class="title">main</span><span class="params">(args: Array)</span> </span>&#123;</span><br><span class="line">  val person = Person(<span class="number">1</span>, <span class="string">"test person"</span>, <span class="string">"engineer"</span>, <span class="number">40</span>)</span><br><span class="line">  val (_, name, age) = person</span><br><span class="line"></span><br><span class="line">  println(<span class="string">"name : "</span> + name);</span><br><span class="line">  println(<span class="string">"age : "</span> + age);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">fun <span class="title function_">main</span><span class="params">(args: Array)</span> &#123;
+  <span class="type">val</span> <span class="variable">person</span> <span class="operator">=</span> Person(<span class="number">1</span>, <span class="string">&quot;test person&quot;</span>, <span class="string">&quot;engineer&quot;</span>, <span class="number">40</span>)
+  val (_, name, age) = person
+
+  <span class="title function_">println</span><span class="params">(<span class="string">&quot;name : &quot;</span> + name)</span>;
+  println(<span class="string">&quot;age : &quot;</span> + age);
+&#125;</code></pre>
 
 <p>What is your expectation of the value of age? It should be 40, but it will print out the value - <code>engineer.</code> That’s the reason why if we want to change to the field, then we need to update the destructuring declaration as well. And, do we have any way to avoid this? Yes, we do. </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val (_, name: String, age: Int) = person</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java">val (_, name: String, age: Int) = person</code></pre>
 
 <p>Explicitly declare what kind of type you want, and let the compiler to help you. </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'component3()'</span> function returns <span class="string">'String'</span>, but <span class="string">'Int'</span> is expected</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight java"><span class="string">&#x27;component3()&#x27;</span> function returns <span class="string">&#x27;String&#x27;</span>, but <span class="string">&#x27;Int&#x27;</span> is expected</code></pre>
 
 
     </div>

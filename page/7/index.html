@@ -240,7 +240,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4 id="Why-leasing-buying-a-car"><a href="#Why-leasing-buying-a-car" class="headerlink" title="Why leasing/buying a car?"></a>Why leasing/buying a car?</h4><p>剛來美國沒多久, 就一直被提醒要趕快去考駕照, 畢竟在一個車輪上的國家, 沒車就跟沒腳一樣哪兒都去不了. 而我所在的北加州(San Francisco) 的大眾交通工具有幾個選擇: </p>
+          <h4 id="Why-leasing-x2F-buying-a-car"><a href="#Why-leasing-x2F-buying-a-car" class="headerlink" title="Why leasing&#x2F;buying a car?"></a>Why leasing&#x2F;buying a car?</h4><p>剛來美國沒多久, 就一直被提醒要趕快去考駕照, 畢竟在一個車輪上的國家, 沒車就跟沒腳一樣哪兒都去不了. 而我所在的北加州(San Francisco) 的大眾交通工具有幾個選擇: </p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/04/19/Car-Insurance-in-US/#more" rel="contents">
@@ -335,7 +335,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Android-Hopping-Animation"><a href="#Android-Hopping-Animation" class="headerlink" title="Android Hopping Animation"></a>Android Hopping Animation</h2><h4 id="WHY"><a href="#WHY" class="headerlink" title="WHY?"></a>WHY?</h4><p>If you ever see what the Android onboarding hop animation looks like, it’s an amusing welcome animation for the new user whom first time launches the phone. Here’s an example of that. Let’s see the result first.</p>
+          <h2 id="Android-Hopping-Animation"><a href="#Android-Hopping-Animation" class="headerlink" title="Android Hopping Animation"></a>Android Hopping Animation</h2><h4 id="WHY"><a href="#WHY" class="headerlink" title="WHY?"></a>WHY?</h4><p>If you ever see what the Android onboarding hop animation looks like, it’s an amusing welcome animation for the new user whom first time launches the phone. Here’s an example of that. Let’s see the result first.</p>
 <p><img src="https://chauyanw.files.wordpress.com/2019/04/ezgif.com-crop.gif" alt="ezgif.com-crop.gif"><br><em>Animation example</em></p>
 <hr>
           <!--noindex-->
@@ -433,7 +433,7 @@
 
       
           <p><img src="https://images.pexels.com/photos/9352/glass-time-watch-business.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="glass-time-watch-business.jpg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=750&amp;w=1260"></p>
-<h4 id="What’s-the-issue"><a href="#What’s-the-issue" class="headerlink" title="What’s the issue?"></a>What’s the issue?</h4><p>When using <a href="https://developer.apple.com/reference/avfoundation/avplayer?language=objc" target="_blank" rel="noopener">AVPlayer</a> method - SeekToTime, I found there’s an issue that I don’t understand: the position of pointed time is not correct. In other word, the return time slot is not exactly what you want.</p>
+<h4 id="What’s-the-issue"><a href="#What’s-the-issue" class="headerlink" title="What’s the issue?"></a>What’s the issue?</h4><p>When using <a href="https://developer.apple.com/reference/avfoundation/avplayer?language=objc">AVPlayer</a> method - SeekToTime, I found there’s an issue that I don’t understand: the position of pointed time is not correct. In other word, the return time slot is not exactly what you want.</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2017/02/17/How-to-precisely-jump-to-a-specific-time-in-AVPlayer/#more" rel="contents">
@@ -627,10 +627,36 @@
           <p><img src="https://miro.medium.com/max/3000/1*5koxNC03BSLLt6Urass5yA.png" alt="1*5koxNC03BSLLt6Urass5yA.png"></p>
 <h4 id="Small-tip"><a href="#Small-tip" class="headerlink" title="Small tip"></a>Small tip</h4><p>You might wanna change the text alignment of the alert controller. Let’s say, change the alignment from center to right. Then the following is for you.</p>
 <p>Just simply open a playground and run these code</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">import UIKit</span><br><span class="line">import XCPlayground</span><br><span class="line">import PlaygroundSupport</span><br><span class="line"> </span><br><span class="line">let alertView = UIAlertController(title: &quot;Demo Alert&quot;, message: &quot;&quot;, preferredStyle: .alert)</span><br><span class="line">alertView.addAction(UIAlertAction(title: &quot;OK&quot;, style: .default, handler: nil))</span><br><span class="line"> </span><br><span class="line">let paragraphStyle = NSMutableParagraphStyle()</span><br><span class="line">// Here is the key thing!</span><br><span class="line">paragraphStyle.alignment = .left</span><br><span class="line"> </span><br><span class="line">let messageText = NSMutableAttributedString(</span><br><span class="line">    string: &quot;Left Position, correct?&quot;,</span><br><span class="line">    attributes: [</span><br><span class="line">        NSAttributedString.Key.paragraphStyle: paragraphStyle,</span><br><span class="line">        NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .body),</span><br><span class="line">        NSAttributedString.Key.foregroundColor : UIColor.black</span><br><span class="line">    ]</span><br><span class="line">)</span><br><span class="line"> </span><br><span class="line">alertView.setValue(messageText, forKey: &quot;attributedMessage&quot;)</span><br><span class="line"> </span><br><span class="line">let viewController = UIViewController()</span><br><span class="line">PlaygroundPage.current.liveView = viewController.view</span><br><span class="line">viewController.present(alertView, animated: true, completion: nil)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight plaintext">import UIKit
+import XCPlayground
+import PlaygroundSupport
+ 
+let alertView = UIAlertController(title: &quot;Demo Alert&quot;, message: &quot;&quot;, preferredStyle: .alert)
+alertView.addAction(UIAlertAction(title: &quot;OK&quot;, style: .default, handler: nil))
+ 
+let paragraphStyle = NSMutableParagraphStyle()
+// Here is the key thing!
+paragraphStyle.alignment = .left
+ 
+let messageText = NSMutableAttributedString(
+    string: &quot;Left Position, correct?&quot;,
+    attributes: [
+        NSAttributedString.Key.paragraphStyle: paragraphStyle,
+        NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .body),
+        NSAttributedString.Key.foregroundColor : UIColor.black
+    ]
+)
+ 
+alertView.setValue(messageText, forKey: &quot;attributedMessage&quot;)
+ 
+let viewController = UIViewController()
+PlaygroundPage.current.liveView = viewController.view
+viewController.present(alertView, animated: true, completion: nil)
+</code></pre>
+
 
 <p>The most important thing is the key <code>attributedMessage</code>. An alert controller can change its text alignment value by using this key.</p>
-<h4 id="References"><a href="#References" class="headerlink" title="[References]"></a>[References]</h4><p><a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html" target="_blank" rel="noopener">Introduction to Key-Value Observing Programming Guide</a></p>
+<h4 id="References"><a href="#References" class="headerlink" title="[References]"></a>[References]</h4><p><a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html">Introduction to Key-Value Observing Programming Guide</a></p>
 
       
     </div>
@@ -719,7 +745,7 @@
 
       
           <p><img src="https://chauyanw.files.wordpress.com/2017/01/mysql-logo.jpg?w=2924" alt="mysql-logo.jpg?w=2924"></p>
-<h4 id="What-happened"><a href="#What-happened" class="headerlink" title="What happened?"></a>What happened?</h4><p>Alright, I don’t know what happened when trying to log in to MySQL. And it shows that message: MySQL - Error 1045 (28000) using password: YES. I am pretty sure that user/pwd pair is correct. After searching and studying some articles and forum discussions. I found it might be caused by broken SQL or reinstall SQL. The interesting is I can’t remember I had done that before.</p>
+<h4 id="What-happened"><a href="#What-happened" class="headerlink" title="What happened?"></a>What happened?</h4><p>Alright, I don’t know what happened when trying to log in to MySQL. And it shows that message: MySQL - Error 1045 (28000) using password: YES. I am pretty sure that user&#x2F;pwd pair is correct. After searching and studying some articles and forum discussions. I found it might be caused by broken SQL or reinstall SQL. The interesting is I can’t remember I had done that before.</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2017/01/20/MySQL-Error-1045-28000/#more" rel="contents">
@@ -815,14 +841,28 @@
 
       
           <p><img src="https://chauyanw.files.wordpress.com/2017/01/android_multi_screen.png?w=2924" alt="android_multi_screen.png?w=2924"></p>
-<h4 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h4><p>This is just a note for myself to remind me how to do dp-to-pixel translation and vice versa. Let’s see how to do it. </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public static float convertDpToPixel(float dp, Context context) &#123;	</span><br><span class="line">	float px = dp * getDensity(context);	</span><br><span class="line">	return px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static float convertPixelToDp(float px, Context context) &#123;	 </span><br><span class="line">	float dp = px / getDensity(context);</span><br><span class="line">	return dp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static float getDensity(Activity context) &#123;</span><br><span class="line">	DisplayMetrics metrics = new DisplayMetrics();</span><br><span class="line">	context.getWindowManager().getDefaultDisplay().getMetrics(metrics);		</span><br><span class="line">	return metrics.density;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h4><p>This is just a note for myself to remind me how to do dp-to-pixel translation and vice versa. Let’s see how to do it. </p>
+<pre><code class="highlight plaintext">public static float convertDpToPixel(float dp, Context context) &#123;	
+	float px = dp * getDensity(context);	
+	return px;
+&#125;
+
+public static float convertPixelToDp(float px, Context context) &#123;	 
+	float dp = px / getDensity(context);
+	return dp;
+&#125;
+
+public static float getDensity(Activity context) &#123;
+	DisplayMetrics metrics = new DisplayMetrics();
+	context.getWindowManager().getDefaultDisplay().getMetrics(metrics);		
+	return metrics.density;
+&#125;</code></pre>
 
 <p>It’s pretty simple, enjoy.<br>Happy Coding.</p>
 <h4 id="Reference"><a href="#Reference" class="headerlink" title="[Reference]"></a>[Reference]</h4><ol>
-<li><a href="https://developer.android.com/reference/android/util/DisplayMetrics.html" target="_blank" rel="noopener">DisplayMetrics  |  Android Developers</a></li>
-<li><a href="https://developer.android.com/guide/practices/screens_support.html" target="_blank" rel="noopener">Screen compatibility overview  |  Android Developers</a></li>
-<li><a href="https://pixplicity.com/dp-px-converter/" target="_blank" rel="noopener">Pixplicity | DP/PX converter</a></li>
+<li><a href="https://developer.android.com/reference/android/util/DisplayMetrics.html">DisplayMetrics  |  Android Developers</a></li>
+<li><a href="https://developer.android.com/guide/practices/screens_support.html">Screen compatibility overview  |  Android Developers</a></li>
+<li><a href="https://pixplicity.com/dp-px-converter/">Pixplicity | DP&#x2F;PX converter</a></li>
 </ol>
 
       
