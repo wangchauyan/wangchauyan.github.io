@@ -139,7 +139,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">104</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -149,7 +149,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">69</span></a>
 
   </li>
   </ul>
@@ -246,137 +246,46 @@
       
         <h2 id="How-Picasso-gets-the-Context-without-parameter-passing"><a href="#How-Picasso-gets-the-Context-without-parameter-passing" class="headerlink" title="How Picasso gets the Context without parameter passing"></a>How Picasso gets the Context without parameter passing</h2><p><img src="https://chauyanw.files.wordpress.com/2019/05/sample.png?w=2924" alt="sample.png?w=2924"></p>
 <h4 id="What’s-new"><a href="#What’s-new" class="headerlink" title="What’s new?"></a>What’s new?</h4><p>I’ve updated the Picasso library recently and mainly see if anything new and surprising. The second goal was to see if the latest version has some bug fixes. I didn’t realize that, on the latest version <code>2.7828</code>, it changes the way to instantiate the Picasso instance by using the <code>With(Context context).</code> Instead, it uses a <code>Get()</code> function to get the instance: </p>
-<pre><code class="highlight plaintext">Picasso.get()
-  .load(url)
-  .resize(50, 50)
-  .centerCrop()
-  .into(imageView)</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Picasso.get()</span><br><span class="line">  .load(url)</span><br><span class="line">  .resize(50, 50)</span><br><span class="line">  .centerCrop()</span><br><span class="line">  .into(imageView)</span><br></pre></td></tr></table></figure>
 
-<span id="more"></span>
+<a id="more"></a>
 
-<h4 id="How-does-it-do"><a href="#How-does-it-do" class="headerlink" title="How does it do?"></a>How does it do?</h4><p>That’s interesting. Here comes a question: how does the <code>Get()</code> create a Picasso instance without getting any Application&#x2F;Activity context? Any magic inside? So, I dive into the source code a little bit to reveal the secrete. Here is the source code of the Picasso <code>Get()</code>:</p>
-<pre><code class="highlight plaintext">public static Picasso get() &#123;
-  if (singleton == null) &#123;
-    synchronized (Picasso.class) &#123;
-      if (singleton == null) &#123;
-        if (PicassoProvider.context == null) &#123;
-          throw new IllegalStateException(&quot;context == null&quot;);
-        &#125;
-        singleton = new Builder(PicassoProvider.context).build();
-      &#125;
-    &#125;
-  &#125;
-  return singleton;
-&#125;</code></pre>
+<h4 id="How-does-it-do"><a href="#How-does-it-do" class="headerlink" title="How does it do?"></a>How does it do?</h4><p>That’s interesting. Here comes a question: how does the <code>Get()</code> create a Picasso instance without getting any Application/Activity context? Any magic inside? So, I dive into the source code a little bit to reveal the secrete. Here is the source code of the Picasso <code>Get()</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public static Picasso get() &#123;</span><br><span class="line">  if (singleton == null) &#123;</span><br><span class="line">    synchronized (Picasso.class) &#123;</span><br><span class="line">      if (singleton == null) &#123;</span><br><span class="line">        if (PicassoProvider.context == null) &#123;</span><br><span class="line">          throw new IllegalStateException(&quot;context == null&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        singleton = new Builder(PicassoProvider.context).build();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return singleton;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>Alright, you can find this code piece:</p>
-<pre><code class="highlight plaintext">if (PicassoProvider.context == null) &#123;
-  throw new IllegalStateException(&quot;context == null&quot;);
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if (PicassoProvider.context == null) &#123;</span><br><span class="line">  throw new IllegalStateException(&quot;context == null&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>Is this PicassoProvider the same thing as <code>ContentProvider</code>? Let’s take a look at the source code of  <a href="https://github.com/square/picasso/blob/2.71828/picasso/src/main/java/com/squareup/picasso/PicassoProvider.java">picasso&#x2F;PicassoProvider.java</a></p>
-<pre><code class="highlight plaintext">@RestrictTo(LIBRARY)
-public final class PicassoProvider extends ContentProvider &#123;
-
-  @SuppressLint(&quot;StaticFieldLeak&quot;) static Context context;
-
-  @Override public boolean onCreate() &#123;
-    context = getContext();
-    return true;
-  &#125;
-
-  @Nullable @Override
-  public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection,
-      @Nullable String[] selectionArgs, @Nullable String sortOrder) &#123;
-    return null;
-  &#125;
-
-  @Nullable @Override public String getType(@NonNull Uri uri) &#123;
-    return null;
-  &#125;
-
-  @Nullable @Override public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) &#123;
-    return null;
-  &#125;
-
-  @Override public int delete(@NonNull Uri uri, @Nullable String selection,
-      @Nullable String[] selectionArgs) &#123;
-    return 0;
-  &#125;
-
-  @Override
-  public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection,
-      @Nullable String[] selectionArgs) &#123;
-    return 0;
-  &#125;
-&#125;</code></pre>
+<p>Is this PicassoProvider the same thing as <code>ContentProvider</code>? Let’s take a look at the source code of  <a href="https://github.com/square/picasso/blob/2.71828/picasso/src/main/java/com/squareup/picasso/PicassoProvider.java" target="_blank" rel="noopener">picasso/PicassoProvider.java</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">@RestrictTo(LIBRARY)</span><br><span class="line">public final class PicassoProvider extends ContentProvider &#123;</span><br><span class="line"></span><br><span class="line">  @SuppressLint(&quot;StaticFieldLeak&quot;) static Context context;</span><br><span class="line"></span><br><span class="line">  @Override public boolean onCreate() &#123;</span><br><span class="line">    context = getContext();</span><br><span class="line">    return true;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Nullable @Override</span><br><span class="line">  public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection,</span><br><span class="line">      @Nullable String[] selectionArgs, @Nullable String sortOrder) &#123;</span><br><span class="line">    return null;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Nullable @Override public String getType(@NonNull Uri uri) &#123;</span><br><span class="line">    return null;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Nullable @Override public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) &#123;</span><br><span class="line">    return null;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override public int delete(@NonNull Uri uri, @Nullable String selection,</span><br><span class="line">      @Nullable String[] selectionArgs) &#123;</span><br><span class="line">    return 0;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override</span><br><span class="line">  public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection,</span><br><span class="line">      @Nullable String[] selectionArgs) &#123;</span><br><span class="line">    return 0;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>That’s right. It’s a content provider. But you can see this content provider doesn’t function. Just several overridden functions. Let’s check the AndroidManifest.xml: </p>
-<pre><code class="highlight plaintext">&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
-    package=&quot;com.squareup.picasso&quot;&gt;
-
-  &lt;application&gt;
-    &lt;provider
-        android:name=&quot;.PicassoProvider&quot;
-        android:authorities=&quot;$&#123;applicationId&#125;.com.squareup.picasso&quot;
-        android:exported=&quot;false&quot;/&gt;
-  &lt;/application&gt;
-&lt;/manifest&gt;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    package=&quot;com.squareup.picasso&quot;&gt;</span><br><span class="line"></span><br><span class="line">  &lt;application&gt;</span><br><span class="line">    &lt;provider</span><br><span class="line">        android:name=&quot;.PicassoProvider&quot;</span><br><span class="line">        android:authorities=&quot;$&#123;applicationId&#125;.com.squareup.picasso&quot;</span><br><span class="line">        android:exported=&quot;false&quot;/&gt;</span><br><span class="line">  &lt;/application&gt;</span><br><span class="line">&lt;/manifest&gt;</span><br></pre></td></tr></table></figure>
 
 <p>It’s there but doesn’t use any keyword like <code>export</code> to outside users.</p>
-<h4 id="The-tricky-part"><a href="#The-tricky-part" class="headerlink" title="The tricky part."></a>The tricky part.</h4><p>There’s a tricky part here. If you notice the authorities’ declaration of the content provider, you can see that it uses the <code>$&#123;applicationId&#125;</code> this way to set up a sole authority for different Apps. That’s because if you set up a unique authority, then that’s only one application running on the device can use this library at the same time. So, by using this way, you can create a general 3rd library for different Apps. You should also remember to remove the <code>ApplicationId</code> setting in the library module, or the Gradle will automatically use this <code>ApplicationId</code> from build.gradle file. </p>
+<h4 id="The-tricky-part"><a href="#The-tricky-part" class="headerlink" title="The tricky part."></a>The tricky part.</h4><p>There’s a tricky part here. If you notice the authorities’ declaration of the content provider, you can see that it uses the <code>${applicationId}</code> this way to set up a sole authority for different Apps. That’s because if you set up a unique authority, then that’s only one application running on the device can use this library at the same time. So, by using this way, you can create a general 3rd library for different Apps. You should also remember to remove the <code>ApplicationId</code> setting in the library module, or the Gradle will automatically use this <code>ApplicationId</code> from build.gradle file. </p>
 <p>Another question is: how can we make sure the content provider would be the first component to initialize? That’s because when an Android application has launched, there is a well-defined order of initializing components: </p>
 <ul>
-<li><p>Each content provider declared in the manifest would be initialized first in this <a href="https://developer.android.com/guide/topics/manifest/provider-element.html#init">order</a></p>
+<li><p>Each content provider declared in the manifest would be initialized first in this <a href="https://developer.android.com/guide/topics/manifest/provider-element.html#init" target="_blank" rel="noopener">order</a></p>
 </li>
 <li><p>The application would be the second part to initialize.</p>
 </li>
-<li><p>The final one would be the component that’s invoked by some intent.</p>
+<li><p>The final one would be the component that’s invoked by some intent. </p>
 </li>
 </ul>
 <p>That’s the reason why Picasso can use this way to get the context first at the very beginning of the App launching.  </p>
 <p>But I think Picasso will use another way to instantiate the instance cause it shows the <code>Builder</code> class in the latest master branch. </p>
-<pre><code class="highlight plaintext">/** Fluent API for creating &#123;@link Picasso&#125; instances. */
-  @SuppressWarnings(&quot;UnusedDeclaration&quot;) // Public API.
-  public static class Builder &#123;
-    private final Context context;
-    @Nullable private Call.Factory callFactory;
-    @Nullable private ExecutorService service;
-    @Nullable private PlatformLruCache cache;
-    @Nullable private Listener listener;
-    private final List&lt;RequestTransformer&gt; requestTransformers = new ArrayList&lt;&gt;();
-    private final List&lt;RequestHandler&gt; requestHandlers = new ArrayList&lt;&gt;();
-    @Nullable private Bitmap.Config defaultBitmapConfig;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">/** Fluent API for creating &#123;@link Picasso&#125; instances. */</span><br><span class="line">  @SuppressWarnings(&quot;UnusedDeclaration&quot;) // Public API.</span><br><span class="line">  public static class Builder &#123;</span><br><span class="line">    private final Context context;</span><br><span class="line">    @Nullable private Call.Factory callFactory;</span><br><span class="line">    @Nullable private ExecutorService service;</span><br><span class="line">    @Nullable private PlatformLruCache cache;</span><br><span class="line">    @Nullable private Listener listener;</span><br><span class="line">    private final List&lt;RequestTransformer&gt; requestTransformers = new ArrayList&lt;&gt;();</span><br><span class="line">    private final List&lt;RequestHandler&gt; requestHandlers = new ArrayList&lt;&gt;();</span><br><span class="line">    @Nullable private Bitmap.Config defaultBitmapConfig;</span><br><span class="line"></span><br><span class="line">    private boolean indicatorsEnabled;</span><br><span class="line">    private boolean loggingEnabled;</span><br><span class="line"></span><br><span class="line">    /** Start building a new &#123;@link Picasso&#125; instance. */</span><br><span class="line">    public Builder(@NonNull Context context) &#123;</span><br><span class="line">      checkNotNull(context, &quot;context == null&quot;);</span><br><span class="line">      this.context = context.getApplicationContext();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">....</span><br></pre></td></tr></table></figure>
 
-    private boolean indicatorsEnabled;
-    private boolean loggingEnabled;
-
-    /** Start building a new &#123;@link Picasso&#125; instance. */
-    public Builder(@NonNull Context context) &#123;
-      checkNotNull(context, &quot;context == null&quot;);
-      this.context = context.getApplicationContext();
-    &#125;
-
-....</code></pre>
-
-<p>You will need to use the <code>Builder</code> class and pass in the Application&#x2F;Activity context to initialize the Builder. And then it also removes the declaration of <code>PicassoProvider</code> in the  <code>AndroidManifest.xml</code>:</p>
-<pre><code class="highlight plaintext">&lt;manifest package=&quot;com.squareup.picasso3&quot;/&gt;</code></pre>
-
+<p>You will need to use the <code>Builder</code> class and pass in the Application/Activity context to initialize the Builder. And then it also removes the declaration of <code>PicassoProvider</code> in the  <code>AndroidManifest.xml</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;manifest package=&quot;com.squareup.picasso3&quot;/&gt;</span><br></pre></td></tr></table></figure>
 
 <h4 id="The-future"><a href="#The-future" class="headerlink" title="The future"></a>The future</h4><p>Why Picasso wants to deprecate this way? In the <code>Picasso.java</code>, it shows this:</p>
-<pre><code class="highlight plaintext">/**
- * Image downloading, transformation, and caching manager.
- * &lt;p&gt;
- * Use &#123;@see PicassoProvider#get()&#125; for a global singleton instance
- * or construct your own instance with &#123;@link Builder&#125;.
- */
-public class Picasso implements LifecycleObserver &#123;
-   ... 
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Image downloading, transformation, and caching manager.</span><br><span class="line"> * &lt;p&gt;</span><br><span class="line"> * Use &#123;@see PicassoProvider#get()&#125; for a global singleton instance</span><br><span class="line"> * or construct your own instance with &#123;@link Builder&#125;.</span><br><span class="line"> */</span><br><span class="line">public class Picasso implements LifecycleObserver &#123;</span><br><span class="line">   ... </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>It should be reasonable to have an Activity context with Lifecycle management. That might be the reason why it obsoletes the way it’s using now. </p>
 <h4 id="Reference"><a href="#Reference" class="headerlink" title="[Reference]"></a>[Reference]</h4><ol>
-<li><a href="https://firebase.googleblog.com/2016/12/how-does-firebase-initialize-on-android.html">The Firebase Blog: How does Firebase initialize on Android?</a></li>
+<li><a href="https://firebase.googleblog.com/2016/12/how-does-firebase-initialize-on-android.html" target="_blank" rel="noopener">The Firebase Blog: How does Firebase initialize on Android?</a></li>
 </ol>
 
     </div>
@@ -485,137 +394,46 @@ public class Picasso implements LifecycleObserver &#123;
       
         <h2 id="How-Picasso-gets-the-Context-without-parameter-passing"><a href="#How-Picasso-gets-the-Context-without-parameter-passing" class="headerlink" title="How Picasso gets the Context without parameter passing"></a>How Picasso gets the Context without parameter passing</h2><p><img src="https://chauyanw.files.wordpress.com/2019/05/sample.png?w=2924" alt="sample.png?w=2924"></p>
 <h4 id="What’s-new"><a href="#What’s-new" class="headerlink" title="What’s new?"></a>What’s new?</h4><p>I’ve updated the Picasso library recently and mainly see if anything new and surprising. The second goal was to see if the latest version has some bug fixes. I didn’t realize that, on the latest version <code>2.7828</code>, it changes the way to instantiate the Picasso instance by using the <code>With(Context context).</code> Instead, it uses a <code>Get()</code> function to get the instance: </p>
-<pre><code class="highlight plaintext">Picasso.get()
-  .load(url)
-  .resize(50, 50)
-  .centerCrop()
-  .into(imageView)</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Picasso.get()</span><br><span class="line">  .load(url)</span><br><span class="line">  .resize(50, 50)</span><br><span class="line">  .centerCrop()</span><br><span class="line">  .into(imageView)</span><br></pre></td></tr></table></figure>
 
-<span id="more"></span>
+<a id="more"></a>
 
-<h4 id="How-does-it-do"><a href="#How-does-it-do" class="headerlink" title="How does it do?"></a>How does it do?</h4><p>That’s interesting. Here comes a question: how does the <code>Get()</code> create a Picasso instance without getting any Application&#x2F;Activity context? Any magic inside? So, I dive into the source code a little bit to reveal the secrete. Here is the source code of the Picasso <code>Get()</code>:</p>
-<pre><code class="highlight plaintext">public static Picasso get() &#123;
-  if (singleton == null) &#123;
-    synchronized (Picasso.class) &#123;
-      if (singleton == null) &#123;
-        if (PicassoProvider.context == null) &#123;
-          throw new IllegalStateException(&quot;context == null&quot;);
-        &#125;
-        singleton = new Builder(PicassoProvider.context).build();
-      &#125;
-    &#125;
-  &#125;
-  return singleton;
-&#125;</code></pre>
+<h4 id="How-does-it-do"><a href="#How-does-it-do" class="headerlink" title="How does it do?"></a>How does it do?</h4><p>That’s interesting. Here comes a question: how does the <code>Get()</code> create a Picasso instance without getting any Application/Activity context? Any magic inside? So, I dive into the source code a little bit to reveal the secrete. Here is the source code of the Picasso <code>Get()</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public static Picasso get() &#123;</span><br><span class="line">  if (singleton == null) &#123;</span><br><span class="line">    synchronized (Picasso.class) &#123;</span><br><span class="line">      if (singleton == null) &#123;</span><br><span class="line">        if (PicassoProvider.context == null) &#123;</span><br><span class="line">          throw new IllegalStateException(&quot;context == null&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        singleton = new Builder(PicassoProvider.context).build();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return singleton;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>Alright, you can find this code piece:</p>
-<pre><code class="highlight plaintext">if (PicassoProvider.context == null) &#123;
-  throw new IllegalStateException(&quot;context == null&quot;);
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if (PicassoProvider.context == null) &#123;</span><br><span class="line">  throw new IllegalStateException(&quot;context == null&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>Is this PicassoProvider the same thing as <code>ContentProvider</code>? Let’s take a look at the source code of  <a href="https://github.com/square/picasso/blob/2.71828/picasso/src/main/java/com/squareup/picasso/PicassoProvider.java">picasso&#x2F;PicassoProvider.java</a></p>
-<pre><code class="highlight plaintext">@RestrictTo(LIBRARY)
-public final class PicassoProvider extends ContentProvider &#123;
-
-  @SuppressLint(&quot;StaticFieldLeak&quot;) static Context context;
-
-  @Override public boolean onCreate() &#123;
-    context = getContext();
-    return true;
-  &#125;
-
-  @Nullable @Override
-  public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection,
-      @Nullable String[] selectionArgs, @Nullable String sortOrder) &#123;
-    return null;
-  &#125;
-
-  @Nullable @Override public String getType(@NonNull Uri uri) &#123;
-    return null;
-  &#125;
-
-  @Nullable @Override public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) &#123;
-    return null;
-  &#125;
-
-  @Override public int delete(@NonNull Uri uri, @Nullable String selection,
-      @Nullable String[] selectionArgs) &#123;
-    return 0;
-  &#125;
-
-  @Override
-  public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection,
-      @Nullable String[] selectionArgs) &#123;
-    return 0;
-  &#125;
-&#125;</code></pre>
+<p>Is this PicassoProvider the same thing as <code>ContentProvider</code>? Let’s take a look at the source code of  <a href="https://github.com/square/picasso/blob/2.71828/picasso/src/main/java/com/squareup/picasso/PicassoProvider.java" target="_blank" rel="noopener">picasso/PicassoProvider.java</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">@RestrictTo(LIBRARY)</span><br><span class="line">public final class PicassoProvider extends ContentProvider &#123;</span><br><span class="line"></span><br><span class="line">  @SuppressLint(&quot;StaticFieldLeak&quot;) static Context context;</span><br><span class="line"></span><br><span class="line">  @Override public boolean onCreate() &#123;</span><br><span class="line">    context = getContext();</span><br><span class="line">    return true;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Nullable @Override</span><br><span class="line">  public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection,</span><br><span class="line">      @Nullable String[] selectionArgs, @Nullable String sortOrder) &#123;</span><br><span class="line">    return null;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Nullable @Override public String getType(@NonNull Uri uri) &#123;</span><br><span class="line">    return null;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Nullable @Override public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) &#123;</span><br><span class="line">    return null;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override public int delete(@NonNull Uri uri, @Nullable String selection,</span><br><span class="line">      @Nullable String[] selectionArgs) &#123;</span><br><span class="line">    return 0;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override</span><br><span class="line">  public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection,</span><br><span class="line">      @Nullable String[] selectionArgs) &#123;</span><br><span class="line">    return 0;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>That’s right. It’s a content provider. But you can see this content provider doesn’t function. Just several overridden functions. Let’s check the AndroidManifest.xml: </p>
-<pre><code class="highlight plaintext">&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
-    package=&quot;com.squareup.picasso&quot;&gt;
-
-  &lt;application&gt;
-    &lt;provider
-        android:name=&quot;.PicassoProvider&quot;
-        android:authorities=&quot;$&#123;applicationId&#125;.com.squareup.picasso&quot;
-        android:exported=&quot;false&quot;/&gt;
-  &lt;/application&gt;
-&lt;/manifest&gt;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    package=&quot;com.squareup.picasso&quot;&gt;</span><br><span class="line"></span><br><span class="line">  &lt;application&gt;</span><br><span class="line">    &lt;provider</span><br><span class="line">        android:name=&quot;.PicassoProvider&quot;</span><br><span class="line">        android:authorities=&quot;$&#123;applicationId&#125;.com.squareup.picasso&quot;</span><br><span class="line">        android:exported=&quot;false&quot;/&gt;</span><br><span class="line">  &lt;/application&gt;</span><br><span class="line">&lt;/manifest&gt;</span><br></pre></td></tr></table></figure>
 
 <p>It’s there but doesn’t use any keyword like <code>export</code> to outside users.</p>
-<h4 id="The-tricky-part"><a href="#The-tricky-part" class="headerlink" title="The tricky part."></a>The tricky part.</h4><p>There’s a tricky part here. If you notice the authorities’ declaration of the content provider, you can see that it uses the <code>$&#123;applicationId&#125;</code> this way to set up a sole authority for different Apps. That’s because if you set up a unique authority, then that’s only one application running on the device can use this library at the same time. So, by using this way, you can create a general 3rd library for different Apps. You should also remember to remove the <code>ApplicationId</code> setting in the library module, or the Gradle will automatically use this <code>ApplicationId</code> from build.gradle file. </p>
+<h4 id="The-tricky-part"><a href="#The-tricky-part" class="headerlink" title="The tricky part."></a>The tricky part.</h4><p>There’s a tricky part here. If you notice the authorities’ declaration of the content provider, you can see that it uses the <code>${applicationId}</code> this way to set up a sole authority for different Apps. That’s because if you set up a unique authority, then that’s only one application running on the device can use this library at the same time. So, by using this way, you can create a general 3rd library for different Apps. You should also remember to remove the <code>ApplicationId</code> setting in the library module, or the Gradle will automatically use this <code>ApplicationId</code> from build.gradle file. </p>
 <p>Another question is: how can we make sure the content provider would be the first component to initialize? That’s because when an Android application has launched, there is a well-defined order of initializing components: </p>
 <ul>
-<li><p>Each content provider declared in the manifest would be initialized first in this <a href="https://developer.android.com/guide/topics/manifest/provider-element.html#init">order</a></p>
+<li><p>Each content provider declared in the manifest would be initialized first in this <a href="https://developer.android.com/guide/topics/manifest/provider-element.html#init" target="_blank" rel="noopener">order</a></p>
 </li>
 <li><p>The application would be the second part to initialize.</p>
 </li>
-<li><p>The final one would be the component that’s invoked by some intent.</p>
+<li><p>The final one would be the component that’s invoked by some intent. </p>
 </li>
 </ul>
 <p>That’s the reason why Picasso can use this way to get the context first at the very beginning of the App launching.  </p>
 <p>But I think Picasso will use another way to instantiate the instance cause it shows the <code>Builder</code> class in the latest master branch. </p>
-<pre><code class="highlight plaintext">/** Fluent API for creating &#123;@link Picasso&#125; instances. */
-  @SuppressWarnings(&quot;UnusedDeclaration&quot;) // Public API.
-  public static class Builder &#123;
-    private final Context context;
-    @Nullable private Call.Factory callFactory;
-    @Nullable private ExecutorService service;
-    @Nullable private PlatformLruCache cache;
-    @Nullable private Listener listener;
-    private final List&lt;RequestTransformer&gt; requestTransformers = new ArrayList&lt;&gt;();
-    private final List&lt;RequestHandler&gt; requestHandlers = new ArrayList&lt;&gt;();
-    @Nullable private Bitmap.Config defaultBitmapConfig;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">/** Fluent API for creating &#123;@link Picasso&#125; instances. */</span><br><span class="line">  @SuppressWarnings(&quot;UnusedDeclaration&quot;) // Public API.</span><br><span class="line">  public static class Builder &#123;</span><br><span class="line">    private final Context context;</span><br><span class="line">    @Nullable private Call.Factory callFactory;</span><br><span class="line">    @Nullable private ExecutorService service;</span><br><span class="line">    @Nullable private PlatformLruCache cache;</span><br><span class="line">    @Nullable private Listener listener;</span><br><span class="line">    private final List&lt;RequestTransformer&gt; requestTransformers = new ArrayList&lt;&gt;();</span><br><span class="line">    private final List&lt;RequestHandler&gt; requestHandlers = new ArrayList&lt;&gt;();</span><br><span class="line">    @Nullable private Bitmap.Config defaultBitmapConfig;</span><br><span class="line"></span><br><span class="line">    private boolean indicatorsEnabled;</span><br><span class="line">    private boolean loggingEnabled;</span><br><span class="line"></span><br><span class="line">    /** Start building a new &#123;@link Picasso&#125; instance. */</span><br><span class="line">    public Builder(@NonNull Context context) &#123;</span><br><span class="line">      checkNotNull(context, &quot;context == null&quot;);</span><br><span class="line">      this.context = context.getApplicationContext();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">....</span><br></pre></td></tr></table></figure>
 
-    private boolean indicatorsEnabled;
-    private boolean loggingEnabled;
-
-    /** Start building a new &#123;@link Picasso&#125; instance. */
-    public Builder(@NonNull Context context) &#123;
-      checkNotNull(context, &quot;context == null&quot;);
-      this.context = context.getApplicationContext();
-    &#125;
-
-....</code></pre>
-
-<p>You will need to use the <code>Builder</code> class and pass in the Application&#x2F;Activity context to initialize the Builder. And then it also removes the declaration of <code>PicassoProvider</code> in the  <code>AndroidManifest.xml</code>:</p>
-<pre><code class="highlight plaintext">&lt;manifest package=&quot;com.squareup.picasso3&quot;/&gt;</code></pre>
-
+<p>You will need to use the <code>Builder</code> class and pass in the Application/Activity context to initialize the Builder. And then it also removes the declaration of <code>PicassoProvider</code> in the  <code>AndroidManifest.xml</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;manifest package=&quot;com.squareup.picasso3&quot;/&gt;</span><br></pre></td></tr></table></figure>
 
 <h4 id="The-future"><a href="#The-future" class="headerlink" title="The future"></a>The future</h4><p>Why Picasso wants to deprecate this way? In the <code>Picasso.java</code>, it shows this:</p>
-<pre><code class="highlight plaintext">/**
- * Image downloading, transformation, and caching manager.
- * &lt;p&gt;
- * Use &#123;@see PicassoProvider#get()&#125; for a global singleton instance
- * or construct your own instance with &#123;@link Builder&#125;.
- */
-public class Picasso implements LifecycleObserver &#123;
-   ... 
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Image downloading, transformation, and caching manager.</span><br><span class="line"> * &lt;p&gt;</span><br><span class="line"> * Use &#123;@see PicassoProvider#get()&#125; for a global singleton instance</span><br><span class="line"> * or construct your own instance with &#123;@link Builder&#125;.</span><br><span class="line"> */</span><br><span class="line">public class Picasso implements LifecycleObserver &#123;</span><br><span class="line">   ... </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>It should be reasonable to have an Activity context with Lifecycle management. That might be the reason why it obsoletes the way it’s using now. </p>
 <h4 id="Reference"><a href="#Reference" class="headerlink" title="[Reference]"></a>[Reference]</h4><ol>
-<li><a href="https://firebase.googleblog.com/2016/12/how-does-firebase-initialize-on-android.html">The Firebase Blog: How does Firebase initialize on Android?</a></li>
+<li><a href="https://firebase.googleblog.com/2016/12/how-does-firebase-initialize-on-android.html" target="_blank" rel="noopener">The Firebase Blog: How does Firebase initialize on Android?</a></li>
 </ol>
 
     </div>
@@ -734,7 +552,7 @@ public class Picasso implements LifecycleObserver &#123;
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-count">69</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -747,7 +565,7 @@ public class Picasso implements LifecycleObserver &#123;
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

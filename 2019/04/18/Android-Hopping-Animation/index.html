@@ -139,7 +139,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">104</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -149,7 +149,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">69</span></a>
 
   </li>
   </ul>
@@ -244,36 +244,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="Android-Hopping-Animation"><a href="#Android-Hopping-Animation" class="headerlink" title="Android Hopping Animation"></a>Android Hopping Animation</h2><h4 id="WHY"><a href="#WHY" class="headerlink" title="WHY?"></a>WHY?</h4><p>If you ever see what the Android onboarding hop animation looks like, it’s an amusing welcome animation for the new user whom first time launches the phone. Here’s an example of that. Let’s see the result first.</p>
+        <h2 id="Android-Hopping-Animation"><a href="#Android-Hopping-Animation" class="headerlink" title="Android Hopping Animation"></a>Android Hopping Animation</h2><h4 id="WHY"><a href="#WHY" class="headerlink" title="WHY?"></a>WHY?</h4><p>If you ever see what the Android onboarding hop animation looks like, it’s an amusing welcome animation for the new user whom first time launches the phone. Here’s an example of that. Let’s see the result first.</p>
 <p><img src="https://chauyanw.files.wordpress.com/2019/04/ezgif.com-crop.gif" alt="ezgif.com-crop.gif"><br><em>Animation example</em></p>
 <hr>
-<span id="more"></span>
+<a id="more"></a>
 
 
-<h4 id="HOW"><a href="#HOW" class="headerlink" title="HOW?"></a>HOW?</h4><p>The basic idea here is that we use an animator to let the container keep changing its position. In the meantime, we would need to update the background color for different positions.<br>Check this gist here: <a href="https://gist.github.com/wangchauyan/44cca4ccd178d05e1b90738b44e9b426">Android Onboarding Pop Animation · GitHub</a></p>
-<h5 id="Let’s-do-one-shut"><a href="#Let’s-do-one-shut" class="headerlink" title="Let’s do one shut."></a>Let’s do one shut.</h5><pre><code class="highlight plaintext">val animation = bottomContainer
-    .animate()
-    .translationYBy(-40f)
-    .alpha(0.9f)
-    .setDuration(400)
-
-animation.withEndAction &#123;
-    bottomContainer
-        .animate()
-        .alpha(0.5f)
-        .translationYBy(40f).duration = 400
-&#125;</code></pre>
+<h4 id="HOW"><a href="#HOW" class="headerlink" title="HOW?"></a>HOW?</h4><p>The basic idea here is that we use an animator to let the container keep changing its position. In the meantime, we would need to update the background color for different positions.<br>Check this gist here: <a href="https://gist.github.com/wangchauyan/44cca4ccd178d05e1b90738b44e9b426" target="_blank" rel="noopener">Android Onboarding Pop Animation · GitHub</a></p>
+<h5 id="Let’s-do-one-shut"><a href="#Let’s-do-one-shut" class="headerlink" title="Let’s do one shut."></a>Let’s do one shut.</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">val animation = bottomContainer</span><br><span class="line">    .animate()</span><br><span class="line">    .translationYBy(-40f)</span><br><span class="line">    .alpha(0.9f)</span><br><span class="line">    .setDuration(400)</span><br><span class="line"></span><br><span class="line">animation.withEndAction &#123;</span><br><span class="line">    bottomContainer</span><br><span class="line">        .animate()</span><br><span class="line">        .alpha(0.5f)</span><br><span class="line">        .translationYBy(40f).duration = 400</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>Let’s quickly go through the code example. I lift the container from the original position to higher position <code>-40f</code>, at the same time, I also update the background alpha from <code>0.5f</code> to <code>0.9f</code>. </p>
 <p>It is a simple one time hopping. What if you want to do infinitely hopping animation? On Android, there are many methods to let you keep trigger the functions. For example,</p>
 <ul>
 <li>Android Handler: Through the Handler function, you can trigger the function by sending events.</li>
-<li>RxJava&#x2F;RxAndroid: It’s probably the most popular library on the Android platform, which provides the publisher feature for event triggering.</li>
+<li>RxJava/RxAndroid: It’s probably the most popular library on the Android platform, which provides the publisher feature for event triggering.  </li>
 </ul>
-<p>I choose the Android Handler to get the infinitely bouncing animation done. Check my gist here: <a href="https://github.com/wangchauyan/AndroidHopAnimation">GitHub - wangchauyan&#x2F;AndroidHopAnimation: Animation just like Android Onboarding Hopping Animation</a></p>
+<p>I choose the Android Handler to get the infinitely bouncing animation done. Check my gist here: <a href="https://github.com/wangchauyan/AndroidHopAnimation" target="_blank" rel="noopener">GitHub - wangchauyan/AndroidHopAnimation: Animation just like Android Onboarding Hopping Animation</a></p>
 <p>Enjoy the animation, happy coding.</p>
 <h4 id="Reference"><a href="#Reference" class="headerlink" title="[Reference]"></a>[Reference]</h4><ol>
-<li><a href="https://www.youtube.com/watch?v=vCTcmPIKgpM">Boucing Animation</a></li>
+<li><a href="https://www.youtube.com/watch?v=vCTcmPIKgpM" target="_blank" rel="noopener">Boucing Animation</a></li>
 </ol>
 
     </div>
@@ -380,36 +369,25 @@ animation.withEndAction &#123;
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="Android-Hopping-Animation"><a href="#Android-Hopping-Animation" class="headerlink" title="Android Hopping Animation"></a>Android Hopping Animation</h2><h4 id="WHY"><a href="#WHY" class="headerlink" title="WHY?"></a>WHY?</h4><p>If you ever see what the Android onboarding hop animation looks like, it’s an amusing welcome animation for the new user whom first time launches the phone. Here’s an example of that. Let’s see the result first.</p>
+        <h2 id="Android-Hopping-Animation"><a href="#Android-Hopping-Animation" class="headerlink" title="Android Hopping Animation"></a>Android Hopping Animation</h2><h4 id="WHY"><a href="#WHY" class="headerlink" title="WHY?"></a>WHY?</h4><p>If you ever see what the Android onboarding hop animation looks like, it’s an amusing welcome animation for the new user whom first time launches the phone. Here’s an example of that. Let’s see the result first.</p>
 <p><img src="https://chauyanw.files.wordpress.com/2019/04/ezgif.com-crop.gif" alt="ezgif.com-crop.gif"><br><em>Animation example</em></p>
 <hr>
-<span id="more"></span>
+<a id="more"></a>
 
 
-<h4 id="HOW"><a href="#HOW" class="headerlink" title="HOW?"></a>HOW?</h4><p>The basic idea here is that we use an animator to let the container keep changing its position. In the meantime, we would need to update the background color for different positions.<br>Check this gist here: <a href="https://gist.github.com/wangchauyan/44cca4ccd178d05e1b90738b44e9b426">Android Onboarding Pop Animation · GitHub</a></p>
-<h5 id="Let’s-do-one-shut"><a href="#Let’s-do-one-shut" class="headerlink" title="Let’s do one shut."></a>Let’s do one shut.</h5><pre><code class="highlight plaintext">val animation = bottomContainer
-    .animate()
-    .translationYBy(-40f)
-    .alpha(0.9f)
-    .setDuration(400)
-
-animation.withEndAction &#123;
-    bottomContainer
-        .animate()
-        .alpha(0.5f)
-        .translationYBy(40f).duration = 400
-&#125;</code></pre>
+<h4 id="HOW"><a href="#HOW" class="headerlink" title="HOW?"></a>HOW?</h4><p>The basic idea here is that we use an animator to let the container keep changing its position. In the meantime, we would need to update the background color for different positions.<br>Check this gist here: <a href="https://gist.github.com/wangchauyan/44cca4ccd178d05e1b90738b44e9b426" target="_blank" rel="noopener">Android Onboarding Pop Animation · GitHub</a></p>
+<h5 id="Let’s-do-one-shut"><a href="#Let’s-do-one-shut" class="headerlink" title="Let’s do one shut."></a>Let’s do one shut.</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">val animation = bottomContainer</span><br><span class="line">    .animate()</span><br><span class="line">    .translationYBy(-40f)</span><br><span class="line">    .alpha(0.9f)</span><br><span class="line">    .setDuration(400)</span><br><span class="line"></span><br><span class="line">animation.withEndAction &#123;</span><br><span class="line">    bottomContainer</span><br><span class="line">        .animate()</span><br><span class="line">        .alpha(0.5f)</span><br><span class="line">        .translationYBy(40f).duration = 400</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>Let’s quickly go through the code example. I lift the container from the original position to higher position <code>-40f</code>, at the same time, I also update the background alpha from <code>0.5f</code> to <code>0.9f</code>. </p>
 <p>It is a simple one time hopping. What if you want to do infinitely hopping animation? On Android, there are many methods to let you keep trigger the functions. For example,</p>
 <ul>
 <li>Android Handler: Through the Handler function, you can trigger the function by sending events.</li>
-<li>RxJava&#x2F;RxAndroid: It’s probably the most popular library on the Android platform, which provides the publisher feature for event triggering.</li>
+<li>RxJava/RxAndroid: It’s probably the most popular library on the Android platform, which provides the publisher feature for event triggering.  </li>
 </ul>
-<p>I choose the Android Handler to get the infinitely bouncing animation done. Check my gist here: <a href="https://github.com/wangchauyan/AndroidHopAnimation">GitHub - wangchauyan&#x2F;AndroidHopAnimation: Animation just like Android Onboarding Hopping Animation</a></p>
+<p>I choose the Android Handler to get the infinitely bouncing animation done. Check my gist here: <a href="https://github.com/wangchauyan/AndroidHopAnimation" target="_blank" rel="noopener">GitHub - wangchauyan/AndroidHopAnimation: Animation just like Android Onboarding Hopping Animation</a></p>
 <p>Enjoy the animation, happy coding.</p>
 <h4 id="Reference"><a href="#Reference" class="headerlink" title="[Reference]"></a>[Reference]</h4><ol>
-<li><a href="https://www.youtube.com/watch?v=vCTcmPIKgpM">Boucing Animation</a></li>
+<li><a href="https://www.youtube.com/watch?v=vCTcmPIKgpM" target="_blank" rel="noopener">Boucing Animation</a></li>
 </ol>
 
     </div>
@@ -528,7 +506,7 @@ animation.withEndAction &#123;
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-count">69</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -541,7 +519,7 @@ animation.withEndAction &#123;
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

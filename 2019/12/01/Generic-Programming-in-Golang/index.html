@@ -140,7 +140,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">104</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -150,7 +150,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">69</span></a>
 
   </li>
   </ul>
@@ -246,8 +246,8 @@
 
       
         <p><img src="https://blog.golang.org/10years/gopher10th-small.jpg" alt="gopher10th-small.jpg"><br><em>Credit by Golang Official Blog</em></p>
-<p>In many programming languages such as <code>Java,</code> <code>Kotlin,</code> <code>Objective-C,</code> and <code>Swift,</code> they support the <a href="https://en.wikipedia.org/w/index.php?title=Generic_programming&gettingStartedReturn=true">Generic programming</a>. But in Golang, it doesn’t have that kind of feature. What if we want to use this feature, how can we do? Let’s check the <code>Interface</code> in Golang. And how it can achieve the generic programming in Golang. </p>
-<span id="more"></span>
+<p>In many programming languages such as <code>Java,</code> <code>Kotlin,</code> <code>Objective-C,</code> and <code>Swift,</code> they support the <a href="https://en.wikipedia.org/w/index.php?title=Generic_programming&gettingStartedReturn=true" target="_blank" rel="noopener">Generic programming</a>. But in Golang, it doesn’t have that kind of feature. What if we want to use this feature, how can we do? Let’s check the <code>Interface</code> in Golang. And how it can achieve the generic programming in Golang. </p>
+<a id="more"></a>
 
 
 <p>Let’s see the definition of <code>Generic Programming</code> from <a href="https://en.wikipedia.org/wiki/Generic_programming" target="_blank">Wikipedia</a>: </p>
@@ -258,174 +258,49 @@
 <p>The original idea describes that we design an algorithm to solve a problem, but we don’t care about the types of objects involved. We use a sorting algorithm to sort fruits from small sizes to large sizes. This algorithm should be able to apply on apples, oranges, guavas, and other different kinds of fruits. We don’t care about what kind of fruit is, we only focus on the <code>size</code> issue. </p>
 <p>How other languages do generic programming? </p>
 <p><strong>Java</strong></p>
-<pre><code class="highlight java"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">GenericFoo</span>&lt;T&gt; &#123;
-  <span class="keyword">private</span> T foo;
-
-  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setFoo</span><span class="params">(T foo)</span> &#123;
-      <span class="built_in">this</span>.foo = foo;
-  &#125;
-
-  <span class="keyword">public</span> T <span class="title function_">getFoo</span><span class="params">()</span> &#123;
-      <span class="keyword">return</span> foo;
-  &#125;
-&#125;</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GenericFoo</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> T foo;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFoo</span><span class="params">(T foo)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.foo = foo;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> T <span class="title">getFoo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> foo;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>Kotlin</strong></p>
-<pre><code class="highlight kotlin"><span class="keyword">class</span> <span class="title class_">GenericFoo</span>&lt;<span class="type">T</span>&gt;() &#123;
-  <span class="keyword">private</span> <span class="keyword">var</span> foo:T
-
-  <span class="function"><span class="keyword">fun</span> <span class="title">setFoo</span><span class="params">(foo: <span class="type">T</span>)</span></span> &#123;
-    <span class="keyword">this</span>.foo = foo
-  &#125;
-  <span class="function"><span class="keyword">fun</span> <span class="title">getFoo</span><span class="params">()</span></span>: T = <span class="keyword">this</span>.foo
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GenericFoo</span>&lt;<span class="type">T</span>&gt;</span>() &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">var</span> foo:T</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">fun</span> <span class="title">setFoo</span><span class="params">(foo: <span class="type">T</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.foo = foo</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">fun</span> <span class="title">getFoo</span><span class="params">()</span></span>: T = <span class="keyword">this</span>.foo</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>Objective-C</strong></p>
-<pre><code class="highlight objective-c">@interface GenericFoo&lt;ObjectType&gt; : NSObject
-- (void) setFoo: (ObjectType) foo; 
-- (ObjectType) getFoo;
-@end
-
-// implementation 
-@interface GenericFoo()
-// some properties here
-@end
-
-@implementation GenericFoo
-- (instancetype)init &#123;
-  // init some properties here
-&#125;
-
-- (void) setFoo: (id) foo &#123;
-  ... 
-&#125;
-- (id) getFoo &#123;
-  ...
-&#125;
-@end</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@interface GenericFoo&lt;ObjectType&gt; : NSObject</span><br><span class="line">- (void) setFoo: (ObjectType) foo; </span><br><span class="line">- (ObjectType) getFoo;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// implementation </span><br><span class="line">@interface GenericFoo()</span><br><span class="line">// some properties here</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation GenericFoo</span><br><span class="line">- (instancetype)init &#123;</span><br><span class="line">  // init some properties here</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void) setFoo: (id) foo &#123;</span><br><span class="line">  ... </span><br><span class="line">&#125;</span><br><span class="line">- (id) getFoo &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
 
 <p><strong>Swift</strong></p>
-<pre><code class="highlight swift"><span class="keyword">struct</span> <span class="title class_">GenericFoo</span>&lt;<span class="title class_">T</span>&gt; &#123;
-  <span class="keyword">var</span> foo: <span class="type">T</span>
-
-  <span class="keyword">mutating</span> <span class="keyword">func</span> <span class="title function_">setFoo</span>(<span class="params">f</span>: <span class="type">T</span>) &#123;
-    foo <span class="operator">=</span> f
-  &#125;
-  <span class="keyword">mutating</span> <span class="keyword">func</span> <span class="title function_">getFoo</span>() -&gt; <span class="type">T</span> &#123;
-    <span class="keyword">return</span> foo
-  &#125;
-&#125;</code></pre>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">GenericFoo</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> foo: <span class="type">T</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">mutating</span> <span class="function"><span class="keyword">func</span> <span class="title">setFoo</span><span class="params">(f: T)</span></span> &#123;</span><br><span class="line">    foo = f</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">mutating</span> <span class="function"><span class="keyword">func</span> <span class="title">getFoo</span><span class="params">()</span></span> -&gt; <span class="type">T</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> foo</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>What about Golang? Can Golang do the same thing as other programming languages do? Unfortunately, Golang doesn’t support <code>generic programming</code> because it does not have that syntax to do. That’s its drawback, but we still have another way to do a similar thing. The answer is <strong>Interface</strong>.</p>
 <p>What’s <code>Interface</code> in Golang? Let’s see an example:</p>
-<pre><code class="highlight go"><span class="keyword">type</span> geometry <span class="keyword">interface</span> &#123;
-  area() <span class="type">float64</span>
-  perim() <span class="type">float64</span>
-&#125;
-
-<span class="function"><span class="keyword">func</span> <span class="title">measure</span><span class="params">(g geometry)</span></span> &#123;
-  fmt.Println(g)
-  fmt.Println(g.area())
-  fmt.Println(g.perim())
-&#125;</code></pre>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> geometry <span class="keyword">interface</span> &#123;</span><br><span class="line">  area() <span class="keyword">float64</span></span><br><span class="line">  perim() <span class="keyword">float64</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">measure</span><span class="params">(g geometry)</span></span> &#123;</span><br><span class="line">  fmt.Println(g)</span><br><span class="line">  fmt.Println(g.area())</span><br><span class="line">  fmt.Println(g.perim())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>So, we define an interface - <em>geometry</em> with two methods:</p>
 <ol>
-<li>area() &#x2F;&#x2F; get the geometry area.</li>
-<li>perim() &#x2F;&#x2F; get the perimeter of this geometry.</li>
+<li>area() // get the geometry area.</li>
+<li>perim() // get the perimeter of this geometry. </li>
 </ol>
 <p>And a measure function that accepts a <code>geometry</code> interface type. How do we use that? You can create two different geometry objects. </p>
-<pre><code class="highlight go"><span class="keyword">type</span> rect <span class="keyword">struct</span> &#123;
-  width, height <span class="type">float64</span>
-&#125;
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> rect <span class="keyword">struct</span> &#123;</span><br><span class="line">  width, height <span class="keyword">float64</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> circle <span class="keyword">struct</span> &#123;</span><br><span class="line">  radius <span class="keyword">float64</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<span class="keyword">type</span> circle <span class="keyword">struct</span> &#123;
-  radius <span class="type">float64</span>
-&#125;</code></pre>
-
-<p>A tip here, when you implement all methods in an interface, then you are a type of that interface, which is so-called <a href="https://en.wikipedia.org/wiki/Duck_typing">Duck typing</a> the core concept of Golang Interface. </p>
-<pre><code class="highlight go"><span class="comment">// duck typing</span>
-<span class="function"><span class="keyword">func</span> <span class="params">(r rect)</span></span> area() <span class="type">float64</span> &#123;
-  <span class="keyword">return</span> r.width * r.height
-&#125;
-
-<span class="function"><span class="keyword">func</span> <span class="params">(r rect)</span></span> perim() <span class="type">float64</span> &#123;
-  <span class="keyword">return</span> <span class="number">2</span>*r.width + <span class="number">2</span>*r.height
-&#125;
-
-<span class="function"><span class="keyword">func</span> <span class="params">(c circle)</span></span> area() <span class="type">float64</span> &#123;
-  <span class="keyword">return</span> math.Pi * c.radius * c.radius
-&#125;
-
-<span class="function"><span class="keyword">func</span> <span class="params">(c circle)</span></span> perim() <span class="type">float64</span> &#123;
-  <span class="keyword">return</span> <span class="number">2</span> * math.Pi * c.radius
-&#125;</code></pre>
+<p>A tip here, when you implement all methods in an interface, then you are a type of that interface, which is so-called <a href="https://en.wikipedia.org/wiki/Duck_typing" target="_blank" rel="noopener">Duck typing</a> the core concept of Golang Interface. </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// duck typing</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r rect)</span> <span class="title">area</span><span class="params">()</span> <span class="title">float64</span></span> &#123;</span><br><span class="line">  <span class="keyword">return</span> r.width * r.height</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r rect)</span> <span class="title">perim</span><span class="params">()</span> <span class="title">float64</span></span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">2</span>*r.width + <span class="number">2</span>*r.height</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c circle)</span> <span class="title">area</span><span class="params">()</span> <span class="title">float64</span></span> &#123;</span><br><span class="line">  <span class="keyword">return</span> math.Pi * c.radius * c.radius</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c circle)</span> <span class="title">perim</span><span class="params">()</span> <span class="title">float64</span></span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">2</span> * math.Pi * c.radius</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>That means these two objects are well-defined geometries. We can use both of them in measure function. </p>
-<pre><code class="highlight go"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;
-  r := rect&#123;width: <span class="number">3</span>, height: <span class="number">4</span>&#125;
-  c := circle&#123;radius: <span class="number">5</span>&#125;
-
-  measure(r)
-  measure(c)
-&#125;</code></pre>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  r := rect&#123;width: <span class="number">3</span>, height: <span class="number">4</span>&#125;</span><br><span class="line">  c := circle&#123;radius: <span class="number">5</span>&#125;</span><br><span class="line"></span><br><span class="line">  measure(r)</span><br><span class="line">  measure(c)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>Through the interface design, we can easily do the generic programming on Go. What’s another benefit to using the interface? The most significant benefit is that you can hide your implementation detail. Let’s check <code>Sort.go</code> source code: </p>
-<pre><code class="highlight go"><span class="comment">// A type, typically a collection, that satisfies sort.Interface can be</span>
-<span class="comment">// sorted by the routines in this package. The methods require that the</span>
-<span class="comment">// elements of the collection be enumerated by an integer index.</span>
-<span class="keyword">type</span> Interface <span class="keyword">interface</span> &#123;
-    <span class="comment">// Len is the number of elements in the collection.</span>
-    Len() <span class="type">int</span>
-    <span class="comment">// Less reports whether the element with</span>
-    <span class="comment">// index i should sort before the element with index j.</span>
-    Less(i, j <span class="type">int</span>) <span class="type">bool</span>
-    <span class="comment">// Swap swaps the elements with indexes i and j.</span>
-    Swap(i, j <span class="type">int</span>)
-&#125;</code></pre>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// A type, typically a collection, that satisfies sort.Interface can be</span></span><br><span class="line"><span class="comment">// sorted by the routines in this package. The methods require that the</span></span><br><span class="line"><span class="comment">// elements of the collection be enumerated by an integer index.</span></span><br><span class="line"><span class="keyword">type</span> Interface <span class="keyword">interface</span> &#123;</span><br><span class="line">    <span class="comment">// Len is the number of elements in the collection.</span></span><br><span class="line">    Len() <span class="keyword">int</span></span><br><span class="line">    <span class="comment">// Less reports whether the element with</span></span><br><span class="line">    <span class="comment">// index i should sort before the element with index j.</span></span><br><span class="line">    Less(i, j <span class="keyword">int</span>) <span class="keyword">bool</span></span><br><span class="line">    <span class="comment">// Swap swaps the elements with indexes i and j.</span></span><br><span class="line">    Swap(i, j <span class="keyword">int</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>It defines three methods, <code>Len()</code>, <code>Less() bool</code>, <code>Swap()</code>. When you try to use Sort interface. Just do something like this: </p>
-<pre><code class="highlight go"><span class="comment">// Insertion sort</span>
-<span class="function"><span class="keyword">func</span> <span class="title">insertionSort</span><span class="params">(data Interface, a, b <span class="type">int</span>)</span></span> &#123;
-    <span class="keyword">for</span> i := a + <span class="number">1</span>; i &lt; b; i++ &#123;
-        <span class="keyword">for</span> j := i; j &gt; a &amp;&amp; data.Less(j, j<span class="number">-1</span>); j-- &#123;
-            data.Swap(j, j<span class="number">-1</span>)
-        &#125;
-    &#125;
-&#125;</code></pre>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Insertion sort</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">insertionSort</span><span class="params">(data Interface, a, b <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">for</span> i := a + <span class="number">1</span>; i &lt; b; i++ &#123;</span><br><span class="line">        <span class="keyword">for</span> j := i; j &gt; a &amp;&amp; data.Less(j, j<span class="number">-1</span>); j-- &#123;</span><br><span class="line">            data.Swap(j, j<span class="number">-1</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>You pass a data as an Interface; then we don’t need to care about what the real type of data is, we need to know: we can use the data to do <strong>Swap</strong>. Another interesting thing I want to mention is that the interface allows you to hook&#x2F;intercept with a customized handler created by you to assemble with other data, which is so-called <strong>dynamic dispatch</strong>. Let’s see an example:</p>
+<p>You pass a data as an Interface; then we don’t need to care about what the real type of data is, we need to know: we can use the data to do <strong>Swap</strong>. Another interesting thing I want to mention is that the interface allows you to hook/intercept with a customized handler created by you to assemble with other data, which is so-called <strong>dynamic dispatch</strong>. Let’s see an example:</p>
 <p>If you try to use <code>http.Get</code> to get some resources from server-side:</p>
-<pre><code class="highlight go"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;
-  resp, err := http.Get(<span class="string">&quot;http://www.sampleside.com/robots.txt&quot;</span>)
-  ... 
-&#125;</code></pre>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  resp, err := http.Get(<span class="string">"http://www.sampleside.com/robots.txt"</span>)</span><br><span class="line">  ... </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>What if we need to add an authentication token to the header for a request? You might try to use http client to do something like this: </p>
-<pre><code class="highlight go"><span class="keyword">type</span> header <span class="keyword">struct</span> &#123;
-  roundTrip http.RoundTripper
-  possibleHeader <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">string</span>
-&#125;
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> header <span class="keyword">struct</span> &#123;</span><br><span class="line">  roundTrip http.RoundTripper</span><br><span class="line">  possibleHeader <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h header)</span> <span class="title">RoundTrip</span><span class="params">(req *http.Request)</span> <span class="params">(*http.Response, error)</span></span> &#123;</span><br><span class="line">  <span class="keyword">for</span> k, v := <span class="keyword">range</span> h.possibleHeader &#123;</span><br><span class="line">    req.Header.Set(k, v)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> h.roundTrip.RoundTrip(req)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">var</span> client = &amp;http.Client&#123;</span><br><span class="line">    Transport: header&#123;</span><br><span class="line">      roundTrip:      http.DefaultTransport,</span><br><span class="line">      possibleHeader: <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span>&#123;<span class="string">"Authorization"</span>: <span class="string">"Bearer this-is-a-token"</span>&#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;</span><br><span class="line">  response, _ := client.Get(<span class="string">"http://www.sampleside.com/robots.txt"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<span class="function"><span class="keyword">func</span> <span class="params">(h header)</span></span> RoundTrip(req *http.Request) (*http.Response, <span class="type">error</span>) &#123;
-  <span class="keyword">for</span> k, v := <span class="keyword">range</span> h.possibleHeader &#123;
-    req.Header.Set(k, v)
-  &#125;
-  <span class="keyword">return</span> h.roundTrip.RoundTrip(req)
-&#125;
-
-
-<span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;
-  <span class="keyword">var</span> client = &amp;http.Client&#123;
-    Transport: header&#123;
-      roundTrip:      http.DefaultTransport,
-      possibleHeader: <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">string</span>&#123;<span class="string">&quot;Authorization&quot;</span>: <span class="string">&quot;Bearer this-is-a-token&quot;</span>&#125;,
-    &#125;,
-  &#125;
-  response, _ := client.Get(<span class="string">&quot;http://www.sampleside.com/robots.txt&quot;</span>)
-&#125;</code></pre>
-
-<p>The header implements the <a href="https://golang.org/src/net/http/client.go">RoundTripper interface</a> that only contains one method - RoundTrip. This interface gives us a chance to put authorization token into every request without manually add it into request header. That’s powerful. </p>
+<p>The header implements the <a href="https://golang.org/src/net/http/client.go" target="_blank" rel="noopener">RoundTripper interface</a> that only contains one method - RoundTrip. This interface gives us a chance to put authorization token into every request without manually add it into request header. That’s powerful. </p>
 <p>The interface is a foundational feature in Golang, but some benefits build on the runtime that means performance cost. So we should use them carefully. </p>
 <p>Happy coding. Enjoy!</p>
 
@@ -535,8 +410,8 @@
 
       
         <p><img src="https://blog.golang.org/10years/gopher10th-small.jpg" alt="gopher10th-small.jpg"><br><em>Credit by Golang Official Blog</em></p>
-<p>In many programming languages such as <code>Java,</code> <code>Kotlin,</code> <code>Objective-C,</code> and <code>Swift,</code> they support the <a href="https://en.wikipedia.org/w/index.php?title=Generic_programming&gettingStartedReturn=true">Generic programming</a>. But in Golang, it doesn’t have that kind of feature. What if we want to use this feature, how can we do? Let’s check the <code>Interface</code> in Golang. And how it can achieve the generic programming in Golang. </p>
-<span id="more"></span>
+<p>In many programming languages such as <code>Java,</code> <code>Kotlin,</code> <code>Objective-C,</code> and <code>Swift,</code> they support the <a href="https://en.wikipedia.org/w/index.php?title=Generic_programming&gettingStartedReturn=true" target="_blank" rel="noopener">Generic programming</a>. But in Golang, it doesn’t have that kind of feature. What if we want to use this feature, how can we do? Let’s check the <code>Interface</code> in Golang. And how it can achieve the generic programming in Golang. </p>
+<a id="more"></a>
 
 
 <p>Let’s see the definition of <code>Generic Programming</code> from <a href="https://en.wikipedia.org/wiki/Generic_programming" target="_blank">Wikipedia</a>: </p>
@@ -547,174 +422,49 @@
 <p>The original idea describes that we design an algorithm to solve a problem, but we don’t care about the types of objects involved. We use a sorting algorithm to sort fruits from small sizes to large sizes. This algorithm should be able to apply on apples, oranges, guavas, and other different kinds of fruits. We don’t care about what kind of fruit is, we only focus on the <code>size</code> issue. </p>
 <p>How other languages do generic programming? </p>
 <p><strong>Java</strong></p>
-<pre><code class="highlight java"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">GenericFoo</span>&lt;T&gt; &#123;
-  <span class="keyword">private</span> T foo;
-
-  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setFoo</span><span class="params">(T foo)</span> &#123;
-      <span class="built_in">this</span>.foo = foo;
-  &#125;
-
-  <span class="keyword">public</span> T <span class="title function_">getFoo</span><span class="params">()</span> &#123;
-      <span class="keyword">return</span> foo;
-  &#125;
-&#125;</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GenericFoo</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> T foo;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFoo</span><span class="params">(T foo)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.foo = foo;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> T <span class="title">getFoo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> foo;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>Kotlin</strong></p>
-<pre><code class="highlight kotlin"><span class="keyword">class</span> <span class="title class_">GenericFoo</span>&lt;<span class="type">T</span>&gt;() &#123;
-  <span class="keyword">private</span> <span class="keyword">var</span> foo:T
-
-  <span class="function"><span class="keyword">fun</span> <span class="title">setFoo</span><span class="params">(foo: <span class="type">T</span>)</span></span> &#123;
-    <span class="keyword">this</span>.foo = foo
-  &#125;
-  <span class="function"><span class="keyword">fun</span> <span class="title">getFoo</span><span class="params">()</span></span>: T = <span class="keyword">this</span>.foo
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GenericFoo</span>&lt;<span class="type">T</span>&gt;</span>() &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">var</span> foo:T</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">fun</span> <span class="title">setFoo</span><span class="params">(foo: <span class="type">T</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.foo = foo</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">fun</span> <span class="title">getFoo</span><span class="params">()</span></span>: T = <span class="keyword">this</span>.foo</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>Objective-C</strong></p>
-<pre><code class="highlight objective-c">@interface GenericFoo&lt;ObjectType&gt; : NSObject
-- (void) setFoo: (ObjectType) foo; 
-- (ObjectType) getFoo;
-@end
-
-// implementation 
-@interface GenericFoo()
-// some properties here
-@end
-
-@implementation GenericFoo
-- (instancetype)init &#123;
-  // init some properties here
-&#125;
-
-- (void) setFoo: (id) foo &#123;
-  ... 
-&#125;
-- (id) getFoo &#123;
-  ...
-&#125;
-@end</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@interface GenericFoo&lt;ObjectType&gt; : NSObject</span><br><span class="line">- (void) setFoo: (ObjectType) foo; </span><br><span class="line">- (ObjectType) getFoo;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// implementation </span><br><span class="line">@interface GenericFoo()</span><br><span class="line">// some properties here</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation GenericFoo</span><br><span class="line">- (instancetype)init &#123;</span><br><span class="line">  // init some properties here</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void) setFoo: (id) foo &#123;</span><br><span class="line">  ... </span><br><span class="line">&#125;</span><br><span class="line">- (id) getFoo &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
 
 <p><strong>Swift</strong></p>
-<pre><code class="highlight swift"><span class="keyword">struct</span> <span class="title class_">GenericFoo</span>&lt;<span class="title class_">T</span>&gt; &#123;
-  <span class="keyword">var</span> foo: <span class="type">T</span>
-
-  <span class="keyword">mutating</span> <span class="keyword">func</span> <span class="title function_">setFoo</span>(<span class="params">f</span>: <span class="type">T</span>) &#123;
-    foo <span class="operator">=</span> f
-  &#125;
-  <span class="keyword">mutating</span> <span class="keyword">func</span> <span class="title function_">getFoo</span>() -&gt; <span class="type">T</span> &#123;
-    <span class="keyword">return</span> foo
-  &#125;
-&#125;</code></pre>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">GenericFoo</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> foo: <span class="type">T</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">mutating</span> <span class="function"><span class="keyword">func</span> <span class="title">setFoo</span><span class="params">(f: T)</span></span> &#123;</span><br><span class="line">    foo = f</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">mutating</span> <span class="function"><span class="keyword">func</span> <span class="title">getFoo</span><span class="params">()</span></span> -&gt; <span class="type">T</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> foo</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>What about Golang? Can Golang do the same thing as other programming languages do? Unfortunately, Golang doesn’t support <code>generic programming</code> because it does not have that syntax to do. That’s its drawback, but we still have another way to do a similar thing. The answer is <strong>Interface</strong>.</p>
 <p>What’s <code>Interface</code> in Golang? Let’s see an example:</p>
-<pre><code class="highlight go"><span class="keyword">type</span> geometry <span class="keyword">interface</span> &#123;
-  area() <span class="type">float64</span>
-  perim() <span class="type">float64</span>
-&#125;
-
-<span class="function"><span class="keyword">func</span> <span class="title">measure</span><span class="params">(g geometry)</span></span> &#123;
-  fmt.Println(g)
-  fmt.Println(g.area())
-  fmt.Println(g.perim())
-&#125;</code></pre>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> geometry <span class="keyword">interface</span> &#123;</span><br><span class="line">  area() <span class="keyword">float64</span></span><br><span class="line">  perim() <span class="keyword">float64</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">measure</span><span class="params">(g geometry)</span></span> &#123;</span><br><span class="line">  fmt.Println(g)</span><br><span class="line">  fmt.Println(g.area())</span><br><span class="line">  fmt.Println(g.perim())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>So, we define an interface - <em>geometry</em> with two methods:</p>
 <ol>
-<li>area() &#x2F;&#x2F; get the geometry area.</li>
-<li>perim() &#x2F;&#x2F; get the perimeter of this geometry.</li>
+<li>area() // get the geometry area.</li>
+<li>perim() // get the perimeter of this geometry. </li>
 </ol>
 <p>And a measure function that accepts a <code>geometry</code> interface type. How do we use that? You can create two different geometry objects. </p>
-<pre><code class="highlight go"><span class="keyword">type</span> rect <span class="keyword">struct</span> &#123;
-  width, height <span class="type">float64</span>
-&#125;
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> rect <span class="keyword">struct</span> &#123;</span><br><span class="line">  width, height <span class="keyword">float64</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> circle <span class="keyword">struct</span> &#123;</span><br><span class="line">  radius <span class="keyword">float64</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<span class="keyword">type</span> circle <span class="keyword">struct</span> &#123;
-  radius <span class="type">float64</span>
-&#125;</code></pre>
-
-<p>A tip here, when you implement all methods in an interface, then you are a type of that interface, which is so-called <a href="https://en.wikipedia.org/wiki/Duck_typing">Duck typing</a> the core concept of Golang Interface. </p>
-<pre><code class="highlight go"><span class="comment">// duck typing</span>
-<span class="function"><span class="keyword">func</span> <span class="params">(r rect)</span></span> area() <span class="type">float64</span> &#123;
-  <span class="keyword">return</span> r.width * r.height
-&#125;
-
-<span class="function"><span class="keyword">func</span> <span class="params">(r rect)</span></span> perim() <span class="type">float64</span> &#123;
-  <span class="keyword">return</span> <span class="number">2</span>*r.width + <span class="number">2</span>*r.height
-&#125;
-
-<span class="function"><span class="keyword">func</span> <span class="params">(c circle)</span></span> area() <span class="type">float64</span> &#123;
-  <span class="keyword">return</span> math.Pi * c.radius * c.radius
-&#125;
-
-<span class="function"><span class="keyword">func</span> <span class="params">(c circle)</span></span> perim() <span class="type">float64</span> &#123;
-  <span class="keyword">return</span> <span class="number">2</span> * math.Pi * c.radius
-&#125;</code></pre>
+<p>A tip here, when you implement all methods in an interface, then you are a type of that interface, which is so-called <a href="https://en.wikipedia.org/wiki/Duck_typing" target="_blank" rel="noopener">Duck typing</a> the core concept of Golang Interface. </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// duck typing</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r rect)</span> <span class="title">area</span><span class="params">()</span> <span class="title">float64</span></span> &#123;</span><br><span class="line">  <span class="keyword">return</span> r.width * r.height</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r rect)</span> <span class="title">perim</span><span class="params">()</span> <span class="title">float64</span></span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">2</span>*r.width + <span class="number">2</span>*r.height</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c circle)</span> <span class="title">area</span><span class="params">()</span> <span class="title">float64</span></span> &#123;</span><br><span class="line">  <span class="keyword">return</span> math.Pi * c.radius * c.radius</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c circle)</span> <span class="title">perim</span><span class="params">()</span> <span class="title">float64</span></span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">2</span> * math.Pi * c.radius</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>That means these two objects are well-defined geometries. We can use both of them in measure function. </p>
-<pre><code class="highlight go"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;
-  r := rect&#123;width: <span class="number">3</span>, height: <span class="number">4</span>&#125;
-  c := circle&#123;radius: <span class="number">5</span>&#125;
-
-  measure(r)
-  measure(c)
-&#125;</code></pre>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  r := rect&#123;width: <span class="number">3</span>, height: <span class="number">4</span>&#125;</span><br><span class="line">  c := circle&#123;radius: <span class="number">5</span>&#125;</span><br><span class="line"></span><br><span class="line">  measure(r)</span><br><span class="line">  measure(c)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>Through the interface design, we can easily do the generic programming on Go. What’s another benefit to using the interface? The most significant benefit is that you can hide your implementation detail. Let’s check <code>Sort.go</code> source code: </p>
-<pre><code class="highlight go"><span class="comment">// A type, typically a collection, that satisfies sort.Interface can be</span>
-<span class="comment">// sorted by the routines in this package. The methods require that the</span>
-<span class="comment">// elements of the collection be enumerated by an integer index.</span>
-<span class="keyword">type</span> Interface <span class="keyword">interface</span> &#123;
-    <span class="comment">// Len is the number of elements in the collection.</span>
-    Len() <span class="type">int</span>
-    <span class="comment">// Less reports whether the element with</span>
-    <span class="comment">// index i should sort before the element with index j.</span>
-    Less(i, j <span class="type">int</span>) <span class="type">bool</span>
-    <span class="comment">// Swap swaps the elements with indexes i and j.</span>
-    Swap(i, j <span class="type">int</span>)
-&#125;</code></pre>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// A type, typically a collection, that satisfies sort.Interface can be</span></span><br><span class="line"><span class="comment">// sorted by the routines in this package. The methods require that the</span></span><br><span class="line"><span class="comment">// elements of the collection be enumerated by an integer index.</span></span><br><span class="line"><span class="keyword">type</span> Interface <span class="keyword">interface</span> &#123;</span><br><span class="line">    <span class="comment">// Len is the number of elements in the collection.</span></span><br><span class="line">    Len() <span class="keyword">int</span></span><br><span class="line">    <span class="comment">// Less reports whether the element with</span></span><br><span class="line">    <span class="comment">// index i should sort before the element with index j.</span></span><br><span class="line">    Less(i, j <span class="keyword">int</span>) <span class="keyword">bool</span></span><br><span class="line">    <span class="comment">// Swap swaps the elements with indexes i and j.</span></span><br><span class="line">    Swap(i, j <span class="keyword">int</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>It defines three methods, <code>Len()</code>, <code>Less() bool</code>, <code>Swap()</code>. When you try to use Sort interface. Just do something like this: </p>
-<pre><code class="highlight go"><span class="comment">// Insertion sort</span>
-<span class="function"><span class="keyword">func</span> <span class="title">insertionSort</span><span class="params">(data Interface, a, b <span class="type">int</span>)</span></span> &#123;
-    <span class="keyword">for</span> i := a + <span class="number">1</span>; i &lt; b; i++ &#123;
-        <span class="keyword">for</span> j := i; j &gt; a &amp;&amp; data.Less(j, j<span class="number">-1</span>); j-- &#123;
-            data.Swap(j, j<span class="number">-1</span>)
-        &#125;
-    &#125;
-&#125;</code></pre>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Insertion sort</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">insertionSort</span><span class="params">(data Interface, a, b <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">for</span> i := a + <span class="number">1</span>; i &lt; b; i++ &#123;</span><br><span class="line">        <span class="keyword">for</span> j := i; j &gt; a &amp;&amp; data.Less(j, j<span class="number">-1</span>); j-- &#123;</span><br><span class="line">            data.Swap(j, j<span class="number">-1</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>You pass a data as an Interface; then we don’t need to care about what the real type of data is, we need to know: we can use the data to do <strong>Swap</strong>. Another interesting thing I want to mention is that the interface allows you to hook&#x2F;intercept with a customized handler created by you to assemble with other data, which is so-called <strong>dynamic dispatch</strong>. Let’s see an example:</p>
+<p>You pass a data as an Interface; then we don’t need to care about what the real type of data is, we need to know: we can use the data to do <strong>Swap</strong>. Another interesting thing I want to mention is that the interface allows you to hook/intercept with a customized handler created by you to assemble with other data, which is so-called <strong>dynamic dispatch</strong>. Let’s see an example:</p>
 <p>If you try to use <code>http.Get</code> to get some resources from server-side:</p>
-<pre><code class="highlight go"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;
-  resp, err := http.Get(<span class="string">&quot;http://www.sampleside.com/robots.txt&quot;</span>)
-  ... 
-&#125;</code></pre>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  resp, err := http.Get(<span class="string">"http://www.sampleside.com/robots.txt"</span>)</span><br><span class="line">  ... </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>What if we need to add an authentication token to the header for a request? You might try to use http client to do something like this: </p>
-<pre><code class="highlight go"><span class="keyword">type</span> header <span class="keyword">struct</span> &#123;
-  roundTrip http.RoundTripper
-  possibleHeader <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">string</span>
-&#125;
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> header <span class="keyword">struct</span> &#123;</span><br><span class="line">  roundTrip http.RoundTripper</span><br><span class="line">  possibleHeader <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h header)</span> <span class="title">RoundTrip</span><span class="params">(req *http.Request)</span> <span class="params">(*http.Response, error)</span></span> &#123;</span><br><span class="line">  <span class="keyword">for</span> k, v := <span class="keyword">range</span> h.possibleHeader &#123;</span><br><span class="line">    req.Header.Set(k, v)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> h.roundTrip.RoundTrip(req)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">var</span> client = &amp;http.Client&#123;</span><br><span class="line">    Transport: header&#123;</span><br><span class="line">      roundTrip:      http.DefaultTransport,</span><br><span class="line">      possibleHeader: <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span>&#123;<span class="string">"Authorization"</span>: <span class="string">"Bearer this-is-a-token"</span>&#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;</span><br><span class="line">  response, _ := client.Get(<span class="string">"http://www.sampleside.com/robots.txt"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<span class="function"><span class="keyword">func</span> <span class="params">(h header)</span></span> RoundTrip(req *http.Request) (*http.Response, <span class="type">error</span>) &#123;
-  <span class="keyword">for</span> k, v := <span class="keyword">range</span> h.possibleHeader &#123;
-    req.Header.Set(k, v)
-  &#125;
-  <span class="keyword">return</span> h.roundTrip.RoundTrip(req)
-&#125;
-
-
-<span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;
-  <span class="keyword">var</span> client = &amp;http.Client&#123;
-    Transport: header&#123;
-      roundTrip:      http.DefaultTransport,
-      possibleHeader: <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">string</span>&#123;<span class="string">&quot;Authorization&quot;</span>: <span class="string">&quot;Bearer this-is-a-token&quot;</span>&#125;,
-    &#125;,
-  &#125;
-  response, _ := client.Get(<span class="string">&quot;http://www.sampleside.com/robots.txt&quot;</span>)
-&#125;</code></pre>
-
-<p>The header implements the <a href="https://golang.org/src/net/http/client.go">RoundTripper interface</a> that only contains one method - RoundTrip. This interface gives us a chance to put authorization token into every request without manually add it into request header. That’s powerful. </p>
+<p>The header implements the <a href="https://golang.org/src/net/http/client.go" target="_blank" rel="noopener">RoundTripper interface</a> that only contains one method - RoundTrip. This interface gives us a chance to put authorization token into every request without manually add it into request header. That’s powerful. </p>
 <p>The interface is a foundational feature in Golang, but some benefits build on the runtime that means performance cost. So we should use them carefully. </p>
 <p>Happy coding. Enjoy!</p>
 
@@ -834,7 +584,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-count">69</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -847,7 +597,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

@@ -139,7 +139,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">104</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -149,7 +149,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">69</span></a>
 
   </li>
   </ul>
@@ -250,9 +250,7 @@
 <span id="more"></span>
 
 <h4 id="Build-out-the-framework-jar"><a href="#Build-out-the-framework-jar" class="headerlink" title="Build out the framework jar."></a>Build out the framework jar.</h4><p>When you run the following commands, </p>
-<pre><code class="highlight script">source ./build/envsetup.sh 
-lunch aosp_arm64-eng
-make -j24</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">source ./build/envsetup.sh </span><br><span class="line">lunch aosp_arm64-eng</span><br><span class="line">make -j24</span><br></pre></td></tr></table></figure>
 
 <p>you can build the AOSP images out and get the class_header.jar file from this path: </p>
 <p><code>path/to/your/AOSP/out/target/common/obj/JAVA_LIBRARIES/framework_intermediates</code></p>
@@ -261,26 +259,14 @@ make -j24</code></pre>
 <h5 id="Create-an-SDK-folder"><a href="#Create-an-SDK-folder" class="headerlink" title="Create an SDK folder"></a>Create an SDK folder</h5><p>You can create an SDK folder in your application root path and put your framework.jar file in this SDK folder. </p>
 <h5 id="Update-project-build-gradle"><a href="#Update-project-build-gradle" class="headerlink" title="Update project build.gradle."></a>Update project build.gradle.</h5><p>We need to update the project level Gradle file and add the following code, </p>
 <p><strong>before Android 4.2</strong></p>
-<pre><code class="highlight script">gradle.projectsEvaluated &#123;
-	tasks.withType(JavaCompile) &#123;
-		options.compilerArgs.add(&#x27;-Xbootclasspath/p:app/sdk/framework.jar&#x27;)
-	&#125;
-&#125;</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gradle.projectsEvaluated &#123;</span><br><span class="line">	tasks.withType(JavaCompile) &#123;</span><br><span class="line">		options.compilerArgs.add(&#x27;-Xbootclasspath/p:app/sdk/framework.jar&#x27;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>after Android 4.2</strong></p>
-<pre><code class="highlight script">gradle.projectsEvaluated &#123;  
-    tasks.withType(JavaCompile) &#123;  
-        Set&lt;File&gt; fileSet = options.bootstrapClasspath.getFiles()  
-        List&lt;File&gt; newFileList = new ArrayList&lt;&gt;();  
-        newFileList.add(new File(&quot;./app/sdk/framework.jar&quot;))  
-        newFileList.addAll(fileSet)  
-        options.bootstrapClasspath = files(newFileList.toArray())  
-    &#125;  
-&#125;</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">gradle.projectsEvaluated &#123;  </span><br><span class="line">    tasks.withType(JavaCompile) &#123;  </span><br><span class="line">        Set&lt;File&gt; fileSet = options.bootstrapClasspath.getFiles()  </span><br><span class="line">        List&lt;File&gt; newFileList = new ArrayList&lt;&gt;();  </span><br><span class="line">        newFileList.add(new File(&quot;./app/sdk/framework.jar&quot;))  </span><br><span class="line">        newFileList.addAll(fileSet)  </span><br><span class="line">        options.bootstrapClasspath = files(newFileList.toArray())  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>The concept here is to put the framework.jar to the classpath where the bootstrap class loader can load and find the class. Android Studio will know it needs to put this framework.jar into the classpath to avoid the import error with this setting. After setting up the project build.gradle, you will need to change your application-level build.gradle. </p>
 <h5 id="And-the-framework-jar-to-the-Application-module"><a href="#And-the-framework-jar-to-the-Application-module" class="headerlink" title="And the framework.jar to the Application module"></a>And the framework.jar to the Application module</h5><p>After the changes described above, you will need to add this jar file to the Application module. </p>
-<pre><code class="highlight script">compileOnly files(&#x27;sdk/framework.jar&#x27;)</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compileOnly files(&#x27;sdk/framework.jar&#x27;)</span><br></pre></td></tr></table></figure>
 
 <p>We use <code>compileOnly</code> because the standard Android SDK contains the corresponding APIs, but we can’t access them due to the <code>@SystemApi</code>  annotation. So letting the compiler know this framework jar and leveraging the APIs during the compiling process can bypass the <code>@SystemApi</code> access problem. </p>
 <p>After doing those changes, you should access the framework API in your Android Studio projects. Enjoy, happy coding. </p>
@@ -395,9 +381,7 @@ make -j24</code></pre>
 <span id="more"></span>
 
 <h4 id="Build-out-the-framework-jar"><a href="#Build-out-the-framework-jar" class="headerlink" title="Build out the framework jar."></a>Build out the framework jar.</h4><p>When you run the following commands, </p>
-<pre><code class="highlight script">source ./build/envsetup.sh 
-lunch aosp_arm64-eng
-make -j24</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">source ./build/envsetup.sh </span><br><span class="line">lunch aosp_arm64-eng</span><br><span class="line">make -j24</span><br></pre></td></tr></table></figure>
 
 <p>you can build the AOSP images out and get the class_header.jar file from this path: </p>
 <p><code>path/to/your/AOSP/out/target/common/obj/JAVA_LIBRARIES/framework_intermediates</code></p>
@@ -406,26 +390,14 @@ make -j24</code></pre>
 <h5 id="Create-an-SDK-folder"><a href="#Create-an-SDK-folder" class="headerlink" title="Create an SDK folder"></a>Create an SDK folder</h5><p>You can create an SDK folder in your application root path and put your framework.jar file in this SDK folder. </p>
 <h5 id="Update-project-build-gradle"><a href="#Update-project-build-gradle" class="headerlink" title="Update project build.gradle."></a>Update project build.gradle.</h5><p>We need to update the project level Gradle file and add the following code, </p>
 <p><strong>before Android 4.2</strong></p>
-<pre><code class="highlight script">gradle.projectsEvaluated &#123;
-	tasks.withType(JavaCompile) &#123;
-		options.compilerArgs.add(&#x27;-Xbootclasspath/p:app/sdk/framework.jar&#x27;)
-	&#125;
-&#125;</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gradle.projectsEvaluated &#123;</span><br><span class="line">	tasks.withType(JavaCompile) &#123;</span><br><span class="line">		options.compilerArgs.add(&#x27;-Xbootclasspath/p:app/sdk/framework.jar&#x27;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>after Android 4.2</strong></p>
-<pre><code class="highlight script">gradle.projectsEvaluated &#123;  
-    tasks.withType(JavaCompile) &#123;  
-        Set&lt;File&gt; fileSet = options.bootstrapClasspath.getFiles()  
-        List&lt;File&gt; newFileList = new ArrayList&lt;&gt;();  
-        newFileList.add(new File(&quot;./app/sdk/framework.jar&quot;))  
-        newFileList.addAll(fileSet)  
-        options.bootstrapClasspath = files(newFileList.toArray())  
-    &#125;  
-&#125;</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">gradle.projectsEvaluated &#123;  </span><br><span class="line">    tasks.withType(JavaCompile) &#123;  </span><br><span class="line">        Set&lt;File&gt; fileSet = options.bootstrapClasspath.getFiles()  </span><br><span class="line">        List&lt;File&gt; newFileList = new ArrayList&lt;&gt;();  </span><br><span class="line">        newFileList.add(new File(&quot;./app/sdk/framework.jar&quot;))  </span><br><span class="line">        newFileList.addAll(fileSet)  </span><br><span class="line">        options.bootstrapClasspath = files(newFileList.toArray())  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>The concept here is to put the framework.jar to the classpath where the bootstrap class loader can load and find the class. Android Studio will know it needs to put this framework.jar into the classpath to avoid the import error with this setting. After setting up the project build.gradle, you will need to change your application-level build.gradle. </p>
 <h5 id="And-the-framework-jar-to-the-Application-module"><a href="#And-the-framework-jar-to-the-Application-module" class="headerlink" title="And the framework.jar to the Application module"></a>And the framework.jar to the Application module</h5><p>After the changes described above, you will need to add this jar file to the Application module. </p>
-<pre><code class="highlight script">compileOnly files(&#x27;sdk/framework.jar&#x27;)</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compileOnly files(&#x27;sdk/framework.jar&#x27;)</span><br></pre></td></tr></table></figure>
 
 <p>We use <code>compileOnly</code> because the standard Android SDK contains the corresponding APIs, but we can’t access them due to the <code>@SystemApi</code>  annotation. So letting the compiler know this framework jar and leveraging the APIs during the compiling process can bypass the <code>@SystemApi</code> access problem. </p>
 <p>After doing those changes, you should access the framework API in your Android Studio projects. Enjoy, happy coding. </p>
@@ -546,7 +518,7 @@ make -j24</code></pre>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-count">69</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -559,7 +531,7 @@ make -j24</code></pre>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

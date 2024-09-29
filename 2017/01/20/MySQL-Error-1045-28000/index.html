@@ -21,12 +21,12 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideRightIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="What happened?Alright, I don’t know what happened when trying to log in to MySQL. And it shows that message: MySQL - Error 1045 (28000) using password: YES. I am pretty sure that user&#x2F;pwd pair i">
+  <meta name="description" content="What happened?Alright, I don’t know what happened when trying to log in to MySQL. And it shows that message: MySQL - Error 1045 (28000) using password: YES. I am pretty sure that user&#x2F;pwd pair is cor">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL - Error 1045 (28000)">
 <meta property="og:url" content="http://yoursite.com/2017/01/20/MySQL-Error-1045-28000/index.html">
 <meta property="og:site_name" content="舊金山周記">
-<meta property="og:description" content="What happened?Alright, I don’t know what happened when trying to log in to MySQL. And it shows that message: MySQL - Error 1045 (28000) using password: YES. I am pretty sure that user&#x2F;pwd pair i">
+<meta property="og:description" content="What happened?Alright, I don’t know what happened when trying to log in to MySQL. And it shows that message: MySQL - Error 1045 (28000) using password: YES. I am pretty sure that user&#x2F;pwd pair is cor">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://chauyanw.files.wordpress.com/2017/01/mysql-logo.jpg?w=2924">
 <meta property="article:published_time" content="2017-01-20T15:34:00.000Z">
@@ -140,7 +140,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">104</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -150,7 +150,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">69</span></a>
 
   </li>
   </ul>
@@ -246,53 +246,49 @@
 
       
         <p><img src="https://chauyanw.files.wordpress.com/2017/01/mysql-logo.jpg?w=2924" alt="mysql-logo.jpg?w=2924"></p>
-<h4 id="What-happened"><a href="#What-happened" class="headerlink" title="What happened?"></a>What happened?</h4><p>Alright, I don’t know what happened when trying to log in to MySQL. And it shows that message: MySQL - Error 1045 (28000) using password: YES. I am pretty sure that user&#x2F;pwd pair is correct. After searching and studying some articles and forum discussions. I found it might be caused by broken SQL or reinstall SQL. The interesting is I can’t remember I had done that before.</p>
-<span id="more"></span>
+<h4 id="What-happened"><a href="#What-happened" class="headerlink" title="What happened?"></a>What happened?</h4><p>Alright, I don’t know what happened when trying to log in to MySQL. And it shows that message: MySQL - Error 1045 (28000) using password: YES. I am pretty sure that user/pwd pair is correct. After searching and studying some articles and forum discussions. I found it might be caused by broken SQL or reinstall SQL. The interesting is I can’t remember I had done that before.</p>
+<a id="more"></a>
 
 <h4 id="How-to-solve-it"><a href="#How-to-solve-it" class="headerlink" title="How to solve it?"></a>How to solve it?</h4><p>So, here some steps show how to restore your SQL.</p>
-<pre><code class="highlight plaintext">// first, stop your SQL daemon
-$sudo service mysql stop</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// first, stop your SQL daemon</span><br><span class="line">$sudo service mysql stop</span><br></pre></td></tr></table></figure>
 
 <p>After stopping your SQL daemon, then we need to start SQL without grant table.</p>
-<pre><code class="highlight plaintext">$sudo mysqld_safe --user=mysql --skip-grant-tables --skip-networking &amp;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sudo mysqld_safe --user=mysql --skip-grant-tables --skip-networking &amp;</span><br></pre></td></tr></table></figure>
 
 <p>After that, log in your SQL as root.</p>
-<pre><code class="highlight plaintext">$sudo mysql -uroot mysql -p</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sudo mysql -uroot mysql -p</span><br></pre></td></tr></table></figure>
 
 <p>We need to reset root pwd now.</p>
-<pre><code class="highlight plaintext">$mysql&gt; UPDATE user SET Password=PASSWORD(&#x27;new root pwd&#x27;) where USER=&#x27;root&#x27;;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$mysql&gt; UPDATE user SET Password=PASSWORD(&apos;new root pwd&apos;) where USER=&apos;root&apos;;</span><br></pre></td></tr></table></figure>
 
 <p>Let root regain the access right for all of your databases.</p>
-<pre><code class="highlight plaintext">$mysql&gt; GRANT all ON *.* TO root@&#x27;localhost&#x27; IDENTIFIED BY &#x27;new root pwd&#x27;;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$mysql&gt; GRANT all ON *.* TO root@&apos;localhost&apos; IDENTIFIED BY &apos;new root pwd&apos;;</span><br></pre></td></tr></table></figure>
 
 <p>Update the permission &amp; exit SQL</p>
-<pre><code class="highlight plaintext">$mysql&gt; flush privileges;
-$mysql&gt; quit;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$mysql&gt; flush privileges;</span><br><span class="line">$mysql&gt; quit;</span><br></pre></td></tr></table></figure>
 
 <p>Re-login to your SQL</p>
-<pre><code class="highlight plaintext">$sudo mysql -uroot mysql -p</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sudo mysql -uroot mysql -p</span><br></pre></td></tr></table></figure>
 
-<h4 id="If-it-still-doesn’t-work"><a href="#If-it-still-doesn’t-work" class="headerlink" title="If it still doesn’t work!"></a>If it still doesn’t work!</h4><p>I believe you can use your root PWD to log in to MySQL now, but if you still can’t login, keep going through the following steps. Sorry for your back luck. You need to check &#x2F;etc&#x2F;mysql&#x2F;debian.cnf file in your system and find [client] section. Use this account to log in.</p>
-<pre><code class="highlight plaintext">$sudo mysql -udebian-sys-maint -p</code></pre>
+<h4 id="If-it-still-doesn’t-work"><a href="#If-it-still-doesn’t-work" class="headerlink" title="If it still doesn’t work!"></a>If it still doesn’t work!</h4><p>I believe you can use your root PWD to log in to MySQL now, but if you still can’t login, keep going through the following steps. Sorry for your back luck. You need to check /etc/mysql/debian.cnf file in your system and find [client] section. Use this account to log in.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sudo mysql -udebian-sys-maint -p</span><br></pre></td></tr></table></figure>
 
 <p>Input debian-sys-maint PWD. and repeat these steps. We need to reset root pwd now.</p>
-<pre><code class="highlight plaintext">$mysql&gt; UPDATE user SET Password=PASSWORD(&#x27;new root pwd&#x27;) where USER=&#x27;root&#x27;;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$mysql&gt; UPDATE user SET Password=PASSWORD(&apos;new root pwd&apos;) where USER=&apos;root&apos;;</span><br></pre></td></tr></table></figure>
 
 <p>Let root regain the access right for all of your databases.</p>
-<pre><code class="highlight plaintext">$mysql&gt; GRANT all ON *.* TO root@&#x27;localhost&#x27; IDENTIFIED BY &#x27;new root pwd&#x27;;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$mysql&gt; GRANT all ON *.* TO root@&apos;localhost&apos; IDENTIFIED BY &apos;new root pwd&apos;;</span><br></pre></td></tr></table></figure>
 
 <p>Update the permission &amp; exit SQL</p>
-<pre><code class="highlight plaintext">$mysql&gt; flush privileges;
-$mysql&gt; quit;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$mysql&gt; flush privileges;</span><br><span class="line">$mysql&gt; quit;</span><br></pre></td></tr></table></figure>
 
 <p>Re-login to your SQL</p>
-<pre><code class="highlight plaintext">$sudo mysql -uroot mysql -p</code></pre>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sudo mysql -uroot mysql -p</span><br></pre></td></tr></table></figure>
 
 <h4 id="Reference"><a href="#Reference" class="headerlink" title="[Reference]"></a>[Reference]</h4><ol>
-<li><a href="https://forums.freebsd.org/threads/55225/">mysql ERROR 1045 (28000): Access denied for user ‘root‘@’localhost’ (using password: NO) | The FreeBSD Forums</a></li>
-<li><a href="http://stackoverflow.com/questions/21944936/error-1045-28000-access-denied-for-user-rootlocalhost-using-password-y">mysql - ERROR 1045 (28000): Access denied for user ‘root‘@’localhost’ (using password: YES) - Stack Overflow</a></li>
-<li><a href="https://www.digitalocean.com/community/questions/setup-mysql-on-ubuntu-droplet-getting-error-error-1045-28000-access-denied-for-user-root-localhost-using-password-yes">Setup MySQL on Ubuntu Droplet getting error ERROR 1045 (28000): Access denied for user ‘root‘@’localhost’ (using password: YES) | DigitalOcean</a></li>
+<li><a href="https://forums.freebsd.org/threads/55225/" target="_blank" rel="noopener">mysql ERROR 1045 (28000): Access denied for user ‘root’@’localhost’ (using password: NO) | The FreeBSD Forums</a></li>
+<li><a href="http://stackoverflow.com/questions/21944936/error-1045-28000-access-denied-for-user-rootlocalhost-using-password-y" target="_blank" rel="noopener">mysql - ERROR 1045 (28000): Access denied for user ‘root’@’localhost’ (using password: YES) - Stack Overflow</a></li>
+<li><a href="https://www.digitalocean.com/community/questions/setup-mysql-on-ubuntu-droplet-getting-error-error-1045-28000-access-denied-for-user-root-localhost-using-password-yes" target="_blank" rel="noopener">Setup MySQL on Ubuntu Droplet getting error ERROR 1045 (28000): Access denied for user ‘root’@’localhost’ (using password: YES) | DigitalOcean</a></li>
 </ol>
 
     </div>
@@ -401,53 +397,49 @@ $mysql&gt; quit;</code></pre>
 
       
         <p><img src="https://chauyanw.files.wordpress.com/2017/01/mysql-logo.jpg?w=2924" alt="mysql-logo.jpg?w=2924"></p>
-<h4 id="What-happened"><a href="#What-happened" class="headerlink" title="What happened?"></a>What happened?</h4><p>Alright, I don’t know what happened when trying to log in to MySQL. And it shows that message: MySQL - Error 1045 (28000) using password: YES. I am pretty sure that user&#x2F;pwd pair is correct. After searching and studying some articles and forum discussions. I found it might be caused by broken SQL or reinstall SQL. The interesting is I can’t remember I had done that before.</p>
-<span id="more"></span>
+<h4 id="What-happened"><a href="#What-happened" class="headerlink" title="What happened?"></a>What happened?</h4><p>Alright, I don’t know what happened when trying to log in to MySQL. And it shows that message: MySQL - Error 1045 (28000) using password: YES. I am pretty sure that user/pwd pair is correct. After searching and studying some articles and forum discussions. I found it might be caused by broken SQL or reinstall SQL. The interesting is I can’t remember I had done that before.</p>
+<a id="more"></a>
 
 <h4 id="How-to-solve-it"><a href="#How-to-solve-it" class="headerlink" title="How to solve it?"></a>How to solve it?</h4><p>So, here some steps show how to restore your SQL.</p>
-<pre><code class="highlight plaintext">// first, stop your SQL daemon
-$sudo service mysql stop</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// first, stop your SQL daemon</span><br><span class="line">$sudo service mysql stop</span><br></pre></td></tr></table></figure>
 
 <p>After stopping your SQL daemon, then we need to start SQL without grant table.</p>
-<pre><code class="highlight plaintext">$sudo mysqld_safe --user=mysql --skip-grant-tables --skip-networking &amp;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sudo mysqld_safe --user=mysql --skip-grant-tables --skip-networking &amp;</span><br></pre></td></tr></table></figure>
 
 <p>After that, log in your SQL as root.</p>
-<pre><code class="highlight plaintext">$sudo mysql -uroot mysql -p</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sudo mysql -uroot mysql -p</span><br></pre></td></tr></table></figure>
 
 <p>We need to reset root pwd now.</p>
-<pre><code class="highlight plaintext">$mysql&gt; UPDATE user SET Password=PASSWORD(&#x27;new root pwd&#x27;) where USER=&#x27;root&#x27;;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$mysql&gt; UPDATE user SET Password=PASSWORD(&apos;new root pwd&apos;) where USER=&apos;root&apos;;</span><br></pre></td></tr></table></figure>
 
 <p>Let root regain the access right for all of your databases.</p>
-<pre><code class="highlight plaintext">$mysql&gt; GRANT all ON *.* TO root@&#x27;localhost&#x27; IDENTIFIED BY &#x27;new root pwd&#x27;;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$mysql&gt; GRANT all ON *.* TO root@&apos;localhost&apos; IDENTIFIED BY &apos;new root pwd&apos;;</span><br></pre></td></tr></table></figure>
 
 <p>Update the permission &amp; exit SQL</p>
-<pre><code class="highlight plaintext">$mysql&gt; flush privileges;
-$mysql&gt; quit;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$mysql&gt; flush privileges;</span><br><span class="line">$mysql&gt; quit;</span><br></pre></td></tr></table></figure>
 
 <p>Re-login to your SQL</p>
-<pre><code class="highlight plaintext">$sudo mysql -uroot mysql -p</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sudo mysql -uroot mysql -p</span><br></pre></td></tr></table></figure>
 
-<h4 id="If-it-still-doesn’t-work"><a href="#If-it-still-doesn’t-work" class="headerlink" title="If it still doesn’t work!"></a>If it still doesn’t work!</h4><p>I believe you can use your root PWD to log in to MySQL now, but if you still can’t login, keep going through the following steps. Sorry for your back luck. You need to check &#x2F;etc&#x2F;mysql&#x2F;debian.cnf file in your system and find [client] section. Use this account to log in.</p>
-<pre><code class="highlight plaintext">$sudo mysql -udebian-sys-maint -p</code></pre>
+<h4 id="If-it-still-doesn’t-work"><a href="#If-it-still-doesn’t-work" class="headerlink" title="If it still doesn’t work!"></a>If it still doesn’t work!</h4><p>I believe you can use your root PWD to log in to MySQL now, but if you still can’t login, keep going through the following steps. Sorry for your back luck. You need to check /etc/mysql/debian.cnf file in your system and find [client] section. Use this account to log in.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sudo mysql -udebian-sys-maint -p</span><br></pre></td></tr></table></figure>
 
 <p>Input debian-sys-maint PWD. and repeat these steps. We need to reset root pwd now.</p>
-<pre><code class="highlight plaintext">$mysql&gt; UPDATE user SET Password=PASSWORD(&#x27;new root pwd&#x27;) where USER=&#x27;root&#x27;;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$mysql&gt; UPDATE user SET Password=PASSWORD(&apos;new root pwd&apos;) where USER=&apos;root&apos;;</span><br></pre></td></tr></table></figure>
 
 <p>Let root regain the access right for all of your databases.</p>
-<pre><code class="highlight plaintext">$mysql&gt; GRANT all ON *.* TO root@&#x27;localhost&#x27; IDENTIFIED BY &#x27;new root pwd&#x27;;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$mysql&gt; GRANT all ON *.* TO root@&apos;localhost&apos; IDENTIFIED BY &apos;new root pwd&apos;;</span><br></pre></td></tr></table></figure>
 
 <p>Update the permission &amp; exit SQL</p>
-<pre><code class="highlight plaintext">$mysql&gt; flush privileges;
-$mysql&gt; quit;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$mysql&gt; flush privileges;</span><br><span class="line">$mysql&gt; quit;</span><br></pre></td></tr></table></figure>
 
 <p>Re-login to your SQL</p>
-<pre><code class="highlight plaintext">$sudo mysql -uroot mysql -p</code></pre>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sudo mysql -uroot mysql -p</span><br></pre></td></tr></table></figure>
 
 <h4 id="Reference"><a href="#Reference" class="headerlink" title="[Reference]"></a>[Reference]</h4><ol>
-<li><a href="https://forums.freebsd.org/threads/55225/">mysql ERROR 1045 (28000): Access denied for user ‘root‘@’localhost’ (using password: NO) | The FreeBSD Forums</a></li>
-<li><a href="http://stackoverflow.com/questions/21944936/error-1045-28000-access-denied-for-user-rootlocalhost-using-password-y">mysql - ERROR 1045 (28000): Access denied for user ‘root‘@’localhost’ (using password: YES) - Stack Overflow</a></li>
-<li><a href="https://www.digitalocean.com/community/questions/setup-mysql-on-ubuntu-droplet-getting-error-error-1045-28000-access-denied-for-user-root-localhost-using-password-yes">Setup MySQL on Ubuntu Droplet getting error ERROR 1045 (28000): Access denied for user ‘root‘@’localhost’ (using password: YES) | DigitalOcean</a></li>
+<li><a href="https://forums.freebsd.org/threads/55225/" target="_blank" rel="noopener">mysql ERROR 1045 (28000): Access denied for user ‘root’@’localhost’ (using password: NO) | The FreeBSD Forums</a></li>
+<li><a href="http://stackoverflow.com/questions/21944936/error-1045-28000-access-denied-for-user-rootlocalhost-using-password-y" target="_blank" rel="noopener">mysql - ERROR 1045 (28000): Access denied for user ‘root’@’localhost’ (using password: YES) - Stack Overflow</a></li>
+<li><a href="https://www.digitalocean.com/community/questions/setup-mysql-on-ubuntu-droplet-getting-error-error-1045-28000-access-denied-for-user-root-localhost-using-password-yes" target="_blank" rel="noopener">Setup MySQL on Ubuntu Droplet getting error ERROR 1045 (28000): Access denied for user ‘root’@’localhost’ (using password: YES) | DigitalOcean</a></li>
 </ol>
 
     </div>
@@ -567,7 +559,7 @@ $mysql&gt; quit;</code></pre>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-count">69</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -580,7 +572,7 @@ $mysql&gt; quit;</code></pre>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

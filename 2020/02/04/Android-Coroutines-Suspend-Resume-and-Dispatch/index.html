@@ -139,7 +139,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">104</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -149,7 +149,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">69</span></a>
 
   </li>
   </ul>
@@ -245,323 +245,84 @@
 
       
         <p><img src="https://chauyanw.files.wordpress.com/2019/08/kotlin-coroutines-1.png?w=2924" alt="kotlin-coroutines-1.png?w=2924"></p>
-<p>In the <a href="https://personaldevblog.firebaseapp.com/2019/12/27/Android-Coroutines-Introduction">Introduction</a> section, we already have a big picture of the <code>Coroutines</code> feature, including what it is, how we can use it, and other basic concepts. In this article, I will introduce another critical keyword <code>suspend</code>:</p>
-<span id="more"></span>
+<p>In the <a href="https://personaldevblog.firebaseapp.com/2019/12/27/Android-Coroutines-Introduction" target="_blank" rel="noopener">Introduction</a> section, we already have a big picture of the <code>Coroutines</code> feature, including what it is, how we can use it, and other basic concepts. In this article, I will introduce another critical keyword <code>suspend</code>:</p>
+<a id="more"></a>
 
 <h4 id="What’s-a-suspend-function"><a href="#What’s-a-suspend-function" class="headerlink" title="What’s a suspend function?"></a>What’s a suspend function?</h4><p>Remember the example we use before:</p>
-<pre><code class="highlight kotlin"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">requestToken</span><span class="params">()</span></span>: Token &#123; ... &#125;
-<span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">createPost</span><span class="params">(token: <span class="type">Token</span>, item: <span class="type">Item</span>)</span></span>: Post &#123; ... &#125;
-<span class="function"><span class="keyword">fun</span> <span class="title">processPost</span><span class="params">(post: <span class="type">Post</span>)</span></span> &#123; ... &#125;
-
-<span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">postItem</span><span class="params">(item: <span class="type">Item</span>)</span></span> &#123;
-  GlobalScope.launch &#123;
-    <span class="keyword">val</span> token = requestToken()
-    <span class="keyword">val</span> post = createPost(token, item)
-    processPost(post)
-  &#125;
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">requestToken</span><span class="params">()</span></span>: Token &#123; ... &#125;</span><br><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">createPost</span><span class="params">(token: <span class="type">Token</span>, item: <span class="type">Item</span>)</span></span>: Post &#123; ... &#125;</span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">processPost</span><span class="params">(post: <span class="type">Post</span>)</span></span> &#123; ... &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">postItem</span><span class="params">(item: <span class="type">Item</span>)</span></span> &#123;</span><br><span class="line">  GlobalScope.launch &#123;</span><br><span class="line">    <span class="keyword">val</span> token = requestToken()</span><br><span class="line">    <span class="keyword">val</span> post = createPost(token, item)</span><br><span class="line">    processPost(post)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>You can see the keyword <code>suspend</code> in front of a function. What does <code>suspend</code> keyword mean? If you compile the Kotlin code, you can see something like this:</p>
-<pre><code class="highlight java"><span class="comment">// declaration: requestToken(kotlin.coroutines.Continuation&lt;? super kotlin.Unit&gt;)</span>
-<span class="keyword">public</span> <span class="keyword">final</span> <span class="title function_">requestToken</span><span class="params">(Lkotlin/coroutines/Continuation;)</span>Ljava/lang/Object;</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// declaration: requestToken(kotlin.coroutines.Continuation&lt;? super kotlin.Unit&gt;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="title">requestToken</span><span class="params">(Lkotlin/coroutines/Continuation;)</span>Ljava/lang/Object</span>;</span><br></pre></td></tr></table></figure>
 
 <p>The code snap above is what we decompile into java code.</p>
-<pre><code class="highlight kotlin"><span class="meta">@Nullable</span>
-<span class="keyword">public</span> <span class="keyword">final</span> Object requestToken(<span class="meta">@NotNull</span> Continuation $completion) &#123;
-  <span class="keyword">return</span> <span class="built_in">Unit</span>.INSTANCE;
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> Object requestToken(<span class="meta">@NotNull</span> Continuation $completion) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Unit</span>.INSTANCE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>This is a bytecode&#x2F;compiled-java-code sample for this suspend function - requestToken(). We can find there’s a parameter passed into requestToken(), which is a <code>Continuation.</code> What’s a <code>Continuation</code>?</p>
-<pre><code class="highlight kotlin"><span class="comment">/**</span>
-<span class="comment">* Interface representing a continuation after a suspension point that returns a value of type `T`.</span>
-<span class="comment">*/</span>
-<span class="meta">@SinceKotlin(<span class="string">&quot;1.3&quot;</span>)</span>
-<span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Continuation</span> &#123;
-  <span class="comment">/**</span>
-<span class="comment">  * The context of the coroutine that corresponds to this continuation.</span>
-<span class="comment">  */</span>
-  <span class="keyword">public</span> <span class="keyword">val</span> context: CoroutineContext
-
-  <span class="comment">/**</span>
-<span class="comment">  * Resumes the execution of the corresponding coroutine passing a successful or failed [result] as the</span>
-<span class="comment">  * return value of the last suspension point.</span>
-<span class="comment">  */</span>
-  <span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> <span class="title">resumeWith</span><span class="params">(result: <span class="type">Result</span>)</span></span>
-&#125;</code></pre>
+<p>This is a bytecode/compiled-java-code sample for this suspend function - requestToken(). We can find there’s a parameter passed into requestToken(), which is a <code>Continuation.</code> What’s a <code>Continuation</code>?</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* Interface representing a continuation after a suspension point that returns a value of type `T`.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@SinceKotlin(<span class="meta-string">"1.3"</span>)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Continuation</span> </span>&#123;</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">  * The context of the coroutine that corresponds to this continuation.</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">val</span> context: CoroutineContext</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">  * Resumes the execution of the corresponding coroutine passing a successful or failed [result] as the</span></span><br><span class="line"><span class="comment">  * return value of the last suspension point.</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> <span class="title">resumeWith</span><span class="params">(result: <span class="type">Result</span>)</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>It’s an interface for resuming the suspended point. Here’s an example when you try to use <code>CoroutineScope.Launch</code>:</p>
-<pre><code class="highlight kotlin">GlobalScope.launch &#123;
-  <span class="keyword">val</span> token = requestToken()
-  <span class="keyword">val</span> post = createPost(token)
-  processPost(post)
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GlobalScope.launch &#123;</span><br><span class="line">  <span class="keyword">val</span> token = requestToken()</span><br><span class="line">  <span class="keyword">val</span> post = createPost(token)</span><br><span class="line">  processPost(post)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>it will become something like:</p>
-<pre><code class="highlight java"><span class="meta">@Nullable</span>
-<span class="keyword">public</span> <span class="keyword">final</span> Object <span class="title function_">invokeSuspend</span><span class="params">(<span class="meta">@NotNull</span> Object $result)</span> &#123;
-  Object var10000;
-  label17: &#123;
-    <span class="type">Object</span> <span class="variable">var5</span> <span class="operator">=</span> IntrinsicsKt.getCOROUTINE_SUSPENDED();
-    CoroutineScope $<span class="built_in">this</span>$launch;
-    Token token;
-    MainActivity var6;
-    <span class="keyword">switch</span>(<span class="built_in">this</span>.label) &#123;
-      <span class="keyword">case</span> <span class="number">0</span>:
-        ResultKt.throwOnFailure($result);
-        $<span class="built_in">this</span>$launch = <span class="built_in">this</span>.p$;
-        var6 = MainActivity.<span class="built_in">this</span>;
-        <span class="built_in">this</span>.L$<span class="number">0</span> = $<span class="built_in">this</span>$launch;
-        <span class="built_in">this</span>.label = <span class="number">1</span>;
-        var10000 = var6.requestToken(<span class="built_in">this</span>);
-        <span class="keyword">if</span> (var10000 == var5) &#123;
-          <span class="keyword">return</span> var5;
-        &#125;
-      <span class="keyword">break</span>;
-      <span class="keyword">case</span> <span class="number">1</span>:
-        $<span class="built_in">this</span>$launch = (CoroutineScope)<span class="built_in">this</span>.L$<span class="number">0</span>;
-        ResultKt.throwOnFailure($result);
-        var10000 = $result;
-      <span class="keyword">break</span>;
-      <span class="keyword">case</span> <span class="number">2</span>:
-        token = (Token)<span class="built_in">this</span>.L$<span class="number">1</span>;
-        $<span class="built_in">this</span>$launch = (CoroutineScope)<span class="built_in">this</span>.L$<span class="number">0</span>;
-        ResultKt.throwOnFailure($result);
-        var10000 = $result;
-        <span class="keyword">break</span> label17;
-      <span class="keyword">default</span>:
-        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalStateException</span>(<span class="string">&quot;call to &#x27;resume&#x27; before &#x27;invoke&#x27; with coroutine&quot;</span>);
-    &#125;
-
-    token = (Token)var10000;
-    var6 = MainActivity.<span class="built_in">this</span>;
-    <span class="built_in">this</span>.L$<span class="number">0</span> = $<span class="built_in">this</span>$launch;
-    <span class="built_in">this</span>.L$<span class="number">1</span> = token;
-    <span class="built_in">this</span>.label = <span class="number">2</span>;
-    var10000 = var6.createPost(token, <span class="built_in">this</span>);
-    <span class="keyword">if</span> (var10000 == var5) &#123;
-      <span class="keyword">return</span> var5;
-    &#125;
-  &#125;
-
-  <span class="type">Post</span> <span class="variable">post</span> <span class="operator">=</span> (Post)var10000;
-  MainActivity.<span class="built_in">this</span>.processPost(post);
-  <span class="keyword">return</span> Unit.INSTANCE;
-&#125;</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Object <span class="title">invokeSuspend</span><span class="params">(@NotNull Object $result)</span> </span>&#123;</span><br><span class="line">  Object var10000;</span><br><span class="line">  label17: &#123;</span><br><span class="line">    Object var5 = IntrinsicsKt.getCOROUTINE_SUSPENDED();</span><br><span class="line">    CoroutineScope $<span class="keyword">this</span>$launch;</span><br><span class="line">    Token token;</span><br><span class="line">    MainActivity var6;</span><br><span class="line">    <span class="keyword">switch</span>(<span class="keyword">this</span>.label) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">        ResultKt.throwOnFailure($result);</span><br><span class="line">        $<span class="keyword">this</span>$launch = <span class="keyword">this</span>.p$;</span><br><span class="line">        var6 = MainActivity.<span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">this</span>.L$<span class="number">0</span> = $<span class="keyword">this</span>$launch;</span><br><span class="line">        <span class="keyword">this</span>.label = <span class="number">1</span>;</span><br><span class="line">        var10000 = var6.requestToken(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">if</span> (var10000 == var5) &#123;</span><br><span class="line">          <span class="keyword">return</span> var5;</span><br><span class="line">        &#125;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">        $<span class="keyword">this</span>$launch = (CoroutineScope)<span class="keyword">this</span>.L$<span class="number">0</span>;</span><br><span class="line">        ResultKt.throwOnFailure($result);</span><br><span class="line">        var10000 = $result;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">        token = (Token)<span class="keyword">this</span>.L$<span class="number">1</span>;</span><br><span class="line">        $<span class="keyword">this</span>$launch = (CoroutineScope)<span class="keyword">this</span>.L$<span class="number">0</span>;</span><br><span class="line">        ResultKt.throwOnFailure($result);</span><br><span class="line">        var10000 = $result;</span><br><span class="line">        <span class="keyword">break</span> label17;</span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"call to 'resume' before 'invoke' with coroutine"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    token = (Token)var10000;</span><br><span class="line">    var6 = MainActivity.<span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">this</span>.L$<span class="number">0</span> = $<span class="keyword">this</span>$launch;</span><br><span class="line">    <span class="keyword">this</span>.L$<span class="number">1</span> = token;</span><br><span class="line">    <span class="keyword">this</span>.label = <span class="number">2</span>;</span><br><span class="line">    var10000 = var6.createPost(token, <span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">if</span> (var10000 == var5) &#123;</span><br><span class="line">      <span class="keyword">return</span> var5;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  Post post = (Post)var10000;</span><br><span class="line">  MainActivity.<span class="keyword">this</span>.processPost(post);</span><br><span class="line">  <span class="keyword">return</span> Unit.INSTANCE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>In a Coroutine, it doesn’t use a callback function to return value. Instead, it uses the state machine to control what will respond to the next state. A suspend function will block the Coroutine when it’s in, but it wouldn’t block the thread. When it executes the suspend function, it won’t block the whole thread. The current thread can still do other jobs.</p>
-<pre><code class="highlight kotlin">Thread &#123;
-
-  <span class="keyword">val</span> context = newSingleThreadContext(<span class="string">&quot;Test Thread&quot;</span>)
-  GlobalScope.launch (context) &#123;
-    println(<span class="string">&quot;Start first coroutine.&quot;</span>)
-    delay(<span class="number">200</span>)
-    println(<span class="string">&quot;Resume first coroutine after delay 200ms&quot;</span>)
-  &#125;
-
-  GlobalScope.launch (context)&#123;
-    println(<span class="string">&quot;Start second coroutine.&quot;</span>)
-    delay(<span class="number">100</span>)
-    println(<span class="string">&quot;Resume second coroutine after delay 100ms&quot;</span>)
-  &#125;
-
-  Thread.sleep(<span class="number">500</span>)
-&#125;.start()</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Thread &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">val</span> context = newSingleThreadContext(<span class="string">"Test Thread"</span>)</span><br><span class="line">  GlobalScope.launch (context) &#123;</span><br><span class="line">    println(<span class="string">"Start first coroutine."</span>)</span><br><span class="line">    delay(<span class="number">200</span>)</span><br><span class="line">    println(<span class="string">"Resume first coroutine after delay 200ms"</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  GlobalScope.launch (context)&#123;</span><br><span class="line">    println(<span class="string">"Start second coroutine."</span>)</span><br><span class="line">    delay(<span class="number">100</span>)</span><br><span class="line">    println(<span class="string">"Resume second coroutine after delay 100ms"</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  Thread.sleep(<span class="number">500</span>)</span><br><span class="line">&#125;.start()</span><br></pre></td></tr></table></figure>
 
 <p>the result:</p>
-<pre><code class="highlight text">2019-08-17 21:25:22.437 I/System.out: Start first coroutine.
-2019-08-17 21:25:22.473 I/System.out: Start second coroutine.
-2019-08-17 21:25:22.574 I/System.out: Resume second coroutine after delay 100ms
-2019-08-17 21:25:22.656 I/System.out: Resume first coroutine after delay 200ms</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2019-08-17 21:25:22.437 I/System.out: Start first coroutine.</span><br><span class="line">2019-08-17 21:25:22.473 I/System.out: Start second coroutine.</span><br><span class="line">2019-08-17 21:25:22.574 I/System.out: Resume second coroutine after delay 100ms</span><br><span class="line">2019-08-17 21:25:22.656 I/System.out: Resume first coroutine after delay 200ms</span><br></pre></td></tr></table></figure>
 
 <p>That’s why a Coroutine is very lightweight, and you can create it anytime without spending many resources on creating a Coroutine. After this, you might have a question: after resuming the suspended status, current Coroutine will still run on the same thread?</p>
 <p>If you remember, I mentioned <code>Dispatcher</code> would decide which thread a Coroutine should run. There are two categories of dispatcher - <code>confined</code> &amp; <code>unconfined.</code> The <code>Default,</code> <code>Main,</code> and <code>IO</code> belong to <code>Confined</code> category, and <code>Unconfined</code> is <code>unconfined.</code> Let’s create two different coroutines and use <code>Confined</code> &amp; <code>Unconfined</code> dispatchers to see what will happen.</p>
-<pre><code class="highlight kotlin">Thread &#123;
-  GlobalScope.launch (Dispatchers.Main) &#123;
-    println(<span class="string">&quot;First coroutine runs in <span class="subst">$&#123;Thread.currentThread().name&#125;</span>&quot;</span>)
-    delay(<span class="number">100</span>)
-    println(<span class="string">&quot;First coroutine resumes and runs in <span class="subst">$&#123;Thread.currentThread().name&#125;</span>&quot;</span>)
-&#125;
-
-  GlobalScope.launch (Dispatchers.Unconfined)&#123;
-    println(<span class="string">&quot;Second coroutine runs in <span class="subst">$&#123;Thread.currentThread().name&#125;</span>&quot;</span>)
-    delay(<span class="number">100</span>)
-    println(<span class="string">&quot;Second coroutine resumes and runs in <span class="subst">$&#123;Thread.currentThread().name&#125;</span>&quot;</span>)
-&#125;
-
-  Thread.sleep(<span class="number">500</span>)
-&#125;.start()</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Thread &#123;</span><br><span class="line">  GlobalScope.launch (Dispatchers.Main) &#123;</span><br><span class="line">    println(<span class="string">"First coroutine runs in <span class="subst">$&#123;Thread.currentThread().name&#125;</span>"</span>)</span><br><span class="line">    delay(<span class="number">100</span>)</span><br><span class="line">    println(<span class="string">"First coroutine resumes and runs in <span class="subst">$&#123;Thread.currentThread().name&#125;</span>"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">  GlobalScope.launch (Dispatchers.Unconfined)&#123;</span><br><span class="line">    println(<span class="string">"Second coroutine runs in <span class="subst">$&#123;Thread.currentThread().name&#125;</span>"</span>)</span><br><span class="line">    delay(<span class="number">100</span>)</span><br><span class="line">    println(<span class="string">"Second coroutine resumes and runs in <span class="subst">$&#123;Thread.currentThread().name&#125;</span>"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">  Thread.sleep(<span class="number">500</span>)</span><br><span class="line">&#125;.start()</span><br></pre></td></tr></table></figure>
 
 <p>Result:</p>
-<pre><code class="highlight plaintext">2019-08-17 21:43:22.895 I/System.out: Second coroutine runs in Thread-4
-2019-08-17 21:43:22.947 I/System.out: First coroutine runs in main
-2019-08-17 21:43:23.005 I/System.out: Second coroutine resumes and runs in kotlinx.coroutines.DefaultExecutor
-2019-08-17 21:43:23.050 I/System.out: First coroutine resumes and runs in main</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2019-08-17 21:43:22.895 I/System.out: Second coroutine runs in Thread-4</span><br><span class="line">2019-08-17 21:43:22.947 I/System.out: First coroutine runs in main</span><br><span class="line">2019-08-17 21:43:23.005 I/System.out: Second coroutine resumes and runs in kotlinx.coroutines.DefaultExecutor</span><br><span class="line">2019-08-17 21:43:23.050 I/System.out: First coroutine resumes and runs in main</span><br></pre></td></tr></table></figure>
 
 <p>When you use a <code>confined</code> dispatcher, no matter when you suspend the Coroutine, it would still run on the same thread after it resumes for the <code>Dispatchers.Unconfined</code> setting, it would first start on the caller thread but continue on a thread based on where the suspend function is.</p>
 <p>So far, I introduce how the suspend function works, but it’s still worth going through how to create a Coroutine, start it and resume mechanism, especially it would be great to know how to switch different Coroutines. Let’s dig in a little bit deeper.</p>
 <p>Go back to the <code>CoroutineScope.Launch</code>:</p>
-<pre><code class="highlight kotlin"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> CoroutineScope.<span class="title">launch</span><span class="params">(</span></span>
-<span class="params"><span class="function">  context: <span class="type">CoroutineContext</span> = EmptyCoroutineContext,</span></span>
-<span class="params"><span class="function">  start: <span class="type">CoroutineStart</span> = CoroutineStart.DEFAULT,</span></span>
-<span class="params"><span class="function">  block: <span class="type">suspend</span> <span class="type">CoroutineScope</span>.() -&gt; <span class="type">Unit</span></span></span>
-<span class="params"><span class="function">)</span></span>: Job &#123;
-  <span class="keyword">val</span> newContext = newCoroutineContext(context)
-  <span class="keyword">val</span> coroutine = <span class="keyword">if</span> (start.isLazy)
-      LazyStandaloneCoroutine(newContext, block) 
-    <span class="keyword">else</span>
-      StandaloneCoroutine(newContext, active = <span class="literal">true</span>)
-  coroutine.start(start, coroutine, block)
-  <span class="keyword">return</span> coroutine
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> CoroutineScope.<span class="title">launch</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  context: <span class="type">CoroutineContext</span> = EmptyCoroutineContext,</span></span></span><br><span class="line"><span class="function"><span class="params">  start: <span class="type">CoroutineStart</span> = CoroutineStart.DEFAULT,</span></span></span><br><span class="line"><span class="function"><span class="params">  block: <span class="type">suspend</span> <span class="type">CoroutineScope</span>.() -&gt; <span class="type">Unit</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>: Job &#123;</span><br><span class="line">  <span class="keyword">val</span> newContext = newCoroutineContext(context)</span><br><span class="line">  <span class="keyword">val</span> coroutine = <span class="keyword">if</span> (start.isLazy)</span><br><span class="line">      LazyStandaloneCoroutine(newContext, block) </span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      StandaloneCoroutine(newContext, active = <span class="literal">true</span>)</span><br><span class="line">  coroutine.start(start, coroutine, block)</span><br><span class="line">  <span class="keyword">return</span> coroutine</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>In general, the <code>start</code> parameter will be <code>CoroutineStart.DEFAULT</code>. It would go to here once the start function calls:</p>
-<pre><code class="highlight kotlin"><span class="keyword">internal</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;R, T&gt;</span> <span class="params">(<span class="keyword">suspend</span> (R)</span></span> -&gt; T).startCoroutineCancellable(
-  receiver: R, 
-  completion: Continuation
-) = runSafely(completion) &#123;
-  createCoroutineUnintercepted(
-    receiver, completion
-  ).intercepted().resumeCancellable(<span class="built_in">Unit</span>)
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">internal</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;R, T&gt;</span> <span class="params">(<span class="keyword">suspend</span> (R)</span></span> -&gt; T).startCoroutineCancellable(</span><br><span class="line">  receiver: R, </span><br><span class="line">  completion: Continuation</span><br><span class="line">) = runSafely(completion) &#123;</span><br><span class="line">  createCoroutineUnintercepted(</span><br><span class="line">    receiver, completion</span><br><span class="line">  ).intercepted().resumeCancellable(<span class="built_in">Unit</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>It eventually calls the function - <code>createCoroutineUnintercepted</code> to create a Coroutine. What does this function do?</p>
-<pre><code class="highlight kotlin"><span class="keyword">public</span> <span class="keyword">actual</span> <span class="function"><span class="title">fun</span> <span class="params">(<span class="keyword">suspend</span> ()</span></span> -&gt; T).createCoroutineUnintercepted(
-  completion: Continuation
-): Continuation &#123;
-  <span class="keyword">val</span> probeCompletion = probeCoroutineCreated(completion)
-  <span class="keyword">return</span> <span class="keyword">if</span> (<span class="keyword">this</span> <span class="keyword">is</span> BaseContinuationImpl)
-      create(probeCompletion)
-    <span class="keyword">else</span>
-      createCoroutineFromSuspendFunction(probeCompletion) &#123;
-        (<span class="keyword">this</span> <span class="keyword">as</span> Function1&lt;Continuation, Any?&gt;).invoke(it)
-      &#125;
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">actual</span> <span class="function"><span class="title">fun</span> <span class="params">(<span class="keyword">suspend</span> ()</span></span> -&gt; T).createCoroutineUnintercepted(</span><br><span class="line">  completion: Continuation</span><br><span class="line">): Continuation &#123;</span><br><span class="line">  <span class="keyword">val</span> probeCompletion = probeCoroutineCreated(completion)</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">if</span> (<span class="keyword">this</span> <span class="keyword">is</span> BaseContinuationImpl)</span><br><span class="line">      create(probeCompletion)</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      createCoroutineFromSuspendFunction(probeCompletion) &#123;</span><br><span class="line">        (<span class="keyword">this</span> <span class="keyword">as</span> Function1&lt;Continuation, Any?&gt;).invoke(it)</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>It creates a Coroutine, which is not intercepted without a receiver but with a result type <code>T.</code> This function creates a new and fresh instance of suspendable computation every time when it is invoked. To start executing this prepared Coroutine, it would call <code>resume(Unit)</code> on the returned Continuation instance. So, remember <code>createCoroutineUnintercepted</code> that will call <code>resumeCancellable</code> to execute a created Coroutine.</p>
 <p><strong>resumeCancellable</strong> function</p>
-<pre><code class="highlight kotlin"><span class="keyword">internal</span> <span class="function"><span class="keyword">fun</span> Continuation.<span class="title">resumeCancellable</span><span class="params">(value: <span class="type">T</span>)</span></span> = <span class="keyword">when</span> (<span class="keyword">this</span>) &#123;
-  <span class="keyword">is</span> DispatchedContinuation -&gt; resumeCancellable(value)
-  <span class="keyword">else</span> -&gt; resume(value)
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">internal</span> <span class="function"><span class="keyword">fun</span> Continuation.<span class="title">resumeCancellable</span><span class="params">(value: <span class="type">T</span>)</span></span> = <span class="keyword">when</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">  <span class="keyword">is</span> DispatchedContinuation -&gt; resumeCancellable(value)</span><br><span class="line">  <span class="keyword">else</span> -&gt; resume(value)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>resume</strong> function</p>
-<pre><code class="highlight kotlin"><span class="keyword">public</span> <span class="keyword">inline</span> <span class="function"><span class="keyword">fun</span> Continuation.<span class="title">resume</span><span class="params">(value: <span class="type">T</span>)</span></span>: <span class="built_in">Unit</span> =
-  resumeWith(Result.success(value))</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">inline</span> <span class="function"><span class="keyword">fun</span> Continuation.<span class="title">resume</span><span class="params">(value: <span class="type">T</span>)</span></span>: <span class="built_in">Unit</span> =</span><br><span class="line">  resumeWith(Result.success(value))</span><br></pre></td></tr></table></figure>
 
 <p>In the resume function, it calls the <code>resumeWith</code> function in a Continuation. Let’s check how it works.</p>
 <p><strong>BaseContinuationImpl</strong></p>
-<pre><code class="highlight kotlin"><span class="keyword">internal</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">BaseContinuationImpl</span>(
-  <span class="comment">// This is `public val` so that it is private on JVM and cannot be modified by untrusted code, yet</span>
-  <span class="comment">// it has a public getter (since even untrusted code is allowed to inspect its call stack).</span>
-  <span class="keyword">public</span> <span class="keyword">val</span> completion: Continuation?
-) : Continuation, CoroutineStackFrame, Serializable &#123;
-
-<span class="comment">// This implementation is final. This fact is used to unroll resumeWith recursion.</span>
-<span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">resumeWith</span><span class="params">(result: <span class="type">Result</span>)</span></span> &#123;
-...
-
-  <span class="keyword">try</span> &#123;
-    <span class="keyword">val</span> outcome = invokeSuspend(param)
-    <span class="keyword">if</span> (outcome === COROUTINE_SUSPENDED) <span class="keyword">return</span>
-    Result.success(outcome)
-  &#125; <span class="keyword">catch</span> (exception: Throwable) &#123;
-    Result.failure(exception)
-  &#125;
-...
-&#125;
-
-<span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="function"><span class="keyword">fun</span> <span class="title">invokeSuspend</span><span class="params">(result: <span class="type">Result</span>)</span></span>: Any?
-
-...
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">internal</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseContinuationImpl</span></span>(</span><br><span class="line">  <span class="comment">// This is `public val` so that it is private on JVM and cannot be modified by untrusted code, yet</span></span><br><span class="line">  <span class="comment">// it has a public getter (since even untrusted code is allowed to inspect its call stack).</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">val</span> completion: Continuation?</span><br><span class="line">) : Continuation, CoroutineStackFrame, Serializable &#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">// This implementation is final. This fact is used to unroll resumeWith recursion.</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">resumeWith</span><span class="params">(result: <span class="type">Result</span>)</span></span> &#123;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">val</span> outcome = invokeSuspend(param)</span><br><span class="line">    <span class="keyword">if</span> (outcome === COROUTINE_SUSPENDED) <span class="keyword">return</span></span><br><span class="line">    Result.success(outcome)</span><br><span class="line">  &#125; <span class="keyword">catch</span> (exception: Throwable) &#123;</span><br><span class="line">    Result.failure(exception)</span><br><span class="line">  &#125;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="function"><span class="keyword">fun</span> <span class="title">invokeSuspend</span><span class="params">(result: <span class="type">Result</span>)</span></span>: Any?</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><code>BaseContinuationImpl</code> is the implementation of the interface <code>Continuation</code>. You can see when a Coroutine tries to get the outcome, it will call <code>invokeSuspend</code> function which is generated by the compiler. If you still remember the example <code>processPost</code> we listed before, the compiled java code shows that the actual computation is in the <code>invokeSuspend</code> function. So the starting flow is:</p>
-<pre><code class="highlight kotlin">resumeCancellable(value: T) -&gt; resume(value) -&gt; resumeWith(Result.success(value)) -&gt; invokeSuspend(param)</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">resumeCancellable(value: T) -&gt; resume(value) -&gt; resumeWith(Result.success(value)) -&gt; invokeSuspend(param)</span><br></pre></td></tr></table></figure>
 
 <p>What does <code>intercepted()</code> do in the <code>startCoroutineCancellable</code>? Let’s see the implementation:</p>
 <p><strong>ContinuationImpl</strong></p>
-<pre><code class="highlight kotlin"><span class="keyword">internal</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">ContinuationImpl</span>(
-  completion: Continuation&lt;Any?&gt;?,
-  <span class="keyword">private</span> <span class="keyword">val</span> _context: CoroutineContext?
-) : BaseContinuationImpl(completion) &#123;
-...
-
-<span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> <span class="title">intercepted</span><span class="params">()</span></span>: Continuation&lt;Any?&gt; = intercepted ?: 
-  (context[ContinuationInterceptor]?.interceptContinuation(<span class="keyword">this</span>) ?: <span class="keyword">this</span>)
-  .also &#123; intercepted = it &#125;
-
-...
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">internal</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">ContinuationImpl</span></span>(</span><br><span class="line">  completion: Continuation&lt;Any?&gt;?,</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">val</span> _context: CoroutineContext?</span><br><span class="line">) : BaseContinuationImpl(completion) &#123;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> <span class="title">intercepted</span><span class="params">()</span></span>: Continuation&lt;Any?&gt; = intercepted ?: </span><br><span class="line">  (context[ContinuationInterceptor]?.interceptContinuation(<span class="keyword">this</span>) ?: <span class="keyword">this</span>)</span><br><span class="line">  .also &#123; intercepted = it &#125;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>In <code>intercepted()</code>, it tries to call <code>context[ContinuationInterceptor]?.interceptContinuation(this)</code> to get the <code>Continuation</code>, what’s the <code>interceptContinuation()</code>?</p>
-<pre><code class="highlight kotlin"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ContinuationInterceptor</span> : <span class="type">CoroutineContext.Element</span> &#123;
-...
-
-<span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> <span class="title">interceptContinuation</span><span class="params">(continuation: <span class="type">Continuation</span>)</span></span>: Continuation
-...
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ContinuationInterceptor</span> : <span class="type">CoroutineContext.Element &#123;</span></span></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> <span class="title">interceptContinuation</span><span class="params">(continuation: <span class="type">Continuation</span>)</span></span>: Continuation</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>It’s been defined in the interface <code>ContinuationInterceptor</code>. You can find:</p>
-<pre><code class="highlight kotlin"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">CoroutineDispatcher</span> :
-  <span class="type">AbstractCoroutineContextElement</span>(ContinuationInterceptor), 
-  ContinuationInterceptor &#123;
-...
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">CoroutineDispatcher</span> :<span class="type"></span></span></span><br><span class="line">  AbstractCoroutineContextElement(ContinuationInterceptor), </span><br><span class="line">  ContinuationInterceptor &#123;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>The CoroutineDispatcher implements this interface. Basically, the <code>context[ContinuationInterceptor]</code> is <code>CoroutineDispatcher</code>. When we use <code>interceptContinuation()</code>, it executes the <code>DispatchedContinuation()</code> in the <code>CoroutineDispatcher</code> class. What does the <code>DispatchedContinuation()</code> do?</p>
-<pre><code class="highlight kotlin"><span class="keyword">internal</span> <span class="keyword">class</span> <span class="title class_">DispatchedContinuation</span>(
-  <span class="meta">@JvmField</span> <span class="keyword">val</span> dispatcher: CoroutineDispatcher,
-  <span class="meta">@JvmField</span> <span class="keyword">val</span> continuation: Continuation
-) : DispatchedTask(MODE_ATOMIC_DEFAULT), 
-    CoroutineStackFrame, 
-    Continuation <span class="keyword">by</span> continuation &#123;
-
-...
-
-  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">resumeWith</span><span class="params">(result: <span class="type">Result</span>)</span></span> &#123;
-    <span class="comment">// check if need to dispatch</span>
-    <span class="keyword">if</span> (dispatcher.isDispatchNeeded(context)) &#123;
-      ...
-
-      <span class="comment">// start dispatching</span>
-      dispatcher.dispatch(context, <span class="keyword">this</span>)
-    &#125; <span class="keyword">else</span> &#123;
-      <span class="comment">// if not, execute the task as part of current event loop</span>
-      executeUnconfined(state, MODE_ATOMIC_DEFAULT) &#123;
-        withCoroutineContext(<span class="keyword">this</span>.context, countOrElement) &#123;
-          continuation.resumeWith(result)
-        &#125;
-      &#125;
-    &#125;
-  &#125;
-
-  <span class="meta">@Suppress(<span class="string">&quot;NOTHING_TO_INLINE&quot;</span>)</span> <span class="comment">// we need it inline to save us an entry on the stack</span>
-  <span class="keyword">inline</span> <span class="function"><span class="keyword">fun</span> <span class="title">resumeCancellable</span><span class="params">(value: <span class="type">T</span>)</span></span> &#123;
-    <span class="comment">// check if need to dispatch</span>
-    <span class="keyword">if</span> (dispatcher.isDispatchNeeded(context)) &#123;
-      ...
-
-      <span class="comment">// start dispatching</span>
-      dispatcher.dispatch(context, <span class="keyword">this</span>)
-    &#125; <span class="keyword">else</span> &#123;
-      <span class="comment">// if not, execute the task as part of current event loop</span>
-      executeUnconfined(value, MODE_CANCELLABLE) &#123;
-        <span class="keyword">if</span> (!resumeCancelled()) &#123;
-          resumeUndispatched(value)
-        &#125;
-      &#125;
-    &#125;
-  &#125;
-
-  ...
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">internal</span> <span class="class"><span class="keyword">class</span> <span class="title">DispatchedContinuation</span></span>(</span><br><span class="line">  <span class="meta">@JvmField</span> <span class="keyword">val</span> dispatcher: CoroutineDispatcher,</span><br><span class="line">  <span class="meta">@JvmField</span> <span class="keyword">val</span> continuation: Continuation</span><br><span class="line">) : DispatchedTask(MODE_ATOMIC_DEFAULT), </span><br><span class="line">    CoroutineStackFrame, </span><br><span class="line">    Continuation <span class="keyword">by</span> continuation &#123;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">resumeWith</span><span class="params">(result: <span class="type">Result</span>)</span></span> &#123;</span><br><span class="line">    <span class="comment">// check if need to dispatch</span></span><br><span class="line">    <span class="keyword">if</span> (dispatcher.isDispatchNeeded(context)) &#123;</span><br><span class="line">      ...</span><br><span class="line"></span><br><span class="line">      <span class="comment">// start dispatching</span></span><br><span class="line">      dispatcher.dispatch(context, <span class="keyword">this</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// if not, execute the task as part of current event loop</span></span><br><span class="line">      executeUnconfined(state, MODE_ATOMIC_DEFAULT) &#123;</span><br><span class="line">        withCoroutineContext(<span class="keyword">this</span>.context, countOrElement) &#123;</span><br><span class="line">          continuation.resumeWith(result)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Suppress(<span class="meta-string">"NOTHING_TO_INLINE"</span>)</span> <span class="comment">// we need it inline to save us an entry on the stack</span></span><br><span class="line">  <span class="keyword">inline</span> <span class="function"><span class="keyword">fun</span> <span class="title">resumeCancellable</span><span class="params">(value: <span class="type">T</span>)</span></span> &#123;</span><br><span class="line">    <span class="comment">// check if need to dispatch</span></span><br><span class="line">    <span class="keyword">if</span> (dispatcher.isDispatchNeeded(context)) &#123;</span><br><span class="line">      ...</span><br><span class="line"></span><br><span class="line">      <span class="comment">// start dispatching</span></span><br><span class="line">      dispatcher.dispatch(context, <span class="keyword">this</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// if not, execute the task as part of current event loop</span></span><br><span class="line">      executeUnconfined(value, MODE_CANCELLABLE) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!resumeCancelled()) &#123;</span><br><span class="line">          resumeUndispatched(value)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>This class intercepts the <code>resumeCancellable</code> and <code>resumeWith</code> functions. And it checks if this Coroutine will need to dispatch.</p>
 <p>Alright, so far, we already know how to suspend, resume, and dispatch a Coroutine. It uses different layers to implement different functionalities. For example, <code>BaseContinuationImpl</code> implements the Coroutine resume, <code>DispatchedContinuation</code> implements the dispatching logic. Let’s move on to how to control the <code>Job</code> itself in the next post.</p>
 <p>Happy coding, enjoy.</p>
-<h4 id="Part1-Introduction"><a href="#Part1-Introduction" class="headerlink" title="Part1 - Introduction"></a>Part1 - <a href="https://personaldevblog.firebaseapp.com/2019/12/27/Android-Coroutines-Introduction">Introduction</a></h4><h4 id="Part3-Callback-Interaction-and-Cancellation"><a href="#Part3-Callback-Interaction-and-Cancellation" class="headerlink" title="Part3 - Callback, Interaction and Cancellation"></a>Part3 - Callback, Interaction and Cancellation</h4><h4 id="Part4-Exception"><a href="#Part4-Exception" class="headerlink" title="Part4 - Exception"></a>Part4 - Exception</h4><h4 id="Part5-Concurrency"><a href="#Part5-Concurrency" class="headerlink" title="Part5 - Concurrency"></a>Part5 - Concurrency</h4><h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><ol>
-<li><a href="https://www.youtube.com/watch?v=_hfBv0a09Jc">KotlinConf 2017 - Introduction to Coroutines by Roman Elizarov</a></li>
-<li><a href="https://kotlinlang.org/docs/tutorials/coroutines/async-programming.html">Asynchronous Programming Techniques - Kotlin Programming Language</a></li>
+<h4 id="Part1-Introduction"><a href="#Part1-Introduction" class="headerlink" title="Part1 - Introduction"></a>Part1 - <a href="https://personaldevblog.firebaseapp.com/2019/12/27/Android-Coroutines-Introduction" target="_blank" rel="noopener">Introduction</a></h4><h4 id="Part3-Callback-Interaction-and-Cancellation"><a href="#Part3-Callback-Interaction-and-Cancellation" class="headerlink" title="Part3 - Callback, Interaction and Cancellation"></a>Part3 - Callback, Interaction and Cancellation</h4><h4 id="Part4-Exception"><a href="#Part4-Exception" class="headerlink" title="Part4 - Exception"></a>Part4 - Exception</h4><h4 id="Part5-Concurrency"><a href="#Part5-Concurrency" class="headerlink" title="Part5 - Concurrency"></a>Part5 - Concurrency</h4><h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><ol>
+<li><a href="https://www.youtube.com/watch?v=_hfBv0a09Jc" target="_blank" rel="noopener">KotlinConf 2017 - Introduction to Coroutines by Roman Elizarov</a></li>
+<li><a href="https://kotlinlang.org/docs/tutorials/coroutines/async-programming.html" target="_blank" rel="noopener">Asynchronous Programming Techniques - Kotlin Programming Language</a></li>
 </ol>
 
     </div>
@@ -669,323 +430,84 @@
 
       
         <p><img src="https://chauyanw.files.wordpress.com/2019/08/kotlin-coroutines-1.png?w=2924" alt="kotlin-coroutines-1.png?w=2924"></p>
-<p>In the <a href="https://personaldevblog.firebaseapp.com/2019/12/27/Android-Coroutines-Introduction">Introduction</a> section, we already have a big picture of the <code>Coroutines</code> feature, including what it is, how we can use it, and other basic concepts. In this article, I will introduce another critical keyword <code>suspend</code>:</p>
-<span id="more"></span>
+<p>In the <a href="https://personaldevblog.firebaseapp.com/2019/12/27/Android-Coroutines-Introduction" target="_blank" rel="noopener">Introduction</a> section, we already have a big picture of the <code>Coroutines</code> feature, including what it is, how we can use it, and other basic concepts. In this article, I will introduce another critical keyword <code>suspend</code>:</p>
+<a id="more"></a>
 
 <h4 id="What’s-a-suspend-function"><a href="#What’s-a-suspend-function" class="headerlink" title="What’s a suspend function?"></a>What’s a suspend function?</h4><p>Remember the example we use before:</p>
-<pre><code class="highlight kotlin"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">requestToken</span><span class="params">()</span></span>: Token &#123; ... &#125;
-<span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">createPost</span><span class="params">(token: <span class="type">Token</span>, item: <span class="type">Item</span>)</span></span>: Post &#123; ... &#125;
-<span class="function"><span class="keyword">fun</span> <span class="title">processPost</span><span class="params">(post: <span class="type">Post</span>)</span></span> &#123; ... &#125;
-
-<span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">postItem</span><span class="params">(item: <span class="type">Item</span>)</span></span> &#123;
-  GlobalScope.launch &#123;
-    <span class="keyword">val</span> token = requestToken()
-    <span class="keyword">val</span> post = createPost(token, item)
-    processPost(post)
-  &#125;
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">requestToken</span><span class="params">()</span></span>: Token &#123; ... &#125;</span><br><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">createPost</span><span class="params">(token: <span class="type">Token</span>, item: <span class="type">Item</span>)</span></span>: Post &#123; ... &#125;</span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">processPost</span><span class="params">(post: <span class="type">Post</span>)</span></span> &#123; ... &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">postItem</span><span class="params">(item: <span class="type">Item</span>)</span></span> &#123;</span><br><span class="line">  GlobalScope.launch &#123;</span><br><span class="line">    <span class="keyword">val</span> token = requestToken()</span><br><span class="line">    <span class="keyword">val</span> post = createPost(token, item)</span><br><span class="line">    processPost(post)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>You can see the keyword <code>suspend</code> in front of a function. What does <code>suspend</code> keyword mean? If you compile the Kotlin code, you can see something like this:</p>
-<pre><code class="highlight java"><span class="comment">// declaration: requestToken(kotlin.coroutines.Continuation&lt;? super kotlin.Unit&gt;)</span>
-<span class="keyword">public</span> <span class="keyword">final</span> <span class="title function_">requestToken</span><span class="params">(Lkotlin/coroutines/Continuation;)</span>Ljava/lang/Object;</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// declaration: requestToken(kotlin.coroutines.Continuation&lt;? super kotlin.Unit&gt;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="title">requestToken</span><span class="params">(Lkotlin/coroutines/Continuation;)</span>Ljava/lang/Object</span>;</span><br></pre></td></tr></table></figure>
 
 <p>The code snap above is what we decompile into java code.</p>
-<pre><code class="highlight kotlin"><span class="meta">@Nullable</span>
-<span class="keyword">public</span> <span class="keyword">final</span> Object requestToken(<span class="meta">@NotNull</span> Continuation $completion) &#123;
-  <span class="keyword">return</span> <span class="built_in">Unit</span>.INSTANCE;
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> Object requestToken(<span class="meta">@NotNull</span> Continuation $completion) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Unit</span>.INSTANCE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>This is a bytecode&#x2F;compiled-java-code sample for this suspend function - requestToken(). We can find there’s a parameter passed into requestToken(), which is a <code>Continuation.</code> What’s a <code>Continuation</code>?</p>
-<pre><code class="highlight kotlin"><span class="comment">/**</span>
-<span class="comment">* Interface representing a continuation after a suspension point that returns a value of type `T`.</span>
-<span class="comment">*/</span>
-<span class="meta">@SinceKotlin(<span class="string">&quot;1.3&quot;</span>)</span>
-<span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Continuation</span> &#123;
-  <span class="comment">/**</span>
-<span class="comment">  * The context of the coroutine that corresponds to this continuation.</span>
-<span class="comment">  */</span>
-  <span class="keyword">public</span> <span class="keyword">val</span> context: CoroutineContext
-
-  <span class="comment">/**</span>
-<span class="comment">  * Resumes the execution of the corresponding coroutine passing a successful or failed [result] as the</span>
-<span class="comment">  * return value of the last suspension point.</span>
-<span class="comment">  */</span>
-  <span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> <span class="title">resumeWith</span><span class="params">(result: <span class="type">Result</span>)</span></span>
-&#125;</code></pre>
+<p>This is a bytecode/compiled-java-code sample for this suspend function - requestToken(). We can find there’s a parameter passed into requestToken(), which is a <code>Continuation.</code> What’s a <code>Continuation</code>?</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* Interface representing a continuation after a suspension point that returns a value of type `T`.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@SinceKotlin(<span class="meta-string">"1.3"</span>)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Continuation</span> </span>&#123;</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">  * The context of the coroutine that corresponds to this continuation.</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">val</span> context: CoroutineContext</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">  * Resumes the execution of the corresponding coroutine passing a successful or failed [result] as the</span></span><br><span class="line"><span class="comment">  * return value of the last suspension point.</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> <span class="title">resumeWith</span><span class="params">(result: <span class="type">Result</span>)</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>It’s an interface for resuming the suspended point. Here’s an example when you try to use <code>CoroutineScope.Launch</code>:</p>
-<pre><code class="highlight kotlin">GlobalScope.launch &#123;
-  <span class="keyword">val</span> token = requestToken()
-  <span class="keyword">val</span> post = createPost(token)
-  processPost(post)
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GlobalScope.launch &#123;</span><br><span class="line">  <span class="keyword">val</span> token = requestToken()</span><br><span class="line">  <span class="keyword">val</span> post = createPost(token)</span><br><span class="line">  processPost(post)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>it will become something like:</p>
-<pre><code class="highlight java"><span class="meta">@Nullable</span>
-<span class="keyword">public</span> <span class="keyword">final</span> Object <span class="title function_">invokeSuspend</span><span class="params">(<span class="meta">@NotNull</span> Object $result)</span> &#123;
-  Object var10000;
-  label17: &#123;
-    <span class="type">Object</span> <span class="variable">var5</span> <span class="operator">=</span> IntrinsicsKt.getCOROUTINE_SUSPENDED();
-    CoroutineScope $<span class="built_in">this</span>$launch;
-    Token token;
-    MainActivity var6;
-    <span class="keyword">switch</span>(<span class="built_in">this</span>.label) &#123;
-      <span class="keyword">case</span> <span class="number">0</span>:
-        ResultKt.throwOnFailure($result);
-        $<span class="built_in">this</span>$launch = <span class="built_in">this</span>.p$;
-        var6 = MainActivity.<span class="built_in">this</span>;
-        <span class="built_in">this</span>.L$<span class="number">0</span> = $<span class="built_in">this</span>$launch;
-        <span class="built_in">this</span>.label = <span class="number">1</span>;
-        var10000 = var6.requestToken(<span class="built_in">this</span>);
-        <span class="keyword">if</span> (var10000 == var5) &#123;
-          <span class="keyword">return</span> var5;
-        &#125;
-      <span class="keyword">break</span>;
-      <span class="keyword">case</span> <span class="number">1</span>:
-        $<span class="built_in">this</span>$launch = (CoroutineScope)<span class="built_in">this</span>.L$<span class="number">0</span>;
-        ResultKt.throwOnFailure($result);
-        var10000 = $result;
-      <span class="keyword">break</span>;
-      <span class="keyword">case</span> <span class="number">2</span>:
-        token = (Token)<span class="built_in">this</span>.L$<span class="number">1</span>;
-        $<span class="built_in">this</span>$launch = (CoroutineScope)<span class="built_in">this</span>.L$<span class="number">0</span>;
-        ResultKt.throwOnFailure($result);
-        var10000 = $result;
-        <span class="keyword">break</span> label17;
-      <span class="keyword">default</span>:
-        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalStateException</span>(<span class="string">&quot;call to &#x27;resume&#x27; before &#x27;invoke&#x27; with coroutine&quot;</span>);
-    &#125;
-
-    token = (Token)var10000;
-    var6 = MainActivity.<span class="built_in">this</span>;
-    <span class="built_in">this</span>.L$<span class="number">0</span> = $<span class="built_in">this</span>$launch;
-    <span class="built_in">this</span>.L$<span class="number">1</span> = token;
-    <span class="built_in">this</span>.label = <span class="number">2</span>;
-    var10000 = var6.createPost(token, <span class="built_in">this</span>);
-    <span class="keyword">if</span> (var10000 == var5) &#123;
-      <span class="keyword">return</span> var5;
-    &#125;
-  &#125;
-
-  <span class="type">Post</span> <span class="variable">post</span> <span class="operator">=</span> (Post)var10000;
-  MainActivity.<span class="built_in">this</span>.processPost(post);
-  <span class="keyword">return</span> Unit.INSTANCE;
-&#125;</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Object <span class="title">invokeSuspend</span><span class="params">(@NotNull Object $result)</span> </span>&#123;</span><br><span class="line">  Object var10000;</span><br><span class="line">  label17: &#123;</span><br><span class="line">    Object var5 = IntrinsicsKt.getCOROUTINE_SUSPENDED();</span><br><span class="line">    CoroutineScope $<span class="keyword">this</span>$launch;</span><br><span class="line">    Token token;</span><br><span class="line">    MainActivity var6;</span><br><span class="line">    <span class="keyword">switch</span>(<span class="keyword">this</span>.label) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">        ResultKt.throwOnFailure($result);</span><br><span class="line">        $<span class="keyword">this</span>$launch = <span class="keyword">this</span>.p$;</span><br><span class="line">        var6 = MainActivity.<span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">this</span>.L$<span class="number">0</span> = $<span class="keyword">this</span>$launch;</span><br><span class="line">        <span class="keyword">this</span>.label = <span class="number">1</span>;</span><br><span class="line">        var10000 = var6.requestToken(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">if</span> (var10000 == var5) &#123;</span><br><span class="line">          <span class="keyword">return</span> var5;</span><br><span class="line">        &#125;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">        $<span class="keyword">this</span>$launch = (CoroutineScope)<span class="keyword">this</span>.L$<span class="number">0</span>;</span><br><span class="line">        ResultKt.throwOnFailure($result);</span><br><span class="line">        var10000 = $result;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">        token = (Token)<span class="keyword">this</span>.L$<span class="number">1</span>;</span><br><span class="line">        $<span class="keyword">this</span>$launch = (CoroutineScope)<span class="keyword">this</span>.L$<span class="number">0</span>;</span><br><span class="line">        ResultKt.throwOnFailure($result);</span><br><span class="line">        var10000 = $result;</span><br><span class="line">        <span class="keyword">break</span> label17;</span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"call to 'resume' before 'invoke' with coroutine"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    token = (Token)var10000;</span><br><span class="line">    var6 = MainActivity.<span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">this</span>.L$<span class="number">0</span> = $<span class="keyword">this</span>$launch;</span><br><span class="line">    <span class="keyword">this</span>.L$<span class="number">1</span> = token;</span><br><span class="line">    <span class="keyword">this</span>.label = <span class="number">2</span>;</span><br><span class="line">    var10000 = var6.createPost(token, <span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">if</span> (var10000 == var5) &#123;</span><br><span class="line">      <span class="keyword">return</span> var5;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  Post post = (Post)var10000;</span><br><span class="line">  MainActivity.<span class="keyword">this</span>.processPost(post);</span><br><span class="line">  <span class="keyword">return</span> Unit.INSTANCE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>In a Coroutine, it doesn’t use a callback function to return value. Instead, it uses the state machine to control what will respond to the next state. A suspend function will block the Coroutine when it’s in, but it wouldn’t block the thread. When it executes the suspend function, it won’t block the whole thread. The current thread can still do other jobs.</p>
-<pre><code class="highlight kotlin">Thread &#123;
-
-  <span class="keyword">val</span> context = newSingleThreadContext(<span class="string">&quot;Test Thread&quot;</span>)
-  GlobalScope.launch (context) &#123;
-    println(<span class="string">&quot;Start first coroutine.&quot;</span>)
-    delay(<span class="number">200</span>)
-    println(<span class="string">&quot;Resume first coroutine after delay 200ms&quot;</span>)
-  &#125;
-
-  GlobalScope.launch (context)&#123;
-    println(<span class="string">&quot;Start second coroutine.&quot;</span>)
-    delay(<span class="number">100</span>)
-    println(<span class="string">&quot;Resume second coroutine after delay 100ms&quot;</span>)
-  &#125;
-
-  Thread.sleep(<span class="number">500</span>)
-&#125;.start()</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Thread &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">val</span> context = newSingleThreadContext(<span class="string">"Test Thread"</span>)</span><br><span class="line">  GlobalScope.launch (context) &#123;</span><br><span class="line">    println(<span class="string">"Start first coroutine."</span>)</span><br><span class="line">    delay(<span class="number">200</span>)</span><br><span class="line">    println(<span class="string">"Resume first coroutine after delay 200ms"</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  GlobalScope.launch (context)&#123;</span><br><span class="line">    println(<span class="string">"Start second coroutine."</span>)</span><br><span class="line">    delay(<span class="number">100</span>)</span><br><span class="line">    println(<span class="string">"Resume second coroutine after delay 100ms"</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  Thread.sleep(<span class="number">500</span>)</span><br><span class="line">&#125;.start()</span><br></pre></td></tr></table></figure>
 
 <p>the result:</p>
-<pre><code class="highlight text">2019-08-17 21:25:22.437 I/System.out: Start first coroutine.
-2019-08-17 21:25:22.473 I/System.out: Start second coroutine.
-2019-08-17 21:25:22.574 I/System.out: Resume second coroutine after delay 100ms
-2019-08-17 21:25:22.656 I/System.out: Resume first coroutine after delay 200ms</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2019-08-17 21:25:22.437 I/System.out: Start first coroutine.</span><br><span class="line">2019-08-17 21:25:22.473 I/System.out: Start second coroutine.</span><br><span class="line">2019-08-17 21:25:22.574 I/System.out: Resume second coroutine after delay 100ms</span><br><span class="line">2019-08-17 21:25:22.656 I/System.out: Resume first coroutine after delay 200ms</span><br></pre></td></tr></table></figure>
 
 <p>That’s why a Coroutine is very lightweight, and you can create it anytime without spending many resources on creating a Coroutine. After this, you might have a question: after resuming the suspended status, current Coroutine will still run on the same thread?</p>
 <p>If you remember, I mentioned <code>Dispatcher</code> would decide which thread a Coroutine should run. There are two categories of dispatcher - <code>confined</code> &amp; <code>unconfined.</code> The <code>Default,</code> <code>Main,</code> and <code>IO</code> belong to <code>Confined</code> category, and <code>Unconfined</code> is <code>unconfined.</code> Let’s create two different coroutines and use <code>Confined</code> &amp; <code>Unconfined</code> dispatchers to see what will happen.</p>
-<pre><code class="highlight kotlin">Thread &#123;
-  GlobalScope.launch (Dispatchers.Main) &#123;
-    println(<span class="string">&quot;First coroutine runs in <span class="subst">$&#123;Thread.currentThread().name&#125;</span>&quot;</span>)
-    delay(<span class="number">100</span>)
-    println(<span class="string">&quot;First coroutine resumes and runs in <span class="subst">$&#123;Thread.currentThread().name&#125;</span>&quot;</span>)
-&#125;
-
-  GlobalScope.launch (Dispatchers.Unconfined)&#123;
-    println(<span class="string">&quot;Second coroutine runs in <span class="subst">$&#123;Thread.currentThread().name&#125;</span>&quot;</span>)
-    delay(<span class="number">100</span>)
-    println(<span class="string">&quot;Second coroutine resumes and runs in <span class="subst">$&#123;Thread.currentThread().name&#125;</span>&quot;</span>)
-&#125;
-
-  Thread.sleep(<span class="number">500</span>)
-&#125;.start()</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Thread &#123;</span><br><span class="line">  GlobalScope.launch (Dispatchers.Main) &#123;</span><br><span class="line">    println(<span class="string">"First coroutine runs in <span class="subst">$&#123;Thread.currentThread().name&#125;</span>"</span>)</span><br><span class="line">    delay(<span class="number">100</span>)</span><br><span class="line">    println(<span class="string">"First coroutine resumes and runs in <span class="subst">$&#123;Thread.currentThread().name&#125;</span>"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">  GlobalScope.launch (Dispatchers.Unconfined)&#123;</span><br><span class="line">    println(<span class="string">"Second coroutine runs in <span class="subst">$&#123;Thread.currentThread().name&#125;</span>"</span>)</span><br><span class="line">    delay(<span class="number">100</span>)</span><br><span class="line">    println(<span class="string">"Second coroutine resumes and runs in <span class="subst">$&#123;Thread.currentThread().name&#125;</span>"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">  Thread.sleep(<span class="number">500</span>)</span><br><span class="line">&#125;.start()</span><br></pre></td></tr></table></figure>
 
 <p>Result:</p>
-<pre><code class="highlight plaintext">2019-08-17 21:43:22.895 I/System.out: Second coroutine runs in Thread-4
-2019-08-17 21:43:22.947 I/System.out: First coroutine runs in main
-2019-08-17 21:43:23.005 I/System.out: Second coroutine resumes and runs in kotlinx.coroutines.DefaultExecutor
-2019-08-17 21:43:23.050 I/System.out: First coroutine resumes and runs in main</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2019-08-17 21:43:22.895 I/System.out: Second coroutine runs in Thread-4</span><br><span class="line">2019-08-17 21:43:22.947 I/System.out: First coroutine runs in main</span><br><span class="line">2019-08-17 21:43:23.005 I/System.out: Second coroutine resumes and runs in kotlinx.coroutines.DefaultExecutor</span><br><span class="line">2019-08-17 21:43:23.050 I/System.out: First coroutine resumes and runs in main</span><br></pre></td></tr></table></figure>
 
 <p>When you use a <code>confined</code> dispatcher, no matter when you suspend the Coroutine, it would still run on the same thread after it resumes for the <code>Dispatchers.Unconfined</code> setting, it would first start on the caller thread but continue on a thread based on where the suspend function is.</p>
 <p>So far, I introduce how the suspend function works, but it’s still worth going through how to create a Coroutine, start it and resume mechanism, especially it would be great to know how to switch different Coroutines. Let’s dig in a little bit deeper.</p>
 <p>Go back to the <code>CoroutineScope.Launch</code>:</p>
-<pre><code class="highlight kotlin"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> CoroutineScope.<span class="title">launch</span><span class="params">(</span></span>
-<span class="params"><span class="function">  context: <span class="type">CoroutineContext</span> = EmptyCoroutineContext,</span></span>
-<span class="params"><span class="function">  start: <span class="type">CoroutineStart</span> = CoroutineStart.DEFAULT,</span></span>
-<span class="params"><span class="function">  block: <span class="type">suspend</span> <span class="type">CoroutineScope</span>.() -&gt; <span class="type">Unit</span></span></span>
-<span class="params"><span class="function">)</span></span>: Job &#123;
-  <span class="keyword">val</span> newContext = newCoroutineContext(context)
-  <span class="keyword">val</span> coroutine = <span class="keyword">if</span> (start.isLazy)
-      LazyStandaloneCoroutine(newContext, block) 
-    <span class="keyword">else</span>
-      StandaloneCoroutine(newContext, active = <span class="literal">true</span>)
-  coroutine.start(start, coroutine, block)
-  <span class="keyword">return</span> coroutine
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> CoroutineScope.<span class="title">launch</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  context: <span class="type">CoroutineContext</span> = EmptyCoroutineContext,</span></span></span><br><span class="line"><span class="function"><span class="params">  start: <span class="type">CoroutineStart</span> = CoroutineStart.DEFAULT,</span></span></span><br><span class="line"><span class="function"><span class="params">  block: <span class="type">suspend</span> <span class="type">CoroutineScope</span>.() -&gt; <span class="type">Unit</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>: Job &#123;</span><br><span class="line">  <span class="keyword">val</span> newContext = newCoroutineContext(context)</span><br><span class="line">  <span class="keyword">val</span> coroutine = <span class="keyword">if</span> (start.isLazy)</span><br><span class="line">      LazyStandaloneCoroutine(newContext, block) </span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      StandaloneCoroutine(newContext, active = <span class="literal">true</span>)</span><br><span class="line">  coroutine.start(start, coroutine, block)</span><br><span class="line">  <span class="keyword">return</span> coroutine</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>In general, the <code>start</code> parameter will be <code>CoroutineStart.DEFAULT</code>. It would go to here once the start function calls:</p>
-<pre><code class="highlight kotlin"><span class="keyword">internal</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;R, T&gt;</span> <span class="params">(<span class="keyword">suspend</span> (R)</span></span> -&gt; T).startCoroutineCancellable(
-  receiver: R, 
-  completion: Continuation
-) = runSafely(completion) &#123;
-  createCoroutineUnintercepted(
-    receiver, completion
-  ).intercepted().resumeCancellable(<span class="built_in">Unit</span>)
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">internal</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;R, T&gt;</span> <span class="params">(<span class="keyword">suspend</span> (R)</span></span> -&gt; T).startCoroutineCancellable(</span><br><span class="line">  receiver: R, </span><br><span class="line">  completion: Continuation</span><br><span class="line">) = runSafely(completion) &#123;</span><br><span class="line">  createCoroutineUnintercepted(</span><br><span class="line">    receiver, completion</span><br><span class="line">  ).intercepted().resumeCancellable(<span class="built_in">Unit</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>It eventually calls the function - <code>createCoroutineUnintercepted</code> to create a Coroutine. What does this function do?</p>
-<pre><code class="highlight kotlin"><span class="keyword">public</span> <span class="keyword">actual</span> <span class="function"><span class="title">fun</span> <span class="params">(<span class="keyword">suspend</span> ()</span></span> -&gt; T).createCoroutineUnintercepted(
-  completion: Continuation
-): Continuation &#123;
-  <span class="keyword">val</span> probeCompletion = probeCoroutineCreated(completion)
-  <span class="keyword">return</span> <span class="keyword">if</span> (<span class="keyword">this</span> <span class="keyword">is</span> BaseContinuationImpl)
-      create(probeCompletion)
-    <span class="keyword">else</span>
-      createCoroutineFromSuspendFunction(probeCompletion) &#123;
-        (<span class="keyword">this</span> <span class="keyword">as</span> Function1&lt;Continuation, Any?&gt;).invoke(it)
-      &#125;
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">actual</span> <span class="function"><span class="title">fun</span> <span class="params">(<span class="keyword">suspend</span> ()</span></span> -&gt; T).createCoroutineUnintercepted(</span><br><span class="line">  completion: Continuation</span><br><span class="line">): Continuation &#123;</span><br><span class="line">  <span class="keyword">val</span> probeCompletion = probeCoroutineCreated(completion)</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">if</span> (<span class="keyword">this</span> <span class="keyword">is</span> BaseContinuationImpl)</span><br><span class="line">      create(probeCompletion)</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      createCoroutineFromSuspendFunction(probeCompletion) &#123;</span><br><span class="line">        (<span class="keyword">this</span> <span class="keyword">as</span> Function1&lt;Continuation, Any?&gt;).invoke(it)</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>It creates a Coroutine, which is not intercepted without a receiver but with a result type <code>T.</code> This function creates a new and fresh instance of suspendable computation every time when it is invoked. To start executing this prepared Coroutine, it would call <code>resume(Unit)</code> on the returned Continuation instance. So, remember <code>createCoroutineUnintercepted</code> that will call <code>resumeCancellable</code> to execute a created Coroutine.</p>
 <p><strong>resumeCancellable</strong> function</p>
-<pre><code class="highlight kotlin"><span class="keyword">internal</span> <span class="function"><span class="keyword">fun</span> Continuation.<span class="title">resumeCancellable</span><span class="params">(value: <span class="type">T</span>)</span></span> = <span class="keyword">when</span> (<span class="keyword">this</span>) &#123;
-  <span class="keyword">is</span> DispatchedContinuation -&gt; resumeCancellable(value)
-  <span class="keyword">else</span> -&gt; resume(value)
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">internal</span> <span class="function"><span class="keyword">fun</span> Continuation.<span class="title">resumeCancellable</span><span class="params">(value: <span class="type">T</span>)</span></span> = <span class="keyword">when</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">  <span class="keyword">is</span> DispatchedContinuation -&gt; resumeCancellable(value)</span><br><span class="line">  <span class="keyword">else</span> -&gt; resume(value)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>resume</strong> function</p>
-<pre><code class="highlight kotlin"><span class="keyword">public</span> <span class="keyword">inline</span> <span class="function"><span class="keyword">fun</span> Continuation.<span class="title">resume</span><span class="params">(value: <span class="type">T</span>)</span></span>: <span class="built_in">Unit</span> =
-  resumeWith(Result.success(value))</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">inline</span> <span class="function"><span class="keyword">fun</span> Continuation.<span class="title">resume</span><span class="params">(value: <span class="type">T</span>)</span></span>: <span class="built_in">Unit</span> =</span><br><span class="line">  resumeWith(Result.success(value))</span><br></pre></td></tr></table></figure>
 
 <p>In the resume function, it calls the <code>resumeWith</code> function in a Continuation. Let’s check how it works.</p>
 <p><strong>BaseContinuationImpl</strong></p>
-<pre><code class="highlight kotlin"><span class="keyword">internal</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">BaseContinuationImpl</span>(
-  <span class="comment">// This is `public val` so that it is private on JVM and cannot be modified by untrusted code, yet</span>
-  <span class="comment">// it has a public getter (since even untrusted code is allowed to inspect its call stack).</span>
-  <span class="keyword">public</span> <span class="keyword">val</span> completion: Continuation?
-) : Continuation, CoroutineStackFrame, Serializable &#123;
-
-<span class="comment">// This implementation is final. This fact is used to unroll resumeWith recursion.</span>
-<span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">resumeWith</span><span class="params">(result: <span class="type">Result</span>)</span></span> &#123;
-...
-
-  <span class="keyword">try</span> &#123;
-    <span class="keyword">val</span> outcome = invokeSuspend(param)
-    <span class="keyword">if</span> (outcome === COROUTINE_SUSPENDED) <span class="keyword">return</span>
-    Result.success(outcome)
-  &#125; <span class="keyword">catch</span> (exception: Throwable) &#123;
-    Result.failure(exception)
-  &#125;
-...
-&#125;
-
-<span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="function"><span class="keyword">fun</span> <span class="title">invokeSuspend</span><span class="params">(result: <span class="type">Result</span>)</span></span>: Any?
-
-...
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">internal</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseContinuationImpl</span></span>(</span><br><span class="line">  <span class="comment">// This is `public val` so that it is private on JVM and cannot be modified by untrusted code, yet</span></span><br><span class="line">  <span class="comment">// it has a public getter (since even untrusted code is allowed to inspect its call stack).</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">val</span> completion: Continuation?</span><br><span class="line">) : Continuation, CoroutineStackFrame, Serializable &#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">// This implementation is final. This fact is used to unroll resumeWith recursion.</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">resumeWith</span><span class="params">(result: <span class="type">Result</span>)</span></span> &#123;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">val</span> outcome = invokeSuspend(param)</span><br><span class="line">    <span class="keyword">if</span> (outcome === COROUTINE_SUSPENDED) <span class="keyword">return</span></span><br><span class="line">    Result.success(outcome)</span><br><span class="line">  &#125; <span class="keyword">catch</span> (exception: Throwable) &#123;</span><br><span class="line">    Result.failure(exception)</span><br><span class="line">  &#125;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="function"><span class="keyword">fun</span> <span class="title">invokeSuspend</span><span class="params">(result: <span class="type">Result</span>)</span></span>: Any?</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><code>BaseContinuationImpl</code> is the implementation of the interface <code>Continuation</code>. You can see when a Coroutine tries to get the outcome, it will call <code>invokeSuspend</code> function which is generated by the compiler. If you still remember the example <code>processPost</code> we listed before, the compiled java code shows that the actual computation is in the <code>invokeSuspend</code> function. So the starting flow is:</p>
-<pre><code class="highlight kotlin">resumeCancellable(value: T) -&gt; resume(value) -&gt; resumeWith(Result.success(value)) -&gt; invokeSuspend(param)</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">resumeCancellable(value: T) -&gt; resume(value) -&gt; resumeWith(Result.success(value)) -&gt; invokeSuspend(param)</span><br></pre></td></tr></table></figure>
 
 <p>What does <code>intercepted()</code> do in the <code>startCoroutineCancellable</code>? Let’s see the implementation:</p>
 <p><strong>ContinuationImpl</strong></p>
-<pre><code class="highlight kotlin"><span class="keyword">internal</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">ContinuationImpl</span>(
-  completion: Continuation&lt;Any?&gt;?,
-  <span class="keyword">private</span> <span class="keyword">val</span> _context: CoroutineContext?
-) : BaseContinuationImpl(completion) &#123;
-...
-
-<span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> <span class="title">intercepted</span><span class="params">()</span></span>: Continuation&lt;Any?&gt; = intercepted ?: 
-  (context[ContinuationInterceptor]?.interceptContinuation(<span class="keyword">this</span>) ?: <span class="keyword">this</span>)
-  .also &#123; intercepted = it &#125;
-
-...
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">internal</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">ContinuationImpl</span></span>(</span><br><span class="line">  completion: Continuation&lt;Any?&gt;?,</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">val</span> _context: CoroutineContext?</span><br><span class="line">) : BaseContinuationImpl(completion) &#123;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> <span class="title">intercepted</span><span class="params">()</span></span>: Continuation&lt;Any?&gt; = intercepted ?: </span><br><span class="line">  (context[ContinuationInterceptor]?.interceptContinuation(<span class="keyword">this</span>) ?: <span class="keyword">this</span>)</span><br><span class="line">  .also &#123; intercepted = it &#125;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>In <code>intercepted()</code>, it tries to call <code>context[ContinuationInterceptor]?.interceptContinuation(this)</code> to get the <code>Continuation</code>, what’s the <code>interceptContinuation()</code>?</p>
-<pre><code class="highlight kotlin"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ContinuationInterceptor</span> : <span class="type">CoroutineContext.Element</span> &#123;
-...
-
-<span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> <span class="title">interceptContinuation</span><span class="params">(continuation: <span class="type">Continuation</span>)</span></span>: Continuation
-...
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ContinuationInterceptor</span> : <span class="type">CoroutineContext.Element &#123;</span></span></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> <span class="title">interceptContinuation</span><span class="params">(continuation: <span class="type">Continuation</span>)</span></span>: Continuation</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>It’s been defined in the interface <code>ContinuationInterceptor</code>. You can find:</p>
-<pre><code class="highlight kotlin"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">CoroutineDispatcher</span> :
-  <span class="type">AbstractCoroutineContextElement</span>(ContinuationInterceptor), 
-  ContinuationInterceptor &#123;
-...
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">CoroutineDispatcher</span> :<span class="type"></span></span></span><br><span class="line">  AbstractCoroutineContextElement(ContinuationInterceptor), </span><br><span class="line">  ContinuationInterceptor &#123;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>The CoroutineDispatcher implements this interface. Basically, the <code>context[ContinuationInterceptor]</code> is <code>CoroutineDispatcher</code>. When we use <code>interceptContinuation()</code>, it executes the <code>DispatchedContinuation()</code> in the <code>CoroutineDispatcher</code> class. What does the <code>DispatchedContinuation()</code> do?</p>
-<pre><code class="highlight kotlin"><span class="keyword">internal</span> <span class="keyword">class</span> <span class="title class_">DispatchedContinuation</span>(
-  <span class="meta">@JvmField</span> <span class="keyword">val</span> dispatcher: CoroutineDispatcher,
-  <span class="meta">@JvmField</span> <span class="keyword">val</span> continuation: Continuation
-) : DispatchedTask(MODE_ATOMIC_DEFAULT), 
-    CoroutineStackFrame, 
-    Continuation <span class="keyword">by</span> continuation &#123;
-
-...
-
-  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">resumeWith</span><span class="params">(result: <span class="type">Result</span>)</span></span> &#123;
-    <span class="comment">// check if need to dispatch</span>
-    <span class="keyword">if</span> (dispatcher.isDispatchNeeded(context)) &#123;
-      ...
-
-      <span class="comment">// start dispatching</span>
-      dispatcher.dispatch(context, <span class="keyword">this</span>)
-    &#125; <span class="keyword">else</span> &#123;
-      <span class="comment">// if not, execute the task as part of current event loop</span>
-      executeUnconfined(state, MODE_ATOMIC_DEFAULT) &#123;
-        withCoroutineContext(<span class="keyword">this</span>.context, countOrElement) &#123;
-          continuation.resumeWith(result)
-        &#125;
-      &#125;
-    &#125;
-  &#125;
-
-  <span class="meta">@Suppress(<span class="string">&quot;NOTHING_TO_INLINE&quot;</span>)</span> <span class="comment">// we need it inline to save us an entry on the stack</span>
-  <span class="keyword">inline</span> <span class="function"><span class="keyword">fun</span> <span class="title">resumeCancellable</span><span class="params">(value: <span class="type">T</span>)</span></span> &#123;
-    <span class="comment">// check if need to dispatch</span>
-    <span class="keyword">if</span> (dispatcher.isDispatchNeeded(context)) &#123;
-      ...
-
-      <span class="comment">// start dispatching</span>
-      dispatcher.dispatch(context, <span class="keyword">this</span>)
-    &#125; <span class="keyword">else</span> &#123;
-      <span class="comment">// if not, execute the task as part of current event loop</span>
-      executeUnconfined(value, MODE_CANCELLABLE) &#123;
-        <span class="keyword">if</span> (!resumeCancelled()) &#123;
-          resumeUndispatched(value)
-        &#125;
-      &#125;
-    &#125;
-  &#125;
-
-  ...
-&#125;</code></pre>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">internal</span> <span class="class"><span class="keyword">class</span> <span class="title">DispatchedContinuation</span></span>(</span><br><span class="line">  <span class="meta">@JvmField</span> <span class="keyword">val</span> dispatcher: CoroutineDispatcher,</span><br><span class="line">  <span class="meta">@JvmField</span> <span class="keyword">val</span> continuation: Continuation</span><br><span class="line">) : DispatchedTask(MODE_ATOMIC_DEFAULT), </span><br><span class="line">    CoroutineStackFrame, </span><br><span class="line">    Continuation <span class="keyword">by</span> continuation &#123;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">resumeWith</span><span class="params">(result: <span class="type">Result</span>)</span></span> &#123;</span><br><span class="line">    <span class="comment">// check if need to dispatch</span></span><br><span class="line">    <span class="keyword">if</span> (dispatcher.isDispatchNeeded(context)) &#123;</span><br><span class="line">      ...</span><br><span class="line"></span><br><span class="line">      <span class="comment">// start dispatching</span></span><br><span class="line">      dispatcher.dispatch(context, <span class="keyword">this</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// if not, execute the task as part of current event loop</span></span><br><span class="line">      executeUnconfined(state, MODE_ATOMIC_DEFAULT) &#123;</span><br><span class="line">        withCoroutineContext(<span class="keyword">this</span>.context, countOrElement) &#123;</span><br><span class="line">          continuation.resumeWith(result)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Suppress(<span class="meta-string">"NOTHING_TO_INLINE"</span>)</span> <span class="comment">// we need it inline to save us an entry on the stack</span></span><br><span class="line">  <span class="keyword">inline</span> <span class="function"><span class="keyword">fun</span> <span class="title">resumeCancellable</span><span class="params">(value: <span class="type">T</span>)</span></span> &#123;</span><br><span class="line">    <span class="comment">// check if need to dispatch</span></span><br><span class="line">    <span class="keyword">if</span> (dispatcher.isDispatchNeeded(context)) &#123;</span><br><span class="line">      ...</span><br><span class="line"></span><br><span class="line">      <span class="comment">// start dispatching</span></span><br><span class="line">      dispatcher.dispatch(context, <span class="keyword">this</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// if not, execute the task as part of current event loop</span></span><br><span class="line">      executeUnconfined(value, MODE_CANCELLABLE) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!resumeCancelled()) &#123;</span><br><span class="line">          resumeUndispatched(value)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>This class intercepts the <code>resumeCancellable</code> and <code>resumeWith</code> functions. And it checks if this Coroutine will need to dispatch.</p>
 <p>Alright, so far, we already know how to suspend, resume, and dispatch a Coroutine. It uses different layers to implement different functionalities. For example, <code>BaseContinuationImpl</code> implements the Coroutine resume, <code>DispatchedContinuation</code> implements the dispatching logic. Let’s move on to how to control the <code>Job</code> itself in the next post.</p>
 <p>Happy coding, enjoy.</p>
-<h4 id="Part1-Introduction"><a href="#Part1-Introduction" class="headerlink" title="Part1 - Introduction"></a>Part1 - <a href="https://personaldevblog.firebaseapp.com/2019/12/27/Android-Coroutines-Introduction">Introduction</a></h4><h4 id="Part3-Callback-Interaction-and-Cancellation"><a href="#Part3-Callback-Interaction-and-Cancellation" class="headerlink" title="Part3 - Callback, Interaction and Cancellation"></a>Part3 - Callback, Interaction and Cancellation</h4><h4 id="Part4-Exception"><a href="#Part4-Exception" class="headerlink" title="Part4 - Exception"></a>Part4 - Exception</h4><h4 id="Part5-Concurrency"><a href="#Part5-Concurrency" class="headerlink" title="Part5 - Concurrency"></a>Part5 - Concurrency</h4><h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><ol>
-<li><a href="https://www.youtube.com/watch?v=_hfBv0a09Jc">KotlinConf 2017 - Introduction to Coroutines by Roman Elizarov</a></li>
-<li><a href="https://kotlinlang.org/docs/tutorials/coroutines/async-programming.html">Asynchronous Programming Techniques - Kotlin Programming Language</a></li>
+<h4 id="Part1-Introduction"><a href="#Part1-Introduction" class="headerlink" title="Part1 - Introduction"></a>Part1 - <a href="https://personaldevblog.firebaseapp.com/2019/12/27/Android-Coroutines-Introduction" target="_blank" rel="noopener">Introduction</a></h4><h4 id="Part3-Callback-Interaction-and-Cancellation"><a href="#Part3-Callback-Interaction-and-Cancellation" class="headerlink" title="Part3 - Callback, Interaction and Cancellation"></a>Part3 - Callback, Interaction and Cancellation</h4><h4 id="Part4-Exception"><a href="#Part4-Exception" class="headerlink" title="Part4 - Exception"></a>Part4 - Exception</h4><h4 id="Part5-Concurrency"><a href="#Part5-Concurrency" class="headerlink" title="Part5 - Concurrency"></a>Part5 - Concurrency</h4><h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><ol>
+<li><a href="https://www.youtube.com/watch?v=_hfBv0a09Jc" target="_blank" rel="noopener">KotlinConf 2017 - Introduction to Coroutines by Roman Elizarov</a></li>
+<li><a href="https://kotlinlang.org/docs/tutorials/coroutines/async-programming.html" target="_blank" rel="noopener">Asynchronous Programming Techniques - Kotlin Programming Language</a></li>
 </ol>
 
     </div>
@@ -1104,7 +626,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-count">69</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1117,7 +639,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

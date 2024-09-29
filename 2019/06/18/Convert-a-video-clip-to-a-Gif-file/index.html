@@ -143,7 +143,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">104</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -153,7 +153,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">69</span></a>
 
   </li>
   </ul>
@@ -251,7 +251,7 @@
         <p><img src="https://chauyanw.files.wordpress.com/2019/06/ffmpeg.png?w=2924" alt="ffmpeg.png?w=2924"></p>
 <p>I recently run into a problem that I would like to convert a video clip to a gif file cause I did the screen recording from my laptop, but the file size is too large (&gt; 100MB) to upload to my blog. So, a reasonable solution is probably to shrink the size either by trimming the video or translating the video file to another format; for example, a possible format to upload is a gif file. </p>
 <p>Here I would show you how to do it. It’s pretty simple. Thanks, @Alex Dergachev’s gist. </p>
-<span id="more"></span>
+<a id="more"></a>
 
 <h4 id="Steps-1-to-capture-the-screen-recording"><a href="#Steps-1-to-capture-the-screen-recording" class="headerlink" title="Steps 1 - to capture the screen recording"></a>Steps 1 - to capture the screen recording</h4><p>press Shift-Command (⌘)-5 on your keyboard to see all the controls you need to record video and capture still images of your screen.</p>
 <p><img src="https://chauyanw.files.wordpress.com/2019/06/screen-shot-2019-06-18-at-7.26.09-am.png" alt="screen-shot-2019-06-18-at-7.26.09-am.png"></p>
@@ -264,18 +264,10 @@
 </ol>
 <h4 id="Step-2-Installation-for-necessary-packages"><a href="#Step-2-Installation-for-necessary-packages" class="headerlink" title="Step 2 - Installation for necessary packages"></a>Step 2 - Installation for necessary packages</h4><ol>
 <li>brew install FFmpeg</li>
-<li>Go to <a href="https://www.xquartz.org/">https://www.xquartz.org/</a>, download, and install.</li>
+<li>Go to <a href="https://www.xquartz.org/" target="_blank" rel="noopener">https://www.xquartz.org/</a>, download, and install.</li>
 <li>brew install gifsicle</li>
 </ol>
-<h4 id="Step-3-Command"><a href="#Step-3-Command" class="headerlink" title="Step 3 - Command"></a>Step 3 - Command</h4><pre><code class="highlight plaintext">ffmpeg -i in_file_path.mov -s 640x480 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 &gt; out_file_path.gif
-
-
-Notes on the arguments:
--r 10 tells FFmpeg to reduce the frame rate from 25 fps to 10
--s 600x400 tells FFmpeg the max-width and max-height
---delay=3 tells gifsicle to delay 30ms between each gif
---optimize=3 requests that gifsicle use the slowest/most file-size optimization
-</code></pre>
+<h4 id="Step-3-Command"><a href="#Step-3-Command" class="headerlink" title="Step 3 - Command"></a>Step 3 - Command</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i in_file_path.mov -s 640x480 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 &gt; out_file_path.gif</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Notes on the arguments:</span><br><span class="line">-r 10 tells FFmpeg to reduce the frame rate from 25 fps to 10</span><br><span class="line">-s 600x400 tells FFmpeg the max-width and max-height</span><br><span class="line">--delay=3 tells gifsicle to delay 30ms between each gif</span><br><span class="line">--optimize=3 requests that gifsicle use the slowest/most file-size optimization</span><br></pre></td></tr></table></figure>
 
 <p>And now, here it goes.<br><img src="https://chauyanw.files.wordpress.com/2019/06/screen-shot-2019-06-18-at-7.16.39-am.png" alt="screen-shot-2019-06-18-at-7.16.39-am.png"></p>
 <p>After that, you can find the Gif file and start using it.Enjoy.</p>
@@ -387,7 +379,7 @@ Notes on the arguments:
         <p><img src="https://chauyanw.files.wordpress.com/2019/06/ffmpeg.png?w=2924" alt="ffmpeg.png?w=2924"></p>
 <p>I recently run into a problem that I would like to convert a video clip to a gif file cause I did the screen recording from my laptop, but the file size is too large (&gt; 100MB) to upload to my blog. So, a reasonable solution is probably to shrink the size either by trimming the video or translating the video file to another format; for example, a possible format to upload is a gif file. </p>
 <p>Here I would show you how to do it. It’s pretty simple. Thanks, @Alex Dergachev’s gist. </p>
-<span id="more"></span>
+<a id="more"></a>
 
 <h4 id="Steps-1-to-capture-the-screen-recording"><a href="#Steps-1-to-capture-the-screen-recording" class="headerlink" title="Steps 1 - to capture the screen recording"></a>Steps 1 - to capture the screen recording</h4><p>press Shift-Command (⌘)-5 on your keyboard to see all the controls you need to record video and capture still images of your screen.</p>
 <p><img src="https://chauyanw.files.wordpress.com/2019/06/screen-shot-2019-06-18-at-7.26.09-am.png" alt="screen-shot-2019-06-18-at-7.26.09-am.png"></p>
@@ -400,18 +392,10 @@ Notes on the arguments:
 </ol>
 <h4 id="Step-2-Installation-for-necessary-packages"><a href="#Step-2-Installation-for-necessary-packages" class="headerlink" title="Step 2 - Installation for necessary packages"></a>Step 2 - Installation for necessary packages</h4><ol>
 <li>brew install FFmpeg</li>
-<li>Go to <a href="https://www.xquartz.org/">https://www.xquartz.org/</a>, download, and install.</li>
+<li>Go to <a href="https://www.xquartz.org/" target="_blank" rel="noopener">https://www.xquartz.org/</a>, download, and install.</li>
 <li>brew install gifsicle</li>
 </ol>
-<h4 id="Step-3-Command"><a href="#Step-3-Command" class="headerlink" title="Step 3 - Command"></a>Step 3 - Command</h4><pre><code class="highlight plaintext">ffmpeg -i in_file_path.mov -s 640x480 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 &gt; out_file_path.gif
-
-
-Notes on the arguments:
--r 10 tells FFmpeg to reduce the frame rate from 25 fps to 10
--s 600x400 tells FFmpeg the max-width and max-height
---delay=3 tells gifsicle to delay 30ms between each gif
---optimize=3 requests that gifsicle use the slowest/most file-size optimization
-</code></pre>
+<h4 id="Step-3-Command"><a href="#Step-3-Command" class="headerlink" title="Step 3 - Command"></a>Step 3 - Command</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i in_file_path.mov -s 640x480 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 &gt; out_file_path.gif</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Notes on the arguments:</span><br><span class="line">-r 10 tells FFmpeg to reduce the frame rate from 25 fps to 10</span><br><span class="line">-s 600x400 tells FFmpeg the max-width and max-height</span><br><span class="line">--delay=3 tells gifsicle to delay 30ms between each gif</span><br><span class="line">--optimize=3 requests that gifsicle use the slowest/most file-size optimization</span><br></pre></td></tr></table></figure>
 
 <p>And now, here it goes.<br><img src="https://chauyanw.files.wordpress.com/2019/06/screen-shot-2019-06-18-at-7.16.39-am.png" alt="screen-shot-2019-06-18-at-7.16.39-am.png"></p>
 <p>After that, you can find the Gif file and start using it.Enjoy.</p>
@@ -532,7 +516,7 @@ Notes on the arguments:
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-count">69</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -545,7 +529,7 @@ Notes on the arguments:
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

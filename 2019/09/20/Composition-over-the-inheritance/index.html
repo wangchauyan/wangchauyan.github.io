@@ -140,7 +140,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">104</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -150,7 +150,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">69</span></a>
 
   </li>
   </ul>
@@ -248,116 +248,58 @@
         <p><img src="https://chauyanw.files.wordpress.com/2019/09/design-pattern.png?w=2924" alt="design-pattern.png?w=2924"></p>
 <h4 id="The-Story"><a href="#The-Story" class="headerlink" title="The Story"></a>The Story</h4><p>I recently encountered a question about why it’s better to using interface than inheritance. I have this because we defined lots of interfaces (behaviors) in a recent project. And, I am not saying this is bad, but just because this is not my familiar pattern when trying to design a system and also wanted to think of it deeper why we are doing that. I am confused if some classes share the same behaviors, my first thought from Java world is to create a parent class to define those common behaviors and then derivative classes would get the benefits without implementing the same behaviors again. But someone told me: Using an interface is better. So, I want to figure out why an interface is better than inheritance. According to the wiki description:</p>
 <blockquote>
-<p><a href="https://en.wikipedia.org/wiki/Composition_over_inheritance">Composition over inheritance - Wikipedia</a><br>Composition over inheritance (or composite reuse principle) in object-oriented programming (OOP) is the principle that classes should achieve polymorphic behavior and code reuse by their Composition (by containing instances of other classes that implement the desired functionality) rather than inheritance from a base or parent class</p>
+<p><a href="https://en.wikipedia.org/wiki/Composition_over_inheritance" target="_blank" rel="noopener">Composition over inheritance - Wikipedia</a><br>Composition over inheritance (or composite reuse principle) in object-oriented programming (OOP) is the principle that classes should achieve polymorphic behavior and code reuse by their Composition (by containing instances of other classes that implement the desired functionality) rather than inheritance from a base or parent class</p>
 </blockquote>
-<span id="more"></span>
+<a id="more"></a>
 
 <h4 id="Composite-Reuse-Principle"><a href="#Composite-Reuse-Principle" class="headerlink" title="Composite Reuse Principle"></a>Composite Reuse Principle</h4><p>Yes, that’s also called <strong>composite reuse principle</strong>. So, the relationships of inheritance and Composition are referred to as <strong>IS-A</strong> and <strong>HAS-A</strong> relationships. Then why should we use the composition pattern (Interfaces) more? </p>
 <ol>
 <li>Flexibility of reuse </li>
 <li>More precise and readable logic. </li>
-<li>Easily create test cases for components.</li>
+<li>Easily create test cases for components. </li>
 </ol>
 <p>Let’s check an example about the inheritance. You need to remember that’s an <code>IS-A</code> relationship.</p>
-<pre><code class="highlight plaintext">open class Dog &#123;
-  fun bark() &#123;
-    println(&quot;Bark!&quot;)
-  &#125;
-&#125;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">open class Dog &#123;</span><br><span class="line">  fun bark() &#123;</span><br><span class="line">    println(&quot;Bark!&quot;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class GermanShephard : Dog()</span><br><span class="line">var myDog = GermanShephard()</span><br><span class="line">myDog.bark()</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">It&apos;s fundamental. Let&apos;s create a parent `Dog` class with a function called bark. Every derivative class, for example - GermanShephard, would be able to bark because a german Shephard is also a kind of dog (`IS-A`). It looks very reasonable. Let&apos;s add another dog - Belgian malinois, and let these two dogs learn another skill - sniffing drug. </span><br><span class="line"></span><br><span class="line">#### Define more behaviors by inheritance</span><br></pre></td></tr></table></figure>
 
-class GermanShephard : Dog()
-var myDog = GermanShephard()
-myDog.bark()</code></pre>
+<p>open class Dog {<br>  fun bark() {<br>    println(“Bark!”)<br>  }<br>}</p>
+<p>class GermanShephard : Dog() {<br>  fun sniffDrugs(drugs: Objects) {<br>    if (drugs != null) bark()<br>  }<br>}</p>
+<p>class BelgianMalinois : Dog() {<br>  fun sniffDrugs(drugs: Objects) {<br>    if (drugs != null) bark()<br>  }<br>}</p>
+<p>class Poodle: Dog()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Well, it still looks reasonable so far, because both german Shephard and Belgian malinois are used to be trained to execute this kind of tasks and they can do this very well. And also, a poodle is a kind of dog, no question about that. From the inheritance point, we usually put the redundant code to parent class, that&apos;s a pretty straightforward mindset (I am doing in this way). Let&apos;s put the function `sniffDrugs` into parent Dog class. Then, you might find something wrong. </span><br><span class="line"></span><br><span class="line">#### Something wrong?</span><br></pre></td></tr></table></figure>
 
-<p>It’s fundamental. Let’s create a parent <code>Dog</code> class with a function called bark. Every derivative class, for example - GermanShephard, would be able to bark because a german Shephard is also a kind of dog (<code>IS-A</code>). It looks very reasonable. Let’s add another dog - Belgian malinois, and let these two dogs learn another skill - sniffing drug. </p>
-<h4 id="Define-more-behaviors-by-inheritance"><a href="#Define-more-behaviors-by-inheritance" class="headerlink" title="Define more behaviors by inheritance"></a>Define more behaviors by inheritance</h4><pre><code class="highlight plaintext">open class Dog &#123;
-  fun bark() &#123;
-    println(&quot;Bark!&quot;)
-  &#125;
-&#125;
+<p>open class Dog {<br>  fun bark() {<br>    println(“Bark!”)<br>  }</p>
+<p>  fun sniffDrugs(drugs: Objects) {<br>    if (drugs != null) bark()<br>  }<br>}</p>
+<p>…</p>
+<p>// Does a poodle can do sniffing drug work?<br>class Poodle: Dog()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">Can a Poodle be trained to sniff drugs? Maybe! But in our example, it seems to be wrong cause a Poodle can&apos;t have this skill. How to solve this? Maybe creating another SniffTrainingDog class is a solution? Let&apos;s see.</span><br></pre></td></tr></table></figure>
 
-class GermanShephard : Dog() &#123;
-  fun sniffDrugs(drugs: Objects) &#123;
-    if (drugs != null) bark()
-  &#125;
-&#125;
+<p>open class Dog {<br>  fun bark() {<br>    println(“Bark!”)<br>  }<br>}</p>
+<p>open class SniffTrainingDog: Dog() {<br>  fun sniffDrugs(drugs: Objects) {<br>    if (drugs != null) bark()<br>  }<br>}</p>
+<p>class GermanShephard : SniffTrainingDog() { … }</p>
+<p>class BelgianMalinois : SniffTrainingDog() { … }</p>
+<p>class Poodle: Dog()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">You can find a fact: when we need more behaviors, and those behaviors show the conflict, then we would need more parent classes to contain and define different behaviors. That makes the project a mess, and it&apos;s not a good design. </span><br><span class="line"></span><br><span class="line">#### A clean and simple solution</span><br><span class="line"></span><br><span class="line">Ok, it&apos;s time to try Composition now to clean the design. It looks much better when we add more behaviors for derivative class. You can define several behaviors that a dog can do.</span><br></pre></td></tr></table></figure>
 
-class BelgianMalinois : Dog() &#123;
-  fun sniffDrugs(drugs: Objects) &#123;
-    if (drugs != null) bark()
-  &#125;
-&#125;
-
-class Poodle: Dog()</code></pre>
-
-<p>Well, it still looks reasonable so far, because both german Shephard and Belgian malinois are used to be trained to execute this kind of tasks and they can do this very well. And also, a poodle is a kind of dog, no question about that. From the inheritance point, we usually put the redundant code to parent class, that’s a pretty straightforward mindset (I am doing in this way). Let’s put the function <code>sniffDrugs</code> into parent Dog class. Then, you might find something wrong. </p>
-<h4 id="Something-wrong"><a href="#Something-wrong" class="headerlink" title="Something wrong?"></a>Something wrong?</h4><pre><code class="highlight plaintext">open class Dog &#123;
-  fun bark() &#123;
-    println(&quot;Bark!&quot;)
-  &#125;
-
-  fun sniffDrugs(drugs: Objects) &#123;
-    if (drugs != null) bark()
-  &#125;
-&#125;
-
-...
-
-// Does a poodle can do sniffing drug work? 
-class Poodle: Dog()
-</code></pre>
+<p>interface Barker {<br>  fun bark()<br>}</p>
+<p>interface Swimmer {<br>  fun swim()<br>}</p>
+<p>interface DrugSniffer{<br>  fun drugSniff()<br>}</p>
+<p>class GermanShephard: Barker, DrugSniffer {<br>  override fun bark() { … }<br>  override fun drugSniff() { … }<br>}</p>
+<pre><code>
+That would be easier to test and define what a german Shephard can do. Is the inheritance dead, and we can&apos;t use it anymore? No, I don&apos;t think so. I think we should carefully choose the design pattern before we start a project. 
 
 
-<p>Can a Poodle be trained to sniff drugs? Maybe! But in our example, it seems to be wrong cause a Poodle can’t have this skill. How to solve this? Maybe creating another SniffTrainingDog class is a solution? Let’s see. </p>
-<pre><code class="highlight plaintext">
-open class Dog &#123;
-  fun bark() &#123;
-    println(&quot;Bark!&quot;)
-  &#125;
-&#125;
+Happy coding, enjoy. 
 
-open class SniffTrainingDog: Dog() &#123;
-  fun sniffDrugs(drugs: Objects) &#123;
-    if (drugs != null) bark()
-  &#125;
-&#125;
 
-class GermanShephard : SniffTrainingDog() &#123; ... &#125;
 
-class BelgianMalinois : SniffTrainingDog() &#123; ... &#125;
 
-class Poodle: Dog()
-</code></pre>
+#### [Reference]
 
-<p>You can find a fact: when we need more behaviors, and those behaviors show the conflict, then we would need more parent classes to contain and define different behaviors. That makes the project a mess, and it’s not a good design. </p>
-<h4 id="A-clean-and-simple-solution"><a href="#A-clean-and-simple-solution" class="headerlink" title="A clean and simple solution"></a>A clean and simple solution</h4><p>Ok, it’s time to try Composition now to clean the design. It looks much better when we add more behaviors for derivative class. You can define several behaviors that a dog can do. </p>
-<pre><code class="highlight plaintext">interface Barker &#123;
-  fun bark()
-&#125;
-  
-interface Swimmer &#123;
-  fun swim()
-&#125;
-
-interface DrugSniffer&#123;
-  fun drugSniff()
-&#125;
-
-class GermanShephard: Barker, DrugSniffer &#123;
-  override fun bark() &#123; ... &#125;
-  override fun drugSniff() &#123; ... &#125;
-&#125;</code></pre>
-
-<p>That would be easier to test and define what a german Shephard can do. Is the inheritance dead, and we can’t use it anymore? No, I don’t think so. I think we should carefully choose the design pattern before we start a project. </p>
-<p>Happy coding, enjoy. </p>
-<h4 id="Reference"><a href="#Reference" class="headerlink" title="[Reference]"></a>[Reference]</h4><ol>
-<li><a href="https://en.wikipedia.org/wiki/Composition_over_inheritance">Composition over inheritance - Wikipedia</a></li>
-<li><a href="https://medium.com/humans-create-software/composition-over-inheritance-cb6f88070205">Composition over Inheritance - Fun Fun Function - Medium</a></li>
-<li><a href="https://mikebuss.com/2016/01/10/interfaces-vs-inheritance/">Interfaces vs Inheritance in Swift - Mike Buss</a></li>
-<li><a href="https://developer.apple.com/videos/play/wwdc2015/408/">Protocol-Oriented Programming in Swift - WWDC 2015 - Videos - Apple Developer</a></li>
-<li><a href="https://medium.com/swlh/oo-design-patterns-composition-vs-inheritance-4206a6b018bb">OO Design Patterns: Composition Vs. Inheritance - The Startup - Medium</a></li>
-</ol>
-
+1. [Composition over inheritance - Wikipedia](https://en.wikipedia.org/wiki/Composition_over_inheritance)
+2. [Composition over Inheritance - Fun Fun Function - Medium](https://medium.com/humans-create-software/composition-over-inheritance-cb6f88070205)
+3. [Interfaces vs Inheritance in Swift - Mike Buss](https://mikebuss.com/2016/01/10/interfaces-vs-inheritance/)
+4. [Protocol-Oriented Programming in Swift - WWDC 2015 - Videos - Apple Developer](https://developer.apple.com/videos/play/wwdc2015/408/)
+5. [OO Design Patterns: Composition Vs. Inheritance - The Startup - Medium](https://medium.com/swlh/oo-design-patterns-composition-vs-inheritance-4206a6b018bb)</code></pre>
     </div>
 
     
@@ -466,116 +408,58 @@ class GermanShephard: Barker, DrugSniffer &#123;
         <p><img src="https://chauyanw.files.wordpress.com/2019/09/design-pattern.png?w=2924" alt="design-pattern.png?w=2924"></p>
 <h4 id="The-Story"><a href="#The-Story" class="headerlink" title="The Story"></a>The Story</h4><p>I recently encountered a question about why it’s better to using interface than inheritance. I have this because we defined lots of interfaces (behaviors) in a recent project. And, I am not saying this is bad, but just because this is not my familiar pattern when trying to design a system and also wanted to think of it deeper why we are doing that. I am confused if some classes share the same behaviors, my first thought from Java world is to create a parent class to define those common behaviors and then derivative classes would get the benefits without implementing the same behaviors again. But someone told me: Using an interface is better. So, I want to figure out why an interface is better than inheritance. According to the wiki description:</p>
 <blockquote>
-<p><a href="https://en.wikipedia.org/wiki/Composition_over_inheritance">Composition over inheritance - Wikipedia</a><br>Composition over inheritance (or composite reuse principle) in object-oriented programming (OOP) is the principle that classes should achieve polymorphic behavior and code reuse by their Composition (by containing instances of other classes that implement the desired functionality) rather than inheritance from a base or parent class</p>
+<p><a href="https://en.wikipedia.org/wiki/Composition_over_inheritance" target="_blank" rel="noopener">Composition over inheritance - Wikipedia</a><br>Composition over inheritance (or composite reuse principle) in object-oriented programming (OOP) is the principle that classes should achieve polymorphic behavior and code reuse by their Composition (by containing instances of other classes that implement the desired functionality) rather than inheritance from a base or parent class</p>
 </blockquote>
-<span id="more"></span>
+<a id="more"></a>
 
 <h4 id="Composite-Reuse-Principle"><a href="#Composite-Reuse-Principle" class="headerlink" title="Composite Reuse Principle"></a>Composite Reuse Principle</h4><p>Yes, that’s also called <strong>composite reuse principle</strong>. So, the relationships of inheritance and Composition are referred to as <strong>IS-A</strong> and <strong>HAS-A</strong> relationships. Then why should we use the composition pattern (Interfaces) more? </p>
 <ol>
 <li>Flexibility of reuse </li>
 <li>More precise and readable logic. </li>
-<li>Easily create test cases for components.</li>
+<li>Easily create test cases for components. </li>
 </ol>
 <p>Let’s check an example about the inheritance. You need to remember that’s an <code>IS-A</code> relationship.</p>
-<pre><code class="highlight plaintext">open class Dog &#123;
-  fun bark() &#123;
-    println(&quot;Bark!&quot;)
-  &#125;
-&#125;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">open class Dog &#123;</span><br><span class="line">  fun bark() &#123;</span><br><span class="line">    println(&quot;Bark!&quot;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class GermanShephard : Dog()</span><br><span class="line">var myDog = GermanShephard()</span><br><span class="line">myDog.bark()</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">It&apos;s fundamental. Let&apos;s create a parent `Dog` class with a function called bark. Every derivative class, for example - GermanShephard, would be able to bark because a german Shephard is also a kind of dog (`IS-A`). It looks very reasonable. Let&apos;s add another dog - Belgian malinois, and let these two dogs learn another skill - sniffing drug. </span><br><span class="line"></span><br><span class="line">#### Define more behaviors by inheritance</span><br></pre></td></tr></table></figure>
 
-class GermanShephard : Dog()
-var myDog = GermanShephard()
-myDog.bark()</code></pre>
+<p>open class Dog {<br>  fun bark() {<br>    println(“Bark!”)<br>  }<br>}</p>
+<p>class GermanShephard : Dog() {<br>  fun sniffDrugs(drugs: Objects) {<br>    if (drugs != null) bark()<br>  }<br>}</p>
+<p>class BelgianMalinois : Dog() {<br>  fun sniffDrugs(drugs: Objects) {<br>    if (drugs != null) bark()<br>  }<br>}</p>
+<p>class Poodle: Dog()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Well, it still looks reasonable so far, because both german Shephard and Belgian malinois are used to be trained to execute this kind of tasks and they can do this very well. And also, a poodle is a kind of dog, no question about that. From the inheritance point, we usually put the redundant code to parent class, that&apos;s a pretty straightforward mindset (I am doing in this way). Let&apos;s put the function `sniffDrugs` into parent Dog class. Then, you might find something wrong. </span><br><span class="line"></span><br><span class="line">#### Something wrong?</span><br></pre></td></tr></table></figure>
 
-<p>It’s fundamental. Let’s create a parent <code>Dog</code> class with a function called bark. Every derivative class, for example - GermanShephard, would be able to bark because a german Shephard is also a kind of dog (<code>IS-A</code>). It looks very reasonable. Let’s add another dog - Belgian malinois, and let these two dogs learn another skill - sniffing drug. </p>
-<h4 id="Define-more-behaviors-by-inheritance"><a href="#Define-more-behaviors-by-inheritance" class="headerlink" title="Define more behaviors by inheritance"></a>Define more behaviors by inheritance</h4><pre><code class="highlight plaintext">open class Dog &#123;
-  fun bark() &#123;
-    println(&quot;Bark!&quot;)
-  &#125;
-&#125;
+<p>open class Dog {<br>  fun bark() {<br>    println(“Bark!”)<br>  }</p>
+<p>  fun sniffDrugs(drugs: Objects) {<br>    if (drugs != null) bark()<br>  }<br>}</p>
+<p>…</p>
+<p>// Does a poodle can do sniffing drug work?<br>class Poodle: Dog()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">Can a Poodle be trained to sniff drugs? Maybe! But in our example, it seems to be wrong cause a Poodle can&apos;t have this skill. How to solve this? Maybe creating another SniffTrainingDog class is a solution? Let&apos;s see.</span><br></pre></td></tr></table></figure>
 
-class GermanShephard : Dog() &#123;
-  fun sniffDrugs(drugs: Objects) &#123;
-    if (drugs != null) bark()
-  &#125;
-&#125;
+<p>open class Dog {<br>  fun bark() {<br>    println(“Bark!”)<br>  }<br>}</p>
+<p>open class SniffTrainingDog: Dog() {<br>  fun sniffDrugs(drugs: Objects) {<br>    if (drugs != null) bark()<br>  }<br>}</p>
+<p>class GermanShephard : SniffTrainingDog() { … }</p>
+<p>class BelgianMalinois : SniffTrainingDog() { … }</p>
+<p>class Poodle: Dog()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">You can find a fact: when we need more behaviors, and those behaviors show the conflict, then we would need more parent classes to contain and define different behaviors. That makes the project a mess, and it&apos;s not a good design. </span><br><span class="line"></span><br><span class="line">#### A clean and simple solution</span><br><span class="line"></span><br><span class="line">Ok, it&apos;s time to try Composition now to clean the design. It looks much better when we add more behaviors for derivative class. You can define several behaviors that a dog can do.</span><br></pre></td></tr></table></figure>
 
-class BelgianMalinois : Dog() &#123;
-  fun sniffDrugs(drugs: Objects) &#123;
-    if (drugs != null) bark()
-  &#125;
-&#125;
-
-class Poodle: Dog()</code></pre>
-
-<p>Well, it still looks reasonable so far, because both german Shephard and Belgian malinois are used to be trained to execute this kind of tasks and they can do this very well. And also, a poodle is a kind of dog, no question about that. From the inheritance point, we usually put the redundant code to parent class, that’s a pretty straightforward mindset (I am doing in this way). Let’s put the function <code>sniffDrugs</code> into parent Dog class. Then, you might find something wrong. </p>
-<h4 id="Something-wrong"><a href="#Something-wrong" class="headerlink" title="Something wrong?"></a>Something wrong?</h4><pre><code class="highlight plaintext">open class Dog &#123;
-  fun bark() &#123;
-    println(&quot;Bark!&quot;)
-  &#125;
-
-  fun sniffDrugs(drugs: Objects) &#123;
-    if (drugs != null) bark()
-  &#125;
-&#125;
-
-...
-
-// Does a poodle can do sniffing drug work? 
-class Poodle: Dog()
-</code></pre>
+<p>interface Barker {<br>  fun bark()<br>}</p>
+<p>interface Swimmer {<br>  fun swim()<br>}</p>
+<p>interface DrugSniffer{<br>  fun drugSniff()<br>}</p>
+<p>class GermanShephard: Barker, DrugSniffer {<br>  override fun bark() { … }<br>  override fun drugSniff() { … }<br>}</p>
+<pre><code>
+That would be easier to test and define what a german Shephard can do. Is the inheritance dead, and we can&apos;t use it anymore? No, I don&apos;t think so. I think we should carefully choose the design pattern before we start a project. 
 
 
-<p>Can a Poodle be trained to sniff drugs? Maybe! But in our example, it seems to be wrong cause a Poodle can’t have this skill. How to solve this? Maybe creating another SniffTrainingDog class is a solution? Let’s see. </p>
-<pre><code class="highlight plaintext">
-open class Dog &#123;
-  fun bark() &#123;
-    println(&quot;Bark!&quot;)
-  &#125;
-&#125;
+Happy coding, enjoy. 
 
-open class SniffTrainingDog: Dog() &#123;
-  fun sniffDrugs(drugs: Objects) &#123;
-    if (drugs != null) bark()
-  &#125;
-&#125;
 
-class GermanShephard : SniffTrainingDog() &#123; ... &#125;
 
-class BelgianMalinois : SniffTrainingDog() &#123; ... &#125;
 
-class Poodle: Dog()
-</code></pre>
+#### [Reference]
 
-<p>You can find a fact: when we need more behaviors, and those behaviors show the conflict, then we would need more parent classes to contain and define different behaviors. That makes the project a mess, and it’s not a good design. </p>
-<h4 id="A-clean-and-simple-solution"><a href="#A-clean-and-simple-solution" class="headerlink" title="A clean and simple solution"></a>A clean and simple solution</h4><p>Ok, it’s time to try Composition now to clean the design. It looks much better when we add more behaviors for derivative class. You can define several behaviors that a dog can do. </p>
-<pre><code class="highlight plaintext">interface Barker &#123;
-  fun bark()
-&#125;
-  
-interface Swimmer &#123;
-  fun swim()
-&#125;
-
-interface DrugSniffer&#123;
-  fun drugSniff()
-&#125;
-
-class GermanShephard: Barker, DrugSniffer &#123;
-  override fun bark() &#123; ... &#125;
-  override fun drugSniff() &#123; ... &#125;
-&#125;</code></pre>
-
-<p>That would be easier to test and define what a german Shephard can do. Is the inheritance dead, and we can’t use it anymore? No, I don’t think so. I think we should carefully choose the design pattern before we start a project. </p>
-<p>Happy coding, enjoy. </p>
-<h4 id="Reference"><a href="#Reference" class="headerlink" title="[Reference]"></a>[Reference]</h4><ol>
-<li><a href="https://en.wikipedia.org/wiki/Composition_over_inheritance">Composition over inheritance - Wikipedia</a></li>
-<li><a href="https://medium.com/humans-create-software/composition-over-inheritance-cb6f88070205">Composition over Inheritance - Fun Fun Function - Medium</a></li>
-<li><a href="https://mikebuss.com/2016/01/10/interfaces-vs-inheritance/">Interfaces vs Inheritance in Swift - Mike Buss</a></li>
-<li><a href="https://developer.apple.com/videos/play/wwdc2015/408/">Protocol-Oriented Programming in Swift - WWDC 2015 - Videos - Apple Developer</a></li>
-<li><a href="https://medium.com/swlh/oo-design-patterns-composition-vs-inheritance-4206a6b018bb">OO Design Patterns: Composition Vs. Inheritance - The Startup - Medium</a></li>
-</ol>
-
+1. [Composition over inheritance - Wikipedia](https://en.wikipedia.org/wiki/Composition_over_inheritance)
+2. [Composition over Inheritance - Fun Fun Function - Medium](https://medium.com/humans-create-software/composition-over-inheritance-cb6f88070205)
+3. [Interfaces vs Inheritance in Swift - Mike Buss](https://mikebuss.com/2016/01/10/interfaces-vs-inheritance/)
+4. [Protocol-Oriented Programming in Swift - WWDC 2015 - Videos - Apple Developer](https://developer.apple.com/videos/play/wwdc2015/408/)
+5. [OO Design Patterns: Composition Vs. Inheritance - The Startup - Medium](https://medium.com/swlh/oo-design-patterns-composition-vs-inheritance-4206a6b018bb)</code></pre>
     </div>
 
     
@@ -679,7 +563,7 @@ class GermanShephard: Barker, DrugSniffer &#123;
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#The-Story"><span class="nav-number">1.</span> <span class="nav-text">The Story</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Composite-Reuse-Principle"><span class="nav-number">2.</span> <span class="nav-text">Composite Reuse Principle</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Define-more-behaviors-by-inheritance"><span class="nav-number">3.</span> <span class="nav-text">Define more behaviors by inheritance</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Something-wrong"><span class="nav-number">4.</span> <span class="nav-text">Something wrong?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#A-clean-and-simple-solution"><span class="nav-number">5.</span> <span class="nav-text">A clean and simple solution</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Reference"><span class="nav-number">6.</span> <span class="nav-text">[Reference]</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#The-Story"><span class="nav-number">1.</span> <span class="nav-text">The Story</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Composite-Reuse-Principle"><span class="nav-number">2.</span> <span class="nav-text">Composite Reuse Principle</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -693,7 +577,7 @@ class GermanShephard: Barker, DrugSniffer &#123;
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-count">69</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -706,7 +590,7 @@ class GermanShephard: Barker, DrugSniffer &#123;
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

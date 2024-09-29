@@ -139,7 +139,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">104</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -149,7 +149,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">69</span></a>
 
   </li>
   </ul>
@@ -247,53 +247,27 @@
         <p><img src="https://chauyanw.files.wordpress.com/2019/09/artillery-logo.png?w=2924" alt="artillery-logo.png?w=2924"></p>
 <p>There are so many choices for doing a system loading test on backend side. Let’s see the list below:</p>
 <ul>
-<li><a href="https://gatling.io/">Gatling</a></li>
-<li><a href="https://jmeter.apache.org/">Apache JMeter</a></li>
-<li><a href="https://locust.io/">Locust</a></li>
-<li><a href="https://github.com/wg/wrk">wrk</a></li>
-<li><a href="https://k6.io/">k6</a></li>
+<li><a href="https://gatling.io" target="_blank" rel="noopener">Gatling</a></li>
+<li><a href="https://jmeter.apache.org" target="_blank" rel="noopener">Apache JMeter</a></li>
+<li><a href="https://locust.io" target="_blank" rel="noopener">Locust</a></li>
+<li><a href="https://github.com/wg/wrk" target="_blank" rel="noopener">wrk</a></li>
+<li><a href="https://k6.io" target="_blank" rel="noopener">k6</a></li>
 </ul>
-<p>You can read this <a href="https://blog.loadimpact.com/comparing-load-testing-tools">post</a> to get more detail information. Choosing Artillery is because it can provide the test scenario for developers to design a test context. After doing some researches and adapting to this tool, I found some advantages for using it to do the web benchmark.</p>
-<span id="more"></span>
+<p>You can read this <a href="https://blog.loadimpact.com/comparing-load-testing-tools" target="_blank" rel="noopener">post</a> to get more detail information. Choosing Artillery is because it can provide the test scenario for developers to design a test context. After doing some researches and adapting to this tool, I found some advantages for using it to do the web benchmark.</p>
+<a id="more"></a>
 
 <p>Let’s start from scratch. The first step would be installing it.</p>
-<pre><code class="highlight plaintext">npm install -g artillery</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g artillery</span><br></pre></td></tr></table></figure>
 
 <p>After the installation, you can write some tests for your APIs. Artillery supports the scenarios testing for your APIs, which means you can create different test scenarios for your API endpoints and make sure everything is ok. Let’s check the primary setting of Artillery:</p>
 <p><strong>Hello.yml</strong></p>
-<pre><code class="highlight yaml"><span class="attr">config:</span>
-  <span class="attr">target:</span> <span class="string">&#x27;https://artillery.io&#x27;</span>
-  <span class="attr">phases:</span>
-    <span class="bullet">-</span> <span class="attr">duration:</span> <span class="number">60</span>
-      <span class="attr">arrivalRate:</span> <span class="number">20</span>
-  <span class="attr">defaults:</span>
-    <span class="attr">headers:</span>
-      <span class="attr">x-my-service-auth:</span> <span class="string">&#x27;987401838271002188298567&#x27;</span>
-<span class="attr">scenarios:</span>
-  <span class="bullet">-</span> <span class="attr">flow:</span>
-    <span class="bullet">-</span> <span class="attr">get:</span>
-        <span class="attr">url:</span> <span class="string">&quot;/docs&quot;</span></code></pre>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">config:</span></span><br><span class="line"><span class="attr">  target:</span> <span class="string">'https://artillery.io'</span></span><br><span class="line"><span class="attr">  phases:</span></span><br><span class="line"><span class="attr">    - duration:</span> <span class="number">60</span></span><br><span class="line"><span class="attr">      arrivalRate:</span> <span class="number">20</span></span><br><span class="line"><span class="attr">  defaults:</span></span><br><span class="line"><span class="attr">    headers:</span></span><br><span class="line"><span class="attr">      x-my-service-auth:</span> <span class="string">'987401838271002188298567'</span></span><br><span class="line"><span class="attr">scenarios:</span></span><br><span class="line"><span class="attr">  - flow:</span></span><br><span class="line"><span class="attr">    - get:</span></span><br><span class="line"><span class="attr">        url:</span> <span class="string">"/docs"</span></span><br></pre></td></tr></table></figure>
 
 <p>This hello.yml file runs a test that uses the <code>GET</code> method to test the API path <code>/docs</code> on the target server <code>https://artillery.io.</code> It’s pretty self-explained. One of the most significant benefits of using Artillery is that the learning curve is pretty easy for developers. You can execute the yaml file in this way:</p>
-<pre><code class="highlight plaintext">artillery run hello.yml</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">artillery run hello.yml</span><br></pre></td></tr></table></figure>
 
 <p>You might see the result like the following:</p>
-<pre><code class="highlight bash">All virtual <span class="built_in">users</span> finished
-Summary report @ 15:02:32(-0700) 2019-09-11
-  Scenarios launched:  1200
-  Scenarios completed: 1200
-  Requests completed:  2400
-  RPS sent: 39.72
-  Request latency:
-    min: 0.4
-    max: 9.7
-    median: 1.5
-    p95: 2.6
-    p99: 4
-  Scenario counts:
-    Get Doc: 1200 (100%)
-  Codes:
-    200: 2400</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">All virtual users finished</span><br><span class="line">Summary report @ 15:02:32(-0700) 2019-09-11</span><br><span class="line">  Scenarios launched:  1200</span><br><span class="line">  Scenarios completed: 1200</span><br><span class="line">  Requests completed:  2400</span><br><span class="line">  RPS sent: 39.72</span><br><span class="line">  Request latency:</span><br><span class="line">    min: 0.4</span><br><span class="line">    max: 9.7</span><br><span class="line">    median: 1.5</span><br><span class="line">    p95: 2.6</span><br><span class="line">    p99: 4</span><br><span class="line">  Scenario counts:</span><br><span class="line">    Get Doc: 1200 (100%)</span><br><span class="line">  Codes:</span><br><span class="line">    200: 2400</span><br></pre></td></tr></table></figure>
 
 <p>There are several terms you might not understand. It’s ok and let’s go through all of them.</p>
 <ul>
@@ -305,55 +279,19 @@ Summary report @ 15:02:32(-0700) 2019-09-11
 </li>
 <li><p><strong>RPS sent</strong> is the average number of requests per second completed in the preceding 10 seconds (or throughout the test)</p>
 </li>
-<li><p><strong>Request latency</strong> is in milliseconds, and p95 and p99 values are the 95th and 99th <a href="https://en.wikipedia.org/wiki/Percentile">percentile</a> values (a request latency p99 value of 500ms means that 99 out of 100 requests took 500ms or less to complete).</p>
+<li><p><strong>Request latency</strong> is in milliseconds, and p95 and p99 values are the 95th and 99th <a href="https://en.wikipedia.org/wiki/Percentile" target="_blank" rel="noopener">percentile</a> values (a request latency p99 value of 500ms means that 99 out of 100 requests took 500ms or less to complete).</p>
 </li>
 <li><p><strong>Codes</strong> provides the breakdown of HTTP response codes received. If you see NaN (“not a number”) reported as a value, that means not enough responses have been received to calculate the percentile.</p>
 </li>
 </ul>
 <p>If there are any errors (such as socket timeouts), those would be printed under Errors in the report as well.</p>
 <p>So, I think it’s quite clear if you check the report. Some people might like the Wrk style report:</p>
-<pre><code class="highlight bash">Running 30s <span class="built_in">test</span> @ http://127.0.0.1:8080/index.html
-  12 threads and 400 connections
-  Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency   635.91us    0.89ms  12.92ms   93.69%
-    Req/Sec    56.20k     8.07k   62.00k    86.54%
-  22464657 requests <span class="keyword">in</span> 30.00s, 17.76GB <span class="built_in">read</span>
-Requests/sec: 748868.53
-Transfer/sec:    606.33MB</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Running 30s <span class="built_in">test</span> @ http://127.0.0.1:8080/index.html</span><br><span class="line">  12 threads and 400 connections</span><br><span class="line">  Thread Stats   Avg      Stdev     Max   +/- Stdev</span><br><span class="line">    Latency   635.91us    0.89ms  12.92ms   93.69%</span><br><span class="line">    Req/Sec    56.20k     8.07k   62.00k    86.54%</span><br><span class="line">  22464657 requests <span class="keyword">in</span> 30.00s, 17.76GB <span class="built_in">read</span></span><br><span class="line">Requests/sec: 748868.53</span><br><span class="line">Transfer/sec:    606.33MB</span><br></pre></td></tr></table></figure>
 
 <p>But I think that’s a matter of debate, totally depends on what kind of format you like.</p>
 <p>Let’s check the two different parts of <code>hello.yml</code> file — the first one, <strong>config</strong>. The config part is where you specify the target (such as the address of the API server under test), the load progression (telling Artillery, for example, to create 20 virtual users every second for 10 minutes), and can set a variety of other options such as HTTP timeout settings, or TLS settings.</p>
 <p>The second part, <strong>scenarios</strong>. This section is where you define what virtual users created by Artillery would be doing. A scenario is a description of a typical user session in the application. For example, in an e-commerce application, a common scenario is to search for a product, add it to cart, and checkout. In a chat application, it may be to connect to the server, send a few messages, lurk for a while, and then disconnect. Remember what I mentioned before; you can create different scenarios for different test groups. <strong>Note: you are testing a behavior logic in a scenario</strong>. Here is an example of testing a shopping cart checkout scenario:</p>
-<pre><code class="highlight yaml"><span class="attr">config:</span>
-  <span class="attr">target:</span> <span class="string">&quot;https://staging1.local&quot;</span>
-  <span class="attr">phases:</span>
-    <span class="bullet">-</span> <span class="attr">duration:</span> <span class="number">60</span>
-      <span class="attr">arrivalRate:</span> <span class="number">5</span>
-    <span class="bullet">-</span> <span class="attr">duration:</span> <span class="number">120</span>
-      <span class="attr">arrivalRate:</span> <span class="number">5</span>
-      <span class="attr">rampTo:</span> <span class="number">50</span>
-    <span class="bullet">-</span> <span class="attr">duration:</span> <span class="number">600</span>
-      <span class="attr">arrivalRate:</span> <span class="number">50</span>
-  <span class="attr">payload:</span>
-    <span class="attr">path:</span> <span class="string">&quot;keywords.csv&quot;</span>
-    <span class="attr">fields:</span>
-      <span class="bullet">-</span> <span class="string">&quot;keywords&quot;</span>
-<span class="attr">scenarios:</span>
-  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;Search and buy&quot;</span>
-    <span class="attr">flow:</span>
-      <span class="bullet">-</span> <span class="attr">post:</span>
-          <span class="attr">url:</span> <span class="string">&quot;/search&quot;</span>
-          <span class="attr">body:</span> <span class="string">&quot;kw=<span class="template-variable">&#123;&#123; keywords &#125;&#125;</span>&quot;</span>
-          <span class="attr">capture:</span>
-            <span class="attr">json:</span> <span class="string">&quot;$.results[0].id&quot;</span>
-            <span class="attr">as:</span> <span class="string">&quot;id&quot;</span>
-      <span class="bullet">-</span> <span class="attr">get:</span>
-          <span class="attr">url:</span> <span class="string">&quot;/details/<span class="template-variable">&#123;&#123; id &#125;&#125;</span>&quot;</span>
-      <span class="bullet">-</span> <span class="attr">think:</span> <span class="number">3</span>
-      <span class="bullet">-</span> <span class="attr">post:</span>
-          <span class="attr">url:</span> <span class="string">&quot;/cart&quot;</span>
-          <span class="attr">json:</span>
-            <span class="attr">productId:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; id &#125;&#125;</span>&quot;</span></code></pre>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">config:</span></span><br><span class="line"><span class="attr">  target:</span> <span class="string">"https://staging1.local"</span></span><br><span class="line"><span class="attr">  phases:</span></span><br><span class="line"><span class="attr">    - duration:</span> <span class="number">60</span></span><br><span class="line"><span class="attr">      arrivalRate:</span> <span class="number">5</span></span><br><span class="line"><span class="attr">    - duration:</span> <span class="number">120</span></span><br><span class="line"><span class="attr">      arrivalRate:</span> <span class="number">5</span></span><br><span class="line"><span class="attr">      rampTo:</span> <span class="number">50</span></span><br><span class="line"><span class="attr">    - duration:</span> <span class="number">600</span></span><br><span class="line"><span class="attr">      arrivalRate:</span> <span class="number">50</span></span><br><span class="line"><span class="attr">  payload:</span></span><br><span class="line"><span class="attr">    path:</span> <span class="string">"keywords.csv"</span></span><br><span class="line"><span class="attr">    fields:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"keywords"</span></span><br><span class="line"><span class="attr">scenarios:</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">"Search and buy"</span></span><br><span class="line"><span class="attr">    flow:</span></span><br><span class="line"><span class="attr">      - post:</span></span><br><span class="line"><span class="attr">          url:</span> <span class="string">"/search"</span></span><br><span class="line"><span class="attr">          body:</span> <span class="string">"kw=<span class="template-variable">&#123;&#123; keywords &#125;&#125;</span>"</span></span><br><span class="line"><span class="attr">          capture:</span></span><br><span class="line"><span class="attr">            json:</span> <span class="string">"$.results[0].id"</span></span><br><span class="line"><span class="attr">            as:</span> <span class="string">"id"</span></span><br><span class="line"><span class="attr">      - get:</span></span><br><span class="line"><span class="attr">          url:</span> <span class="string">"/details/<span class="template-variable">&#123;&#123; id &#125;&#125;</span>"</span></span><br><span class="line"><span class="attr">      - think:</span> <span class="number">3</span></span><br><span class="line"><span class="attr">      - post:</span></span><br><span class="line"><span class="attr">          url:</span> <span class="string">"/cart"</span></span><br><span class="line"><span class="attr">          json:</span></span><br><span class="line"><span class="attr">            productId:</span> <span class="string">"<span class="template-variable">&#123;&#123; id &#125;&#125;</span>"</span></span><br></pre></td></tr></table></figure>
 
 <p>This scenario describes a context that I want to search for something with the keyword variable, which is loaded by the payload path. After I get a specific product, I want to see the product detail information. If I like the product, I’d like to put it into the shopping cart. This context is the so-called <code>scenario testing.</code> You set up a scenario(it’s primarily a use-case) that covers several APIs you want to test.</p>
 <p>Here are some tips I want to share with you:</p>
@@ -361,52 +299,17 @@ Transfer/sec:    606.33MB</code></pre>
 <li>Tip: you might have several environments, for instance, staging, production, and other pre-defined environments. What we want to test APIs load in different environments? Artillery gives you this ability, don’t worry.</li>
 </ul>
 <p><strong>your-test-load.yaml</strong></p>
-<pre><code class="highlight yaml"><span class="attr">config:</span>
-  <span class="attr">environments:</span> 
-    <span class="attr">staging:</span> 
-      <span class="attr">target:</span> <span class="string">&#x27;https://your.staging.env&#x27;</span>
-    <span class="attr">production:</span> 
-      <span class="attr">target:</span> <span class="string">&#x27;https://your.production.env&#x27;</span>
-  <span class="attr">phases:</span>
-    <span class="bullet">-</span> <span class="attr">duration:</span> <span class="number">60</span>
-      <span class="attr">arrivalRate:</span> <span class="number">20</span>
-  <span class="attr">defaults:</span>
-    <span class="attr">headers:</span>
-      <span class="attr">x-my-service-auth:</span> <span class="string">&#x27;987401838271002188298567&#x27;</span>
-<span class="attr">scenarios:</span>
-  <span class="bullet">-</span> <span class="attr">flow:</span>
-    <span class="bullet">-</span> <span class="attr">get:</span>
-        <span class="attr">url:</span> <span class="string">&quot;/docs&quot;</span></code></pre>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">config:</span></span><br><span class="line"><span class="attr">  environments:</span> </span><br><span class="line"><span class="attr">    staging:</span> </span><br><span class="line"><span class="attr">      target:</span> <span class="string">'https://your.staging.env'</span></span><br><span class="line"><span class="attr">    production:</span> </span><br><span class="line"><span class="attr">      target:</span> <span class="string">'https://your.production.env'</span></span><br><span class="line"><span class="attr">  phases:</span></span><br><span class="line"><span class="attr">    - duration:</span> <span class="number">60</span></span><br><span class="line"><span class="attr">      arrivalRate:</span> <span class="number">20</span></span><br><span class="line"><span class="attr">  defaults:</span></span><br><span class="line"><span class="attr">    headers:</span></span><br><span class="line"><span class="attr">      x-my-service-auth:</span> <span class="string">'987401838271002188298567'</span></span><br><span class="line"><span class="attr">scenarios:</span></span><br><span class="line"><span class="attr">  - flow:</span></span><br><span class="line"><span class="attr">    - get:</span></span><br><span class="line"><span class="attr">        url:</span> <span class="string">"/docs"</span></span><br></pre></td></tr></table></figure>
 
 <p>You can define an <code>environments</code> tag here, and use the following command:</p>
-<pre><code class="highlight plaintext">artillery run -e staging your-test-load.yaml</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">artillery run -e staging your-test-load.yaml</span><br></pre></td></tr></table></figure>
 
 <p>You can choose different environments in this way.</p>
 <ul>
 <li>Tip: do you want to cache something from an API call? Try this.</li>
 </ul>
 <p><strong>your-test-load.yaml</strong></p>
-<pre><code class="highlight yaml"><span class="attr">config:</span>
-  <span class="attr">environments:</span> 
-    <span class="attr">staging:</span> 
-      <span class="attr">target:</span> <span class="string">&#x27;https://your.staging.env&#x27;</span>
-    <span class="attr">production:</span> 
-      <span class="attr">target:</span> <span class="string">&#x27;https://your.production.env&#x27;</span>
-  <span class="attr">phases:</span>
-    <span class="bullet">-</span> <span class="attr">duration:</span> <span class="number">60</span>
-      <span class="attr">arrivalRate:</span> <span class="number">20</span>
-  <span class="attr">defaults:</span>
-    <span class="attr">headers:</span>
-      <span class="attr">x-my-service-auth:</span> <span class="string">&#x27;987401838271002188298567&#x27;</span>
-<span class="attr">scenarios:</span>
-  <span class="bullet">-</span> <span class="attr">flow:</span>
-    <span class="bullet">-</span> <span class="attr">get:</span>
-        <span class="attr">url:</span> <span class="string">&quot;/docs&quot;</span>
-        <span class="attr">capture:</span>
-          <span class="attr">json:</span> <span class="string">&quot;$.id&quot;</span>
-          <span class="attr">as:</span> <span class="string">&quot;id&quot;</span>
-    <span class="bullet">-</span> <span class="attr">get:</span> 
-        <span class="attr">url:</span> <span class="string">&quot;/docs/<span class="template-variable">&#123;&#123; id &#125;&#125;</span>&quot;</span></code></pre>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">config:</span></span><br><span class="line"><span class="attr">  environments:</span> </span><br><span class="line"><span class="attr">    staging:</span> </span><br><span class="line"><span class="attr">      target:</span> <span class="string">'https://your.staging.env'</span></span><br><span class="line"><span class="attr">    production:</span> </span><br><span class="line"><span class="attr">      target:</span> <span class="string">'https://your.production.env'</span></span><br><span class="line"><span class="attr">  phases:</span></span><br><span class="line"><span class="attr">    - duration:</span> <span class="number">60</span></span><br><span class="line"><span class="attr">      arrivalRate:</span> <span class="number">20</span></span><br><span class="line"><span class="attr">  defaults:</span></span><br><span class="line"><span class="attr">    headers:</span></span><br><span class="line"><span class="attr">      x-my-service-auth:</span> <span class="string">'987401838271002188298567'</span></span><br><span class="line"><span class="attr">scenarios:</span></span><br><span class="line"><span class="attr">  - flow:</span></span><br><span class="line"><span class="attr">    - get:</span></span><br><span class="line"><span class="attr">        url:</span> <span class="string">"/docs"</span></span><br><span class="line"><span class="attr">        capture:</span></span><br><span class="line"><span class="attr">          json:</span> <span class="string">"$.id"</span></span><br><span class="line"><span class="attr">          as:</span> <span class="string">"id"</span></span><br><span class="line"><span class="attr">    - get:</span> </span><br><span class="line"><span class="attr">        url:</span> <span class="string">"/docs/<span class="template-variable">&#123;&#123; id &#125;&#125;</span>"</span></span><br></pre></td></tr></table></figure>
 
 <p>You might try to capture a field called id from the response. Remember, each JSON should have a paired <code>as</code> keyword. Then you can directly use this id in other APIs.</p>
 
@@ -517,53 +420,27 @@ Transfer/sec:    606.33MB</code></pre>
         <p><img src="https://chauyanw.files.wordpress.com/2019/09/artillery-logo.png?w=2924" alt="artillery-logo.png?w=2924"></p>
 <p>There are so many choices for doing a system loading test on backend side. Let’s see the list below:</p>
 <ul>
-<li><a href="https://gatling.io/">Gatling</a></li>
-<li><a href="https://jmeter.apache.org/">Apache JMeter</a></li>
-<li><a href="https://locust.io/">Locust</a></li>
-<li><a href="https://github.com/wg/wrk">wrk</a></li>
-<li><a href="https://k6.io/">k6</a></li>
+<li><a href="https://gatling.io" target="_blank" rel="noopener">Gatling</a></li>
+<li><a href="https://jmeter.apache.org" target="_blank" rel="noopener">Apache JMeter</a></li>
+<li><a href="https://locust.io" target="_blank" rel="noopener">Locust</a></li>
+<li><a href="https://github.com/wg/wrk" target="_blank" rel="noopener">wrk</a></li>
+<li><a href="https://k6.io" target="_blank" rel="noopener">k6</a></li>
 </ul>
-<p>You can read this <a href="https://blog.loadimpact.com/comparing-load-testing-tools">post</a> to get more detail information. Choosing Artillery is because it can provide the test scenario for developers to design a test context. After doing some researches and adapting to this tool, I found some advantages for using it to do the web benchmark.</p>
-<span id="more"></span>
+<p>You can read this <a href="https://blog.loadimpact.com/comparing-load-testing-tools" target="_blank" rel="noopener">post</a> to get more detail information. Choosing Artillery is because it can provide the test scenario for developers to design a test context. After doing some researches and adapting to this tool, I found some advantages for using it to do the web benchmark.</p>
+<a id="more"></a>
 
 <p>Let’s start from scratch. The first step would be installing it.</p>
-<pre><code class="highlight plaintext">npm install -g artillery</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g artillery</span><br></pre></td></tr></table></figure>
 
 <p>After the installation, you can write some tests for your APIs. Artillery supports the scenarios testing for your APIs, which means you can create different test scenarios for your API endpoints and make sure everything is ok. Let’s check the primary setting of Artillery:</p>
 <p><strong>Hello.yml</strong></p>
-<pre><code class="highlight yaml"><span class="attr">config:</span>
-  <span class="attr">target:</span> <span class="string">&#x27;https://artillery.io&#x27;</span>
-  <span class="attr">phases:</span>
-    <span class="bullet">-</span> <span class="attr">duration:</span> <span class="number">60</span>
-      <span class="attr">arrivalRate:</span> <span class="number">20</span>
-  <span class="attr">defaults:</span>
-    <span class="attr">headers:</span>
-      <span class="attr">x-my-service-auth:</span> <span class="string">&#x27;987401838271002188298567&#x27;</span>
-<span class="attr">scenarios:</span>
-  <span class="bullet">-</span> <span class="attr">flow:</span>
-    <span class="bullet">-</span> <span class="attr">get:</span>
-        <span class="attr">url:</span> <span class="string">&quot;/docs&quot;</span></code></pre>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">config:</span></span><br><span class="line"><span class="attr">  target:</span> <span class="string">'https://artillery.io'</span></span><br><span class="line"><span class="attr">  phases:</span></span><br><span class="line"><span class="attr">    - duration:</span> <span class="number">60</span></span><br><span class="line"><span class="attr">      arrivalRate:</span> <span class="number">20</span></span><br><span class="line"><span class="attr">  defaults:</span></span><br><span class="line"><span class="attr">    headers:</span></span><br><span class="line"><span class="attr">      x-my-service-auth:</span> <span class="string">'987401838271002188298567'</span></span><br><span class="line"><span class="attr">scenarios:</span></span><br><span class="line"><span class="attr">  - flow:</span></span><br><span class="line"><span class="attr">    - get:</span></span><br><span class="line"><span class="attr">        url:</span> <span class="string">"/docs"</span></span><br></pre></td></tr></table></figure>
 
 <p>This hello.yml file runs a test that uses the <code>GET</code> method to test the API path <code>/docs</code> on the target server <code>https://artillery.io.</code> It’s pretty self-explained. One of the most significant benefits of using Artillery is that the learning curve is pretty easy for developers. You can execute the yaml file in this way:</p>
-<pre><code class="highlight plaintext">artillery run hello.yml</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">artillery run hello.yml</span><br></pre></td></tr></table></figure>
 
 <p>You might see the result like the following:</p>
-<pre><code class="highlight bash">All virtual <span class="built_in">users</span> finished
-Summary report @ 15:02:32(-0700) 2019-09-11
-  Scenarios launched:  1200
-  Scenarios completed: 1200
-  Requests completed:  2400
-  RPS sent: 39.72
-  Request latency:
-    min: 0.4
-    max: 9.7
-    median: 1.5
-    p95: 2.6
-    p99: 4
-  Scenario counts:
-    Get Doc: 1200 (100%)
-  Codes:
-    200: 2400</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">All virtual users finished</span><br><span class="line">Summary report @ 15:02:32(-0700) 2019-09-11</span><br><span class="line">  Scenarios launched:  1200</span><br><span class="line">  Scenarios completed: 1200</span><br><span class="line">  Requests completed:  2400</span><br><span class="line">  RPS sent: 39.72</span><br><span class="line">  Request latency:</span><br><span class="line">    min: 0.4</span><br><span class="line">    max: 9.7</span><br><span class="line">    median: 1.5</span><br><span class="line">    p95: 2.6</span><br><span class="line">    p99: 4</span><br><span class="line">  Scenario counts:</span><br><span class="line">    Get Doc: 1200 (100%)</span><br><span class="line">  Codes:</span><br><span class="line">    200: 2400</span><br></pre></td></tr></table></figure>
 
 <p>There are several terms you might not understand. It’s ok and let’s go through all of them.</p>
 <ul>
@@ -575,55 +452,19 @@ Summary report @ 15:02:32(-0700) 2019-09-11
 </li>
 <li><p><strong>RPS sent</strong> is the average number of requests per second completed in the preceding 10 seconds (or throughout the test)</p>
 </li>
-<li><p><strong>Request latency</strong> is in milliseconds, and p95 and p99 values are the 95th and 99th <a href="https://en.wikipedia.org/wiki/Percentile">percentile</a> values (a request latency p99 value of 500ms means that 99 out of 100 requests took 500ms or less to complete).</p>
+<li><p><strong>Request latency</strong> is in milliseconds, and p95 and p99 values are the 95th and 99th <a href="https://en.wikipedia.org/wiki/Percentile" target="_blank" rel="noopener">percentile</a> values (a request latency p99 value of 500ms means that 99 out of 100 requests took 500ms or less to complete).</p>
 </li>
 <li><p><strong>Codes</strong> provides the breakdown of HTTP response codes received. If you see NaN (“not a number”) reported as a value, that means not enough responses have been received to calculate the percentile.</p>
 </li>
 </ul>
 <p>If there are any errors (such as socket timeouts), those would be printed under Errors in the report as well.</p>
 <p>So, I think it’s quite clear if you check the report. Some people might like the Wrk style report:</p>
-<pre><code class="highlight bash">Running 30s <span class="built_in">test</span> @ http://127.0.0.1:8080/index.html
-  12 threads and 400 connections
-  Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency   635.91us    0.89ms  12.92ms   93.69%
-    Req/Sec    56.20k     8.07k   62.00k    86.54%
-  22464657 requests <span class="keyword">in</span> 30.00s, 17.76GB <span class="built_in">read</span>
-Requests/sec: 748868.53
-Transfer/sec:    606.33MB</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Running 30s <span class="built_in">test</span> @ http://127.0.0.1:8080/index.html</span><br><span class="line">  12 threads and 400 connections</span><br><span class="line">  Thread Stats   Avg      Stdev     Max   +/- Stdev</span><br><span class="line">    Latency   635.91us    0.89ms  12.92ms   93.69%</span><br><span class="line">    Req/Sec    56.20k     8.07k   62.00k    86.54%</span><br><span class="line">  22464657 requests <span class="keyword">in</span> 30.00s, 17.76GB <span class="built_in">read</span></span><br><span class="line">Requests/sec: 748868.53</span><br><span class="line">Transfer/sec:    606.33MB</span><br></pre></td></tr></table></figure>
 
 <p>But I think that’s a matter of debate, totally depends on what kind of format you like.</p>
 <p>Let’s check the two different parts of <code>hello.yml</code> file — the first one, <strong>config</strong>. The config part is where you specify the target (such as the address of the API server under test), the load progression (telling Artillery, for example, to create 20 virtual users every second for 10 minutes), and can set a variety of other options such as HTTP timeout settings, or TLS settings.</p>
 <p>The second part, <strong>scenarios</strong>. This section is where you define what virtual users created by Artillery would be doing. A scenario is a description of a typical user session in the application. For example, in an e-commerce application, a common scenario is to search for a product, add it to cart, and checkout. In a chat application, it may be to connect to the server, send a few messages, lurk for a while, and then disconnect. Remember what I mentioned before; you can create different scenarios for different test groups. <strong>Note: you are testing a behavior logic in a scenario</strong>. Here is an example of testing a shopping cart checkout scenario:</p>
-<pre><code class="highlight yaml"><span class="attr">config:</span>
-  <span class="attr">target:</span> <span class="string">&quot;https://staging1.local&quot;</span>
-  <span class="attr">phases:</span>
-    <span class="bullet">-</span> <span class="attr">duration:</span> <span class="number">60</span>
-      <span class="attr">arrivalRate:</span> <span class="number">5</span>
-    <span class="bullet">-</span> <span class="attr">duration:</span> <span class="number">120</span>
-      <span class="attr">arrivalRate:</span> <span class="number">5</span>
-      <span class="attr">rampTo:</span> <span class="number">50</span>
-    <span class="bullet">-</span> <span class="attr">duration:</span> <span class="number">600</span>
-      <span class="attr">arrivalRate:</span> <span class="number">50</span>
-  <span class="attr">payload:</span>
-    <span class="attr">path:</span> <span class="string">&quot;keywords.csv&quot;</span>
-    <span class="attr">fields:</span>
-      <span class="bullet">-</span> <span class="string">&quot;keywords&quot;</span>
-<span class="attr">scenarios:</span>
-  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;Search and buy&quot;</span>
-    <span class="attr">flow:</span>
-      <span class="bullet">-</span> <span class="attr">post:</span>
-          <span class="attr">url:</span> <span class="string">&quot;/search&quot;</span>
-          <span class="attr">body:</span> <span class="string">&quot;kw=<span class="template-variable">&#123;&#123; keywords &#125;&#125;</span>&quot;</span>
-          <span class="attr">capture:</span>
-            <span class="attr">json:</span> <span class="string">&quot;$.results[0].id&quot;</span>
-            <span class="attr">as:</span> <span class="string">&quot;id&quot;</span>
-      <span class="bullet">-</span> <span class="attr">get:</span>
-          <span class="attr">url:</span> <span class="string">&quot;/details/<span class="template-variable">&#123;&#123; id &#125;&#125;</span>&quot;</span>
-      <span class="bullet">-</span> <span class="attr">think:</span> <span class="number">3</span>
-      <span class="bullet">-</span> <span class="attr">post:</span>
-          <span class="attr">url:</span> <span class="string">&quot;/cart&quot;</span>
-          <span class="attr">json:</span>
-            <span class="attr">productId:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; id &#125;&#125;</span>&quot;</span></code></pre>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">config:</span></span><br><span class="line"><span class="attr">  target:</span> <span class="string">"https://staging1.local"</span></span><br><span class="line"><span class="attr">  phases:</span></span><br><span class="line"><span class="attr">    - duration:</span> <span class="number">60</span></span><br><span class="line"><span class="attr">      arrivalRate:</span> <span class="number">5</span></span><br><span class="line"><span class="attr">    - duration:</span> <span class="number">120</span></span><br><span class="line"><span class="attr">      arrivalRate:</span> <span class="number">5</span></span><br><span class="line"><span class="attr">      rampTo:</span> <span class="number">50</span></span><br><span class="line"><span class="attr">    - duration:</span> <span class="number">600</span></span><br><span class="line"><span class="attr">      arrivalRate:</span> <span class="number">50</span></span><br><span class="line"><span class="attr">  payload:</span></span><br><span class="line"><span class="attr">    path:</span> <span class="string">"keywords.csv"</span></span><br><span class="line"><span class="attr">    fields:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"keywords"</span></span><br><span class="line"><span class="attr">scenarios:</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">"Search and buy"</span></span><br><span class="line"><span class="attr">    flow:</span></span><br><span class="line"><span class="attr">      - post:</span></span><br><span class="line"><span class="attr">          url:</span> <span class="string">"/search"</span></span><br><span class="line"><span class="attr">          body:</span> <span class="string">"kw=<span class="template-variable">&#123;&#123; keywords &#125;&#125;</span>"</span></span><br><span class="line"><span class="attr">          capture:</span></span><br><span class="line"><span class="attr">            json:</span> <span class="string">"$.results[0].id"</span></span><br><span class="line"><span class="attr">            as:</span> <span class="string">"id"</span></span><br><span class="line"><span class="attr">      - get:</span></span><br><span class="line"><span class="attr">          url:</span> <span class="string">"/details/<span class="template-variable">&#123;&#123; id &#125;&#125;</span>"</span></span><br><span class="line"><span class="attr">      - think:</span> <span class="number">3</span></span><br><span class="line"><span class="attr">      - post:</span></span><br><span class="line"><span class="attr">          url:</span> <span class="string">"/cart"</span></span><br><span class="line"><span class="attr">          json:</span></span><br><span class="line"><span class="attr">            productId:</span> <span class="string">"<span class="template-variable">&#123;&#123; id &#125;&#125;</span>"</span></span><br></pre></td></tr></table></figure>
 
 <p>This scenario describes a context that I want to search for something with the keyword variable, which is loaded by the payload path. After I get a specific product, I want to see the product detail information. If I like the product, I’d like to put it into the shopping cart. This context is the so-called <code>scenario testing.</code> You set up a scenario(it’s primarily a use-case) that covers several APIs you want to test.</p>
 <p>Here are some tips I want to share with you:</p>
@@ -631,52 +472,17 @@ Transfer/sec:    606.33MB</code></pre>
 <li>Tip: you might have several environments, for instance, staging, production, and other pre-defined environments. What we want to test APIs load in different environments? Artillery gives you this ability, don’t worry.</li>
 </ul>
 <p><strong>your-test-load.yaml</strong></p>
-<pre><code class="highlight yaml"><span class="attr">config:</span>
-  <span class="attr">environments:</span> 
-    <span class="attr">staging:</span> 
-      <span class="attr">target:</span> <span class="string">&#x27;https://your.staging.env&#x27;</span>
-    <span class="attr">production:</span> 
-      <span class="attr">target:</span> <span class="string">&#x27;https://your.production.env&#x27;</span>
-  <span class="attr">phases:</span>
-    <span class="bullet">-</span> <span class="attr">duration:</span> <span class="number">60</span>
-      <span class="attr">arrivalRate:</span> <span class="number">20</span>
-  <span class="attr">defaults:</span>
-    <span class="attr">headers:</span>
-      <span class="attr">x-my-service-auth:</span> <span class="string">&#x27;987401838271002188298567&#x27;</span>
-<span class="attr">scenarios:</span>
-  <span class="bullet">-</span> <span class="attr">flow:</span>
-    <span class="bullet">-</span> <span class="attr">get:</span>
-        <span class="attr">url:</span> <span class="string">&quot;/docs&quot;</span></code></pre>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">config:</span></span><br><span class="line"><span class="attr">  environments:</span> </span><br><span class="line"><span class="attr">    staging:</span> </span><br><span class="line"><span class="attr">      target:</span> <span class="string">'https://your.staging.env'</span></span><br><span class="line"><span class="attr">    production:</span> </span><br><span class="line"><span class="attr">      target:</span> <span class="string">'https://your.production.env'</span></span><br><span class="line"><span class="attr">  phases:</span></span><br><span class="line"><span class="attr">    - duration:</span> <span class="number">60</span></span><br><span class="line"><span class="attr">      arrivalRate:</span> <span class="number">20</span></span><br><span class="line"><span class="attr">  defaults:</span></span><br><span class="line"><span class="attr">    headers:</span></span><br><span class="line"><span class="attr">      x-my-service-auth:</span> <span class="string">'987401838271002188298567'</span></span><br><span class="line"><span class="attr">scenarios:</span></span><br><span class="line"><span class="attr">  - flow:</span></span><br><span class="line"><span class="attr">    - get:</span></span><br><span class="line"><span class="attr">        url:</span> <span class="string">"/docs"</span></span><br></pre></td></tr></table></figure>
 
 <p>You can define an <code>environments</code> tag here, and use the following command:</p>
-<pre><code class="highlight plaintext">artillery run -e staging your-test-load.yaml</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">artillery run -e staging your-test-load.yaml</span><br></pre></td></tr></table></figure>
 
 <p>You can choose different environments in this way.</p>
 <ul>
 <li>Tip: do you want to cache something from an API call? Try this.</li>
 </ul>
 <p><strong>your-test-load.yaml</strong></p>
-<pre><code class="highlight yaml"><span class="attr">config:</span>
-  <span class="attr">environments:</span> 
-    <span class="attr">staging:</span> 
-      <span class="attr">target:</span> <span class="string">&#x27;https://your.staging.env&#x27;</span>
-    <span class="attr">production:</span> 
-      <span class="attr">target:</span> <span class="string">&#x27;https://your.production.env&#x27;</span>
-  <span class="attr">phases:</span>
-    <span class="bullet">-</span> <span class="attr">duration:</span> <span class="number">60</span>
-      <span class="attr">arrivalRate:</span> <span class="number">20</span>
-  <span class="attr">defaults:</span>
-    <span class="attr">headers:</span>
-      <span class="attr">x-my-service-auth:</span> <span class="string">&#x27;987401838271002188298567&#x27;</span>
-<span class="attr">scenarios:</span>
-  <span class="bullet">-</span> <span class="attr">flow:</span>
-    <span class="bullet">-</span> <span class="attr">get:</span>
-        <span class="attr">url:</span> <span class="string">&quot;/docs&quot;</span>
-        <span class="attr">capture:</span>
-          <span class="attr">json:</span> <span class="string">&quot;$.id&quot;</span>
-          <span class="attr">as:</span> <span class="string">&quot;id&quot;</span>
-    <span class="bullet">-</span> <span class="attr">get:</span> 
-        <span class="attr">url:</span> <span class="string">&quot;/docs/<span class="template-variable">&#123;&#123; id &#125;&#125;</span>&quot;</span></code></pre>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">config:</span></span><br><span class="line"><span class="attr">  environments:</span> </span><br><span class="line"><span class="attr">    staging:</span> </span><br><span class="line"><span class="attr">      target:</span> <span class="string">'https://your.staging.env'</span></span><br><span class="line"><span class="attr">    production:</span> </span><br><span class="line"><span class="attr">      target:</span> <span class="string">'https://your.production.env'</span></span><br><span class="line"><span class="attr">  phases:</span></span><br><span class="line"><span class="attr">    - duration:</span> <span class="number">60</span></span><br><span class="line"><span class="attr">      arrivalRate:</span> <span class="number">20</span></span><br><span class="line"><span class="attr">  defaults:</span></span><br><span class="line"><span class="attr">    headers:</span></span><br><span class="line"><span class="attr">      x-my-service-auth:</span> <span class="string">'987401838271002188298567'</span></span><br><span class="line"><span class="attr">scenarios:</span></span><br><span class="line"><span class="attr">  - flow:</span></span><br><span class="line"><span class="attr">    - get:</span></span><br><span class="line"><span class="attr">        url:</span> <span class="string">"/docs"</span></span><br><span class="line"><span class="attr">        capture:</span></span><br><span class="line"><span class="attr">          json:</span> <span class="string">"$.id"</span></span><br><span class="line"><span class="attr">          as:</span> <span class="string">"id"</span></span><br><span class="line"><span class="attr">    - get:</span> </span><br><span class="line"><span class="attr">        url:</span> <span class="string">"/docs/<span class="template-variable">&#123;&#123; id &#125;&#125;</span>"</span></span><br></pre></td></tr></table></figure>
 
 <p>You might try to capture a field called id from the response. Remember, each JSON should have a paired <code>as</code> keyword. Then you can directly use this id in other APIs.</p>
 
@@ -795,7 +601,7 @@ Transfer/sec:    606.33MB</code></pre>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-count">69</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -808,7 +614,7 @@ Transfer/sec:    606.33MB</code></pre>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

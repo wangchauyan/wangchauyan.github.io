@@ -139,7 +139,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">104</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -149,7 +149,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">69</span></a>
 
   </li>
   </ul>
@@ -249,134 +249,91 @@
 <ul>
 <li>OS version : macOS Monterey 12.1 Beta (21C5021h)</li>
 <li>Chipset: Apple M1 </li>
-<li>Memory size: 16 GB</li>
+<li>Memory size: 16 GB </li>
 </ul>
-<span id="more"></span>
+<a id="more"></a>
 
 <p>First of all, you will need to install the XCode command-line tools. </p>
-<pre><code class="highlight terminal">xcode-select --install</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcode-select --install</span><br></pre></td></tr></table></figure>
 
 <p>And, you should also install <code>Rosetta</code> for code-building. </p>
-<pre><code class="highlight plaintext">/usr/sbin/softwareupdate --install-rosetta</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/sbin/softwareupdate --install-rosetta</span><br></pre></td></tr></table></figure>
 
 <p>When I tried to install Rosetta, I found some system errors, and I can’t solve that, but it seems that doesn’t matter. You can still build the AOSP project. </p>
-<p>Now, we should prepare a case-sensitive disk image cause the AOSP should build on the Ubuntu system, but MacOS is not a case-sensitive file system <a href="https://discussions.apple.com/thread/251191099">ref</a>.</p>
-<pre><code class="highlight plaintext">hdiutil create -type SPARSE -fs &#x27;Case-sensitive Journaled HFS+&#x27; -size 350g ~/aosp_source.dmg</code></pre>
+<p>Now, we should prepare a case-sensitive disk image cause the AOSP should build on the Ubuntu system, but MacOS is not a case-sensitive file system <a href="https://discussions.apple.com/thread/251191099" target="_blank" rel="noopener">ref</a>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdiutil create -type SPARSE -fs &apos;Case-sensitive Journaled HFS+&apos; -size 350g ~/aosp_source.dmg</span><br></pre></td></tr></table></figure>
 
-<p>After this, let’s create a ZSH environment. You might first time hear about ZSH. Here are some helpful tools for empowering your ZSH env, such as <a href="https://ohmyz.sh/">Oh My Zsh</a>, <a href="https://github.com/romkatv/powerlevel10k">Powerlevel10k</a>, etc. I highly recommend that you try PowerLevel10k, a successor of the powerlevel9k, and it’s a perfect theme for ZSH env. </p>
-<p>When you finish up installing&#x2F;setting the ZSH, we need to create and edit the <code>.zshenv</code> with the following content: </p>
-<pre><code class="highlight script"># set the number of open files to be 2048
-ulimit -S -n 2048
-
-# Compiler cache
-export USE_CCACHE=1
-
-# Mount the Android Tree
-function mountAOSP &#123; hdiutil attach ~/aosp_source.dmg.sparseimage -mountpoint /Volumes/aosp_source; &#125;
-
-#Unmount the Android Tree
-function umountAOSP() &#123; hdiutil detach /Volumes/aosp_source; &#125;
-
-export PATH=&quot;/opt/local/bin:/opt/local/sbin:$PATH&quot;
-export PATH=~/.bin:$PATH</code></pre>
+<p>After this, let’s create a ZSH environment. You might first time hear about ZSH. Here are some helpful tools for empowering your ZSH env, such as <a href="https://ohmyz.sh/" target="_blank" rel="noopener">Oh My Zsh</a>, <a href="https://github.com/romkatv/powerlevel10k" target="_blank" rel="noopener">Powerlevel10k</a>, etc. I highly recommend that you try PowerLevel10k, a successor of the powerlevel9k, and it’s a perfect theme for ZSH env. </p>
+<p>When you finish up installing/setting the ZSH, we need to create and edit the <code>.zshenv</code> with the following content: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># set the number of open files to be 2048</span><br><span class="line">ulimit -S -n 2048</span><br><span class="line"></span><br><span class="line"># Compiler cache</span><br><span class="line">export USE_CCACHE=1</span><br><span class="line"></span><br><span class="line"># Mount the Android Tree</span><br><span class="line">function mountAOSP &#123; hdiutil attach ~/aosp_source.dmg.sparseimage -mountpoint /Volumes/aosp_source; &#125;</span><br><span class="line"></span><br><span class="line">#Unmount the Android Tree</span><br><span class="line">function umountAOSP() &#123; hdiutil detach /Volumes/aosp_source; &#125;</span><br><span class="line"></span><br><span class="line">export PATH=&quot;/opt/local/bin:/opt/local/sbin:$PATH&quot;</span><br><span class="line">export PATH=~/.bin:$PATH</span><br></pre></td></tr></table></figure>
 
 <p>Let’s use this env setting and start downloading the AOSP code. We are going to use android-11.0.0_r48 for the building.</p>
-<pre><code class="highlight script">$ source ~/.zshenv
-$ mkdir ~/.bin
-$ curl https://storage.googleapis.com/git-repo-downloads/repo &gt; ~/.bin/repo
-$ chmod a+x ~/.bin/repo 
-$ mountAOSP
-$ cd /Volumes/aosp_source
-$ mkdir aospsrc
-$ cd aospsrc
-
-// setup your gitconfig 
-$ git config --global user.name &quot;Your Name&quot; 
-$ git config --global user.email &quot;you@example.com&quot; 
-$ repo init -u https://android.googlesource.com/platform/manifest -b android-11.0.0_r48
-$ repo sync</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ source ~/.zshenv</span><br><span class="line">$ mkdir ~/.bin</span><br><span class="line">$ curl https://storage.googleapis.com/git-repo-downloads/repo &gt; ~/.bin/repo</span><br><span class="line">$ chmod a+x ~/.bin/repo </span><br><span class="line">$ mountAOSP</span><br><span class="line">$ cd /Volumes/aosp_source</span><br><span class="line">$ mkdir aospsrc</span><br><span class="line">$ cd aospsrc</span><br><span class="line"></span><br><span class="line">// setup your gitconfig </span><br><span class="line">$ git config --global user.name &quot;Your Name&quot; </span><br><span class="line">$ git config --global user.email &quot;you@example.com&quot; </span><br><span class="line">$ repo init -u https://android.googlesource.com/platform/manifest -b android-11.0.0_r48</span><br><span class="line">$ repo sync</span><br></pre></td></tr></table></figure>
 
 <p>Here are some commands to build AOSP: </p>
-<pre><code class="highlight script">$ source build/envsetup.sh 
-$ lunch aosp_arm-eng
-$ make -j24</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ source build/envsetup.sh </span><br><span class="line">$ lunch aosp_arm-eng</span><br><span class="line">$ make -j24</span><br></pre></td></tr></table></figure>
 
 <p>Then, you can start enjoying the AOSP journey now.</p>
 <p>[Reference] </p>
 <ol>
-<li><a href="https://cs.android.com/android/platform/superproject/">Code Search</a> for AOSP</li>
-<li><a href="https://source.android.com/setup/build/building">Build AOSP</a></li>
-<li><a href="https://source.android.com/setup/build/downloading">Download AOSP</a></li>
-<li><a href="https://source.android.com/setup/start/build-numbers#source-code-tags-and-builds">AOSP codenames, tags, and build numbers</a></li>
+<li><a href="https://cs.android.com/android/platform/superproject/" target="_blank" rel="noopener">Code Search</a> for AOSP</li>
+<li><a href="https://source.android.com/setup/build/building" target="_blank" rel="noopener">Build AOSP</a></li>
+<li><a href="https://source.android.com/setup/build/downloading" target="_blank" rel="noopener">Download AOSP</a></li>
+<li><a href="https://source.android.com/setup/start/build-numbers#source-code-tags-and-builds" target="_blank" rel="noopener">AOSP codenames, tags, and build numbers</a></li>
 </ol>
 <p>[Q&amp;A]</p>
 <ul>
 <li><p>Could not find a supported mac sdk: [“10.10” “10.11” “10.12” “10.13” “10.14” “10.15”]?</p>
 <p>  If you see this error message, you can check your MacOSX SDK under</p>
-  <pre><code class="highlight text">/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/</code></pre>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/</span><br></pre></td></tr></table></figure>
 
 <p>  To make sure you have correct SDKs for building. If you can’t see the needed SDKs under this folder, there are two ways you can solve this error:</p>
 <p>  a. You can download corresponding SDKs from <code>https://github.com/phracker/MacOSX-SDKs</code> and put these SDKs into the folder.</p>
-<p>  b. You can edit the <code>build/soong/cc/config/x86_darwin_host.go</code> and add your current pointed SDK into this file.</p>
+<p>  b. You can edit the <code>build/soong/cc/config/x86_darwin_host.go</code> and add your current pointed SDK into this file. </p>
 </li>
 </ul>
 <br>
 
 <ul>
-<li><p>When seeing : system&#x2F;core&#x2F;base&#x2F;cmsg.cpp:36:21: error: use of undeclared identifier <code>PAGE_SIZE</code></p>
+<li><p>When seeing : system/core/base/cmsg.cpp:36:21: error: use of undeclared identifier <code>PAGE_SIZE</code></p>
 <p>  Add this line into the file <code>size_t psize = getpagesize();</code></p>
-  <pre><code class="highlight c++"><span class="keyword">namespace</span> base &#123;
-<span class="type">size_t</span> psize = <span class="built_in">getpagesize</span>();
-<span class="function"><span class="type">ssize_t</span> <span class="title">SendFileDescriptorVector</span><span class="params">(borrowed_fd sockfd, <span class="type">const</span> <span class="type">void</span>* data, <span class="type">size_t</span> len,</span></span>
-<span class="params"><span class="function"></span></span>
-<span class="params"><span class="function">...</span></span></code></pre>
-
-<p>  And then, replace the two distances of the PAGE_SIZE with <code>psize</code>.</p>
-  <pre><code class="highlight c++"><span class="keyword">if</span> (cmsg_space &gt;= psize) &#123;</code></pre></li>
+</li>
 </ul>
-<br>
+<pre><code><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> base &#123;</span><br><span class="line"><span class="keyword">size_t</span> psize = getpagesize();</span><br><span class="line"><span class="keyword">ssize_t</span> SendFileDescriptorVector(borrowed_fd sockfd, <span class="keyword">const</span> <span class="keyword">void</span>* data, <span class="keyword">size_t</span> len,</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+And then, replace the two distances of the PAGE_SIZE with `psize`.
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (cmsg_space &gt;= psize) &#123;</span><br></pre></td></tr></table></figure></code></pre><br>
 
 <ul>
 <li><p>When seeing <code>Segmentation fault: 11</code></p>
 <p>  Edit this file <code>system/sepolicy/tests/Android.bp</code> by deleting this line <code>libc++_static</code> and then re-compile.</p>
-<p>  Check this official <a href="https://android.googlesource.com/platform/system/sepolicy/+/1f944107a3341ab593c93bbdf09e22436cc0e3d3%5E%21/">fix</a> from google.</p>
+<p>  Check this official <a href="https://android.googlesource.com/platform/system/sepolicy/+/1f944107a3341ab593c93bbdf09e22436cc0e3d3%5E%21/" target="_blank" rel="noopener">fix</a> from google.</p>
 </li>
 </ul>
 <br>
 
 <ul>
-<li><p>When seeing these errors</p>
-  <pre><code class="highlight log">external/python/cpython2/Modules/getpath.c:414:50: error: incompatible pointer types passing &#x27;unsigned long *&#x27; to parameter of type &#x27;uint32_t *&#x27; (aka &#x27;unsigned int *&#x27;) [-Werror,-Wincompatible-pointer-types]
-
-else if(0 == _NSGetExecutablePath(progpath, &amp;nsexeclength) &amp;&amp; progpath[0] == SEP)
-
-^~~~~~~~~~~~~</code></pre>
-
-
-<p>  or </p>
-  <pre><code class="highlight log">external/python/cpython3/Modules/getpath.c:414:50: error: incompatible pointer types passing &#x27;unsigned long *&#x27; to parameter of type &#x27;uint32_t *&#x27; (aka &#x27;unsigned int *&#x27;) [-Werror,-Wincompatible-pointer-types]
-
-else if(0 == _NSGetExecutablePath(progpath, &amp;nsexeclength) &amp;&amp; progpath[0] == SEP)
-
-^~~~~~~~~~~~~</code></pre>
-
-<p>  You can solve these errors by modifying them.</p>
-  <pre><code class="highlight c++"><span class="meta">#<span class="keyword">ifdef</span> __APPLE__</span>
-<span class="meta">#<span class="keyword">if</span> MAC_OS_X_VERSION_MAX_ALLOWED &gt;= MAC_OS_X_VERSION_10_4</span>
-	<span class="type">uint32_t</span> nsexeclength = MAXPATHLEN;
-<span class="meta">#<span class="keyword">else</span></span>
-	<span class="type">unsigned</span> <span class="type">long</span> nsexeclength = MAXPATHLEN;
-<span class="meta">#<span class="keyword">endif</span></span>
-<span class="meta">#<span class="keyword">endif</span></span></code></pre>
-
-<p>  to</p>
-  <pre><code class="highlight c++"><span class="meta">#<span class="keyword">ifdef</span> __APPLE__</span>
-	<span class="type">uint32_t</span> nsexeclength = MAXPATHLEN;
-<span class="meta">#<span class="keyword">endif</span></span></code></pre>
-<p>  #Android #Android&#x2F;Build</p>
-</li>
+<li>When seeing these errors</li>
 </ul>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">external/python/cpython2/Modules/getpath.c:414:50: error: incompatible pointer types passing &apos;unsigned long *&apos; to parameter of type &apos;uint32_t *&apos; (aka &apos;unsigned int *&apos;) [-Werror,-Wincompatible-pointer-types]</span><br><span class="line"></span><br><span class="line">else if(0 == _NSGetExecutablePath(progpath, &amp;nsexeclength) &amp;&amp; progpath[0] == SEP)</span><br><span class="line"></span><br><span class="line">^~~~~~~~~~~~~</span><br></pre></td></tr></table></figure>
 
+or 
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">external/python/cpython3/Modules/getpath.c:414:50: error: incompatible pointer types passing &apos;unsigned long *&apos; to parameter of type &apos;uint32_t *&apos; (aka &apos;unsigned int *&apos;) [-Werror,-Wincompatible-pointer-types]</span><br><span class="line"></span><br><span class="line">else if(0 == _NSGetExecutablePath(progpath, &amp;nsexeclength) &amp;&amp; progpath[0] == SEP)</span><br><span class="line"></span><br><span class="line">^~~~~~~~~~~~~</span><br></pre></td></tr></table></figure>
+
+You can solve these errors by modifying them.
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __APPLE__</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> MAC_OS_X_VERSION_MAX_ALLOWED &gt;= MAC_OS_X_VERSION_10_4</span></span><br><span class="line">	<span class="keyword">uint32_t</span> nsexeclength = MAXPATHLEN;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> nsexeclength = MAXPATHLEN;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+to
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __APPLE__</span></span><br><span class="line">	<span class="keyword">uint32_t</span> nsexeclength = MAXPATHLEN;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+#Android #Android/Build </code></pre>
     </div>
 
     
@@ -486,134 +443,91 @@ else if(0 == _NSGetExecutablePath(progpath, &amp;nsexeclength) &amp;&amp; progpa
 <ul>
 <li>OS version : macOS Monterey 12.1 Beta (21C5021h)</li>
 <li>Chipset: Apple M1 </li>
-<li>Memory size: 16 GB</li>
+<li>Memory size: 16 GB </li>
 </ul>
-<span id="more"></span>
+<a id="more"></a>
 
 <p>First of all, you will need to install the XCode command-line tools. </p>
-<pre><code class="highlight terminal">xcode-select --install</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcode-select --install</span><br></pre></td></tr></table></figure>
 
 <p>And, you should also install <code>Rosetta</code> for code-building. </p>
-<pre><code class="highlight plaintext">/usr/sbin/softwareupdate --install-rosetta</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/sbin/softwareupdate --install-rosetta</span><br></pre></td></tr></table></figure>
 
 <p>When I tried to install Rosetta, I found some system errors, and I can’t solve that, but it seems that doesn’t matter. You can still build the AOSP project. </p>
-<p>Now, we should prepare a case-sensitive disk image cause the AOSP should build on the Ubuntu system, but MacOS is not a case-sensitive file system <a href="https://discussions.apple.com/thread/251191099">ref</a>.</p>
-<pre><code class="highlight plaintext">hdiutil create -type SPARSE -fs &#x27;Case-sensitive Journaled HFS+&#x27; -size 350g ~/aosp_source.dmg</code></pre>
+<p>Now, we should prepare a case-sensitive disk image cause the AOSP should build on the Ubuntu system, but MacOS is not a case-sensitive file system <a href="https://discussions.apple.com/thread/251191099" target="_blank" rel="noopener">ref</a>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdiutil create -type SPARSE -fs &apos;Case-sensitive Journaled HFS+&apos; -size 350g ~/aosp_source.dmg</span><br></pre></td></tr></table></figure>
 
-<p>After this, let’s create a ZSH environment. You might first time hear about ZSH. Here are some helpful tools for empowering your ZSH env, such as <a href="https://ohmyz.sh/">Oh My Zsh</a>, <a href="https://github.com/romkatv/powerlevel10k">Powerlevel10k</a>, etc. I highly recommend that you try PowerLevel10k, a successor of the powerlevel9k, and it’s a perfect theme for ZSH env. </p>
-<p>When you finish up installing&#x2F;setting the ZSH, we need to create and edit the <code>.zshenv</code> with the following content: </p>
-<pre><code class="highlight script"># set the number of open files to be 2048
-ulimit -S -n 2048
-
-# Compiler cache
-export USE_CCACHE=1
-
-# Mount the Android Tree
-function mountAOSP &#123; hdiutil attach ~/aosp_source.dmg.sparseimage -mountpoint /Volumes/aosp_source; &#125;
-
-#Unmount the Android Tree
-function umountAOSP() &#123; hdiutil detach /Volumes/aosp_source; &#125;
-
-export PATH=&quot;/opt/local/bin:/opt/local/sbin:$PATH&quot;
-export PATH=~/.bin:$PATH</code></pre>
+<p>After this, let’s create a ZSH environment. You might first time hear about ZSH. Here are some helpful tools for empowering your ZSH env, such as <a href="https://ohmyz.sh/" target="_blank" rel="noopener">Oh My Zsh</a>, <a href="https://github.com/romkatv/powerlevel10k" target="_blank" rel="noopener">Powerlevel10k</a>, etc. I highly recommend that you try PowerLevel10k, a successor of the powerlevel9k, and it’s a perfect theme for ZSH env. </p>
+<p>When you finish up installing/setting the ZSH, we need to create and edit the <code>.zshenv</code> with the following content: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># set the number of open files to be 2048</span><br><span class="line">ulimit -S -n 2048</span><br><span class="line"></span><br><span class="line"># Compiler cache</span><br><span class="line">export USE_CCACHE=1</span><br><span class="line"></span><br><span class="line"># Mount the Android Tree</span><br><span class="line">function mountAOSP &#123; hdiutil attach ~/aosp_source.dmg.sparseimage -mountpoint /Volumes/aosp_source; &#125;</span><br><span class="line"></span><br><span class="line">#Unmount the Android Tree</span><br><span class="line">function umountAOSP() &#123; hdiutil detach /Volumes/aosp_source; &#125;</span><br><span class="line"></span><br><span class="line">export PATH=&quot;/opt/local/bin:/opt/local/sbin:$PATH&quot;</span><br><span class="line">export PATH=~/.bin:$PATH</span><br></pre></td></tr></table></figure>
 
 <p>Let’s use this env setting and start downloading the AOSP code. We are going to use android-11.0.0_r48 for the building.</p>
-<pre><code class="highlight script">$ source ~/.zshenv
-$ mkdir ~/.bin
-$ curl https://storage.googleapis.com/git-repo-downloads/repo &gt; ~/.bin/repo
-$ chmod a+x ~/.bin/repo 
-$ mountAOSP
-$ cd /Volumes/aosp_source
-$ mkdir aospsrc
-$ cd aospsrc
-
-// setup your gitconfig 
-$ git config --global user.name &quot;Your Name&quot; 
-$ git config --global user.email &quot;you@example.com&quot; 
-$ repo init -u https://android.googlesource.com/platform/manifest -b android-11.0.0_r48
-$ repo sync</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ source ~/.zshenv</span><br><span class="line">$ mkdir ~/.bin</span><br><span class="line">$ curl https://storage.googleapis.com/git-repo-downloads/repo &gt; ~/.bin/repo</span><br><span class="line">$ chmod a+x ~/.bin/repo </span><br><span class="line">$ mountAOSP</span><br><span class="line">$ cd /Volumes/aosp_source</span><br><span class="line">$ mkdir aospsrc</span><br><span class="line">$ cd aospsrc</span><br><span class="line"></span><br><span class="line">// setup your gitconfig </span><br><span class="line">$ git config --global user.name &quot;Your Name&quot; </span><br><span class="line">$ git config --global user.email &quot;you@example.com&quot; </span><br><span class="line">$ repo init -u https://android.googlesource.com/platform/manifest -b android-11.0.0_r48</span><br><span class="line">$ repo sync</span><br></pre></td></tr></table></figure>
 
 <p>Here are some commands to build AOSP: </p>
-<pre><code class="highlight script">$ source build/envsetup.sh 
-$ lunch aosp_arm-eng
-$ make -j24</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ source build/envsetup.sh </span><br><span class="line">$ lunch aosp_arm-eng</span><br><span class="line">$ make -j24</span><br></pre></td></tr></table></figure>
 
 <p>Then, you can start enjoying the AOSP journey now.</p>
 <p>[Reference] </p>
 <ol>
-<li><a href="https://cs.android.com/android/platform/superproject/">Code Search</a> for AOSP</li>
-<li><a href="https://source.android.com/setup/build/building">Build AOSP</a></li>
-<li><a href="https://source.android.com/setup/build/downloading">Download AOSP</a></li>
-<li><a href="https://source.android.com/setup/start/build-numbers#source-code-tags-and-builds">AOSP codenames, tags, and build numbers</a></li>
+<li><a href="https://cs.android.com/android/platform/superproject/" target="_blank" rel="noopener">Code Search</a> for AOSP</li>
+<li><a href="https://source.android.com/setup/build/building" target="_blank" rel="noopener">Build AOSP</a></li>
+<li><a href="https://source.android.com/setup/build/downloading" target="_blank" rel="noopener">Download AOSP</a></li>
+<li><a href="https://source.android.com/setup/start/build-numbers#source-code-tags-and-builds" target="_blank" rel="noopener">AOSP codenames, tags, and build numbers</a></li>
 </ol>
 <p>[Q&amp;A]</p>
 <ul>
 <li><p>Could not find a supported mac sdk: [“10.10” “10.11” “10.12” “10.13” “10.14” “10.15”]?</p>
 <p>  If you see this error message, you can check your MacOSX SDK under</p>
-  <pre><code class="highlight text">/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/</code></pre>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/</span><br></pre></td></tr></table></figure>
 
 <p>  To make sure you have correct SDKs for building. If you can’t see the needed SDKs under this folder, there are two ways you can solve this error:</p>
 <p>  a. You can download corresponding SDKs from <code>https://github.com/phracker/MacOSX-SDKs</code> and put these SDKs into the folder.</p>
-<p>  b. You can edit the <code>build/soong/cc/config/x86_darwin_host.go</code> and add your current pointed SDK into this file.</p>
+<p>  b. You can edit the <code>build/soong/cc/config/x86_darwin_host.go</code> and add your current pointed SDK into this file. </p>
 </li>
 </ul>
 <br>
 
 <ul>
-<li><p>When seeing : system&#x2F;core&#x2F;base&#x2F;cmsg.cpp:36:21: error: use of undeclared identifier <code>PAGE_SIZE</code></p>
+<li><p>When seeing : system/core/base/cmsg.cpp:36:21: error: use of undeclared identifier <code>PAGE_SIZE</code></p>
 <p>  Add this line into the file <code>size_t psize = getpagesize();</code></p>
-  <pre><code class="highlight c++"><span class="keyword">namespace</span> base &#123;
-<span class="type">size_t</span> psize = <span class="built_in">getpagesize</span>();
-<span class="function"><span class="type">ssize_t</span> <span class="title">SendFileDescriptorVector</span><span class="params">(borrowed_fd sockfd, <span class="type">const</span> <span class="type">void</span>* data, <span class="type">size_t</span> len,</span></span>
-<span class="params"><span class="function"></span></span>
-<span class="params"><span class="function">...</span></span></code></pre>
-
-<p>  And then, replace the two distances of the PAGE_SIZE with <code>psize</code>.</p>
-  <pre><code class="highlight c++"><span class="keyword">if</span> (cmsg_space &gt;= psize) &#123;</code></pre></li>
+</li>
 </ul>
-<br>
+<pre><code><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> base &#123;</span><br><span class="line"><span class="keyword">size_t</span> psize = getpagesize();</span><br><span class="line"><span class="keyword">ssize_t</span> SendFileDescriptorVector(borrowed_fd sockfd, <span class="keyword">const</span> <span class="keyword">void</span>* data, <span class="keyword">size_t</span> len,</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+And then, replace the two distances of the PAGE_SIZE with `psize`.
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (cmsg_space &gt;= psize) &#123;</span><br></pre></td></tr></table></figure></code></pre><br>
 
 <ul>
 <li><p>When seeing <code>Segmentation fault: 11</code></p>
 <p>  Edit this file <code>system/sepolicy/tests/Android.bp</code> by deleting this line <code>libc++_static</code> and then re-compile.</p>
-<p>  Check this official <a href="https://android.googlesource.com/platform/system/sepolicy/+/1f944107a3341ab593c93bbdf09e22436cc0e3d3%5E%21/">fix</a> from google.</p>
+<p>  Check this official <a href="https://android.googlesource.com/platform/system/sepolicy/+/1f944107a3341ab593c93bbdf09e22436cc0e3d3%5E%21/" target="_blank" rel="noopener">fix</a> from google.</p>
 </li>
 </ul>
 <br>
 
 <ul>
-<li><p>When seeing these errors</p>
-  <pre><code class="highlight log">external/python/cpython2/Modules/getpath.c:414:50: error: incompatible pointer types passing &#x27;unsigned long *&#x27; to parameter of type &#x27;uint32_t *&#x27; (aka &#x27;unsigned int *&#x27;) [-Werror,-Wincompatible-pointer-types]
-
-else if(0 == _NSGetExecutablePath(progpath, &amp;nsexeclength) &amp;&amp; progpath[0] == SEP)
-
-^~~~~~~~~~~~~</code></pre>
-
-
-<p>  or </p>
-  <pre><code class="highlight log">external/python/cpython3/Modules/getpath.c:414:50: error: incompatible pointer types passing &#x27;unsigned long *&#x27; to parameter of type &#x27;uint32_t *&#x27; (aka &#x27;unsigned int *&#x27;) [-Werror,-Wincompatible-pointer-types]
-
-else if(0 == _NSGetExecutablePath(progpath, &amp;nsexeclength) &amp;&amp; progpath[0] == SEP)
-
-^~~~~~~~~~~~~</code></pre>
-
-<p>  You can solve these errors by modifying them.</p>
-  <pre><code class="highlight c++"><span class="meta">#<span class="keyword">ifdef</span> __APPLE__</span>
-<span class="meta">#<span class="keyword">if</span> MAC_OS_X_VERSION_MAX_ALLOWED &gt;= MAC_OS_X_VERSION_10_4</span>
-	<span class="type">uint32_t</span> nsexeclength = MAXPATHLEN;
-<span class="meta">#<span class="keyword">else</span></span>
-	<span class="type">unsigned</span> <span class="type">long</span> nsexeclength = MAXPATHLEN;
-<span class="meta">#<span class="keyword">endif</span></span>
-<span class="meta">#<span class="keyword">endif</span></span></code></pre>
-
-<p>  to</p>
-  <pre><code class="highlight c++"><span class="meta">#<span class="keyword">ifdef</span> __APPLE__</span>
-	<span class="type">uint32_t</span> nsexeclength = MAXPATHLEN;
-<span class="meta">#<span class="keyword">endif</span></span></code></pre>
-<p>  #Android #Android&#x2F;Build</p>
-</li>
+<li>When seeing these errors</li>
 </ul>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">external/python/cpython2/Modules/getpath.c:414:50: error: incompatible pointer types passing &apos;unsigned long *&apos; to parameter of type &apos;uint32_t *&apos; (aka &apos;unsigned int *&apos;) [-Werror,-Wincompatible-pointer-types]</span><br><span class="line"></span><br><span class="line">else if(0 == _NSGetExecutablePath(progpath, &amp;nsexeclength) &amp;&amp; progpath[0] == SEP)</span><br><span class="line"></span><br><span class="line">^~~~~~~~~~~~~</span><br></pre></td></tr></table></figure>
 
+or 
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">external/python/cpython3/Modules/getpath.c:414:50: error: incompatible pointer types passing &apos;unsigned long *&apos; to parameter of type &apos;uint32_t *&apos; (aka &apos;unsigned int *&apos;) [-Werror,-Wincompatible-pointer-types]</span><br><span class="line"></span><br><span class="line">else if(0 == _NSGetExecutablePath(progpath, &amp;nsexeclength) &amp;&amp; progpath[0] == SEP)</span><br><span class="line"></span><br><span class="line">^~~~~~~~~~~~~</span><br></pre></td></tr></table></figure>
+
+You can solve these errors by modifying them.
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __APPLE__</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> MAC_OS_X_VERSION_MAX_ALLOWED &gt;= MAC_OS_X_VERSION_10_4</span></span><br><span class="line">	<span class="keyword">uint32_t</span> nsexeclength = MAXPATHLEN;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> nsexeclength = MAXPATHLEN;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+to
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __APPLE__</span></span><br><span class="line">	<span class="keyword">uint32_t</span> nsexeclength = MAXPATHLEN;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+#Android #Android/Build </code></pre>
     </div>
 
     
@@ -729,7 +643,7 @@ else if(0 == _NSGetExecutablePath(progpath, &amp;nsexeclength) &amp;&amp; progpa
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-count">69</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -742,7 +656,7 @@ else if(0 == _NSGetExecutablePath(progpath, &amp;nsexeclength) &amp;&amp; progpa
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

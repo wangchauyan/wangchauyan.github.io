@@ -31,13 +31,13 @@
 <meta property="article:published_time" content="2020-04-16T20:56:50.000Z">
 <meta property="article:modified_time" content="2020-04-16T21:24:44.888Z">
 <meta property="article:author" content="Chauyan">
+<meta property="article:tag" content="Google">
+<meta property="article:tag" content="Uber">
 <meta property="article:tag" content="Facebook">
 <meta property="article:tag" content="Amazon">
 <meta property="article:tag" content="Microsoft">
 <meta property="article:tag" content="Walmart Labs">
-<meta property="article:tag" content="Google">
 <meta property="article:tag" content="Apple">
-<meta property="article:tag" content="Uber">
 <meta property="article:tag" content="Oracle">
 <meta property="article:tag" content="Adobe">
 <meta property="article:tag" content="Bloomberg">
@@ -156,7 +156,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">104</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -166,7 +166,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">69</span></a>
 
   </li>
   </ul>
@@ -257,27 +257,13 @@
       
         <p><strong>Question:</strong></p>
 <p>Given an array of integers, return indices of the two numbers such that they add up to a specific target.<br>You may assume that each input would have exactly one solution, and you may not use the same element twice.</p>
-<span id="more"></span>
+<a id="more"></a>
 
 <p><strong>Example:</strong></p>
-<pre><code class="highlight plaintext">Given nums = [2, 7, 11, 15], target = 9,
-
-Because nums[0] + nums[1] = 2 + 7 = 9,
-return [0, 1].</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Given nums = [2, 7, 11, 15], target = 9,</span><br><span class="line"></span><br><span class="line">Because nums[0] + nums[1] = 2 + 7 = 9,</span><br><span class="line">return [0, 1].</span><br></pre></td></tr></table></figure>
 
 <p><strong>Analysis:</strong><br>This one is a very classical quiz. You can do an O(n) runtime complexity to solve this problem with an O(n) space complexity. Let’s see how to do it: </p>
-<pre><code class="highlight plaintext">class Solution &#123;
-  fun twoSum(nums: IntArray, target: Int): IntArray &#123;
-    val result = hashMapOf&lt;Int, Int&gt;()
-    nums.forEachIndexed &#123; index, number -&gt;
-      if (result.containsKey(target - number)) &#123;
-        return intArrayOf(index, result.get(target - number)!!)
-      &#125;
-    &#125;
-    result.put(number, index)
-    return intArrayOf()
-  &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">  fun twoSum(nums: IntArray, target: Int): IntArray &#123;</span><br><span class="line">    val result = hashMapOf&lt;Int, Int&gt;()</span><br><span class="line">    nums.forEachIndexed &#123; index, number -&gt;</span><br><span class="line">      if (result.containsKey(target - number)) &#123;</span><br><span class="line">        return intArrayOf(index, result.get(target - number)!!)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    result.put(number, index)</span><br><span class="line">    return intArrayOf()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>We can create a hash map to put all numbers and their indices. If there is a number that exists in the hash map and it equals target minus current iterated number, then we found the possible pair in the integer array.</p>
 <p>Can we solve this problem without any data structure? Yes, we can. We need to have two indices and sort this array in ascending order. You can think about how to solve it :)</p>
@@ -290,13 +276,13 @@ return [0, 1].</code></pre>
 
       <footer class="post-footer">
           <div class="post-tags">
+              <a href="/tags/Google/" rel="tag"># Google</a>
+              <a href="/tags/Uber/" rel="tag"># Uber</a>
               <a href="/tags/Facebook/" rel="tag"># Facebook</a>
               <a href="/tags/Amazon/" rel="tag"># Amazon</a>
               <a href="/tags/Microsoft/" rel="tag"># Microsoft</a>
               <a href="/tags/Walmart-Labs/" rel="tag"># Walmart Labs</a>
-              <a href="/tags/Google/" rel="tag"># Google</a>
               <a href="/tags/Apple/" rel="tag"># Apple</a>
-              <a href="/tags/Uber/" rel="tag"># Uber</a>
               <a href="/tags/Oracle/" rel="tag"># Oracle</a>
               <a href="/tags/Adobe/" rel="tag"># Adobe</a>
               <a href="/tags/Bloomberg/" rel="tag"># Bloomberg</a>
@@ -401,27 +387,13 @@ return [0, 1].</code></pre>
       
         <p><strong>Question:</strong></p>
 <p>Given an array of integers, return indices of the two numbers such that they add up to a specific target.<br>You may assume that each input would have exactly one solution, and you may not use the same element twice.</p>
-<span id="more"></span>
+<a id="more"></a>
 
 <p><strong>Example:</strong></p>
-<pre><code class="highlight plaintext">Given nums = [2, 7, 11, 15], target = 9,
-
-Because nums[0] + nums[1] = 2 + 7 = 9,
-return [0, 1].</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Given nums = [2, 7, 11, 15], target = 9,</span><br><span class="line"></span><br><span class="line">Because nums[0] + nums[1] = 2 + 7 = 9,</span><br><span class="line">return [0, 1].</span><br></pre></td></tr></table></figure>
 
 <p><strong>Analysis:</strong><br>This one is a very classical quiz. You can do an O(n) runtime complexity to solve this problem with an O(n) space complexity. Let’s see how to do it: </p>
-<pre><code class="highlight plaintext">class Solution &#123;
-  fun twoSum(nums: IntArray, target: Int): IntArray &#123;
-    val result = hashMapOf&lt;Int, Int&gt;()
-    nums.forEachIndexed &#123; index, number -&gt;
-      if (result.containsKey(target - number)) &#123;
-        return intArrayOf(index, result.get(target - number)!!)
-      &#125;
-    &#125;
-    result.put(number, index)
-    return intArrayOf()
-  &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">  fun twoSum(nums: IntArray, target: Int): IntArray &#123;</span><br><span class="line">    val result = hashMapOf&lt;Int, Int&gt;()</span><br><span class="line">    nums.forEachIndexed &#123; index, number -&gt;</span><br><span class="line">      if (result.containsKey(target - number)) &#123;</span><br><span class="line">        return intArrayOf(index, result.get(target - number)!!)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    result.put(number, index)</span><br><span class="line">    return intArrayOf()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>We can create a hash map to put all numbers and their indices. If there is a number that exists in the hash map and it equals target minus current iterated number, then we found the possible pair in the integer array.</p>
 <p>Can we solve this problem without any data structure? Yes, we can. We need to have two indices and sort this array in ascending order. You can think about how to solve it :)</p>
@@ -434,13 +406,13 @@ return [0, 1].</code></pre>
 
       <footer class="post-footer">
           <div class="post-tags">
+              <a href="/tags/Google/" rel="tag"># Google</a>
+              <a href="/tags/Uber/" rel="tag"># Uber</a>
               <a href="/tags/Facebook/" rel="tag"># Facebook</a>
               <a href="/tags/Amazon/" rel="tag"># Amazon</a>
               <a href="/tags/Microsoft/" rel="tag"># Microsoft</a>
               <a href="/tags/Walmart-Labs/" rel="tag"># Walmart Labs</a>
-              <a href="/tags/Google/" rel="tag"># Google</a>
               <a href="/tags/Apple/" rel="tag"># Apple</a>
-              <a href="/tags/Uber/" rel="tag"># Uber</a>
               <a href="/tags/Oracle/" rel="tag"># Oracle</a>
               <a href="/tags/Adobe/" rel="tag"># Adobe</a>
               <a href="/tags/Bloomberg/" rel="tag"># Bloomberg</a>
@@ -560,7 +532,7 @@ return [0, 1].</code></pre>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-count">69</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -573,7 +545,7 @@ return [0, 1].</code></pre>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

@@ -140,7 +140,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">104</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -150,7 +150,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">69</span></a>
 
   </li>
   </ul>
@@ -248,36 +248,10 @@
         <p><img src="https://miro.medium.com/max/3000/1*5koxNC03BSLLt6Urass5yA.png" alt="1*5koxNC03BSLLt6Urass5yA.png"></p>
 <h4 id="Small-tip"><a href="#Small-tip" class="headerlink" title="Small tip"></a>Small tip</h4><p>You might wanna change the text alignment of the alert controller. Let’s say, change the alignment from center to right. Then the following is for you.</p>
 <p>Just simply open a playground and run these code</p>
-<pre><code class="highlight plaintext">import UIKit
-import XCPlayground
-import PlaygroundSupport
- 
-let alertView = UIAlertController(title: &quot;Demo Alert&quot;, message: &quot;&quot;, preferredStyle: .alert)
-alertView.addAction(UIAlertAction(title: &quot;OK&quot;, style: .default, handler: nil))
- 
-let paragraphStyle = NSMutableParagraphStyle()
-// Here is the key thing!
-paragraphStyle.alignment = .left
- 
-let messageText = NSMutableAttributedString(
-    string: &quot;Left Position, correct?&quot;,
-    attributes: [
-        NSAttributedString.Key.paragraphStyle: paragraphStyle,
-        NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .body),
-        NSAttributedString.Key.foregroundColor : UIColor.black
-    ]
-)
- 
-alertView.setValue(messageText, forKey: &quot;attributedMessage&quot;)
- 
-let viewController = UIViewController()
-PlaygroundPage.current.liveView = viewController.view
-viewController.present(alertView, animated: true, completion: nil)
-</code></pre>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">import UIKit</span><br><span class="line">import XCPlayground</span><br><span class="line">import PlaygroundSupport</span><br><span class="line"> </span><br><span class="line">let alertView = UIAlertController(title: &quot;Demo Alert&quot;, message: &quot;&quot;, preferredStyle: .alert)</span><br><span class="line">alertView.addAction(UIAlertAction(title: &quot;OK&quot;, style: .default, handler: nil))</span><br><span class="line"> </span><br><span class="line">let paragraphStyle = NSMutableParagraphStyle()</span><br><span class="line">// Here is the key thing!</span><br><span class="line">paragraphStyle.alignment = .left</span><br><span class="line"> </span><br><span class="line">let messageText = NSMutableAttributedString(</span><br><span class="line">    string: &quot;Left Position, correct?&quot;,</span><br><span class="line">    attributes: [</span><br><span class="line">        NSAttributedString.Key.paragraphStyle: paragraphStyle,</span><br><span class="line">        NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .body),</span><br><span class="line">        NSAttributedString.Key.foregroundColor : UIColor.black</span><br><span class="line">    ]</span><br><span class="line">)</span><br><span class="line"> </span><br><span class="line">alertView.setValue(messageText, forKey: &quot;attributedMessage&quot;)</span><br><span class="line"> </span><br><span class="line">let viewController = UIViewController()</span><br><span class="line">PlaygroundPage.current.liveView = viewController.view</span><br><span class="line">viewController.present(alertView, animated: true, completion: nil)</span><br></pre></td></tr></table></figure>
 
 <p>The most important thing is the key <code>attributedMessage</code>. An alert controller can change its text alignment value by using this key.</p>
-<h4 id="References"><a href="#References" class="headerlink" title="[References]"></a>[References]</h4><p><a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html">Introduction to Key-Value Observing Programming Guide</a></p>
+<h4 id="References"><a href="#References" class="headerlink" title="[References]"></a>[References]</h4><p><a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html" target="_blank" rel="noopener">Introduction to Key-Value Observing Programming Guide</a></p>
 
     </div>
 
@@ -387,36 +361,10 @@ viewController.present(alertView, animated: true, completion: nil)
         <p><img src="https://miro.medium.com/max/3000/1*5koxNC03BSLLt6Urass5yA.png" alt="1*5koxNC03BSLLt6Urass5yA.png"></p>
 <h4 id="Small-tip"><a href="#Small-tip" class="headerlink" title="Small tip"></a>Small tip</h4><p>You might wanna change the text alignment of the alert controller. Let’s say, change the alignment from center to right. Then the following is for you.</p>
 <p>Just simply open a playground and run these code</p>
-<pre><code class="highlight plaintext">import UIKit
-import XCPlayground
-import PlaygroundSupport
- 
-let alertView = UIAlertController(title: &quot;Demo Alert&quot;, message: &quot;&quot;, preferredStyle: .alert)
-alertView.addAction(UIAlertAction(title: &quot;OK&quot;, style: .default, handler: nil))
- 
-let paragraphStyle = NSMutableParagraphStyle()
-// Here is the key thing!
-paragraphStyle.alignment = .left
- 
-let messageText = NSMutableAttributedString(
-    string: &quot;Left Position, correct?&quot;,
-    attributes: [
-        NSAttributedString.Key.paragraphStyle: paragraphStyle,
-        NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .body),
-        NSAttributedString.Key.foregroundColor : UIColor.black
-    ]
-)
- 
-alertView.setValue(messageText, forKey: &quot;attributedMessage&quot;)
- 
-let viewController = UIViewController()
-PlaygroundPage.current.liveView = viewController.view
-viewController.present(alertView, animated: true, completion: nil)
-</code></pre>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">import UIKit</span><br><span class="line">import XCPlayground</span><br><span class="line">import PlaygroundSupport</span><br><span class="line"> </span><br><span class="line">let alertView = UIAlertController(title: &quot;Demo Alert&quot;, message: &quot;&quot;, preferredStyle: .alert)</span><br><span class="line">alertView.addAction(UIAlertAction(title: &quot;OK&quot;, style: .default, handler: nil))</span><br><span class="line"> </span><br><span class="line">let paragraphStyle = NSMutableParagraphStyle()</span><br><span class="line">// Here is the key thing!</span><br><span class="line">paragraphStyle.alignment = .left</span><br><span class="line"> </span><br><span class="line">let messageText = NSMutableAttributedString(</span><br><span class="line">    string: &quot;Left Position, correct?&quot;,</span><br><span class="line">    attributes: [</span><br><span class="line">        NSAttributedString.Key.paragraphStyle: paragraphStyle,</span><br><span class="line">        NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .body),</span><br><span class="line">        NSAttributedString.Key.foregroundColor : UIColor.black</span><br><span class="line">    ]</span><br><span class="line">)</span><br><span class="line"> </span><br><span class="line">alertView.setValue(messageText, forKey: &quot;attributedMessage&quot;)</span><br><span class="line"> </span><br><span class="line">let viewController = UIViewController()</span><br><span class="line">PlaygroundPage.current.liveView = viewController.view</span><br><span class="line">viewController.present(alertView, animated: true, completion: nil)</span><br></pre></td></tr></table></figure>
 
 <p>The most important thing is the key <code>attributedMessage</code>. An alert controller can change its text alignment value by using this key.</p>
-<h4 id="References"><a href="#References" class="headerlink" title="[References]"></a>[References]</h4><p><a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html">Introduction to Key-Value Observing Programming Guide</a></p>
+<h4 id="References"><a href="#References" class="headerlink" title="[References]"></a>[References]</h4><p><a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html" target="_blank" rel="noopener">Introduction to Key-Value Observing Programming Guide</a></p>
 
     </div>
 
@@ -535,7 +483,7 @@ viewController.present(alertView, animated: true, completion: nil)
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-count">69</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -548,7 +496,7 @@ viewController.present(alertView, animated: true, completion: nil)
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

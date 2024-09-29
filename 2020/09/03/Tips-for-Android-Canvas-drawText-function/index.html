@@ -140,7 +140,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">104</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -150,7 +150,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">69</span></a>
 
   </li>
   </ul>
@@ -250,51 +250,16 @@
 <p>What about drawing a string on your canvas? </p>
 </blockquote>
 <p>Well, that’s a good question. Let’s see how to draw a string fundamentally. </p>
-<span id="more"></span>
+<a id="more"></a>
 
 
-<h4 id="Basic-way-to-draw-a-string"><a href="#Basic-way-to-draw-a-string" class="headerlink" title="Basic way to draw a string"></a>Basic way to draw a string</h4><pre><code class="highlight plaintext">class CustomizeView(context: Context) : View(context) &#123;
-
-  private val textPaint = Paint()
-  private val renderText = &quot;Random String&quot;
-  private val startX = 20f
-  private val startY = 60f
-
-  init &#123;
-    textPaint.apply &#123;
-      color = Color.BLACK
-      style = Paint.Style.STROKE
-      strokeCap = Paint.Cap.ROUND
-      textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 30f, resources.displayMetrics)
-    &#125;
-  &#125;
-
-  override fun onDraw(canvas: Canvas?) &#123;
-    super.onDraw(canvas)
-
-    canvas?.drawText(renderText, startX, startY, textPaint)
-  &#125;
-&#125;</code></pre>
+<h4 id="Basic-way-to-draw-a-string"><a href="#Basic-way-to-draw-a-string" class="headerlink" title="Basic way to draw a string"></a>Basic way to draw a string</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class CustomizeView(context: Context) : View(context) &#123;</span><br><span class="line"></span><br><span class="line">  private val textPaint = Paint()</span><br><span class="line">  private val renderText = &quot;Random String&quot;</span><br><span class="line">  private val startX = 20f</span><br><span class="line">  private val startY = 60f</span><br><span class="line"></span><br><span class="line">  init &#123;</span><br><span class="line">    textPaint.apply &#123;</span><br><span class="line">      color = Color.BLACK</span><br><span class="line">      style = Paint.Style.STROKE</span><br><span class="line">      strokeCap = Paint.Cap.ROUND</span><br><span class="line">      textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 30f, resources.displayMetrics)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  override fun onDraw(canvas: Canvas?) &#123;</span><br><span class="line">    super.onDraw(canvas)</span><br><span class="line"></span><br><span class="line">    canvas?.drawText(renderText, startX, startY, textPaint)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>I create a customized view that displays a <code>Random String</code> on the screen. As you can see, the most important thing for a personalized view you need to take care of is its <code>onDraw</code> function. In this function, you can draw whatever you want as long as you know how to draw objects. </p>
 <h4 id="Find-the-center-point-of-the-string"><a href="#Find-the-center-point-of-the-string" class="headerlink" title="Find the center point of the string"></a>Find the center point of the string</h4><p>Let’s draw a circle and put the above string behind the circle we have outlined. The request here is to get the string’s center point and let this string locate at the circle’s center. Let’s see how to do this: </p>
-<pre><code class="highlight plaintext">override fun onDraw(canvas: Canvas?) &#123;
-  super.onDraw(canvas)
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">override fun onDraw(canvas: Canvas?) &#123;</span><br><span class="line">  super.onDraw(canvas)</span><br><span class="line"></span><br><span class="line">  canvas?.apply &#123;</span><br><span class="line"></span><br><span class="line">    val textBound = Rect()</span><br><span class="line">    textPaint.getTextBounds(renderText, 0, renderText.length, textBound)</span><br><span class="line"></span><br><span class="line">    drawText(renderText,</span><br><span class="line">      circleCenterX - textBound.width() / 2,</span><br><span class="line">      circleCenterY - textBound.height() / 2,</span><br><span class="line">      textPaint)</span><br><span class="line">    drawCircle(circleCenterX, circleCenterY, circleRadius, circlePaint)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-  canvas?.apply &#123;
-
-    val textBound = Rect()
-    textPaint.getTextBounds(renderText, 0, renderText.length, textBound)
-
-    drawText(renderText,
-      circleCenterX - textBound.width() / 2,
-      circleCenterY - textBound.height() / 2,
-      textPaint)
-    drawCircle(circleCenterX, circleCenterY, circleRadius, circlePaint)
-  &#125;
-&#125;</code></pre>
-
-<p>The first thought that comes to my mind is that I want to get the text bound for this specific text and then let both the text’s width&#x2F;height bound divide by 2. This coordinate would be the start point to draw. Let’s see what the result is. </p>
+<p>The first thought that comes to my mind is that I want to get the text bound for this specific text and then let both the text’s width/height bound divide by 2. This coordinate would be the start point to draw. Let’s see what the result is. </p>
 <p><img src="https://personaldevblog.firebaseapp.com/2020/09/03/Tips-for-Android-Canvas-drawText-function/DrawText_Exmaple.png" alt="DrawText_Exmaple.png"><br><em>Drawing the string at the center point of the circle</em></p>
 <h4 id="The-basic-introduction-of-the-font-metrics"><a href="#The-basic-introduction-of-the-font-metrics" class="headerlink" title="The basic introduction of the font metrics"></a>The basic introduction of the font metrics</h4><p>It doesn’t look at what we want to show on the screen. Let’s get into the font metrics on the Android platform. Here is a picture from reference [1].</p>
 <p><img src="https://miro.medium.com/max/2000/1*v1FDlH-vFEnhXDFDxp6OXg.png" alt="1*v1FDlH-vFEnhXDFDxp6OXg.png"></p>
@@ -309,7 +274,7 @@
 <p><strong>Line height</strong>: the distance between top and bottom. </p>
 <p>To find the string’s center y, you will need to use these two values - <code>Ascent</code> and <code>Descent.</code> </p>
 <p>Happy coding - enjoy.</p>
-<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p>[1] <a href="https://proandroiddev.com/android-and-typography-101-5f06722dd611">Android 101: Typography. One way or another, every developer… | by Orhan Obut | ProAndroidDev</a></p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p>[1] <a href="https://proandroiddev.com/android-and-typography-101-5f06722dd611" target="_blank" rel="noopener">Android 101: Typography. One way or another, every developer… | by Orhan Obut | ProAndroidDev</a></p>
 
     </div>
 
@@ -420,51 +385,16 @@
 <p>What about drawing a string on your canvas? </p>
 </blockquote>
 <p>Well, that’s a good question. Let’s see how to draw a string fundamentally. </p>
-<span id="more"></span>
+<a id="more"></a>
 
 
-<h4 id="Basic-way-to-draw-a-string"><a href="#Basic-way-to-draw-a-string" class="headerlink" title="Basic way to draw a string"></a>Basic way to draw a string</h4><pre><code class="highlight plaintext">class CustomizeView(context: Context) : View(context) &#123;
-
-  private val textPaint = Paint()
-  private val renderText = &quot;Random String&quot;
-  private val startX = 20f
-  private val startY = 60f
-
-  init &#123;
-    textPaint.apply &#123;
-      color = Color.BLACK
-      style = Paint.Style.STROKE
-      strokeCap = Paint.Cap.ROUND
-      textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 30f, resources.displayMetrics)
-    &#125;
-  &#125;
-
-  override fun onDraw(canvas: Canvas?) &#123;
-    super.onDraw(canvas)
-
-    canvas?.drawText(renderText, startX, startY, textPaint)
-  &#125;
-&#125;</code></pre>
+<h4 id="Basic-way-to-draw-a-string"><a href="#Basic-way-to-draw-a-string" class="headerlink" title="Basic way to draw a string"></a>Basic way to draw a string</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class CustomizeView(context: Context) : View(context) &#123;</span><br><span class="line"></span><br><span class="line">  private val textPaint = Paint()</span><br><span class="line">  private val renderText = &quot;Random String&quot;</span><br><span class="line">  private val startX = 20f</span><br><span class="line">  private val startY = 60f</span><br><span class="line"></span><br><span class="line">  init &#123;</span><br><span class="line">    textPaint.apply &#123;</span><br><span class="line">      color = Color.BLACK</span><br><span class="line">      style = Paint.Style.STROKE</span><br><span class="line">      strokeCap = Paint.Cap.ROUND</span><br><span class="line">      textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 30f, resources.displayMetrics)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  override fun onDraw(canvas: Canvas?) &#123;</span><br><span class="line">    super.onDraw(canvas)</span><br><span class="line"></span><br><span class="line">    canvas?.drawText(renderText, startX, startY, textPaint)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>I create a customized view that displays a <code>Random String</code> on the screen. As you can see, the most important thing for a personalized view you need to take care of is its <code>onDraw</code> function. In this function, you can draw whatever you want as long as you know how to draw objects. </p>
 <h4 id="Find-the-center-point-of-the-string"><a href="#Find-the-center-point-of-the-string" class="headerlink" title="Find the center point of the string"></a>Find the center point of the string</h4><p>Let’s draw a circle and put the above string behind the circle we have outlined. The request here is to get the string’s center point and let this string locate at the circle’s center. Let’s see how to do this: </p>
-<pre><code class="highlight plaintext">override fun onDraw(canvas: Canvas?) &#123;
-  super.onDraw(canvas)
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">override fun onDraw(canvas: Canvas?) &#123;</span><br><span class="line">  super.onDraw(canvas)</span><br><span class="line"></span><br><span class="line">  canvas?.apply &#123;</span><br><span class="line"></span><br><span class="line">    val textBound = Rect()</span><br><span class="line">    textPaint.getTextBounds(renderText, 0, renderText.length, textBound)</span><br><span class="line"></span><br><span class="line">    drawText(renderText,</span><br><span class="line">      circleCenterX - textBound.width() / 2,</span><br><span class="line">      circleCenterY - textBound.height() / 2,</span><br><span class="line">      textPaint)</span><br><span class="line">    drawCircle(circleCenterX, circleCenterY, circleRadius, circlePaint)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-  canvas?.apply &#123;
-
-    val textBound = Rect()
-    textPaint.getTextBounds(renderText, 0, renderText.length, textBound)
-
-    drawText(renderText,
-      circleCenterX - textBound.width() / 2,
-      circleCenterY - textBound.height() / 2,
-      textPaint)
-    drawCircle(circleCenterX, circleCenterY, circleRadius, circlePaint)
-  &#125;
-&#125;</code></pre>
-
-<p>The first thought that comes to my mind is that I want to get the text bound for this specific text and then let both the text’s width&#x2F;height bound divide by 2. This coordinate would be the start point to draw. Let’s see what the result is. </p>
+<p>The first thought that comes to my mind is that I want to get the text bound for this specific text and then let both the text’s width/height bound divide by 2. This coordinate would be the start point to draw. Let’s see what the result is. </p>
 <p><img src="https://personaldevblog.firebaseapp.com/2020/09/03/Tips-for-Android-Canvas-drawText-function/DrawText_Exmaple.png" alt="DrawText_Exmaple.png"><br><em>Drawing the string at the center point of the circle</em></p>
 <h4 id="The-basic-introduction-of-the-font-metrics"><a href="#The-basic-introduction-of-the-font-metrics" class="headerlink" title="The basic introduction of the font metrics"></a>The basic introduction of the font metrics</h4><p>It doesn’t look at what we want to show on the screen. Let’s get into the font metrics on the Android platform. Here is a picture from reference [1].</p>
 <p><img src="https://miro.medium.com/max/2000/1*v1FDlH-vFEnhXDFDxp6OXg.png" alt="1*v1FDlH-vFEnhXDFDxp6OXg.png"></p>
@@ -479,7 +409,7 @@
 <p><strong>Line height</strong>: the distance between top and bottom. </p>
 <p>To find the string’s center y, you will need to use these two values - <code>Ascent</code> and <code>Descent.</code> </p>
 <p>Happy coding - enjoy.</p>
-<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p>[1] <a href="https://proandroiddev.com/android-and-typography-101-5f06722dd611">Android 101: Typography. One way or another, every developer… | by Orhan Obut | ProAndroidDev</a></p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p>[1] <a href="https://proandroiddev.com/android-and-typography-101-5f06722dd611" target="_blank" rel="noopener">Android 101: Typography. One way or another, every developer… | by Orhan Obut | ProAndroidDev</a></p>
 
     </div>
 
@@ -597,7 +527,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-count">69</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -610,7 +540,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

@@ -137,7 +137,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">104</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -147,7 +147,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">69</span></a>
 
   </li>
   </ul>
@@ -243,70 +243,39 @@
 <h3 id="Why-Use-App-Bundles"><a href="#Why-Use-App-Bundles" class="headerlink" title="Why Use App Bundles?"></a>Why Use App Bundles?</h3><p>The adoption of <a href="https://developer.android.com/guide/app-bundle">App Bundles</a> serves purposes beyond simple size reduction. By segmenting apps into multiple APKs, Google may be encouraging users to use the Play Store, given that manually installing these fragmented files can be challenging. Each APK within a bundle is designed to work together, but when installed manually, the Android system may not detect all components, potentially resulting in incomplete installations.</p>
 <p>Starting August 2021, new apps must be published using the Android App Bundle on Google Play. Additionally, new apps larger than 200 MB must utilize either Play Feature Delivery or Play Asset Delivery. From June 2023, all new and existing TV apps are also required to be published as App Bundles.</p>
 <h3 id="Preparing-for-Manual-Installation"><a href="#Preparing-for-Manual-Installation" class="headerlink" title="Preparing for Manual Installation"></a>Preparing for Manual Installation</h3><p>There are various methods for installing multiple APKs. For instance, you can use the ADB command to install multiple APKs simultaneously:</p>
-<pre><code class="highlight bash">adb install-multiple /path/to/your/APKs</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb install-multiple /path/to/your/APKs</span><br></pre></td></tr></table></figure>
 
 <p>This guide, however, focuses on a programmatic approach similar to what <a href="https://play.google.com/store/apps/details?id=com.aefyr.sai&hl=en_US">SAI (Split APK Installer)</a> utilizes. You can also create your own installer for managing multiple APKs if necessary.</p>
 <p>To manually install split APKs, ensure that all required APK files are transferred to your device. Although you can place them in any directory, this guide assumes they are located in the Download folder. Follow these steps to set up the installation:</p>
 <ol>
-<li><strong>Start ADB and Open a Shell</strong>: Connect your Android device to your computer and initiate an ADB shell session. <pre><code class="highlight bash">adb shell</code></pre></li>
-<li><strong>Navigate to the File Directory</strong>: Change the directory to where the APK files are stored. <pre><code class="highlight bash"><span class="built_in">cd</span> /sdcard/Download <span class="comment"># or the appropriate folder on your device</span></code></pre></li>
-<li><strong>List the APK Files</strong>: Display all APK files and their sizes, which is essential for the installation. <pre><code class="highlight bash"><span class="built_in">ls</span> -l</code></pre></li>
+<li><strong>Start ADB and Open a Shell</strong>: Connect your Android device to your computer and initiate an ADB shell session. <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell</span><br></pre></td></tr></table></figure></li>
+<li><strong>Navigate to the File Directory</strong>: Change the directory to where the APK files are stored. <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /sdcard/Download <span class="comment"># or the appropriate folder on your device</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>List the APK Files</strong>: Display all APK files and their sizes, which is essential for the installation. <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -l</span><br></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="Performing-the-Installation"><a href="#Performing-the-Installation" class="headerlink" title="Performing the Installation"></a>Performing the Installation</h3><p>The installation process involves several steps. These instructions apply to Android versions before Nougat. For newer versions, adjust the syntax as necessary.</p>
 <ol>
 <li><p><strong>Create an Installation Session</strong>: Begin by creating a new session with the total size of all APK files.</p>
- <pre><code class="highlight bash">pm install-create -S TOTAL_SIZE_OF_ALL_APKS</code></pre>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm install-create -S TOTAL_SIZE_OF_ALL_APKS</span><br></pre></td></tr></table></figure>
 <p> You will receive a session ID for use in the subsequent steps.</p>
 </li>
 <li><p><strong>Stage the APK Files</strong>: Each APK must be staged individually. Start with the base APK, but the order can vary. Provide the APK size, session ID, index, and path.</p>
- <pre><code class="highlight bash">pm install-write -S APK_SIZE SESSION_ID INDEX PATH</code></pre>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm install-write -S APK_SIZE SESSION_ID INDEX PATH</span><br></pre></td></tr></table></figure>
 <p> Repeat this command for each APK file to be installed.</p>
 </li>
 <li><p><strong>Commit the Installation</strong>: Finalize the installation by committing the session.</p>
- <pre><code class="highlight bash">pm install-commit SESSION_ID</code></pre></li>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm install-commit SESSION_ID</span><br></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="Example-Installation"><a href="#Example-Installation" class="headerlink" title="Example Installation"></a>Example Installation</h3><p>Consider an app named <code>com.disney.disneyplus</code> with multiple APK files: a base APK, several language-specific APKs, and a high-resolution screen module. The files might be listed as follows:</p>
-<pre><code class="highlight bash">-rw-rw-rw-@ 1 ChauyanWang  staff        58 Aug 15 23:00 APKM_installer.url
-drwxr-xr-x@ 5 ChauyanWang  staff       160 Aug 18 18:18 META-INF
--rw-rw-r--@ 1 ChauyanWang  staff  23346094 Aug 15 22:59 base.apk
--rw-rw-r--@ 1 ChauyanWang  staff    255277 Aug 15 21:08 icon.png
--rw-rw-rw-@ 1 ChauyanWang  staff      1023 Aug 15 23:00 info.json
--rw-rw-r--@ 1 ChauyanWang  staff    254361 Aug 15 22:59 split_config.ar.apk
--rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 22:59 split_config.de.apk
--rw-rw-r--@ 1 ChauyanWang  staff    876953 Aug 15 22:59 split_config.en.apk
--rw-rw-r--@ 1 ChauyanWang  staff    405913 Aug 15 23:00 split_config.es.apk
--rw-rw-r--@ 1 ChauyanWang  staff    250265 Aug 15 23:00 split_config.et.apk
--rw-rw-r--@ 1 ChauyanWang  staff    254361 Aug 15 22:59 split_config.fi.apk
--rw-rw-r--@ 1 ChauyanWang  staff    336281 Aug 15 23:00 split_config.fr.apk
--rw-rw-r--@ 1 ChauyanWang  staff    258457 Aug 15 22:59 split_config.hi.apk
--rw-rw-r--@ 1 ChauyanWang  staff    254361 Aug 15 23:00 split_config.hu.apk
--rw-rw-r--@ 1 ChauyanWang  staff    250265 Aug 15 22:59 split_config.in.apk
--rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 23:00 split_config.it.apk
--rw-rw-r--@ 1 ChauyanWang  staff    188825 Aug 15 22:59 split_config.ja.apk
--rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 22:59 split_config.ko.apk
--rw-rw-r--@ 1 ChauyanWang  staff    250265 Aug 15 23:00 split_config.ms.apk
--rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 22:59 split_config.nl.apk
--rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 22:59 split_config.pl.apk
--rw-rw-r--@ 1 ChauyanWang  staff    340377 Aug 15 23:00 split_config.pt.apk
--rw-rw-r--@ 1 ChauyanWang  staff    188825 Aug 15 23:00 split_config.ru.apk
--rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 23:00 split_config.sv.apk
--rw-rw-r--@ 1 ChauyanWang  staff    258457 Aug 15 22:59 split_config.th.apk
--rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 23:00 split_config.tr.apk
--rw-rw-r--@ 1 ChauyanWang  staff    254361 Aug 15 22:59 split_config.uk.apk
--rw-rw-r--@ 1 ChauyanWang  staff    250265 Aug 15 22:59 split_config.vi.apk
--rw-rw-r--@ 1 ChauyanWang  staff    860656 Aug 15 22:59 split_config.xhdpi.apk
--rw-rw-r--@ 1 ChauyanWang  staff    549273 Aug 15 23:00 split_config.zh.apk</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">-rw-rw-rw-@ 1 ChauyanWang  staff        58 Aug 15 23:00 APKM_installer.url</span><br><span class="line">drwxr-xr-x@ 5 ChauyanWang  staff       160 Aug 18 18:18 META-INF</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff  23346094 Aug 15 22:59 base.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    255277 Aug 15 21:08 icon.png</span><br><span class="line">-rw-rw-rw-@ 1 ChauyanWang  staff      1023 Aug 15 23:00 info.json</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    254361 Aug 15 22:59 split_config.ar.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 22:59 split_config.de.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    876953 Aug 15 22:59 split_config.en.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    405913 Aug 15 23:00 split_config.es.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    250265 Aug 15 23:00 split_config.et.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    254361 Aug 15 22:59 split_config.fi.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    336281 Aug 15 23:00 split_config.fr.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    258457 Aug 15 22:59 split_config.hi.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    254361 Aug 15 23:00 split_config.hu.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    250265 Aug 15 22:59 split_config.in.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 23:00 split_config.it.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    188825 Aug 15 22:59 split_config.ja.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 22:59 split_config.ko.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    250265 Aug 15 23:00 split_config.ms.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 22:59 split_config.nl.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 22:59 split_config.pl.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    340377 Aug 15 23:00 split_config.pt.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    188825 Aug 15 23:00 split_config.ru.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 23:00 split_config.sv.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    258457 Aug 15 22:59 split_config.th.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 23:00 split_config.tr.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    254361 Aug 15 22:59 split_config.uk.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    250265 Aug 15 22:59 split_config.vi.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    860656 Aug 15 22:59 split_config.xhdpi.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    549273 Aug 15 23:00 split_config.zh.apk</span><br></pre></td></tr></table></figure>
 
 <p>To install this app, select the base APK, a language module, and a resolution module. Calculate the total size (25,083,703 bytes) and start a new installation session:</p>
-<pre><code class="highlight bash">pm install-create -S 25083703</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm install-create -S 25083703</span><br></pre></td></tr></table></figure>
 
 <p>After obtaining the installation session ID (assuming it’s 1234), stage each APK file:</p>
-<pre><code class="highlight bash">pm install-write -S 23346094 1234 0 base.apk
-pm install-write -S 876953 1234 1 split_config.en.apk
-pm install-write -S 860656 1234 2 split_config.xhdpi.apk</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pm install-write -S 23346094 1234 0 base.apk</span><br><span class="line">pm install-write -S 876953 1234 1 split_config.en.apk</span><br><span class="line">pm install-write -S 860656 1234 2 split_config.xhdpi.apk</span><br></pre></td></tr></table></figure>
 
 <p>Finalize the installation by committing the session:</p>
-<pre><code class="highlight bash">pm install-commit 1234</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm install-commit 1234</span><br></pre></td></tr></table></figure>
 
 <h3 id="Final-Thoughts"><a href="#Final-Thoughts" class="headerlink" title="Final Thoughts"></a>Final Thoughts</h3><p>Manually installing split APK files demands careful attention but offers a practical solution when traditional methods are unavailable. By following this guide, you can effectively manage App Bundles and ensure successful installation on your Android device. This approach provides enhanced control over the installation process, particularly for fragmented application files.</p>
 
@@ -330,7 +299,10 @@ pm install-write -S 860656 1234 2 split_config.xhdpi.apk</code></pre>
     <a href="/2022/03/31/Android-Moshi-and-Polymorphism/" rel="prev" title="Android Moshi and Polymorphism">
       <i class="fa fa-chevron-left"></i> Android Moshi and Polymorphism
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2024/09/11/Stanford-CoreNLP-Introduction/" rel="next" title="Stanford CoreNLP Introduction">
+      Stanford CoreNLP Introduction <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -412,70 +384,39 @@ pm install-write -S 860656 1234 2 split_config.xhdpi.apk</code></pre>
 <h3 id="Why-Use-App-Bundles"><a href="#Why-Use-App-Bundles" class="headerlink" title="Why Use App Bundles?"></a>Why Use App Bundles?</h3><p>The adoption of <a href="https://developer.android.com/guide/app-bundle">App Bundles</a> serves purposes beyond simple size reduction. By segmenting apps into multiple APKs, Google may be encouraging users to use the Play Store, given that manually installing these fragmented files can be challenging. Each APK within a bundle is designed to work together, but when installed manually, the Android system may not detect all components, potentially resulting in incomplete installations.</p>
 <p>Starting August 2021, new apps must be published using the Android App Bundle on Google Play. Additionally, new apps larger than 200 MB must utilize either Play Feature Delivery or Play Asset Delivery. From June 2023, all new and existing TV apps are also required to be published as App Bundles.</p>
 <h3 id="Preparing-for-Manual-Installation"><a href="#Preparing-for-Manual-Installation" class="headerlink" title="Preparing for Manual Installation"></a>Preparing for Manual Installation</h3><p>There are various methods for installing multiple APKs. For instance, you can use the ADB command to install multiple APKs simultaneously:</p>
-<pre><code class="highlight bash">adb install-multiple /path/to/your/APKs</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb install-multiple /path/to/your/APKs</span><br></pre></td></tr></table></figure>
 
 <p>This guide, however, focuses on a programmatic approach similar to what <a href="https://play.google.com/store/apps/details?id=com.aefyr.sai&hl=en_US">SAI (Split APK Installer)</a> utilizes. You can also create your own installer for managing multiple APKs if necessary.</p>
 <p>To manually install split APKs, ensure that all required APK files are transferred to your device. Although you can place them in any directory, this guide assumes they are located in the Download folder. Follow these steps to set up the installation:</p>
 <ol>
-<li><strong>Start ADB and Open a Shell</strong>: Connect your Android device to your computer and initiate an ADB shell session. <pre><code class="highlight bash">adb shell</code></pre></li>
-<li><strong>Navigate to the File Directory</strong>: Change the directory to where the APK files are stored. <pre><code class="highlight bash"><span class="built_in">cd</span> /sdcard/Download <span class="comment"># or the appropriate folder on your device</span></code></pre></li>
-<li><strong>List the APK Files</strong>: Display all APK files and their sizes, which is essential for the installation. <pre><code class="highlight bash"><span class="built_in">ls</span> -l</code></pre></li>
+<li><strong>Start ADB and Open a Shell</strong>: Connect your Android device to your computer and initiate an ADB shell session. <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell</span><br></pre></td></tr></table></figure></li>
+<li><strong>Navigate to the File Directory</strong>: Change the directory to where the APK files are stored. <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /sdcard/Download <span class="comment"># or the appropriate folder on your device</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>List the APK Files</strong>: Display all APK files and their sizes, which is essential for the installation. <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -l</span><br></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="Performing-the-Installation"><a href="#Performing-the-Installation" class="headerlink" title="Performing the Installation"></a>Performing the Installation</h3><p>The installation process involves several steps. These instructions apply to Android versions before Nougat. For newer versions, adjust the syntax as necessary.</p>
 <ol>
 <li><p><strong>Create an Installation Session</strong>: Begin by creating a new session with the total size of all APK files.</p>
- <pre><code class="highlight bash">pm install-create -S TOTAL_SIZE_OF_ALL_APKS</code></pre>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm install-create -S TOTAL_SIZE_OF_ALL_APKS</span><br></pre></td></tr></table></figure>
 <p> You will receive a session ID for use in the subsequent steps.</p>
 </li>
 <li><p><strong>Stage the APK Files</strong>: Each APK must be staged individually. Start with the base APK, but the order can vary. Provide the APK size, session ID, index, and path.</p>
- <pre><code class="highlight bash">pm install-write -S APK_SIZE SESSION_ID INDEX PATH</code></pre>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm install-write -S APK_SIZE SESSION_ID INDEX PATH</span><br></pre></td></tr></table></figure>
 <p> Repeat this command for each APK file to be installed.</p>
 </li>
 <li><p><strong>Commit the Installation</strong>: Finalize the installation by committing the session.</p>
- <pre><code class="highlight bash">pm install-commit SESSION_ID</code></pre></li>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm install-commit SESSION_ID</span><br></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="Example-Installation"><a href="#Example-Installation" class="headerlink" title="Example Installation"></a>Example Installation</h3><p>Consider an app named <code>com.disney.disneyplus</code> with multiple APK files: a base APK, several language-specific APKs, and a high-resolution screen module. The files might be listed as follows:</p>
-<pre><code class="highlight bash">-rw-rw-rw-@ 1 ChauyanWang  staff        58 Aug 15 23:00 APKM_installer.url
-drwxr-xr-x@ 5 ChauyanWang  staff       160 Aug 18 18:18 META-INF
--rw-rw-r--@ 1 ChauyanWang  staff  23346094 Aug 15 22:59 base.apk
--rw-rw-r--@ 1 ChauyanWang  staff    255277 Aug 15 21:08 icon.png
--rw-rw-rw-@ 1 ChauyanWang  staff      1023 Aug 15 23:00 info.json
--rw-rw-r--@ 1 ChauyanWang  staff    254361 Aug 15 22:59 split_config.ar.apk
--rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 22:59 split_config.de.apk
--rw-rw-r--@ 1 ChauyanWang  staff    876953 Aug 15 22:59 split_config.en.apk
--rw-rw-r--@ 1 ChauyanWang  staff    405913 Aug 15 23:00 split_config.es.apk
--rw-rw-r--@ 1 ChauyanWang  staff    250265 Aug 15 23:00 split_config.et.apk
--rw-rw-r--@ 1 ChauyanWang  staff    254361 Aug 15 22:59 split_config.fi.apk
--rw-rw-r--@ 1 ChauyanWang  staff    336281 Aug 15 23:00 split_config.fr.apk
--rw-rw-r--@ 1 ChauyanWang  staff    258457 Aug 15 22:59 split_config.hi.apk
--rw-rw-r--@ 1 ChauyanWang  staff    254361 Aug 15 23:00 split_config.hu.apk
--rw-rw-r--@ 1 ChauyanWang  staff    250265 Aug 15 22:59 split_config.in.apk
--rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 23:00 split_config.it.apk
--rw-rw-r--@ 1 ChauyanWang  staff    188825 Aug 15 22:59 split_config.ja.apk
--rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 22:59 split_config.ko.apk
--rw-rw-r--@ 1 ChauyanWang  staff    250265 Aug 15 23:00 split_config.ms.apk
--rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 22:59 split_config.nl.apk
--rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 22:59 split_config.pl.apk
--rw-rw-r--@ 1 ChauyanWang  staff    340377 Aug 15 23:00 split_config.pt.apk
--rw-rw-r--@ 1 ChauyanWang  staff    188825 Aug 15 23:00 split_config.ru.apk
--rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 23:00 split_config.sv.apk
--rw-rw-r--@ 1 ChauyanWang  staff    258457 Aug 15 22:59 split_config.th.apk
--rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 23:00 split_config.tr.apk
--rw-rw-r--@ 1 ChauyanWang  staff    254361 Aug 15 22:59 split_config.uk.apk
--rw-rw-r--@ 1 ChauyanWang  staff    250265 Aug 15 22:59 split_config.vi.apk
--rw-rw-r--@ 1 ChauyanWang  staff    860656 Aug 15 22:59 split_config.xhdpi.apk
--rw-rw-r--@ 1 ChauyanWang  staff    549273 Aug 15 23:00 split_config.zh.apk</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">-rw-rw-rw-@ 1 ChauyanWang  staff        58 Aug 15 23:00 APKM_installer.url</span><br><span class="line">drwxr-xr-x@ 5 ChauyanWang  staff       160 Aug 18 18:18 META-INF</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff  23346094 Aug 15 22:59 base.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    255277 Aug 15 21:08 icon.png</span><br><span class="line">-rw-rw-rw-@ 1 ChauyanWang  staff      1023 Aug 15 23:00 info.json</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    254361 Aug 15 22:59 split_config.ar.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 22:59 split_config.de.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    876953 Aug 15 22:59 split_config.en.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    405913 Aug 15 23:00 split_config.es.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    250265 Aug 15 23:00 split_config.et.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    254361 Aug 15 22:59 split_config.fi.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    336281 Aug 15 23:00 split_config.fr.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    258457 Aug 15 22:59 split_config.hi.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    254361 Aug 15 23:00 split_config.hu.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    250265 Aug 15 22:59 split_config.in.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 23:00 split_config.it.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    188825 Aug 15 22:59 split_config.ja.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 22:59 split_config.ko.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    250265 Aug 15 23:00 split_config.ms.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 22:59 split_config.nl.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 22:59 split_config.pl.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    340377 Aug 15 23:00 split_config.pt.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    188825 Aug 15 23:00 split_config.ru.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 23:00 split_config.sv.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    258457 Aug 15 22:59 split_config.th.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    184729 Aug 15 23:00 split_config.tr.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    254361 Aug 15 22:59 split_config.uk.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    250265 Aug 15 22:59 split_config.vi.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    860656 Aug 15 22:59 split_config.xhdpi.apk</span><br><span class="line">-rw-rw-r--@ 1 ChauyanWang  staff    549273 Aug 15 23:00 split_config.zh.apk</span><br></pre></td></tr></table></figure>
 
 <p>To install this app, select the base APK, a language module, and a resolution module. Calculate the total size (25,083,703 bytes) and start a new installation session:</p>
-<pre><code class="highlight bash">pm install-create -S 25083703</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm install-create -S 25083703</span><br></pre></td></tr></table></figure>
 
 <p>After obtaining the installation session ID (assuming it’s 1234), stage each APK file:</p>
-<pre><code class="highlight bash">pm install-write -S 23346094 1234 0 base.apk
-pm install-write -S 876953 1234 1 split_config.en.apk
-pm install-write -S 860656 1234 2 split_config.xhdpi.apk</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pm install-write -S 23346094 1234 0 base.apk</span><br><span class="line">pm install-write -S 876953 1234 1 split_config.en.apk</span><br><span class="line">pm install-write -S 860656 1234 2 split_config.xhdpi.apk</span><br></pre></td></tr></table></figure>
 
 <p>Finalize the installation by committing the session:</p>
-<pre><code class="highlight bash">pm install-commit 1234</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm install-commit 1234</span><br></pre></td></tr></table></figure>
 
 <h3 id="Final-Thoughts"><a href="#Final-Thoughts" class="headerlink" title="Final Thoughts"></a>Final Thoughts</h3><p>Manually installing split APK files demands careful attention but offers a practical solution when traditional methods are unavailable. By following this guide, you can effectively manage App Bundles and ensure successful installation on your Android device. This approach provides enhanced control over the installation process, particularly for fragmented application files.</p>
 
@@ -499,7 +440,10 @@ pm install-write -S 860656 1234 2 split_config.xhdpi.apk</code></pre>
     <a href="/2022/03/31/Android-Moshi-and-Polymorphism/" rel="prev" title="Android Moshi and Polymorphism">
       <i class="fa fa-chevron-left"></i> Android Moshi and Polymorphism
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2024/09/11/Stanford-CoreNLP-Introduction/" rel="next" title="Stanford CoreNLP Introduction">
+      Stanford CoreNLP Introduction <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -592,7 +536,7 @@ pm install-write -S 860656 1234 2 split_config.xhdpi.apk</code></pre>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-count">69</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -605,7 +549,7 @@ pm install-write -S 860656 1234 2 split_config.xhdpi.apk</code></pre>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

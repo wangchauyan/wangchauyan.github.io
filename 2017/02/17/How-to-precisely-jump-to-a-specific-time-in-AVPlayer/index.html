@@ -141,7 +141,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">102</span></a>
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags<span class="badge">104</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -151,7 +151,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">67</span></a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives<span class="badge">69</span></a>
 
   </li>
   </ul>
@@ -247,74 +247,56 @@
 
       
         <p><img src="https://images.pexels.com/photos/9352/glass-time-watch-business.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="glass-time-watch-business.jpg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=750&amp;w=1260"></p>
-<h4 id="What’s-the-issue"><a href="#What’s-the-issue" class="headerlink" title="What’s the issue?"></a>What’s the issue?</h4><p>When using <a href="https://developer.apple.com/reference/avfoundation/avplayer?language=objc">AVPlayer</a> method - SeekToTime, I found there’s an issue that I don’t understand: the position of pointed time is not correct. In other word, the return time slot is not exactly what you want.</p>
-<span id="more"></span>
+<h4 id="What’s-the-issue"><a href="#What’s-the-issue" class="headerlink" title="What’s the issue?"></a>What’s the issue?</h4><p>When using <a href="https://developer.apple.com/reference/avfoundation/avplayer?language=objc" target="_blank" rel="noopener">AVPlayer</a> method - SeekToTime, I found there’s an issue that I don’t understand: the position of pointed time is not correct. In other word, the return time slot is not exactly what you want.</p>
+<a id="more"></a>
 
 <p>To me, that’s a serious problem because when doing the multimedia App by showing the subtitles, it would cause the title and speaking sound asynchronously. The whole App would become a bit weird at that moment on the user experience.</p>
 <p><img src="https://kingworldnews.com/wp-content/uploads/2018/01/King-World-News-WTF-Is-Going-On-Here-864x400_c.jpg" alt="WTF.jpg"><em>This should be what users thought about!</em></p>
 <h4 id="Do-I-have-a-solution-for-this"><a href="#Do-I-have-a-solution-for-this" class="headerlink" title="Do I have a solution for this?"></a>Do I have a solution for this?</h4><p>I’ve tried several ways to get the goal - precisely move the time cursor to the correct position. Unfortunately, I couldn’t find a proper method to achieve this goal. For example:</p>
-<pre><code class="highlight plaintext">[self.player 
-  seekToTime: CMTimeMakeWithSeconds(musicTime, 600) 
-  toleranceBefore: kCMTimeZero
-  toleranceAfter: kCMTimeZero
-];</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[self.player </span><br><span class="line">  seekToTime: CMTimeMakeWithSeconds(musicTime, 600) </span><br><span class="line">  toleranceBefore: kCMTimeZero</span><br><span class="line">  toleranceAfter: kCMTimeZero</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
 
 <p>Back to the code gist, I think I run into a dead end. We should think about: why 600 is the correct time scale to use? Why this magic number 600? </p>
 <p>To answer these questions, I think I should know and explain what a CMTime means. </p>
-<h4 id="What’s-CMTime"><a href="#What’s-CMTime" class="headerlink" title="What’s CMTime?"></a>What’s CMTime?</h4><p>Let’s see the definition from Apple - <a href="https://developer.apple.com/documentation/coremedia/cmtime-u58">CMTime</a></p>
+<h4 id="What’s-CMTime"><a href="#What’s-CMTime" class="headerlink" title="What’s CMTime?"></a>What’s CMTime?</h4><p>Let’s see the definition from Apple - <a href="https://developer.apple.com/documentation/coremedia/cmtime-u58" target="_blank" rel="noopener">CMTime</a></p>
 <blockquote>
-<p>A struct representing a time value such as a timestamp or duration. Defines a structure that represents a rational time value int64&#x2F;int32.</p>
+<p>A struct representing a time value such as a timestamp or duration. Defines a structure that represents a rational time value int64/int32.</p>
 </blockquote>
-<p>So, it’s used to represent a rational number that has a numerator number (an int64 value) and a denominator number (an int32 value). Developers can use those settings to search scene position in Video&#x2F;Audio Applications. The definition of CMTime structure would be: </p>
-<pre><code class="highlight plaintext">typedef struct
-&#123;
-   CMTimeValue    value;
-   CMTimeScale    timescale;
-   CMTimeFlags    flags;
-   CMTimeEpoch    epoch;
-&#125; CMTime</code></pre>
+<p>So, it’s used to represent a rational number that has a numerator number (an int64 value) and a denominator number (an int32 value). Developers can use those settings to search scene position in Video/Audio Applications. The definition of CMTime structure would be: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">typedef struct</span><br><span class="line">&#123;</span><br><span class="line">   CMTimeValue    value;</span><br><span class="line">   CMTimeScale    timescale;</span><br><span class="line">   CMTimeFlags    flags;</span><br><span class="line">   CMTimeEpoch    epoch;</span><br><span class="line">&#125; CMTime</span><br></pre></td></tr></table></figure>
 
 <h4 id="How-to-create-a-CMTime"><a href="#How-to-create-a-CMTime" class="headerlink" title="How to create a CMTime?"></a>How to create a CMTime?</h4><p>There are two most-used different categories to create a CMTime in Objective-C.</p>
 <ul>
 <li>CMTime CMTimeMakeWithSeconds(Float64 seconds, int32_t preferredTimescale);</li>
 <li>CMTime CMTimeMake(int64_t value, int32_t timescale);</li>
 </ul>
-<p>A larger time scale will result in high precision when it’s performing addition and subtraction operations. So, Apple recommends it’s better to use 600 as a time scale value for video.  Based on the document: <a href="https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/06_MediaRepresentations.html">Time and Media Representations</a></p>
+<p>A larger time scale will result in high precision when it’s performing addition and subtraction operations. So, Apple recommends it’s better to use 600 as a time scale value for video.  Based on the document: <a href="https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/06_MediaRepresentations.html" target="_blank" rel="noopener">Time and Media Representations</a></p>
 <blockquote>
 <p>You frequently use a timescale of 600, because this is a multiple of several commonly used frame rates: 24 fps for film, 30 fps for NTSC (used for TV in North America and Japan), and 25 fps for PAL (used for TV in Europe). </p>
 </blockquote>
 <p>So, it’s a common multiple of 24 fps, 25 fps, 30 fps. </p>
 <h4 id="Does-the-time-scale-equal-to-frame-rate"><a href="#Does-the-time-scale-equal-to-frame-rate" class="headerlink" title="Does the time scale equal to frame rate?"></a>Does the time scale equal to frame rate?</h4><p>I know the description above sounds like a time scale value means the frame rate. So, we can use a 600 <code>frame rate</code> to process the video. It looks like something weird because not every video clip uses then <code>600 frame rate</code>. Then what does the time scale exactly mean? </p>
 <p>Back to the original question, how to indicate a precise time in second? For example, you want to search a scene at 20 mins and 40 seconds in a video, how do you present this? We might show 20:40 in NSTimeInterval that would be 1240.0. That’s a double-precision floating-point number. It seems no question about this. But the problem is the operation of double-precision floating-point numbers would cause inaccuracy in the computer world because we store value in <code>double</code> type, which means in 8 words. So, we don’t use a double-precision floating-point to calculate the time; instead, we use double to calculate, which means the fraction part would be wrong. That’s why Apple provides CMTime structure to solve this issue. Do you remember the structure of CMTime? Here are the definitions of the fields. </p>
-<pre><code class="highlight plaintext">typedef int64_t CMTimeValue;
-typedef int32_t CMTimeScale;
-typedef enum CMTimeFlags : uint32_t &#123;
-    ...
-&#125; CMTimeFlags;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">typedef int64_t CMTimeValue;</span><br><span class="line">typedef int32_t CMTimeScale;</span><br><span class="line">typedef enum CMTimeFlags : uint32_t &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125; CMTimeFlags;</span><br></pre></td></tr></table></figure>
 
 <p>You might remember that I said <code>value</code> is the numerator, and <code>timeScale</code> is the denominator. By using <code>int64</code> and <code>int32</code>, we can avoid the lack of precision of double operation. </p>
 <h4 id="Then-what-does-the-time-exactly-mean"><a href="#Then-what-does-the-time-exactly-mean" class="headerlink" title="Then what does the time exactly mean?"></a>Then what does the time exactly mean?</h4><p>A time scale means the slice numbers in one second. For example, if you use 600 as time scale value, then that means we slice 600 slots in a second. That means, conceptually, the time scale means <code>frame rate</code> but not the real <code>frame rate</code> in a video clip. </p>
-<h4 id="Back-to-the-function"><a href="#Back-to-the-function" class="headerlink" title="Back to the function."></a>Back to the function.</h4><p>For <code>CMTimeMake(200, 10)</code>, it means there are 200 units, and each unit occupies 1&#x2F;10 of a second. For <code>CMTimeMakeWithSeconds(200, 10)</code>, it means this video clip has 200 seconds, and each unit occupies 1&#x2F;10 of a second, then how many units can I have? The answer is 2000 units. To get the precise time for the next jump, we need to know what’s the exact time scale value of this video clip: </p>
-<pre><code class="highlight plaintext">int32_t currentAssetTimeScale = self.avPlayer.currentItem.asset.duration.timescale;</code></pre>
+<h4 id="Back-to-the-function"><a href="#Back-to-the-function" class="headerlink" title="Back to the function."></a>Back to the function.</h4><p>For <code>CMTimeMake(200, 10)</code>, it means there are 200 units, and each unit occupies 1/10 of a second. For <code>CMTimeMakeWithSeconds(200, 10)</code>, it means this video clip has 200 seconds, and each unit occupies 1/10 of a second, then how many units can I have? The answer is 2000 units. To get the precise time for the next jump, we need to know what’s the exact time scale value of this video clip: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int32_t currentAssetTimeScale = self.avPlayer.currentItem.asset.duration.timescale;</span><br></pre></td></tr></table></figure>
 
 <p>Then how many units we currently have? </p>
-<pre><code class="highlight plaintext">CMTime nextInterval = CMTimeMake(musicTime, timeScale);</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CMTime nextInterval = CMTimeMake(musicTime, timeScale);</span><br></pre></td></tr></table></figure>
 
 <p>You will get the next start position for playing the video.</p>
-<pre><code class="highlight plaintext">[self.player
-  seekToTime:nextInterval
-  toleranceBefore:kCMTimeZero
-  toleranceAfter:kCMTimeZero
-];</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[self.player</span><br><span class="line">  seekToTime:nextInterval</span><br><span class="line">  toleranceBefore:kCMTimeZero</span><br><span class="line">  toleranceAfter:kCMTimeZero</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
 
 <p>You can jump to the correct start position now. Happy coding.</p>
 <h4 id="Reference"><a href="#Reference" class="headerlink" title="[Reference]"></a>[Reference]</h4><ol>
-<li><a href="http://www.d2vision.com/blog/simplifiedunderstandingofcmtime.html">Blog - D2Vision, CMTime for video and audio apps on iOS!</a></li>
-<li><a href="https://warrenmoore.net/understanding-cmtime">Warren Moore — Understanding CMTime</a></li>
-<li><a href="https://stackoverflow.com/questions/12902410/trying-to-understand-cmtime">ios - Trying to understand CMTime - Stack Overflow</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Double-precision_floating-point_format">Double-precision floating-point format - Wikipedia</a></li>
-<li><a href="https://developer.apple.com/documentation/coremedia/cmtimeflags?language=objc">CMTimeFlags - Core Media | Apple Developer Documentation</a></li>
-<li><a href="https://weekly-geekly.github.io/articles/173897/index.html">About CMTime</a></li>
+<li><a href="http://www.d2vision.com/blog/simplifiedunderstandingofcmtime.html" target="_blank" rel="noopener">Blog - D2Vision, CMTime for video and audio apps on iOS!</a></li>
+<li><a href="https://warrenmoore.net/understanding-cmtime" target="_blank" rel="noopener">Warren Moore — Understanding CMTime</a></li>
+<li><a href="https://stackoverflow.com/questions/12902410/trying-to-understand-cmtime" target="_blank" rel="noopener">ios - Trying to understand CMTime - Stack Overflow</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Double-precision_floating-point_format" target="_blank" rel="noopener">Double-precision floating-point format - Wikipedia</a></li>
+<li><a href="https://developer.apple.com/documentation/coremedia/cmtimeflags?language=objc" target="_blank" rel="noopener">CMTimeFlags - Core Media | Apple Developer Documentation</a></li>
+<li><a href="https://weekly-geekly.github.io/articles/173897/index.html" target="_blank" rel="noopener">About CMTime</a></li>
 </ol>
 
     </div>
@@ -423,74 +405,56 @@ typedef enum CMTimeFlags : uint32_t &#123;
 
       
         <p><img src="https://images.pexels.com/photos/9352/glass-time-watch-business.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="glass-time-watch-business.jpg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=750&amp;w=1260"></p>
-<h4 id="What’s-the-issue"><a href="#What’s-the-issue" class="headerlink" title="What’s the issue?"></a>What’s the issue?</h4><p>When using <a href="https://developer.apple.com/reference/avfoundation/avplayer?language=objc">AVPlayer</a> method - SeekToTime, I found there’s an issue that I don’t understand: the position of pointed time is not correct. In other word, the return time slot is not exactly what you want.</p>
-<span id="more"></span>
+<h4 id="What’s-the-issue"><a href="#What’s-the-issue" class="headerlink" title="What’s the issue?"></a>What’s the issue?</h4><p>When using <a href="https://developer.apple.com/reference/avfoundation/avplayer?language=objc" target="_blank" rel="noopener">AVPlayer</a> method - SeekToTime, I found there’s an issue that I don’t understand: the position of pointed time is not correct. In other word, the return time slot is not exactly what you want.</p>
+<a id="more"></a>
 
 <p>To me, that’s a serious problem because when doing the multimedia App by showing the subtitles, it would cause the title and speaking sound asynchronously. The whole App would become a bit weird at that moment on the user experience.</p>
 <p><img src="https://kingworldnews.com/wp-content/uploads/2018/01/King-World-News-WTF-Is-Going-On-Here-864x400_c.jpg" alt="WTF.jpg"><em>This should be what users thought about!</em></p>
 <h4 id="Do-I-have-a-solution-for-this"><a href="#Do-I-have-a-solution-for-this" class="headerlink" title="Do I have a solution for this?"></a>Do I have a solution for this?</h4><p>I’ve tried several ways to get the goal - precisely move the time cursor to the correct position. Unfortunately, I couldn’t find a proper method to achieve this goal. For example:</p>
-<pre><code class="highlight plaintext">[self.player 
-  seekToTime: CMTimeMakeWithSeconds(musicTime, 600) 
-  toleranceBefore: kCMTimeZero
-  toleranceAfter: kCMTimeZero
-];</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[self.player </span><br><span class="line">  seekToTime: CMTimeMakeWithSeconds(musicTime, 600) </span><br><span class="line">  toleranceBefore: kCMTimeZero</span><br><span class="line">  toleranceAfter: kCMTimeZero</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
 
 <p>Back to the code gist, I think I run into a dead end. We should think about: why 600 is the correct time scale to use? Why this magic number 600? </p>
 <p>To answer these questions, I think I should know and explain what a CMTime means. </p>
-<h4 id="What’s-CMTime"><a href="#What’s-CMTime" class="headerlink" title="What’s CMTime?"></a>What’s CMTime?</h4><p>Let’s see the definition from Apple - <a href="https://developer.apple.com/documentation/coremedia/cmtime-u58">CMTime</a></p>
+<h4 id="What’s-CMTime"><a href="#What’s-CMTime" class="headerlink" title="What’s CMTime?"></a>What’s CMTime?</h4><p>Let’s see the definition from Apple - <a href="https://developer.apple.com/documentation/coremedia/cmtime-u58" target="_blank" rel="noopener">CMTime</a></p>
 <blockquote>
-<p>A struct representing a time value such as a timestamp or duration. Defines a structure that represents a rational time value int64&#x2F;int32.</p>
+<p>A struct representing a time value such as a timestamp or duration. Defines a structure that represents a rational time value int64/int32.</p>
 </blockquote>
-<p>So, it’s used to represent a rational number that has a numerator number (an int64 value) and a denominator number (an int32 value). Developers can use those settings to search scene position in Video&#x2F;Audio Applications. The definition of CMTime structure would be: </p>
-<pre><code class="highlight plaintext">typedef struct
-&#123;
-   CMTimeValue    value;
-   CMTimeScale    timescale;
-   CMTimeFlags    flags;
-   CMTimeEpoch    epoch;
-&#125; CMTime</code></pre>
+<p>So, it’s used to represent a rational number that has a numerator number (an int64 value) and a denominator number (an int32 value). Developers can use those settings to search scene position in Video/Audio Applications. The definition of CMTime structure would be: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">typedef struct</span><br><span class="line">&#123;</span><br><span class="line">   CMTimeValue    value;</span><br><span class="line">   CMTimeScale    timescale;</span><br><span class="line">   CMTimeFlags    flags;</span><br><span class="line">   CMTimeEpoch    epoch;</span><br><span class="line">&#125; CMTime</span><br></pre></td></tr></table></figure>
 
 <h4 id="How-to-create-a-CMTime"><a href="#How-to-create-a-CMTime" class="headerlink" title="How to create a CMTime?"></a>How to create a CMTime?</h4><p>There are two most-used different categories to create a CMTime in Objective-C.</p>
 <ul>
 <li>CMTime CMTimeMakeWithSeconds(Float64 seconds, int32_t preferredTimescale);</li>
 <li>CMTime CMTimeMake(int64_t value, int32_t timescale);</li>
 </ul>
-<p>A larger time scale will result in high precision when it’s performing addition and subtraction operations. So, Apple recommends it’s better to use 600 as a time scale value for video.  Based on the document: <a href="https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/06_MediaRepresentations.html">Time and Media Representations</a></p>
+<p>A larger time scale will result in high precision when it’s performing addition and subtraction operations. So, Apple recommends it’s better to use 600 as a time scale value for video.  Based on the document: <a href="https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/06_MediaRepresentations.html" target="_blank" rel="noopener">Time and Media Representations</a></p>
 <blockquote>
 <p>You frequently use a timescale of 600, because this is a multiple of several commonly used frame rates: 24 fps for film, 30 fps for NTSC (used for TV in North America and Japan), and 25 fps for PAL (used for TV in Europe). </p>
 </blockquote>
 <p>So, it’s a common multiple of 24 fps, 25 fps, 30 fps. </p>
 <h4 id="Does-the-time-scale-equal-to-frame-rate"><a href="#Does-the-time-scale-equal-to-frame-rate" class="headerlink" title="Does the time scale equal to frame rate?"></a>Does the time scale equal to frame rate?</h4><p>I know the description above sounds like a time scale value means the frame rate. So, we can use a 600 <code>frame rate</code> to process the video. It looks like something weird because not every video clip uses then <code>600 frame rate</code>. Then what does the time scale exactly mean? </p>
 <p>Back to the original question, how to indicate a precise time in second? For example, you want to search a scene at 20 mins and 40 seconds in a video, how do you present this? We might show 20:40 in NSTimeInterval that would be 1240.0. That’s a double-precision floating-point number. It seems no question about this. But the problem is the operation of double-precision floating-point numbers would cause inaccuracy in the computer world because we store value in <code>double</code> type, which means in 8 words. So, we don’t use a double-precision floating-point to calculate the time; instead, we use double to calculate, which means the fraction part would be wrong. That’s why Apple provides CMTime structure to solve this issue. Do you remember the structure of CMTime? Here are the definitions of the fields. </p>
-<pre><code class="highlight plaintext">typedef int64_t CMTimeValue;
-typedef int32_t CMTimeScale;
-typedef enum CMTimeFlags : uint32_t &#123;
-    ...
-&#125; CMTimeFlags;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">typedef int64_t CMTimeValue;</span><br><span class="line">typedef int32_t CMTimeScale;</span><br><span class="line">typedef enum CMTimeFlags : uint32_t &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125; CMTimeFlags;</span><br></pre></td></tr></table></figure>
 
 <p>You might remember that I said <code>value</code> is the numerator, and <code>timeScale</code> is the denominator. By using <code>int64</code> and <code>int32</code>, we can avoid the lack of precision of double operation. </p>
 <h4 id="Then-what-does-the-time-exactly-mean"><a href="#Then-what-does-the-time-exactly-mean" class="headerlink" title="Then what does the time exactly mean?"></a>Then what does the time exactly mean?</h4><p>A time scale means the slice numbers in one second. For example, if you use 600 as time scale value, then that means we slice 600 slots in a second. That means, conceptually, the time scale means <code>frame rate</code> but not the real <code>frame rate</code> in a video clip. </p>
-<h4 id="Back-to-the-function"><a href="#Back-to-the-function" class="headerlink" title="Back to the function."></a>Back to the function.</h4><p>For <code>CMTimeMake(200, 10)</code>, it means there are 200 units, and each unit occupies 1&#x2F;10 of a second. For <code>CMTimeMakeWithSeconds(200, 10)</code>, it means this video clip has 200 seconds, and each unit occupies 1&#x2F;10 of a second, then how many units can I have? The answer is 2000 units. To get the precise time for the next jump, we need to know what’s the exact time scale value of this video clip: </p>
-<pre><code class="highlight plaintext">int32_t currentAssetTimeScale = self.avPlayer.currentItem.asset.duration.timescale;</code></pre>
+<h4 id="Back-to-the-function"><a href="#Back-to-the-function" class="headerlink" title="Back to the function."></a>Back to the function.</h4><p>For <code>CMTimeMake(200, 10)</code>, it means there are 200 units, and each unit occupies 1/10 of a second. For <code>CMTimeMakeWithSeconds(200, 10)</code>, it means this video clip has 200 seconds, and each unit occupies 1/10 of a second, then how many units can I have? The answer is 2000 units. To get the precise time for the next jump, we need to know what’s the exact time scale value of this video clip: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int32_t currentAssetTimeScale = self.avPlayer.currentItem.asset.duration.timescale;</span><br></pre></td></tr></table></figure>
 
 <p>Then how many units we currently have? </p>
-<pre><code class="highlight plaintext">CMTime nextInterval = CMTimeMake(musicTime, timeScale);</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CMTime nextInterval = CMTimeMake(musicTime, timeScale);</span><br></pre></td></tr></table></figure>
 
 <p>You will get the next start position for playing the video.</p>
-<pre><code class="highlight plaintext">[self.player
-  seekToTime:nextInterval
-  toleranceBefore:kCMTimeZero
-  toleranceAfter:kCMTimeZero
-];</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[self.player</span><br><span class="line">  seekToTime:nextInterval</span><br><span class="line">  toleranceBefore:kCMTimeZero</span><br><span class="line">  toleranceAfter:kCMTimeZero</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
 
 <p>You can jump to the correct start position now. Happy coding.</p>
 <h4 id="Reference"><a href="#Reference" class="headerlink" title="[Reference]"></a>[Reference]</h4><ol>
-<li><a href="http://www.d2vision.com/blog/simplifiedunderstandingofcmtime.html">Blog - D2Vision, CMTime for video and audio apps on iOS!</a></li>
-<li><a href="https://warrenmoore.net/understanding-cmtime">Warren Moore — Understanding CMTime</a></li>
-<li><a href="https://stackoverflow.com/questions/12902410/trying-to-understand-cmtime">ios - Trying to understand CMTime - Stack Overflow</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Double-precision_floating-point_format">Double-precision floating-point format - Wikipedia</a></li>
-<li><a href="https://developer.apple.com/documentation/coremedia/cmtimeflags?language=objc">CMTimeFlags - Core Media | Apple Developer Documentation</a></li>
-<li><a href="https://weekly-geekly.github.io/articles/173897/index.html">About CMTime</a></li>
+<li><a href="http://www.d2vision.com/blog/simplifiedunderstandingofcmtime.html" target="_blank" rel="noopener">Blog - D2Vision, CMTime for video and audio apps on iOS!</a></li>
+<li><a href="https://warrenmoore.net/understanding-cmtime" target="_blank" rel="noopener">Warren Moore — Understanding CMTime</a></li>
+<li><a href="https://stackoverflow.com/questions/12902410/trying-to-understand-cmtime" target="_blank" rel="noopener">ios - Trying to understand CMTime - Stack Overflow</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Double-precision_floating-point_format" target="_blank" rel="noopener">Double-precision floating-point format - Wikipedia</a></li>
+<li><a href="https://developer.apple.com/documentation/coremedia/cmtimeflags?language=objc" target="_blank" rel="noopener">CMTimeFlags - Core Media | Apple Developer Documentation</a></li>
+<li><a href="https://weekly-geekly.github.io/articles/173897/index.html" target="_blank" rel="noopener">About CMTime</a></li>
 </ol>
 
     </div>
@@ -610,7 +574,7 @@ typedef enum CMTimeFlags : uint32_t &#123;
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-count">69</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -623,7 +587,7 @@ typedef enum CMTimeFlags : uint32_t &#123;
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
